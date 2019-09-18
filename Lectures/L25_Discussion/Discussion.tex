@@ -1,0 +1,297 @@
+%\documentclass[handout]{beamer} 
+\documentclass[t,12pt,numbers,fleqn]{beamer}
+%\documentclass[ignorenonframetext]{beamer}
+
+\newif\ifquestions
+%\questionstrue
+\questionsfalse
+
+\usepackage{pgfpages} 
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    filecolor=blue,
+    urlcolor=blue,
+    unicode=false}
+\urlstyle{same}
+
+\bibliographystyle{plain}
+
+%\usetheme{Iimenau}
+
+\useoutertheme{split} %so the footline can be seen, without needing pgfpages
+
+%\pgfpagesuselayout{resize to}[letterpaper,border shrink=5mm,landscape]  %if this is uncommented, the hyperref links do not work
+
+\mode<presentation>{}
+
+\input{../def-beamer}
+
+\newcommand{\topic}{25 Discussion}
+
+\input{../titlepage}
+
+\begin{document}
+
+\input{../footline}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Discussions}
+
+\bi
+\item Administrative details
+\item Coding style
+\item Test report
+\item Questions?
+\item Discussion
+\ei
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Administrative Details}
+
+\bi
+\item Course evaluation
+\bi
+\item Nov 23 to Dec 7
+\item \url{https://evals.mcmaster.ca}
+\ei
+\item GitHub issues for colleagues
+\bi
+\item Assigned 1 colleague (see \texttt{Repos.xlsx} in repo)
+\item Provide at least 5 issues on their MIS
+\item Grading as before
+\item Due by Tuesday, Dec 5, 11:59 pm
+\ei
+\item GitHub issues for implementation
+\bi
+\item Not required as part of course
+\item Will assign names anyway
+\ei
+\item Source in src folder
+\item Added an INSTALL.txt file to BlankProjectTemplate
+\ei
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Administrative Details: Deadlines}
+~\newline
+\begin{tabular}{l l}
+\textbf{Final Documentation} & Dec 18, 11:59 pm\\
+\end {tabular}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Coding Style}
+
+\bi
+\item Having a coding standard is more important than which standard you use
+\item Examples
+\bi
+\item Google guides
+\bi
+\item \href{https://google.github.io/styleguide/pyguide.html}{Python}
+\item \href{https://google.github.io/styleguide/cppguide.html}{C++}
+\item \href{https://google.github.io/styleguide/javaguide.html}{Java}
+\ei
+\item
+  \href{https://developer.mozilla.org/en-US/docs/Mozilla/Developer_guide/Coding_Style}{Mozilla
+    Developer Network}
+\item \href{http://homepages.inf.ed.ac.uk/dts/pm/Papers/nasa-c-style.pdf}{NASA C
+    Style Guide}
+\ei
+\item Your decisions on style may evolve over the project
+\item Important to be consistent
+\ei
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Installability and Learnability}
+
+\bi
+\item You can test this
+\item Ask a colleague to install your software
+\item Run it on a virtual machine, like
+  \href{https://www.virtualbox.org/}{VirtualBox}
+\item Use a ``light weight'' VM like docker
+\item Include installation instructions (INSTALL.txt)
+\item Include instructions so that someone else can run your tests cases
+\ei
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Final Documentation: Test Report}
+\begin{itemize}
+\item Completing what you proposed in your test plan
+\item You do not need to repeat material from your test plan - the emphasis is
+  not on the rational for test case selection, but on the results.
+\item If your test plan does not match what you are now testing, edit your test
+  plan to ``fake'' a rational design process.
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Test Report Continued}
+\begin{itemize}
+\item Provide specific test cases
+\item Summarize your test results
+\bi
+\item Test case name
+\item Initial state
+\item Input
+\item Expected results
+\item Whether actual output matched expected
+\ei
+\item Summarize and explain usability tests - quantify the results
+\item Performance tests - quantify the results
+\item Stress tests
+\item Robustness tests
+\item After quantification of nonfunctional tests, explain significance of
+  results
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Test Report Continued}
+\begin{itemize}
+\item In cases where there are many similar tests
+\bi
+\item Summarize the results
+\item If the expected result is obvious, you might not need to state it
+\item Give an example test case, and explain how similar tests were constructed
+\item If the tests were random, describe how they were selected, and how many,
+  but not all of the details
+\item Use graphs and tables
+\item You need enough information that
+\bi
+\item Someone could reproduce your tests
+\item Your test results are convincing
+\item Evidence that you have used testing to improve the quality of your project
+\ei
+\ei
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Test Report Continued}
+\begin{itemize}
+\item Summarize changes made in response to test results
+\item Explain your automated testing set-up (if require more detail than from
+  the test plan)
+\item Provide traceability to requirements (if not in test plan)
+\item Provide traceability to modules (if not in test plan)
+\item Make sure you show test results for ``bad/abnormal'' input
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Sample Test Report Documents} 
+
+\bi
+\item
+  \href{https://gitlab.cas.mcmaster.ca/screenholders/screenholders}{Screenholders}
+\item
+  \href{https://github.com/palmerst/CS-4ZP6/tree/master}{2D Physics Based Game}
+  (Uses doxygen)
+\item
+  \href{https://gitlab.cas.mcmaster.ca/smiths/cas741/tree/master/BlankProjectTemplate/Doc/TestReport}{Follow given template}
+\item Examples are not perfect
+\item Examples are intended to give you ideas, not to be strictly followed
+\item You can modify/extend the test report template as appropriate
+\ei
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Questions?}
+\begin{itemize}
+\item Questions Final documentation?
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Discussion}
+
+\bi
+\item Thoughts on documentation
+\bi
+\item SRS
+\item VnV Plan
+\item MG
+\item MIS
+\ei
+\item Thoughts on technology
+\bi
+\item Git
+\item GitHub
+\item LaTeX
+\item Make
+\item Your programming language
+\ei
+\ei
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Discussion: Course Content}
+
+\bi
+\item What ideas from the course will you continue to use?
+\item Thoughts on
+\bi
+\item Drasil
+\item Assurance cases
+\ei
+\item Other thoughts?
+\ei
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Discussion: Course Structure}
+
+\bi
+\item What can be done to improve the course on its next iteration?
+\item Increase number of reviewers for GitHub issue creation?
+\item How to get more discussion in class?
+\ei
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

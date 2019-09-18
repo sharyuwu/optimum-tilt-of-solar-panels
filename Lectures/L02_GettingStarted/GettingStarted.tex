@@ -1,0 +1,563 @@
+%\documentclass[handout]{beamer} 
+\documentclass[t,12pt,numbers,fleqn]{beamer}
+%\documentclass[ignorenonframetext]{beamer}
+
+\newif\ifquestions
+%\questionstrue
+\questionsfalse
+
+\usepackage{pgfpages} 
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    filecolor=blue,
+    urlcolor=blue,
+    unicode=false}
+\urlstyle{same}
+
+\usepackage{booktabs}
+\usepackage{hhline}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{array}
+
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+
+%\usepackage{natbib} %doesn't seem to work with beamer
+\bibliographystyle{plain}
+%\setcitestyle{authoryear}
+
+%\usetheme{Iimenau}
+
+\useoutertheme{split} %so the footline can be seen, without needing pgfpages
+
+%\pgfpagesuselayout{resize to}[letterpaper,border shrink=5mm,landscape]  %if this is uncommented, the hyperref links do not work
+
+\mode<presentation>{}
+
+\input{../def-beamer}
+
+\newcommand{\topic}{02 Getting Started}
+
+\input{../titlepage}
+
+\begin{document}
+
+%\nobibliography{../../ReferenceMaterial/References}
+
+\input{../footline}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Getting Started}
+
+\bi
+\item Administrative details
+\item Any more introductions?
+\item Project choices
+\item Software tools
+\begin{itemize}
+\item Git, GitLab and GitHub (Issue Creating Exercise)
+\item LaTeX
+\item Make
+\end{itemize}
+\item Questions on suggested reading?
+\item Software Engineering for Scientific Computing literature
+\ei
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Administrative Details}
+
+\bi
+\item Can everyone access GitLab?
+  \href{https://gitlab.cas.mcmaster.ca/smiths/cas741}
+  {https://gitlab.cas.mcmaster.ca/smiths/cas741}
+\item Use folder structure given in repo (will be updating)
+\item Post any questions as issues in our repo
+\item Create a GitHub account if you don't already have one
+\item Add \texttt{smiths} to your GitHub repos
+\item Problem statement
+\begin{itemize}
+\item Problem statement due Thurs, Sept 19 by 11:59 pm
+\item Assign the instructor an issue to review your problem
+    statement
+\end{itemize}
+\item Issue creating exercises due Thurs, Sept 19 by 10:30 am
+\item Feel free to add me to you Linked-In network
+\ei
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Administrative Details: Domain Expert}
+
+\begin {itemize}
+
+\item Creates issues for their partner's written deliverables
+\item Asks questions during their partner's presentations
+\item Implements one module following their partner's spec
+
+\end {itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+
+\frametitle{Administrative Details: Our Deliverables}
+
+\begin{center}
+\includegraphics[scale=0.55]{../Figures/VModelOfProcessXOut.pdf}
+\end{center}
+\vspace{-1.0cm}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Administrative Details: Presentations}
+
+~\newline
+\begin{tabular}{l l l}
+SRS Present & Week 05 & Week of Sept 30\\
+Syst.\ VnV Present & Week 07 & Week of Oct 21\\
+MG + MIS Syntax Present & Week 9 & Week of Nov 4\\
+MIS Semantics Present & Week 11 & Week of Nov 18\\
+Unit VnV or Implement Present & Week 12/13 & Week of Nov 28\\
+\end {tabular}
+
+\bi
+%\item Very tentative dates
+\item Specific schedule depends on final class registration and need
+\item Informal presentations with the goal of improving everyone's written
+  deliverables
+\item Domain experts and secondary reviewers (and others) will ask questions
+\ei
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Administrative Details: Report Deadlines}
+~\newline
+\begin{tabular}{l l l}
+Issue Creation Exercise & Week 03 & Sept 19\\
+Problem Statement & Week 03 & Sept 19\\
+System Requirements Specification (SRS) & Week 06 & Oct 7\\
+System VnV Plan & Week 08 & Oct 28\\
+Module Guide (MG) + Mod Int Spec (MIS) & Week 10 & Nov 25\\
+%Unit VnV Plan & Week 14 & Dec 3\\
+Final Documentation & Week 14 & Dec 9\\
+\end {tabular}
+
+\bi
+\item The written deliverables will be graded based on the repo contents as of
+11:59 pm of the due date
+\item If you need an extension, please ask
+\item Two days after each major deliverable, your GitHub issues will be due
+\item Domain expert code due 1 week after MIS deadline
+\ei
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Introductions (if necessary)}
+
+\begin{itemize}
+\item Your name
+\item Degree program
+\item Academic background
+\item Experience with:
+\begin{itemize}
+\item Science (such as physics)
+\item Scientific computing
+\item Continuous math
+\item Discrete math
+\item Software engineering
+\item Software development technology
+\bi
+\item Git
+\item GitHub or GitLab
+\item LaTeX
+\item Make etc.
+\ei
+\end{itemize}
+\item What do you hope to get out of this course?
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Project Selection: Desired Qualities}
+\begin{itemize}
+\item Related to scientific computing
+\item Simple, but not trivial
+\item If feasible, select a project related to your research
+\item Possibly re-implement existing software
+\item Each student project needs to be unique
+\item Possibly a specific physical problem
+\item Possibly a (family of) general purpose tool(s)
+\item Some examples follow, the links are just places to get started
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Project Selection: Specific Physical Problem}
+\begin{itemize}
+\item
+  \href{https://ocw.mit.edu/courses/mathematics/18-303-linear-partial-differential-equations-fall-2006/lecture-notes/heateqni.pdf}{
+    Heated
+    rod}
+\item \href{http://www.tech.plym.ac.uk/sme/THER204B-web/Heatran2.PDF}{Heated plate}
+\item \href{https://en.wikipedia.org/wiki/Double_pendulum}{Double pendulum}
+\item \href{http://chrishecker.com/Rigid_Body_Dynamics}{Rigid body dynamics}
+\item Column buckling
+\item \href{https://en.wikipedia.org/wiki/Harmonic_oscillator}{Damped harmonic oscillator}
+\item Stoichiometric calculations (chemical balance)
+\item
+  \href{http://www.tiem.utk.edu/~gross/bioed/bealsmodules/predator-prey.html}{Predator
+    prey dynamics}
+\item Imaging: filters, edge detection etc.
+\item Medical Imaging
+\item etc.
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Project Selection: Family of General Purpose Tools}
+\begin{itemize}
+\item \href{https://en.wikipedia.org/wiki/Numerical_methods_for_ordinary_differential_equations}{Solution of ODEs}
+\item \href{https://en.wikibooks.org/wiki/Numerical_Methods/Solution_of_Linear_Equation_Systems}{Solution of $A x = b$}
+\item \href{https://en.wikipedia.org/wiki/Linear_regression}{Regression}
+\item \href{https://en.wikibooks.org/wiki/Introduction_to_Numerical_Methods/Interpolation}{Interpolation}
+\item \href{https://en.wikipedia.org/wiki/Numerical_integration}{Numerical integration}
+\item \href{https://en.wikipedia.org/wiki/Fast_Fourier_transform}{FFT}
+\item \href{https://en.wikipedia.org/wiki/Mesh_generation}{Mesh generation}
+\item \href{https://en.wikipedia.org/wiki/Finite_element_method}{Finite element method}
+\item Any chapter from a standard numerical methods textbook
+\item etc.
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Tool Tutorials}
+\begin{itemize}
+\item Best way to learn is by doing
+\item Some getting started information and exercises in the
+  \href{https://gitlab.cas.mcmaster.ca/smiths/cas741/tree/master/ToolTutorials} {ToolTutorials}
+  folder, modified from undergrad classes
+\item Tutorials for
+  \href{https://gitlab.cas.mcmaster.ca/smiths/se2aa4_cs2me3/tree/master/Tutorials}
+  {se 2aa4 and cs 2me3}
+\item Many other resources on-line
+\item Your colleagues can help too
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Git, GitLab and GitHub}
+\begin{itemize}
+\item Git manages changes to documents
+\bi
+\item Tracks changes
+\item Keeps history, you can roll back
+\item Useful documentation over time
+\item Allows people to work simultaneously
+\ei
+\item Benefits for SC \cite{WilsonEtAl2016}
+\bi
+\item Not necessary to make a backup copy of everything, stores just enough
+  information to recreate
+\item Do not need to come up with names for backup copies - same file name, but
+  with timestamps
+\item Enforces changelog discipline
+\item Facilitates identifying conflict and merging changes
+\ei
+\item The real bottleneck in scientific computing~\cite{Wilson2006}
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Git Typical Usage}
+
+First either init repo or clone (git init, git clone), then typical workflow is
+\be
+\item update repo (git pull)
+\item create files
+\item stage changes to be committed (git status, git add)
+\item commit staged changes (git commit -m ``message'')
+\item push to remote, if using one (git push)
+\ee
+\bi
+\item Commit after every separate issue, and when need to stop working
+\item Always include a meaningful and descriptive commit message for the log
+\item If a push reveals conflicts, take appropriate action to merge
+\ei
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{GitLab and GitHub Issue Tracking}
+
+\bi
+\item \href{https://gitlab.cas.mcmaster.ca/smiths/cas741/tree/master/ToolTutorials/gitAndGitLab}{See brief document in course repo}
+\item \href{https://github.com/JacquesCarette/literate-scientific-software/issues}{See
+  examples}
+\item Tutorials for
+  \href{https://gitlab.cas.mcmaster.ca/smiths/se2aa4_cs2me3/tree/master/Tutorials/T01a-Git/slides}
+  {se 2aa4 and cs 2me3}
+\item \href{https://gitlab.cas.mcmaster.ca/smiths/cas741/issues}{Create an issue}
+\ei
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Issue Creating Exercise}
+
+\bi
+\item Due by Thurs, Sept 19, 10:30 am
+\item Create 2 to 3 issues for case studies in Drasil repo
+\item \href{https://jacquescarette.github.io/Drasil/}
+  {https://jacquescarette.github.io/Drasil/}
+\item Select any case study that interests you and review the SRS
+\item Create issues at \href{https://github.com/JacquesCarette/Drasil/issues}
+  {https://github.com/JacquesCarette/Drasil/issues}
+\item Assign issues to \texttt{smiths}
+\item Consider using SRS
+  \href{https://gitlab.cas.mcmaster.ca/smiths/cas741/blob/master/BlankProjectTemplate/docs/SRS/SRS-Checklist.pdf}
+  {checklist} (except for major revision history)
+\item Additional guidance in
+  \href{https://gitlab.cas.mcmaster.ca/smiths/cas741/blob/master/BlankProjectTemplate/docs/SRS/SRS.tex}
+  {SRS Template}
+\ei
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{LaTeX}
+\begin{itemize}
+\item A typesetting language
+\item
+  \href{https://gitlab.cas.mcmaster.ca/smiths/cas741/tree/master/ToolTutorials/LaTeX}
+  {Some initial information in course repo}
+\item Tutorials for
+  \href{https://gitlab.cas.mcmaster.ca/smiths/se2aa4_cs2me3/tree/master/Tutorials/T02a-LaTeX}
+  {se 2aa4 and cs 2me3}
+\item Start from an example
+\bi
+\item The lectures notes
+\item The Blank Project Template
+\item The problem statement
+\ei
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Make}
+\begin{itemize}
+\item \href{https://swcarpentry.github.io/make-novice/} {Software Carpentry:
+    Automation and Make}
+\item The Blank Project Template
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Suggested Reading Questions?}
+
+\begin {itemize}
+
+\item
+  \href{https://gitlab.cas.mcmaster.ca/smiths/cas741/blob/master/ReferenceMaterial/SoftEngForScienceBook.pdf}
+  {Smith2016~\cite{Smith2016}}
+\item
+  \href{https://gitlab.cas.mcmaster.ca/smiths/cas741/blob/master/ReferenceMaterial/SmithLaiAndKhedri2007fulltext.pdf}
+  {SmithEtAl2007~\cite{SmithEtAl2007}}
+\item
+  \href{https://gitlab.cas.mcmaster.ca/smiths/cas741/blob/master/ReferenceMaterial/ParnasAndClements1986.pdf}
+  {{ParnasAndClements1986}~\cite{ParnasAndClements1986}}
+\item \href{https://github.com/smiths/swhs}{Solar Water Heating System Example}
+
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{SE For SC Literature}
+
+\begin {itemize}
+
+\item CAS 741 process is document driven, adapted
+from the waterfall model~\cite{GhezziEtAl2003, VanVliet2000}
+\item Many say a document driven process is not used by, nor suitable for,
+scientific software.
+\bi
+\item Scientific developers naturally use an agile
+  philosophy~\cite{AckroydEtAl2008, CarverEtAl2007, EasterbrookAndJohns2009, Segal2005}, 
+\item or an amethododical process~\cite{Kelly2013}
+\item or a knowledge acquisition driven process~\cite{Kelly2015}.
+\ei
+\item Scientists do not view rigid, process-heavy approaches,
+  favorably~\cite{CarverEtAl2007}
+\item Reports for each stage of development are counterproductive~\cite[p.~373]{Roache1998}
+\item Up-front requirements are
+impossible~\cite{CarverEtAl2007, SegalAndMorris2008}
+\item \structure{What are some arguments in favour of a rational document driven
+    process?}
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Counter Arguments}
+
+\begin {itemize}
+
+\item Just because not used, doesn't mean docs shouldn't be
+\item Documentation provides many
+benefits~\cite{Parnas2010}: 
+\bi
+\item easier reuse of old designs
+\item better communication about requirements
+\item more useful design reviews
+\item easier integration of separately
+written modules
+\item more effective code inspection
+\item more effective testing
+\item more efficient corrections and improvements.
+\ei
+\item Actually faking a rational design process
+\item Too complex for up-front requirements sounds like an excuse
+\bi
+\item Laws of physics/science slow to change
+\item Often simple design patterns
+\item Think program family, not individual member
+\ei
+\item Debunking myth against up-front requirements~\cite{SmithEtAl2019}
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Literature on SE applied to SCS}
+
+\begin {itemize}
+
+\item Highlights problems with SE
+\begin{itemize}
+\item
+  \href{https://gitlab.cas.mcmaster.ca/smiths/cas741/blob/master/ReferenceMaterial/Miller2006.pdf}
+  {Miller2006~\cite{Miller2006}}
+\item
+  \href{https://gitlab.cas.mcmaster.ca/smiths/cas741/blob/master/ReferenceMaterial/Hatton2007.pdf}
+  {Hatton2007~\cite{Hatton2007}}
+\item Sleipner A oil rig collapse~\cite[p.~38]{OliveiraAndStewart2006}
+\item Patriot missile disaster~\cite[p.~36]{OliveiraAndStewart2006}
+\end{itemize}
+\item Highlights gap/chasm between SE and SC
+\begin{itemize}
+\item
+  \href{https://gitlab.cas.mcmaster.ca/smiths/cas741/blob/master/ReferenceMaterial/Kelly2007.pdf}
+  {Kelly2007~\cite{Kelly2007}}
+\item
+  \href{https://gitlab.cas.mcmaster.ca/smiths/cas741/blob/master/ReferenceMaterial/Storer2017.pdf}
+  {Storer2017~\cite{Storer2017}}
+\end{itemize}
+\item Studies of SE applied to SC
+\begin{itemize}
+\item
+  \href{https://gitlab.cas.mcmaster.ca/smiths/cas741/blob/master/ReferenceMaterial/CarverEtAl2007.pdf}
+  {CarverEtAl2007~\cite{CarverEtAl2007}}
+\item
+  \href{https://gitlab.cas.mcmaster.ca/smiths/cas741/blob/master/ReferenceMaterial/Segal2005.pdf}
+  {Segal2005~\cite{Segal2005}}
+\end{itemize}
+
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Literature on SE applied to SCS}
+
+\begin {itemize}
+
+\item Reproducibility
+\begin{itemize}
+\item
+  \href{https://gitlab.cas.mcmaster.ca/smiths/cas741/blob/master/ReferenceMaterial/BaileyEtAl2016.pdf}
+  {BaileyEtAl2016~\cite{BaileyEtAl2016}}
+\item
+  \href{https://gitlab.cas.mcmaster.ca/smiths/cas741/blob/master/ReferenceMaterial/BenureauAndRougier2017.pdf}
+  {BenureauAndRougier2017~\cite{BenureauAndRougier2017}}
+\end{itemize}
+
+\item Future of SE for SC
+\begin{itemize}
+\item
+  \href{https://gitlab.cas.mcmaster.ca/smiths/cas741/blob/master/ReferenceMaterial/JohansonAndHasselbring2018.pdf}
+  {JohansonAndHasselbring2018~\cite{JohansonAndHasselbring2018}}
+\item
+  \href{https://gitlab.cas.mcmaster.ca/smiths/cas741/blob/master/ReferenceMaterial/Smith2018.pdf}
+  {Smith2018~\cite{Smith2018}}
+\end{itemize}
+
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[allowframebreaks]
+\frametitle{References}
+
+\bibliography{../../ReferenceMaterial/References}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

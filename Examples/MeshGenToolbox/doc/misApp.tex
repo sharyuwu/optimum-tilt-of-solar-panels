@@ -1,0 +1,771 @@
+\documentclass[12pt,titlepage]{article}
+
+\include{Preamble}
+
+\author{Wen Yu}
+
+\begin{document}
+
+\begin{titlepage}
+
+% Fonts for the title page
+\newcommand{\texttl}{\textsf} %font for the title (Emil's version is \textsf)
+\newcommand{\textau}{\textsf} %font for the authors, date, etc. (Emils version is \textsc)
+
+\begin{center}
+ 
+\HRule \\[0.4cm]
+{ \huge \bfseries \texttl{Module Interface Specification for a Parallel Mesh Generation Toolbox}}\\[0.4cm]
+ 
+\HRule \\[2cm]
+
+\textau{\LARGE Wen Yu}\\[2cm]
+ 
+\textau{\LARGE {September 2008}}
+ 
+\vfill
+ 
+% Bottom of the page
+%\includegraphics[width=0.27\textwidth]{logo.pdf}
+\hfill
+\textau{\LARGE
+\raisebox{2pt}{\begin{tabular}[b]{r}
+\raisebox{8pt}{Computing and Software} \\
+McMaster University \end{tabular}}
+}
+\end{center}
+
+\end{titlepage}
+
+\tableofcontents
+
+\newpage
+
+\section{Introduction \label{AmisSecIntro}}
+One of the advantages of decomposing the system into modules is that each module can be developed independently. However, the secret and services of each module does not provide enough information for parallel coding. A document specifying the interface of each module, called the Module Interface Specification (MIS), is needed. An MIS of a particular module is not only used as a guide by the programmers that are responsible for coding this module, but also by programmers that will use this module. An MIS is abstract because it describes \emph{what} the module will do, but not \emph{how} to do it.
+
+This MIS describes the services of the corresponding modules specified in the document ``Module Guide for a Mesh Generator.''  A state machine MIS is used. Note that some of the modules have multiple projections. In this case, variables listed in section \emph{state variables} give the format of all states for all of the created objects. The idea of multiple projection is also used in \citet{Bauer1995}. By using projections, the change of state variables is applicable to the particular object associated with this module. In this system, this particular kind of modules includes the module Vertex, Edge, Cell, and Mesh.
+
+The rest of the document is organized as follows. Section \ref{AmisSecTemplate} describes the MIS template used in this document. Section \ref{AmisSecMD} copies the module hierarchy from \emph{Module Guide} document for convenience. Section \ref{AmisSecV}, Section \ref{AmisSecE}, Section \ref{AmisSecC}, Section \ref{AmisSecM}, Section \ref{AmisSecSer}, Section \ref{AmisSecRef}, Section \ref{AmisSecCoa}  give the MISs for the Vertex Module, Edge Module, Cell Module, Mesh Module, Service Module, Refining Module, and Coarsening Module, respectively. 
+
+
+\section{Template \label{AmisSecTemplate}}
+This section gives the template used in this document. This template is modified version of the MIS template presented in \citet{Ghezzi2003} and \citet{Hoffman1999}. According to this template, each module is modeled as a finite state machine. It has a set of state variables, inputs, outputs, and transitions. In the case that an exception conditions become true, an exception is raised by the associated access program. If an access program has an output, then \emph{Output} is specified. If an access program changes states variables, a \emph{Transition} is specified. The inputs of the access program are listed as arguments. 
+
+The discrete mathematics notation used here follows that introduced by \citet{Gries1993}. This notation is explained in the SRS. A dot notation is used in two cases. One is for referring to a field in a tuple, and the other is for referencing the access program of a module.
+
+The whole template is composed of four parts. First, the name of the module is given. Second, constants, data types, and access programs that are used by this module, but defined outside of this module, are listed. Third, the syntax of the interface is specified. Finally, the semantics of the interface is described. The template is described in the rest of this section. 
+
+\subsection{Module Name}
+If ``{\bf (MP)}'' is appended to the name of the module, it means that this module has multiple projections. 
+\subsection{Uses}
+This section lists constants, data types, and access programs that are defined outside of this module. The format of each imported item is specified after each header. 
+
+\subsubsection{Imported Constants}
+{\bf Uses} $\langle$ \emph{module name} $\rangle$ {\bf Imports} $\langle$ \emph{resource constants list} $\rangle$ 
+
+\subsubsection{Imported Data Types}
+{\bf Uses} $\langle$ \emph{module name} $\rangle$ {\bf Imports} $\langle$ \emph{resource data type list}$\rangle$
+
+\subsubsection{Imported Access Programs}
+{\bf Uses} $\langle$ \emph{module name} $\rangle$ {\bf Imports} $\langle$ \emph{resource access program list}$\rangle$
+
+\subsection{Interface Syntax}
+This section defines the syntax of the module interface. The interface indicates the services that the module provides. Other modules can only access this module through this interface. Other information inside the module is the secret that it hides from other modules. Changing the internal design of a module will not affect the way that other modules use this module. The format of each exported items is specified after each header. 
+
+\subsubsection{Exported Constants}
+ \emph{constant name : type of the constant}
+ 
+\subsubsection{Exported Data Types}
+ \emph{data type name := structure of the data type}
+ 
+\subsubsection{Exported Access Programs}
+The exported access programs are listed in the tabular format shown below. In this software, exceptions are handled inside the access routine by displaying error messages and terminating the program.
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+Routine Name & Input & Output & Exceptions \\ 
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Interface Semantics}
+The semantics of the interface is introduced in this section. The components of this section include state variables, state invariants, access program semantics, \emph{etc}. 
+\subsubsection{State Variables}
+This section lists the state variables in the format of \emph{variable name}: \emph{type}
+\subsubsection{Assumption}
+Any assumption about this module are specified here.
+\subsubsection{Invariant} 
+Predicates that should always hold before and after each access routine in the module.
+\subsubsection{Access Program Semantics} This section includes possible exceptions, possible outputs, and possible transitions. The contents of this section should be as formal as possible. When necessary and appropriate, an English explanation is included to help readers understand the meaning of some the mathematical notations.
+\subsubsection{Local Functions} Functions used to facilitate the expression of the interface semantics.
+\subsubsection{Local Data Types} Data types used to facilitate the expression of the interface semantics.
+\subsubsection{Local Constants} Constants used to facilitate the expression of interface semantics.
+\subsubsection{Considerations} Other issues related to the MIS of this module, but not covered in the other parts of the document.
+
+\section{Module Decomposition \label{AmisSecMD}}
+\begin{table}[ht]
+\centering
+\begin{tabular}{p{0.15\textwidth}|p{0.25\textwidth}|p{0.25\textwidth}|p{0.2\textwidth}}
+\hline
+\textbf{Level 1} & \textbf{Level 2} & \textbf{Level 3} & \textbf{Level 4} \\ \hline
+
+\multirow{4}{0.15\textwidth}{Hardware-Hiding Module} 
+& \multirow{2}{0.25\textwidth}{Extended Computer Module} & Virtual Memory Module&  \\ \cline{3-3}
+&  & File Read/Write Module & \\ \cline{2-3}
+& \multirow{2}{0.25\textwidth}{Device Interface Module} & Keyboard Input Module & \\\cline{3-3}
+& & Screen Display Module & \\\hline
+
+\multirow{3}{0.15\textwidth}{Behavior-Hiding Module} & Input Format Module & &\\ \cline{2-2}
+& Output Format Module & &\\ \cline{2-2}
+& Service Module & &\\\hline
+
+\multirow{5}{0.15\textwidth}{Software Decision Module}
+& \multirow{4}{0.25\textwidth}{Mesh Data Module} &
+\multirow{3}{0.25\textwidth}{Entity Module} & Vertex Module \\ \cline{4-4}
+& & & Edge Module \\ \cline{4-4}
+& & & Cell Module \\ \cline{3-4}
+& & Mesh Module & \\ \cline{2-4}
+& \multirow {2}{0.25\textwidth}{Algorithm Module} & Refining Module & \\ \cline{3-3}
+& & Coarsening Module & \\ \hline   
+
+\end{tabular}
+\caption{Module Hierarchy}
+\label{AmisMH}
+\end{table}
+
+PMGT is decomposited into the modules listed in Table \ref{AmisMH}. Note that only the leaf modules are implemented. The \emph{Virtual Memory Module}, \emph{File Read/Write Module}, \emph{Keyboard Input Module}, and \emph{Screen Display Module} are implemented by the operating system and programming language libraries. More information on the modular decomposition of the PMGT can be found in the MG document.
+
+
+\section{MIS of Vertex Module \label{AmisSecV}}
+
+\subsection{Module Name: Vertex (MP)}
+
+\subsection{Uses}
+\subsubsection{Imported Constants} None
+\subsubsection{Imported Data Types} None
+\subsubsection{Imported Access Programs}None
+
+\subsection{Interface Syntax}
+\subsubsection{Exported constants} None
+\subsubsection{Exported Data Types}
+{\tt VertexT} := tuple of ($x: \mathbb{R},\  y: \mathbb{R}$)
+\subsubsection{Exported Access Programs}
+The exported access programs for the vertex module are listed in Table \ref{AmisVEAP}.
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+Routine Name & Input & Output & Exceptions \\ 
+\hline
+initVertex & $\mathbb{R}$, $\mathbb{R}$ & & \\
+\hline
+getVertex &  & {\tt VertexT} & \\
+\hline
+\end{tabular}
+\caption{Exported Access Programs of the Vertex Module}
+\label{AmisVEAP} 
+\end{table}
+
+\subsection{Interface Semantics}
+\subsubsection{State Variables}
+$x: \mathbb{R}$\\
+$y: \mathbb{R}$
+\subsubsection{Invariant} None
+\subsubsection{Assumptions}initVertex() is called before any other access routine.
+\subsubsection{Access Program Semantics}
+\paragraph{initVertex($x1: \mathbb{R}, \ y1: \mathbb{R}$)}
+\begin{itemize}
+\item \textbf{Transition}\\ 
+$x := x1$ \\
+$y := y1$
+\end{itemize}
+
+\paragraph{getVertex()}
+\begin{itemize}
+\item \textbf{Output}\\ $( x, y)$ 
+\end{itemize}
+
+\subsubsection{Local Functions} None
+\subsubsection{Local Data Types} None
+\subsubsection{Local Constants} None
+\subsubsection{Considerations} None
+
+
+\section{MIS of Edge Module \label{AmisSecE}}
+
+\subsection{Module Name: Edge (MP)}
+
+\subsection{Uses}
+\subsubsection{Imported Constants} None
+\subsubsection{Imported Data Types} 
+{\bf Uses}  \emph{Vertex Module}  {\bf Imports}  \texttt{VertexT}  
+\subsubsection{Imported Access Programs}None
+
+\subsection{Interface Syntax}
+\subsubsection{Exported constants} None
+\subsubsection{Exported Data Types}
+{\tt EdgeT} := set of {\tt VertexT}
+\subsubsection{Exported Access Programs}
+The exported access programs for the Edge module are listed in Table \ref{AmisEEAP}.
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+Routine Name & Input & Output & Exceptions \\ 
+\hline
+initEdge & {\tt VertexT, VertexT}& & EqualVertices\\
+\hline
+getEdge &  & {\tt EdgeT} & \\
+\hline
+\end{tabular}
+\caption{Exported Access Programs of the Edge Module}
+\label{AmisEEAP} 
+\end{table}
+
+\subsection{Interface Semantics}
+\subsubsection{State Variables}
+$e$: set of {\tt VertexT}
+\subsubsection{Invariant} $\# e = 2$
+\subsubsection{Assumptions}initEdge() is called before any other access routine.
+\subsubsection{Access Program Semantics} None
+\paragraph{initEdge({\it start}: {\tt VertexT}, {\it end}: {\tt VertexT})}
+\begin{itemize}
+\item \textbf{Exception}\\  {\it start = end} $\Longrightarrow$ EqualVertices
+\item \textbf{Transition}\\ {\it e: = \{start, end\}} 
+\end{itemize}
+
+\paragraph{getEdge()}
+\begin{itemize}
+\item \textbf{Output}\\ $e$
+\end{itemize}
+\subsubsection{Local Functions} None
+\subsubsection{Local Data Types} None
+\subsubsection{Local Constants} None
+\subsubsection{Considerations} None
+
+
+
+\section{MIS of Cell Module \label{AmisSecC}}
+
+\subsection{Module Name: Cell (MP)}
+
+\subsection{Uses}
+\subsubsection{Imported Constants} None
+\subsubsection{Imported Data Types} 
+{\bf Uses}  \emph{Vertex Module}  {\bf Imports}  \texttt{VertexT}  
+\subsubsection{Imported Access Programs}None
+
+\subsection{Interface Syntax}
+\subsubsection{Exported constants} None
+\subsubsection{Exported Data Types}
+{\tt CellT} := set of {\tt VertexT}
+\subsubsection{Exported Access Programs}
+The exported access programs for the cell module are listed in Table \ref{AmisCEAP}.
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+Routine Name & Input & Output & Exceptions \\ 
+\hline
+initCell & {\tt VertexT, VertexT, VertexT} & & EqualVertices\\
+\hline
+getCell &  & {\tt CellT} & \\
+\hline
+\end{tabular}
+\caption{Exported Access Programs of the Cell Module}
+\label{AmisCEAP} 
+\end{table}
+
+\subsection{Interface Semantics}
+\subsubsection{State Variables}
+$c$: set of {\tt VertexT}
+\subsubsection{Invariant} $\# c = 3$
+\subsubsection{Assumptions}initCell() is called before any other access routine.
+\subsubsection{Access Program Semantics}None
+\paragraph{initCell($v1$: {\tt VertexT}, $v2$: {\tt VertexT}, $v3$: {\tt VertexT})}
+\begin{itemize}
+\item \textbf{Exception}\\  $v1=v2 \vee v2=v3 \vee v3=v1 \Longrightarrow$ EqualVertices
+\item \textbf{Transition}\\ 
+$c := \{v1, v2, v3\}$
+\end{itemize}
+
+\paragraph{getCell()}
+\begin{itemize}
+\item \textbf{Output}\\ $c$ 
+\end{itemize}
+
+\subsubsection{Local Functions} None
+\subsubsection{Local Data Types} None
+\subsubsection{Local Constants} None
+\subsubsection{Considerations} None
+
+
+\section{MIS of Mesh Module \label{AmisSecM}}
+
+\subsection{Module Name: Mesh (MP)}
+
+\subsection{Uses}
+\subsubsection{Imported Constants} None
+\subsubsection{Imported Data Types}  
+{\bf Uses}  \emph{Vertex Module}  {\bf Imports}  \texttt{VertexT}  \\
+{\bf Uses}  \emph{Edge Module}  {\bf Imports}  \texttt{EdgeT}  \\
+{\bf Uses}  \emph{Cell Module}  {\bf Imports}  \texttt{CellT}  
+\subsubsection{Imported Access Programs}None
+
+\subsection{Interface Syntax}
+\subsubsection{Exported constants} None
+\subsubsection{Exported Data Types}
+{\tt MeshT} := set of {\tt CellT}
+\subsubsection{Exported Access Programs}
+The exported access programs for the mesh module are listed in Table \ref{AmisMEAP}.
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+Routine Name & Input & Output & Exceptions \\ 
+\hline
+initMesh & & & \\
+\hline
+getMesh &  & {\tt MeshT} & \\
+\hline
+numOfCells &  & $\mathbb{N}$ & \\
+\hline
+addCell & {\tt CellT} &  & CellExist\\
+\hline
+deleteCell & {\tt CellT} &  & CellNotExist\\
+\hline
+onEdge & {\tt VertexT, EdgeT}& $\mathbb{B}$ & \\
+\hline
+belongToCell &{\tt EdgeT , CellT}&$ \mathbb{B}$&\\
+\hline
+inside &{\tt VertexT , CellT}&$ \mathbb{B}$&\\
+\hline
+vertices & & set of {\tt VertexT}&\\
+\hline
+edges & & set of {\tt EdgeT}&\\
+\hline
+boundaryEdges & & set of {\tt EdgeT}&\\
+\hline
+boundaryVertices & &set of {\tt VertexT}&\\
+\hline
+\end{tabular}
+\caption{Exported Access Programs of the Mesh Module}
+\label{AmisMEAP} 
+\end{table}
+
+\subsection{Interface Semantics}
+\subsubsection{State Variables}
+$m$: set of {\tt CellT}
+\subsubsection{Invariant}
+$\# m\geq 0$
+\subsubsection{Assumptions}initCell() is called before any other access routine.
+\subsubsection{Access Program Semantics} 
+\paragraph{initMesh()}
+\begin{itemize}
+\item \textbf{Transition}\\ 
+$ m := \emptyset$
+\end{itemize}
+
+\paragraph{getMesh()}
+\begin{itemize}
+\item \textbf{Output}\\ $m$ 
+\end{itemize}
+
+\paragraph{numOfCells()}
+\begin{itemize}
+\item \textbf{Output} \\
+$\# m$
+\end{itemize}
+
+\paragraph{addCell($c$: {\tt CellT})}
+\begin{itemize}
+\item \textbf{Exception}\\
+$c \in m \Longrightarrow$ CellExist
+\item \textbf{Transition} \\
+$m := m \cup \{c\}$
+\end{itemize}
+
+\paragraph{deleteCell($c$: {\tt CellT})}
+\begin{itemize}
+\item \textbf{Exception}\\
+$c \notin m \Longrightarrow$ CellNotExist
+\item \textbf{Transition} \\
+$m := m \backslash \{c\}$
+\end{itemize}
+
+\paragraph{onEdge($v$: {\tt VertexT}, $e$: {\tt EdgeT})}
+\begin{itemize}
+\item \textbf{Description}\\
+Returns true if a vertex $v$ is on the line segment between two vertices (exclusive) of the edge $e$.
+\item \textbf{Output} \\
+$ \exists v1,v2$: {\tt VertexT} $|\\
+ v1\in e \wedge v2\in e \wedge v1\neq v2 \wedge v\neq v1 \wedge v\neq v2:\\
+(v1.x < v.x\leq v2.x \wedge \\(v.y-v1.y)/(v.x-v1.x)=(v2.y-v1.y)/(v2.x-v1.x))$
+\end{itemize}
+
+\paragraph{belongToCell($e$: {\tt EdgeT}, $c$: {\tt CellT})}
+\begin{itemize}
+\item \textbf{Description}\\
+Returns true if an edge $e$ belongs to a cell $c$.
+\item \textbf{Output} \\
+$\forall v$: {\tt VertexT} $|\ v\in e: v\in c$
+\end{itemize}
+
+\paragraph{inside($v$: {\tt VertexT}, $c$: {\tt CellT})}
+\begin{itemize}
+\item \textbf{Description}\\
+Returns true if a vertex $v$ is inside a cell $c$. (The algorithm is adopt from \citet{Franklin2006}.)
+\item \textbf{Output} \\
+$\exists v1, v2, v3$: {\tt VertexT} $|\\
+v1\in c \wedge v2\in c \wedge v3\in c \wedge v1\neq v2 \wedge v2\neq v3 \wedge v3 \neq v1:\\
+((v.y-v1.y)*(v2.x-v1.x)-(v.x-v1.x)*(v2.y-v1.y))*\\
+((v.y-v2.y)*(v3.x-v2.x)-(v.x-v2.x)*(v3.y-v2.y)) > 0 \wedge \\
+((v.y-v2.y)*(v3.x-v2.x)-(v.x-v2.x)*(v3.y-v2.y))*\\
+((v.y-v3.y)*(v1.x-v3.x)-(v.x-v3.x)*(v1.y-v3.y)) > 0$
+\end{itemize}
+
+\paragraph{vertices()}
+\begin{itemize}
+\item \textbf{Description}\\
+Returns the set of all the vertices of the mesh.
+\item \textbf{Output} \\
+$\{v$: {\tt VertexT} $|\ (\forall c$: {\tt CellT} $|\ c\in m:v\in c):v\}$
+\end{itemize}
+
+\paragraph{edges()}
+\begin{itemize}
+\item \textbf{Description}\\
+Returns the set of all the edges of the mesh
+\item \textbf{Output} \\
+$\{v1,v2$: {\tt VertexT} $|\ (\forall c$: {\tt CellT} $|\ c\in m:v1\in c \wedge v2\in c \wedge v1 \neq v2):\{v1, v2\}\}$
+\end{itemize}
+
+\paragraph{boundaryEdges()}
+\begin{itemize}
+\item \textbf{Description}\\
+Returns a set of boundary edges of the mesh
+\item \textbf{Output} \\
+$ \{ b$: {\tt EdgeT} $|\ b\in$ Edges() $\wedge\\ (\# \{c$: {\tt CellT} $|\ c\in m\ \wedge$ belongToCell{\it (b, c): c\}=1):b\}}
+\end{itemize}
+
+\paragraph{boundaryVertices()}
+\begin{itemize}
+\item \textbf{Description}\\
+Returns a set of boundary vertices of the mesh.
+\item \textbf{Output} \\
+$ \{v$: {\tt VertexT} $|\ v\in$  boundaryEdges{\it(): v\}}
+\end{itemize}
+\subsubsection{Local Functions} 
+\subsubsection{Local Data Types} None
+\subsubsection{Local Constants} None
+\subsubsection{Considerations} None
+
+\section{MIS of Service Module \label{AmisSecSer}}
+
+\subsection{Module Name: Service}
+
+\subsection{Uses}
+\subsubsection{Imported Constants} None
+\subsubsection{Imported Data Types} 
+{\bf Uses}  \emph{Vertex Module}  {\bf Imports}  \texttt{VertexT}  \\
+{\bf Uses}  \emph{Edge Module}  {\bf Imports}  \texttt{EdgeT}  \\
+{\bf Uses}  \emph{Cell Module}  {\bf Imports}  \texttt{CellT}  \\
+{\bf Uses}  \emph{Mesh Module}  {\bf Imports}  \texttt{MeshT}  
+
+\subsubsection{Imported Access Programs}
+{\bf Uses}  \emph{Mesh Module}  {\bf Imports} 
+\emph{onEdge(), inside(), \\vertices(), edges(), boundaryEdges(), boundaryVertices()}  
+
+\subsection{Interface Syntax}
+\subsubsection{Exported constants} None
+\subsubsection{Exported Data Types} 
+{\tt InstructionT} := \{{\tt REFINE, COARSEN, NOCHANGE}\}\\
+{\tt CellInstructionT}:= tuple of ({\it cell}: {\tt CellT}, {\it instr}: {\tt InstructionT})\\
+{\tt RCinstructionT} := tuple of \\({\it rORc}: {\tt InstructionT}, {\it cInstru}: set of {\tt CellInstructionT}) 
+\subsubsection{Exported Access Programs}
+The exported access programs for the services module are listed in Table \ref{AmisSerEAP}.
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+Routine Name & Input & Output & Exceptions \\ 
+\hline
+isValidMesh & {\tt MeshT} & $\mathbb{B}$ & \\
+\hline
+coveringUp & {\tt MeshT} $\times$ {\tt MeshT}& $\mathbb{B}$ & \\
+\hline
+\end{tabular}
+\caption{Exported Access Programs of the Services Module}
+\label{AmisSerEAP} 
+\end{table}
+
+\subsection{Interface Semantics}
+\subsubsection{State Variables}None
+\subsubsection{Invariant} None
+\subsubsection{Assumptions} None
+\subsubsection{Access Program Semantics}
+
+\paragraph{isValidMesh($m$: {\tt MeshT})}
+\begin{itemize}
+\item \textbf{Description}\\
+Returns true if cells of the mesh are bounded, conformal, and non overlapping. 
+\item \textbf{Output}\\ Bounded$(m)\ \wedge$ Conformal$(m)\ \wedge$ NoInteriorIntersect$(m)$ 
+\end{itemize}
+
+\paragraph{coveringUp($m1$:{\tt MeshT}, $m2$: {\tt MeshT})}
+\begin{itemize}
+\item \textbf{Description} \\
+Returns false if any boundary vertex of one mesh is not on a boundary edge of another mesh.
+Otherwise, return true.  
+\item \textbf{Output} \\
+$\forall v1, v2$: {\tt VertexT} $| \\
+ v1\in$ boundaryVertice($m1)\ \wedge\ v2\in$ boundaryVertices$(m2): \\
+ (\exists\ b1, b2$: {\tt EdgeT} $|\ b1 \in$ boundaryEdges$(m1)\ \wedge\ b2 \in$ boundaryEdges$(m2)$:
+ (onEdge$(v1,b2)\ \vee\ v1\in b2)\ \wedge$ (onEdge$(v2, b1)\ \vee\ v2\in b1))$
+\end{itemize}
+
+\subsubsection{Local Functions} 
+\begin{itemize}
+
+\item ValidEdge: {\tt EdgeT} $\rightarrow \mathbb{B}$\\
+ValidEdge($e$: {\tt EdgeT}) $\equiv \# e = 2$
+\item Area: {\tt CellT} $\rightarrow \mathbb{R}$\\
+Area($c$: {\tt CellT}) $\equiv \Sigma v1,v2,v3$: {\tt VertexT} $|\ v1\in c \wedge v2\in c \wedge v3\in c \\
+\wedge v1\neq v2 \wedge v2\neq v3 \wedge v3\neq v1:\\
+\frac{1}{12}* |v1.x*v2.y - v2.x*v1.y +\\
+v2.x*v3.y - v3.x*v2.y +\\
+v1.x*v3.y - v3.x*v1.y |$
+\item ValidCell: {\tt CellT} $\rightarrow \mathbb{B}$\\
+ValidCell($c$: {\tt CellT}) $\equiv \# c = 3\ \wedge$ Area$(c) \geq 0$
+\item Bounded: {\tt MeshT} $\rightarrow \mathbb{B}$\\
+Bounded($m$: {\tt MeshT}) $\equiv \forall v$: {\tt VertexT} $|\ v\in$ boundaryVertices($m$): \\
+$(\# \{e$: {\tt EdgeT} $|\ e\in$ boundaryEdge($m$) $\wedge v\in e: e\}=2)$
+
+\item Conformal: {\tt MeshT} $\rightarrow \mathbb{B}$\\
+Conformal($m$: {\tt MeshT}) $\equiv \forall c1, c2$: {\tt CellT} $|\ c1\in m \wedge c2\in m \wedge c1\neq c2 : \\
+(\exists e$: {\tt EdgeT} $|\ e\in$ edges($m):(\exists v:$ {\tt VertexT} $|\ v\in$ vertices($m):\\
+(c1\cap c2 = e \vee c1\cap c2 = v \vee c1\cap c2 = \emptyset) \wedge (\neg$ onEdge($v,\ e))  ))$
+
+\item NoInteriorIntersect: {\tt MeshT} $\rightarrow \mathbb{B}$\\
+NoInteriorIntersect($m$: {\tt MeshT}) $\equiv \forall c1, c2$: {\tt CellT} $|\\ c1\in m \wedge c2\in m \wedge c1 \neq c2:
+(\forall v$: {\tt VertexT} $|$ inside($v,\ c1): \neg$ inside($v,\ c2))$
+ 
+\end{itemize}
+\subsubsection{Local Data Types} None
+\subsubsection{Local Constants} None
+\subsubsection{Considerations} None
+
+
+\section{MIS of Input Format Module \label{AmisSecInput}}
+
+\subsection{Module Name: Input Format}
+
+\subsection{Uses}
+\subsubsection{Imported Constants} None
+\subsubsection{Imported Data Types} 
+{\bf Uses}  \emph{Embedding Application}  {\bf Imports}  \texttt{InputFormatT}  
+
+\subsubsection{Imported Access Programs}
+None
+\subsection{Interface Syntax}
+\subsubsection{Exported constants} None
+\subsubsection{Exported Data Types}None
+\subsubsection{Exported Access Programs}
+The exported access programs for the input format module are listed in Table \ref{AmisInputEAP}.
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+Routine Name & Input & Output & Exceptions \\ 
+\hline
+convertInput & {\tt InputFormatT} &{\tt MeshT} & \\
+\hline
+\end{tabular}
+\caption{Exported Access Programs of the Input Format Module}
+\label{AmisInputEAP} 
+\end{table}
+
+\subsection{Interface Semantics}
+\subsubsection{State Variables}None
+\subsubsection{Invariant} None
+\subsubsection{Assumptions} None
+\subsubsection{Access Program Semantics}
+\paragraph{convertInput($m$: {\tt InputFormatT})}
+\begin{itemize}
+\item \textbf{Output}\\ 
+$m'$ such that\\
+$m'$ is of type {\tt MeshT} and $m$ and $m'$ are equivalent.
+\end{itemize}
+
+\subsubsection{Local Functions} 
+None
+\subsubsection{Local Data Types} None
+\subsubsection{Local Constants} None
+\subsubsection{Considerations} 
+\begin{itemize}
+\item Semantics of access programs in this module heavily depend on the format of the input mesh. At this stage, this information is missing. Unknown data types {\tt InputFormatT} is used to represent the data structures of input mesh. English is used to describe the semantics.
+\end{itemize}
+
+
+\section{MIS of Output Format Module \label{AmisSecOutput}}
+
+\subsection{Module Name: Output Format}
+
+\subsection{Uses}
+\subsubsection{Imported Constants} None
+\subsubsection{Imported Data Types} 
+{\bf Uses}  \emph{Embedding Application}  {\bf Imports}  \texttt{OutputFormatT}  
+
+\subsubsection{Imported Access Programs}None
+\subsection{Interface Syntax}
+\subsubsection{Exported constants} None
+\subsubsection{Exported Data Types} None
+\subsubsection{Exported Access Programs}
+The exported access programs for the output format module are listed in Table \ref{AmisOutputEAP}.
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+Routine Name & Input & Output & Exceptions \\ 
+\hline
+convertOutput & {\tt MeshT} & {\tt OutputFormatT} & \\
+\hline
+\end{tabular}
+\caption{Exported Access Programs of the Output Format Module}
+\label{AmisOutputEAP} 
+\end{table}
+
+\subsection{Interface Semantics}
+\subsubsection{State Variables}None
+\subsubsection{Invariant} None
+\subsubsection{Assumptions} None
+\subsubsection{Access Program Semantics}
+
+\paragraph{convertOutput($m$: {\tt MeshT})}
+\begin{itemize}
+\item \textbf{Output}\\ 
+$m'$ such that\\
+$m'$ is of type {\tt OutputFormatT} and $m$ and $m'$ are equivalent.
+\end{itemize}
+
+\subsubsection{Local Functions} 
+None
+\subsubsection{Local Data Types} None
+\subsubsection{Local Constants} None
+\subsubsection{Considerations} 
+\begin{itemize}
+\item Semantics of access programs in this module heavily depend on the format of the requirements of the output. At this stage, this information is missing. Unknown data type {\tt OutputFormatT} are used to represent the data structures of input and output. English is used to describe the semantics.
+\end{itemize}
+
+
+\section{MIS of Refining Module \label{AmisSecRef}}
+
+\subsection{Module Name: Refining}
+
+\subsection{Uses}
+\subsubsection{Imported Constants} None
+\subsubsection{Imported Data Types} 
+{\bf Uses}  \emph{Mesh Module}  {\bf Imports}  \texttt{MeshT} \\
+{\bf Uses}  \emph{Service Module}  {\bf Imports} \\
+\texttt{InstructionT, CellInstructionT, RCinstructionT}
+
+\subsubsection{Imported Access Programs}
+{\bf Uses}  \emph{Service Module}  {\bf Imports}  \emph{isValidMesh(), coveringUp()}  
+
+\subsection{Interface Syntax}
+\subsubsection{Exported constants} None
+\subsubsection{Exported Data Types} None
+\subsubsection{Exported Access Programs}
+The exported access programs for the refining module are listed in Table \ref{AmisRefEAP}.
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+Routine Name & Input & Output & Exceptions \\ 
+\hline
+refining & {\tt MeshT, RCinstructionT} &{\tt MeshT} & \\
+\hline
+\end{tabular}
+\caption{Exported Access Programs of the Refining Module}
+\label{AmisRefEAP} 
+\end{table}
+
+\subsection{Interface Semantics}
+\subsubsection{State Variables}None
+\subsubsection{Invariant} None
+\subsubsection{Assumptions} isValidMesh$(m)$ and {\it i.rORc} = {\tt REFINE} \\for input $m$: {\tt MeshT} and $i$: {\tt RCinstructionT}
+\subsubsection{Access Program Semantics}
+\paragraph{refining($m$: {\tt MeshT}, $i$: {\tt RCinstructionT})}
+\begin{itemize}
+\item \textbf{Output}\\ 
+$m'$ \\such that\\
+ValidMesh$(m)\ \wedge$ ValidMesh$(m')\ \wedge$ CoveringUp$(m', m)\ \wedge \# m' \geq \#m$
+\end{itemize}
+
+\subsubsection{Local Functions} None
+\subsubsection{Local Data Types} None
+\subsubsection{Local Constants} None
+\subsubsection{Considerations} None
+
+
+\section{MIS of Coarsening Module \label{AmisSecCoa}}
+
+\subsection{Module Name: Coarsening}
+
+\subsection{Uses}
+\subsubsection{Imported Constants} None
+\subsubsection{Imported Data Types} 
+{\bf Uses}  \emph{Mesh Module}  {\bf Imports}  \texttt{MeshT} \\
+{\bf Uses}  \emph{Service Module}  {\bf Imports} \\
+\texttt{InstructionT, CellInstructionT, RCinstructionT}
+
+\subsubsection{Imported Access Programs}
+{\bf Uses}  \emph{Service Module}  {\bf Imports}  \emph{isValidMesh(), coveringUp()}  
+
+\subsection{Interface Syntax}
+\subsubsection{Exported constants} None
+\subsubsection{Exported Data Types} None
+\subsubsection{Exported Access Programs}
+The exported access programs for the coarsening module are listed in Table \ref{AmisCoaEAP}.
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+Routine Name & Input & Output & Exceptions \\ 
+\hline
+coarsening & {\tt MeshT, RCinstructionT} &{\tt MeshT} & \\
+\hline
+\end{tabular}
+\caption{Exported Access Programs of the Coarsening Module}
+\label{AmisCoaEAP} 
+\end{table}
+
+\subsection{Interface Semantics}
+\subsubsection{State Variables}None
+\subsubsection{Invariant} None
+\subsubsection{Assumptions} isValidMesh$(m)$ and {\it i.rORc} = {\tt COARSEN} \\for input $m$: {\tt MeshT} and $i$: {\tt RCinstructionT}
+\subsubsection{Access Program Semantics}
+\paragraph{coarsening($m$: {\tt MeshT})}
+\begin{itemize}
+\item \textbf{Output}\\ 
+$m'$ \\such that\\
+ValidMesh$(m)\ \wedge$ ValidMesh$(m')\ \wedge$ CoveringUp$(m',\ m)\ \wedge \# m' \leq \# m$
+\end{itemize}
+
+\subsubsection{Local Functions} None
+\subsubsection{Local Data Types} None
+\subsubsection{Local Constants} None
+\subsubsection{Considerations} None
+
+\newpage
+
+\bibliography{WenRef}
+\bibliographystyle{plainnat}
+
+\end{document}
+
+
+
+

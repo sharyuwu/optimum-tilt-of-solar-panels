@@ -1,0 +1,23 @@
+1. Software Engineering for Science
+
+https://gitlab.cas.mcmaster.ca/SEforSC/se4sc
+
+https://gitlab.cas.mcmaster.ca/SEforSC/se4sc/tree/git-svn/SciCompAndSoftEngPapers
+
+
+2. Case Study Examples of Scientific Computing Projects
+
+SWHS: https://github.com/smiths/swhs
+
+GlassBR: https://github.com/smiths/caseStudies/tree/master/CaseStudies/glass
+
+noPCM: https://github.com/smiths/caseStudies/tree/master/CaseStudies/noPCM
+
+SSP: https://github.com/smiths/caseStudies/tree/master/CaseStudies/ssp
+
+GamePhysics: https://github.com/smiths/caseStudies/tree/master/CaseStudies/gamephys
+
+
+3. Document and Code Generation
+
+https://github.com/JacquesCarette/Drasil

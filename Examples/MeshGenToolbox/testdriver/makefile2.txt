@@ -1,0 +1,34 @@
+OBJECTS = Service.o Coarsening.o Refining.o Output.o Input.o Mesh.o
+TEST_OBJ = 5_test_sr_arc.o
+	
+SOURCES = Service.cpp Coarsening.cpp Refining.cpp Output.cpp Input.cpp Mesh.cpp
+TEST_SRC = 5_test_sr_arc.cpp
+
+HEADERS = Service.h Coarsening.h Refining.h Input.h Input.h Mesh.h Cell.h Edge.h Vertex.h
+
+ALL_TEST = 5_test_sr_arc	
+
+# all testing executable
+all: $(TEST_OBJ)
+	@cd ../mgt; $(MAKE) $@
+	g++ -o 5_test_sr_arc $(OBJECTS) 5_test_sr_arc.o -L../mgt
+	
+5_test_sr_arc:5_test_sr_arc.o
+	g++ -o 5_test_sr_arc $(OBJECTS) 5_test_sr_arc.o
+	
+$(TEST_OBJ): $(TEST_SRC)
+	g++ -c $(TEST_SRC)
+
+# remove generated testing and PMGT files
+clean:
+	@cd src; $(MAKE) $@
+	rm *.o $(ALL_TEST)
+	
+# remove generated testing files.
+# keep the PMGT files
+cleanTest:
+	rm $(TEST_OBJ) $(ALL_TEST)
+	
+# remove generated output files
+cleanOutput:
+	rm newVertices* newCells*
