@@ -1,5 +1,6 @@
 \documentclass{article}
 
+\usepackage{fullpage}
 \usepackage{tabularx}
 \usepackage{booktabs}
 
@@ -21,19 +22,59 @@
 \toprule
 \textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
-Date1 & Name(s) & Description of changes\\
-Date2 & Name(s) & Description of changes\\
-... & ... & ...\\
+9.18.2019 & Sharon Wu & First version of Problem Statement\\
+\iffalse Date2 & Name(s) & Description of changes  \\ 
+... & ... & ...\\\fi
+
 \bottomrule
 \end{tabularx}
 \end{table}
 
-Put your problem statement here.  Comments to you can be added, like this:
+{\Large\textbf  {Problem.}}
+
+\medskip
+\medskip
+
+Due to the increasing concepts of creating an earth-friendly environment, the kits using renewable energy become more popular in the market. In all type of renewable energy, solar energy is the most common type of renewable resource for a home. However, it is an expensive technology, and its energy efficiency is restricted by seasons. Purchasing a solar tracker might solve the problem but its usual cost double than a solar panel which means for most of the home users it may not be an affordable price. Some current software, which designed to estimate optimum tilt angle of seasons, provided a less accurate result to users, due to the lack of consideration of the sun rays in the entire season.
+
+
+\medskip
+\medskip
+
+{\Large\textbf  {Proposed Solution. }}
+
+\medskip
+\medskip
+
+The purpose of this software is to gain the optimum solar energy in every season for home users without additional cost. To capture the most energy from the sunlight, we have to point the panel directly to the sun. Therefore, when placing solar panels tilt in a specific angle, users can gain better energy from the solar panels as a result. This software calculate the optimum angle for the most insolation on the panel everyday in a season. Then, it determined the best angle of the season by using the iterative method on the total insolation.
+
+
+\medskip
+\medskip
+
+{\Large\textbf  {Context. }}
+
+\medskip
+
+{\textbf  {Environment. }}
+\medskip
+
+This software should perform functionally in Windows 10 and other variety of Windows version but will not be guaranteed not tested.
+
+\medskip
+
+{\textbf  {Stakeholders. }}
+
+\medskip
+
+The stakeholders in this program may be the software makers, software users, technology support, solar panel's owners. 
+
+\iffalse Put your problem statement here.  Comments to you can be added, like this:
 
 \wss{comment}
 
 You can also leave comments for yourself, like this:
 
-\an{comment}
+\an{comment} \fi
 
 \end{document}
