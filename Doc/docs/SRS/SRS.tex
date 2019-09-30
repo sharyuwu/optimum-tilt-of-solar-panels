@@ -77,8 +77,8 @@
 
 \begin{document}
 
-\title{Software Requirements Specification for \progname: subtitle describing software} 
-\author{Author Name(s)}
+\title{Software Requirements Specification for Sun Catcher - Optimum Tilt Calculator} 
+\author{Yu-Shiuan Wu}
 \date{\today}
 	
 \maketitle
@@ -264,15 +264,34 @@ which heat is transferred in
 
 \section{Introduction}
 
-\plt{The introduction section is written to introduce the problem.  It starts
+\medskip
+
+Due to the increasing concepts of creating an earth-friendly environment, the kits using renewable energy bocome more popular in the market. In all type of renweable energy, solar energy is the most common type of renewable resourse for a home. However, it is an enpensive technology, and its cell efficiency is restricted by seaons. Therefore, Sun Catcher is created for home users to gain optimum energy from daily sunlight.
+
+
+The following sections provides an overview of the Software Requirements Specification
+(SRS) for Sun Catcher - Optimum Tilt Calculator. The developed program will be referred to as SC. This section explains the purpose of this document, the scope of the requirements, the characteristics of the intended reader, and the organization of the document.
+
+
+\iffalse\plt{The introduction section is written to introduce the problem.  It starts
   general and focuses on the problem domain. The general advice is to start with
 a paragraph or two that describes the problem, followed by a ``roadmap''
 paragraph.  A roadmap orients the reader by telling them what sub-sections to
-expect in the Introduction section.}
+expect in the Introduction section.}\fi
 
 \subsection{Purpose of Document}
 
-\plt{This section summarizes the purpose of the SRS document.  It does not focus
+\medskip
+
+The purpose of this document is to record the correct requirements of SC. The goal statement provided readers a consistent idea of what problem is solved. The theoretical models and the instance models, which state the mathematical terms supporting the theoretical models, are explained unambiguously for readers to reuse and verify the software. In the section of System Constraints, its contents will stay abstract because the content should only say what problem is being solved, but not how to solve it.
+
+This document will be used as a starting point for subsequent development phases, including writing the design specification and the software verification and validation plan.
+The design document will show how the requirements are to be realized, including decisions
+on the numerical algorithms and programming environment. The verification and validation
+plan will show the steps that will be used to increase confidence in the software documentation and the implementation. 
+
+
+\iffalse\plt{This section summarizes the purpose of the SRS document.  It does not focus
   on the problem itself.  The problem is described in the ``Problem
   Description'' section (Section~\ref{Sec_pd}).  The purpose is for the document
   in the context of the project itself, not in the context of the CAS 741
@@ -280,7 +299,7 @@ expect in the Introduction section.}
   you should not mention this.  Instead, ``fake it'' as if this is a real
   project.  The purpose section will be similar between projects.  The purpose
   of the document is the purpose of the SRS, including communication, planning
-  for the design stage, etc.}
+  for the design stage, etc.}\fi
 
 \subsection{Scope of Requirements} 
 
@@ -327,16 +346,16 @@ expect in the Introduction section.}
 
 This section provides general information about the system.  It identifies the
 interfaces between the system and its environment, describes the user
-characteristics and lists the system constraints.  \plt{This text can likely be
-  borrowed verbatim.}
+characteristics and lists the system constraints. \iffalse \plt{This text can likely be
+  borrowed verbatim.}\fi
 
-\plt{The purpose of this section is to provide general information about the
+\iffalse\plt{The purpose of this section is to provide general information about the
   system so the specific requirements in the next section will be easier to
   understand. The general system description section is designed to be
   changeable independent of changes to the functional requirements documented in
   the specific system description. The general system description provides a
   context for a family of related models.  The general description can stay the
-  same, while specific details are changed between family members.}
+  same, while specific details are changed between family members.}\fi
 
 \subsection{System Context}
 
@@ -408,8 +427,9 @@ the instance models.  \plt{Add any project specific details that are relevant
 
 \subsection{Problem Description} \label{Sec_pd}
 
-\progname{} is intended to solve ... \plt{What problem does your program solve?
-The description here should be in the problem space, not the solution space.}
+Sun Catcher is intended to solve the unpredictable energy efficiency of solar panels.
+\iffalse \plt{What problem does your program solve?
+The description here should be in the problem space, not the solution space.}\fi
 
 \subsubsection{Terminology and  Definitions}
 
@@ -425,7 +445,13 @@ easier to correctly understand the requirements:
 
 \begin{itemize}
 
-\item 
+\item Declination of the Sun: The angle between the rays of the Sun and the plane of the Earth's equator.
+
+\item Hemisphere: A half of the earth, usually as divided into northern and southern halves by the equator.
+
+\item Sun Intensity: The amount of incoming solar energy, or radiation, that reaches the Earth's surface.
+
+\item Zenith Angle: The angle between the sun and the vertical.
 
 \end{itemize}
 
@@ -449,27 +475,31 @@ includes the following elements:
 
 \begin{itemize}
 
-\item[PS1:] 
+\item[ ] PS1: Solar Panel: The panel with solar cell that able to absorb solar energy from sun.
 
-\item[PS2:] ...
+\item[ ] PS2: Sun: Proving solar energy to solar panel
+
 
 \end{itemize}
+ 
+ 
 
 \plt{A figure here makes sense for most SRS documents}
 
-% \begin{figure}[h!]
-% \begin{center}
-% %\rotatebox{-90}
-% {
-%  \includegraphics[width=0.5\textwidth]{<FigureName>}
-% }
-% \caption{\label{<Label>} <Caption>}
-% \end{center}
-% \end{figure}
+\begin{figure}[h!]
+\begin{center}
+\rotatebox{0}
+{
+ \includegraphics[width=0.5\textwidth]{figurePhysic.jpg}
+ }
+ \caption{\label{<Label>} <Caption>}
+ \end{center}
+\end{figure}
 
 \subsubsection{Goal Statements}
 
-\plt{The goal statements refine the ``Problem Description''
+
+\iffalse\plt{The goal statements refine the ``Problem Description''
   (Section~\ref{Sec_pd}).  A goal is a functional objective the system under
   consideration should achieve. Goals provide criteria for sufficient
   completeness of a requirements specification and for requirements
@@ -477,15 +507,17 @@ includes the following elements:
   (Section~\ref{sec_instance}). Large and complex goals should be decomposed
   into smaller sub-goals.  The goals are written abstractly, with a minimal
   amount of technical language.  They should be understandable by non-domain
-  experts.}
+  experts.}\fi
 
-\noindent Given the \plt{inputs}, the goal statements are:
+\noindent Given the user located latitude, the goal statements are:
 
 \begin{itemize}
 
-\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] \plt{One
-    sentence description of the goal.  There may be more than one.  Each Goal
-    should have a meaningful label.}
+\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] Predict the optimum tilt angle.
+
+\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] Predict the optimum produced solar energy.
+
+\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] Predict the possibility the amount of money user might save.
 
 \end{itemize}
 
@@ -590,23 +622,28 @@ on.  \plt{Modify the examples below for your problem, and add additional models
   \rowcolor[gray]{0.9}
   Number& T\refstepcounter{theorynum}\thetheorynum \label{T_COE}\\
   \hline
-  Label&\bf Conservation of thermal energy\\
+  Label&\bf Calculating the Sun intensity\\
   \hline
-  Equation&  $-{\bf \nabla \cdot q} + g$ = $\rho C \frac{\partial T}{\partial t}$\\
+  Equation&  $1.35 \cdot \frac{1.00}{1.35}^ {sec(\theta_s)} $\\
+  %%Equation&  $-{\bf \nabla \cdot q} + g$ = $\rho C \frac{\partial T}{\partial t}$\\
   \hline
+
   Description & 
-                The above equation gives the conservation of energy for transient heat transfer in a material
-                of specific heat capacity $C$ (\si{\joule\per\kilogram\per\celsius}) and density $\rho$ 
-                (\si{\kilogram\per\cubic\metre}), where $\bf q$ is the thermal flux vector (\si{\watt\per\square\metre}),
-                $g$ is the volumetric heat generation
-                (\si{\watt\per\cubic\metre}), $T$ is the temperature
-                (\si{\celsius}),  $t$ is time (\si{\second}), and $\nabla$ is
-                the gradient operator.  For this equation to apply, other forms
-                of energy, such as mechanical energy, are assumed to be negligible in the
-                system (\aref{A_OnlyThermalEnergy}).  In general, the material properties ($\rho$ and $C$) depend on temperature.\\
+          The above equation gives the daily sun intensity at noon. 
+
+        1.35 kW is the solar intensity measured by satellites.
+
+         sec is the second of arc.
+
+         $(\theta_s)$ is the angle of sun from zenith refer to the figurephyic. 
+
+This equation assumes that the earth is flat, so a factor was applied to account for the curvature of the earth(and therefore the earth’s atmosphere). These factors, and the angle of the sun with respect to the panel, then determine the insolation on the panel. \\
+
+
+
   \hline
   Source &
-           \url{http://www.efunda.com/formulae/heat_transfer/conduction/overview_cond.cfm}\\
+           \url{https://www.solarpaneltilt.com/#other}\\
   % The above web link should be replaced with a proper citation to a publication
   \hline
   Ref.\ By & \dref{ROCT}\\
@@ -641,25 +678,31 @@ instance models.
 \rowcolor[gray]{0.9}
 Number& GD\refstepcounter{defnum}\thedefnum \label{NL}\\
 \hline
-Label &\bf Newton's law of cooling \\
+Label &\bf Calculate the zenith angle \\
 \hline
 % Units&$MLt^{-3}T^0$\\
 % \hline
-SI Units&\si{\watt\per\square\metre}\\
+SI Units&\si{degree}\\
 \hline
-Equation&$ q(t) = h \Delta T(t)$  \\
+Equation&$ \theta_s = \Phi_l - \delta_s $  \\
 \hline
 Description &
-Newton's law of cooling describes convective cooling from a surface.  The law is
+This equation describes the zenith angle associated with the location of the solar panel.
+$\theta_s $ is the zeith angle
+
+$\Phi_l$  is the local latitude of the solar panel
+
+$\delta_s $ is the declination of the sun during the day.\\
+\iffalse Newton's law of cooling describes convective cooling from a surface.  The law is
 stated as: the rate of heat loss from a body is proportional to the difference
 in temperatures between the body and its surroundings.
-\\
+
 & $q(t)$ is the thermal flux (\si{\watt\per\square\metre}).\\
 & $h$ is the heat transfer coefficient, assumed independent of $T$ (\aref{A_hcoeff})
 	(\si{\watt\per\square\metre\per\celsius}).\\
 &$\Delta T(t)$= $T(t) - T_{\text{env}}(t)$ is the time-dependent thermal gradient
 between the environment and the object (\si{\celsius}).
-\\
+\\\fi
 \hline
   Source & Citation here \\
   \hline
@@ -759,27 +802,32 @@ The goals \plt{reference your goals} are solved by \plt{reference your instance
   \rowcolor[gray]{0.9}
   Number& IM\refstepcounter{instnum}\theinstnum \label{ewat}\\
   \hline
-  Label& \bf Energy balance on water to find $T_W$\\
+  Label& \bf Calculate the zenith angle to find $\theta_s$\\
   \hline
-  Input&$m_W$, $C_W$, $h_C$, $A_C$, $h_P$, $A_P$, $t_\text{final}$, $T_C$, 
-  $T_\text{init}$, $T_P(t)$ from \iref{epcm}\\
-  & The input is constrained so that $T_\text{init} \leq T_C$ (\aref{A_charge})\\
+
+  Input&$\Phi_l$, $delta_s$\\
+
   \hline
-  Output&$T_W(t)$, $0\leq t \leq t_\text{final}$, such that\\
-  &$\frac{dT_W}{dt} = \frac{1}{\tau_W}[(T_C - T_W(t)) + {\eta}(T_P(t) - T_W(t))]$,\\
-  &$T_W(0) = T_P(0) = T_\text{init}$ (\aref{A_InitTemp}) and $T_P(t)$ from \iref{epcm} \\
+  Output
+$\theta_s$ \\ 
   \hline
-  Description&$T_W$ is the water temperature (\si{\celsius}).\\
-  &$T_P$ is the PCM temperature (\si{\celsius}).\\
+  Description&
+ $\theta_s$ is the zenith angle.
+
+\medskip
+
+  If the $\Phi_l$ and sun are in the same hemisphere 
+	$ \theta_s = \Phi_l - \delta_s $ \\ & then $ \theta_s = \Phi_l + \delta_s $ \\
+
+\iffalse  &$T_P$ is the PCM temperature (\si{\celsius}).\\
   &$T_C$ is the coil temperature (\si{\celsius}).\\
   &$\tau_W = \frac{m_W C_W}{h_C A_C}$ is a constant (\si{\second}).\\
   &$\eta = \frac{h_P A_P}{h_C A_C}$ is a constant (dimensionless).\\
   & The above equation applies as long as the water is in liquid form,
   $0<T_W<100^o\text{C}$, where $0^o\text{C}$ and $100^o\text{C}$ are the melting
-  and boiling points of water, respectively (\aref{A_OpRange}, \aref{A_Pressure}).
-  \\
+  and boiling points of water, respectively (\aref{A_OpRange}, \aref{A_Pressure}).\\\fi
   \hline
-  Sources& Citation here \\
+  Sources& Citation here  \url{https://www.youtube.com/watch?v=snzUrP_Ay9Q}\\ \\
   \hline
   Ref.\ By & \iref{epcm}\\
   \hline
