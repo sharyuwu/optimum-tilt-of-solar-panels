@@ -1,0 +1,74 @@
+\documentclass[12pt]{article}
+
+\usepackage{enumitem}
+
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+
+\newlist{todolist}{itemize}{2}
+\setlist[todolist]{label=$\square$}
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+\newcommand{\done}{\rlap{$\square$}{\raisebox{2pt}{\large\hspace{1pt}\cmark}}%
+\hspace{-2.5pt}}
+\newcommand{\wontfix}{\rlap{$\square$}{\large\hspace{1pt}\xmark}}
+
+\begin{document}
+
+\title{Writing Checklist}
+\author{Spencer Smith}
+\date{\today}
+
+\maketitle
+
+% Show an item is done by   \item[\done] Frame the problem
+% Show an item will not be fixed by   \item[\wontfix] profit
+
+\begin{itemize}
+  
+\item Avoid Low Information Content phrases
+  \begin{todolist}
+  \item ``in order to'' simplified to ``to''
+  \item ...
+  \end{todolist}
+
+\item \LaTeX points
+  \begin{todolist}
+  \item Only tex file (and possibly pdf files, or image files) are under version
+    control.
+    \item Opening and closing ``quotes'' are used (\verb|``quotes''|)
+  \item Periods that do not end sentences are followed by only one space:
+    \verb|``I like Dr.\ Smith.''|, or for no linebreaks: \verb|``I like Dr.~Smith.''|
+  \item Long names in math mode use either matit or text, or equivalent: $coeff$
+    (\verb|$coeff$|) versus $\mathit{coeff}$ (\verb|$\mathit{coeff}$|) versus
+    $\text{coeff}$ (\verb|$\text{coeff}$|).
+  \end{todolist}
+
+\item Structure
+  \begin{todolist}
+  \item There is always some text between section headings
+  \item There aren't instances of only one subsection within a section
+  \end{todolist}
+
+\item Spelling, Grammar and attention to detail
+  \begin{todolist}
+  \item Each punctuation symbol (period, comma, semicolon, question mark,
+    exclamation point) has no space before it.
+  \item Opening parentheses (brackets) have a space before, closing parentheses
+    have a space after the symbol.
+  \item Parentheses (brackets) occur in pairs, one opening and one closing
+  \item All sentences begin with a capital letter.
+  \item Document is spell checked!
+  \item Grammar has been checked.
+  \end{todolist}
+
+\item Writing style
+  \begin{todolist}
+  \item Avoid sentences that start with ``It.''
+  \end{todolist}
+  
+\end{itemize}
+
+\end{document}
