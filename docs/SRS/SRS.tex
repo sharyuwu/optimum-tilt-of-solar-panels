@@ -196,22 +196,22 @@ $I_{S_{day}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the intensity
   \bottomrule
 \end{tabular}\\
 
-\plt{Add any other abbreviations or acronyms that you add}
+\iffalse\plt{Add any other abbreviations or acronyms that you add}\fi
 
 \newpage
 
 \pagenumbering{arabic}
 
-\plt{This SRS template is based on \citet{SmithAndLai2005, SmithEtAl2007}.  It
+\iffalse\plt{This SRS template is based on \citet{SmithAndLai2005, SmithEtAl2007}.  It
   will get you started.  You should not modify the section headings, without
   first discussing the change with the course instructor.  Modification means
   you are not following the template, which loses some of the advantage of a
   template, especially standardization.  Although the bits shown below do not
   include type information, you may need to add this information for your
-  problem.  If you are unsure, please can ask the instructor.}
+  problem.  If you are unsure, please can ask the instructor.}\fi
 
-\plt{Feel free to change the appearance of the report by modifying the LaTeX
-  commands.}
+\iffalse\plt{Feel free to change the appearance of the report by modifying the LaTeX
+  commands.}\fi
 
 \plt{This template document assumes that a single program is being documented.
   If you are documenting a family of models, you should start with a commonality
@@ -221,7 +221,7 @@ $I_{S_{day}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the intensity
   model.  General purpose tools are usually documented as a family.  Families of
   physical models also come up.}
 
-\plt{The SRS is not generally written, or read, sequentially.  The SRS is a
+\iffalse\plt{The SRS is not generally written, or read, sequentially.  The SRS is a
   reference document.  It is generally read in an ad hoc order, as the need
   arises.  For writing an SRS, and for reading one for the first time, the
   suggested order of sections is:
@@ -232,9 +232,9 @@ $I_{S_{day}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the intensity
 \item Introduction
 \item Specific System Description
 \end{itemize}
-}
+}\fi
 
-\plt{Guiding principles for the SRS document:
+\iffalse\\plt{Guiding principles for the SRS document:
 \begin{itemize}
 \item Do not repeat the same information at the same abstraction level.  If
   information is repeated, the repetition should be at a different abstraction
@@ -242,16 +242,16 @@ $I_{S_{day}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the intensity
   assumptions, but the scope section will not go into as much detail as the
   assumptions section.
 \end{itemize}
-}
+}\fi
 
-\plt{The template description comments should be disabled before submitting this
+\iffalse\plt{The template description comments should be disabled before submitting this
   document for grading.}
 
 \plt{You can borrow any wording from the text given in the template.  It is part
   of the template, and not considered an instance of academic integrity.  Of
-  course, you need to cite the source of the template.}
+  course, you need to cite the source of the template.}\fi
 
-\plt{When the documentation is done, it should be possible to trace back to the
+\iffalse\plt{When the documentation is done, it should be possible to trace back to the
   source of every piece of information.  Some information will come from
   external sources, like terminology.  Other information will be derived, like
   General Definitions.}
@@ -263,7 +263,7 @@ $I_{S_{day}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the intensity
   of the Intended Reader (Section~\ref{sec_IntendedReader}) can learn,
   understand and verify the captured domain knowledge.  They should not have to
   trust the authors of the SRS on any statements.  They should be able to
-  independently verify/derive every statement made.}
+  independently verify/derive every statement made.}\fi
 
 \section{Introduction}
 
@@ -639,9 +639,9 @@ likely change [LC], in which the respective assumption is used.
 
 \begin{itemize}
 
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{environmentCondition}]: The environmental condition of the solar panel location assumed as users have an unobstructed view of the sky, with no trees, hills, clouds, dust, or haze ever blocking the sun.(RefBy: \iref{C_SC})\\
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{environmentCondition}]: The environmental condition of the solar panel location assumed as users have an unobstructed view of the sky, with no trees, hills, clouds, dust, or haze ever blocking the sun.(RefBy: \iref{C_SI})\\
 
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{environmentCondition}]: The default solar intensity is 1.35 kW. It was measured by the satellites.(RefBy: \iref{C_SC})\\
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{environmentCondition}]: The default solar intensity is 1.35 kW. It was measured by the satellites.(RefBy: \iref{C_SI})\\
 
   \iffalse\plt{Short description of each assumption.  Each assumption
     should have a meaningful label.  Use cross-references to identify the
@@ -692,7 +692,7 @@ on.
            \url{https://en.wikipedia.org/wiki/Lambert%27s_cosine_law}\\
   % The above web link should be replaced with a proper citation to a publication
   \hline
-  Ref.\ By & \dref{ROCT}\\
+  Ref.\ By & RefBy: \iref{C_SI}\\
   \hline
 \end{tabular}
 \end{minipage}\\
@@ -728,7 +728,7 @@ Label &\bf Calculate Zenith Angle \\
 \hline
 % Units&$MLt^{-3}T^0$\\
 % \hline
-SI Units& degree$^\circ$\\
+SI Units& $\circ$\\
 \hline
 Equation&  \[
     \theta_{S_{day}}= 
@@ -750,19 +750,43 @@ Equation&  \[
 
 
 \hline
-  Source & Citation here \url{https://ntrs.nasa.gov/archive/nasa/casi.ntrs.nasa.gov/19680025707.pdf}\\
+  Source & \url{https://ntrs.nasa.gov/archive/nasa/casi.ntrs.nasa.gov/19680025707.pdf}\\
   \hline
-  Ref.\ By & \ddref{FluxCoil}, \ddref{FluxPCM}\\
+  Ref.\ By & \ddref{C_DC}\\
   \hline
 \end{tabular}
 \end{minipage}\\
 
 \subsubsection*{Detailed derivation of simplified rate of change of temperature}
 
-\plt{This may be necessary when the necessary information does not fit in the
+	According to the resource [cite], it states the the solar elevation angle $\sin{\alpha}$ is
+determined by the relationship\\
+					$\sin{\alpha} = \sin{\Phi} \times \sin{\delta} + \cos{\Phi} \times \cos{\delta} \times \cos{\text{h}}$\\
+		where \\
+		  $\alpha$ is the solar elevation.\\
+		  $\Phi$ is the latituade.\\
+		  $\delta$ is the solar declination.\\
+		  $\text{h}$ is the solar hour angle.\\
+Base on the Level 1 celestial mechanics, the solar zenith angle 
+is equal to 90$^\circ$ - the solar elevation angle\\
+			which can write as\\
+$\cos{\theta} = \sin{\alpha} = \sin{\Phi} \times \sin{\delta} + \cos{\Phi} \times \cos{\delta} \times \cos{\text{h}}$
+			Base on the \nameref{sec_assumpt} section, it assumes that SC calculate the solar zenith 
+angle at noon which mean solar hour angle = 0$^\circ$.\\
+			Therefore, $\cos{\text{h}} = 0$\\
+				Rewrite the equation as,\\
+$\cos{\theta} = \sin{\alpha} = \sin{\Phi} \times \sin{\delta} + \cos{\Phi} \times \cos{\delta} \times 1$\\
+$\Rightarrow  \cos{\theta} = \sin{\alpha} = \sin{\Phi} \times \sin{\delta} + \cos{\Phi} \times \cos{\delta}$\\
+			Base on the Level 1 calcucltion, we have\\
+$\cos{\Phi \pm \delta} = \sin{\alpha} = \sin{\Phi} \times \sin{\delta} + \cos{\Phi} \times \cos{\delta}$\\
+			Therefore, we have
+			$\theta = \Phi \pm \delta$\\
+
+
+\iffalse\plt{This may be necessary when the necessary information does not fit in the
   description field.}
 \plt{Derivations are important for justifying a given GD.  You want it to be
-  clear where the equation came from.}
+  clear where the equation came from.}\fi
 
 \subsubsection{Data Definitions}\label{sec_datadef}
 
@@ -787,7 +811,7 @@ models. The dimension of each quantity is also given. \iffalse \plt{Modify the e
 \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
 \hline
 \rowcolor[gray]{0.9}
-Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{FluxCoil}\\
+Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{C_DC}\\
 \hline
 Label& \bf The Declination of the Sun\\
 \hline
@@ -864,11 +888,11 @@ The goals \nameref{sec_GS} are solved by IM\ref{C_SI}. \iffalse \plt{other detai
 This equation assumes that the earth is flat, so a factor was applied to account for the curvature of the earth(and therefore the earth’s atmosphere). These factors, and the angle of the sun with respect to the panel, then determine the insolation on the panel. \\
 
   \hline
-  Sources& Citation here  \url{https://www.solarpaneltilt.com/#other}\\
+  Sources&  \url{https://www.solarpaneltilt.com/#other}\\
 
 
   \hline
-  Ref.\ By & \iref{epcm}\\
+  Ref.\ By & \text{-}\\
   \hline
 \end{tabular}
 \end{minipage}\\
