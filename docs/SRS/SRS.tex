@@ -17,6 +17,7 @@
 \usepackage{pdflscape}
 \usepackage{afterpage}
 
+
 \usepackage[round]{natbib}
 
 %\usepackage{refcheck}
@@ -121,18 +122,17 @@ description of the unit and the SI name.
     \toprule		
     \textbf{symbol} & \textbf{unit} & \textbf{SI}\\
     \midrule 
-    \si{\metre} & length & metre\\
-    \si{\kilogram} & mass	& kilogram\\
-    \si{\second} & time & second\\
-    \si{\celsius} & temperature & centigrade\\
-    \si{\joule} & energy & Joule\\
+    \si{\degree} & angle & degree\\
+    \si{'} & angle	& - \\
+    \si{k} & mass   & kilo\\
+    \si{m} &  length   & metre \\
     \si{\watt} & power & Watt (W = \si{\joule\per\second})\\
     \bottomrule
   \end{tabular}
   %	\caption{Provide a caption}
 %\end{table}
 
-\plt{Only include the units that your SRS actually uses.}
+\iffalse\plt{Only include the units that your SRS actually uses.}
 
 \plt{Derived units, like newtons, pascal, etc, should show their derivation
     (the units they are derived from) if their constituent units are in the
@@ -148,7 +148,7 @@ description of the unit and the SI name.
   etc.  The one exception to this is degree Celsius.  Details on writing metric
   units can be found on the 
   \href{https://www.nist.gov/pml/weights-and-measures/writing-metric-units}
-  {NIST} web-page.}
+  {NIST} web-page.}\fi
 
 \subsection{Table of Symbols}
 
@@ -162,15 +162,18 @@ systems.  The symbols are listed in alphabetical order.
 \noindent \begin{longtable*}{l l p{12cm}} \toprule
 \textbf{symbol} & \textbf{unit} & \textbf{description}\\
 \midrule 
-$A_C$ & \si[per-mode=symbol] {\square\metre} & coil surface area
+$\theta_{S_{day}}$ & \si[per-mode=symbol] {\degree} & zenith angle of sun in the day
 \\
-$A_\text{in}$ & \si[per-mode=symbol] {\square\metre} & surface area over 
-which heat is transferred in
+$\Phi_{SP}$ & \si[per-mode=symbol] {(\degree \  ')N/S} & the latituade of the solar panel
+\\ 
+$\delta_{day}$ & \si[per-mode=symbol] {\degree \ N/S} & the declination of the vertical noon sun in the day
+\\ 
+$I_{S_{day}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the intensity of the sun in a day
 \\ 
 \bottomrule
 \end{longtable*}
-\plt{Use your problems actual symbols.  The si package is a good idea to use for
-  units.}
+\iffalse\plt{Use your problems actual symbols.  The si package is a good idea to use for
+  units.}\fi
 
 \subsection{Abbreviations and Acronyms}
 
@@ -188,7 +191,7 @@ which heat is transferred in
   PS & Physical System Description\\
   R & Requirement\\
   SRS & Software Requirements Specification\\
-  \progname{} & \plt{put an expanded version of your program name here (as appropriate)}\\
+  SC & Sun Catcher\\
   T & Theoretical Model\\
   \bottomrule
 \end{tabular}\\
@@ -302,8 +305,9 @@ plan will show the steps that will be used to increase confidence in the softwar
   for the design stage, etc.}\fi
 
 \subsection{Scope of Requirements} 
+The scope of the requirements includes stability analysis of a two-dimensional (2D) solar panel and the sun as the solar resource. The solar panel is assumed to place in a location near sea level, and the sky view above is unobstructed, with no trees, hills, clouds, dust, or haze ever blocking the sun.
 
-\plt{Modelling the real world requires simplification.  The full complexity of
+\iffalse\plt{Modelling the real world requires simplification.  The full complexity of
   the actual physics, chemistry, biology is too much for existing models, and
   for existing computational solution techniques.  Rather than say what is in
   the scope, it is usually easier to say what is not.  You can think of it as
@@ -316,11 +320,13 @@ plan will show the steps that will be used to increase confidence in the softwar
   (Section~\ref{sec_assumpt}).  However, the scope and the assumptions are not
   at the same level of abstraction.  The scope is at a high level.  The focus is
   on the ``big picture'' assumptions.  The assumptions section lists, and
-  describes, all of the assumptions.}
+  describes, all of the assumptions.}\fi
 
 \subsection{Characteristics of Intended Reader} \label{sec_IntendedReader}
 
-\plt{This section summarizes the skills and knowledge of the readers of the
+This section summarized the expectation of the readers' knowledge and skills for understanding this SRS. Readers should have a general knowledge of how a solar panel works and know the common factors that affect energy absorption.
+
+\iffalse\plt{This section summarizes the skills and knowledge of the readers of the
   SRS.  It does NOT have the same purpose as the ``User Characteristics''
   section (Section~\ref{SecUserCharacteristics}).  The intended readers are the
   people that will read, review and maintain the SRS.  They are the people that
@@ -333,14 +339,23 @@ plan will show the steps that will be used to increase confidence in the softwar
   as specifically as possible.  Rather than say, the user should have an
   understanding of physics, say what kind of physics and at what level.  For
   instance, is high school physics adequate, or should the reader have had a
-  graduate course on advanced quantum mechanics?}
+  graduate course on advanced quantum mechanics?}\fi
 
 \subsection{Organization of Document}
 
-\plt{This section provides a roadmap of the SRS document.  It will help the
+The organization of this document follows the template for an SRS for scientific computing
+software proposed by Koothoor [4] as well as Smith and Lai [8]. The presentation follows
+the standard pattern of presenting goals, theories, definitions, and assumptions. For readers
+that would like a more bottom up approach, they can start reading the instance models in
+Section:  \nameref{sec_instance}) and trace back to find any additional information they require.
+The goal statements (Section:  \nameref{sec_GS}) are refined to the theoretical models
+and the theoretical models (Section:  \nameref{sec_theoretical}) to the instance models (Section:  \nameref{sec_instance}). The instance models provide the set of algebraic equations that must be
+solved.
+
+\iffalse\plt{This section provides a roadmap of the SRS document.  It will help the
   reader orient themselves.  It will provide direction that will help them
   select which sections they want to read, and in what order.  This section will
-  be similar between project.}
+  be similar between project.}\fi
 
 \section{General System Description}
 
@@ -358,8 +373,12 @@ characteristics and lists the system constraints. \iffalse \plt{This text can li
   same, while specific details are changed between family members.}\fi
 
 \subsection{System Context}
+\nameref{Fig_SystemContext} shows the design pattern of this program from users 
+to the system than the output. The circle represents the users of this software. The rectangle
+represents the software system: Sun Catcher. The arrow represents the inputs that drive
+the software and the output expecting from the software.\\
 
-\plt{Your system context will include a figure that shows the abstract view of
+\iffalse\plt{Your system context will include a figure that shows the abstract view of
   the software.  Often in a scientific context, the program can be viewed
   abstractly following the design pattern of Inputs $\rightarrow$ Calculations
   $\rightarrow$ Outputs.  The system context will therefore often follow this
@@ -369,75 +388,90 @@ characteristics and lists the system constraints. \iffalse \plt{This text can li
   properties, geometry, etc.).  Likewise, the outputs should be presented from
   an abstract point of view.  In some cases the diagram will show other external
   entities, besides the user.  For instance, when the software product is a
-  library, the user will be another software program, not an actual end user.}
+  library, the user will be another software program, not an actual end user.}\fi
 
-\begin{figure}[h!]
+\begin{figure}[H]
 \begin{center}
- \includegraphics[width=0.6\textwidth]{SystemContextFigure}
+ \includegraphics[width=0.9\textwidth]{SystemContextFigure}
 \caption{System Context}
 \label{Fig_SystemContext} 
 \end{center}
 \end{figure}
 
-\plt{For each of the entities in the system context diagram its responsibilities
+\medskip
+
+\iffalse\plt{For each of the entities in the system context diagram its responsibilities
   should be listed.  Whenever possible the system should check for data quality,
-  but for some cases the user will need to assume that responsibility.}
+  but for some cases the user will need to assume that responsibility.}\fi
 
 \begin{itemize}
 \item User Responsibilities:
 \begin{itemize}
-\item 
+\item Provide the input data related to the solar panel. 
+\item Ensure the input date format matches the requirement from SC.
+\item Ensure the condition of the solar panel, and the surrounding environment of the solar panel.
 \end{itemize}
 \item \progname{} Responsibilities:
 \begin{itemize}
 \item Detect data type mismatch, such as a string of characters instead of a
-  floating point number
-\item 
+  floating point number.
+\item Comfirm the inputs quality to satisfy the required physical and software constraints.
+\item Predict an optimum tilt angle, the expected gaining solar energy, and a report that shows the comparison of different results.
+
 \end{itemize}
 \end{itemize}
 
 \subsection{User Characteristics} \label{SecUserCharacteristics}
 
-\plt{This section summarizes the knowledge/skills expected of the user.
+The end-users of SC is expecting to understand the Level 1 Calculation method
+such as angle addition and subtraction theorems and understand the Level 1 celestial
+mechanics such as the formation of the latitude and the earth's tilt angle in the four seasons.
+
+\iffalse\plt{This section summarizes the knowledge/skills expected of the user.
   Measuring usability, which is often a required non-function requirement,
   requires knowledge of a typical user.  As mentioned above, the user is a
   different role from the ``intended reader,'' as given in
   Section~\ref{sec_IntendedReader}.  As in Section~\ref{sec_IntendedReader}, the
   user characteristics should be specific an unambiguous.  For instance, ``The
   end user of \progname{} should have an understanding of undergraduate Level 1
-  Calculus and Physics.''}
+  Calculus and Physics.''}\fi
 
 \subsection{System Constraints}
 
-\plt{System constraints differ from other type of requirements because they
+There are no system constraints.
+
+\iffalse\plt{System constraints differ from other type of requirements because they
   limit the developers’ options in the system design and they identify how the
   eventual system must fit into the world. This is the only place in the SRS
   where design decisions can be specified.  That is, the quality requirement for
   abstraction is relaxed here.  However, system constraints should only be
   included if they are truly required. In the context of CAS 741, you often will
-  may not have any system constraints.}
+  may not have any system constraints.}\fi
 
 \section{Specific System Description}
 
 This section first presents the problem description, which gives a high-level
 view of the problem to be solved.  This is followed by the solution characteristics
 specification, which presents the assumptions, theories, definitions and finally
-the instance models.  \plt{Add any project specific details that are relevant
-  for the section overview.}
+the instance models.  \iffalse\plt{Add any project specific details that are relevant
+  for the section overview.}\fi
 
 \subsection{Problem Description} \label{Sec_pd}
 
 Sun Catcher is intended to solve the unpredictable energy efficiency of solar panels.
+Due to the tilt angle of the earth when it rotates by axis, the latitude of the sun will 
+consistently move. With the fixed location of the solar panel, it is unlikely to get the direct
+the direct sunlight for the maximum output. Therefore, it causes inadequate performance in gaining energy.
 \iffalse \plt{What problem does your program solve?
 The description here should be in the problem space, not the solution space.}\fi
 
 \subsubsection{Terminology and  Definitions}
 
-\plt{This section is expressed in words, not with equations.  It provide the
+\iffalse\plt{This section is expressed in words, not with equations.  It provide the
   meaning of the different words and phrases used in the domain of the problem.
 The terminology is used to introduce concepts from the world outside of the
 mathematical model  The terminology provides a real world connection to give the
-mathematical model meaning.}
+mathematical model meaning.}\fi
 
 This subsection provides a list of terms that are used in the subsequent
 sections and their meaning, with the purpose of reducing ambiguity and making it
@@ -447,9 +481,16 @@ easier to correctly understand the requirements:
 
 \item Declination of the Sun: The angle between the rays of the Sun and the plane of the Earth's equator.
 
-\item Hemisphere: A half of the earth, usually as divided into northern and southern halves by the equator.
+\item Tilt angle: The angle for adjusting the solar panel result in the panel get the direct sunlight.
+
+\item The period of days: The period of days depends on the input days of the users.
+
+\item Sun panel: The adjustable panel, which has solar cells on it, able to converse solar energy
+to power.
 
 \item Sun Intensity: The amount of incoming solar energy, or radiation, that reaches the Earth's surface.
+
+\item Latitude: Latitude is an angle which ranges from 0 $^\circ$ at the Equator to 90$^\circ$ (North or South) at the poles. 
 
 \item Zenith Angle: The angle between the sun and the vertical.
 
@@ -484,19 +525,19 @@ includes the following elements:
  
  
 
-\plt{A figure here makes sense for most SRS documents}
+\iffalse\plt{A figure here makes sense for most SRS documents}\fi
 
 \begin{figure}[h!]
 \begin{center}
 \rotatebox{0}
 {
- \includegraphics[width=0.5\textwidth]{figurePhysic.jpg}
+ \includegraphics[width=0.8\textwidth]{PhysicFigure.pdf}
  }
- \caption{\label{<Label>} <Caption>}
+ \caption{\label{Fig_PhysicFigure} The Physic System}
  \end{center}
 \end{figure}
 
-\subsubsection{Goal Statements}
+\subsubsection{Goal Statements} \label{sec_GS}
 
 
 \iffalse\plt{The goal statements refine the ``Problem Description''
@@ -509,21 +550,27 @@ includes the following elements:
   amount of technical language.  They should be understandable by non-domain
   experts.}\fi
 
-\noindent Given the user located latitude, the goal statements are:
+\noindent Given the user located latitude, the day started to estimate angle,the day when the  estimation end, the goal statements are:
 
 \begin{itemize}
 
-\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] Predict the optimum tilt angle.
+\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] Predict the optimum tilt angle in the period of days.
 
-\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] Predict the optimum produced solar energy.
+\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] Predict the optimum produced solar energy in the period of days.
 
 \item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] Predict the possibility the amount of money user might save.
 
 \end{itemize}
 
-\subsection{Solution Characteristics Specification}
+\subsection{Solution Characteristics Specification} \label{sec_SCS}
 
-\plt{This section specifies the information in the solution domain of the system
+The instance models that govern SC are presented in Section: \nameref{sec_instance}. The
+information to understand the meaning of the instance models and their derivation is also
+presented, so that the instance models can be verified.
+
+
+\iffalse\plt{This section specifies the information in the solution domai
+n of the system
   to be developed. This section is intended to express what is required in
   such a way that analysts and stakeholders get a clear picture, and the
   latter will accept it. The purpose of this section is to reduce the problem
@@ -563,7 +610,7 @@ includes the following elements:
 \noindent \plt{The relationships between the parts of the document are show in
   the following figure.  In this diagram ``may ref'' has the same role as
   ``uses'' above.  The figure adds ``Likely Changes,'' which are able to
-  reference (use) Assumptions.}
+  reference (use) Assumptions.}\fi
 
 \begin{figure}[H]
   \includegraphics[scale=0.9]{RelationsBetweenTM_GD_IM_DD_A.pdf}
@@ -576,13 +623,13 @@ models can be verified.
 
 \subsubsection{Assumptions} \label{sec_assumpt}
 
-\plt{The assumptions are a refinement of the scope.  The scope is general, where
+\iffalse\plt{The assumptions are a refinement of the scope.  The scope is general, where
   the assumptions are specific.  All assumptions should be listed, even those
   that domain experts know so well that they are rarely (if ever) written down.}
 \plt{The document should not take for granted that the reader knows which
   assumptions have been made. In the case of unusual assumptions, it is
   recommended that the documentation either include, or point to, an explanation
-  and justification for the assumption.}
+  and justification for the assumption.}\fi
 
 This section simplifies the original problem and helps in developing the
 theoretical model by filling in the missing information for the physical
@@ -592,25 +639,27 @@ likely change [LC], in which the respective assumption is used.
 
 \begin{itemize}
 
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:]
-  \plt{Short description of each assumption.  Each assumption
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{environmentCondition}]: The environmental condition of the solar panel location assumed as users have an unobstructed view of the sky, with no trees, hills, clouds, dust, or haze ever blocking the sun.(RefBy: \iref{C_SC})\\
+
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{environmentCondition}]: The default solar intensity is 1.35 kW. It was measured by the satellites.(RefBy: \iref{C_SC})\\
+
+  \iffalse\plt{Short description of each assumption.  Each assumption
     should have a meaningful label.  Use cross-references to identify the
     appropriate traceability to T, GD, DD etc., using commands like dref, ddref
     etc.  Each assumption should be atomic - that is, there should not be an
-    explicit (or implicit) ``and'' in the text of an assumption.}
+    explicit (or implicit) ``and'' in the text of an assumption.}\fi
 
 \end{itemize}
 
 \subsubsection{Theoretical Models}\label{sec_theoretical}
 
-\plt{Theoretical models are sets of abstract mathematical equations or axioms
+\iffalse\plt{Theoretical models are sets of abstract mathematical equations or axioms
   for solving the problem described in Section ``Physical System Description''
   (Section~\ref{sec_phySystDescrip}). Examples of theoretical models are
-  physical laws, constitutive equations, relevant conversion factors, etc.}
+  physical laws, constitutive equations, relevant conversion factors, etc.}\fi
 
 This section focuses on the general equations and laws that \progname{} is based
-on.  \plt{Modify the examples below for your problem, and add additional models
-  as appropriate.}
+on.  
 
 ~\newline
 
@@ -620,30 +669,27 @@ on.  \plt{Modify the examples below for your problem, and add additional models
 \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
   \hline
   \rowcolor[gray]{0.9}
-  Number& T\refstepcounter{theorynum}\thetheorynum \label{T_COE}\\
+  Number& T\refstepcounter{theorynum}\thetheorynum \label{LCL}\\
   \hline
-  Label&\bf Calculating the Sun intensity\\
+  Label&\bf Lambert's cosine law\\
   \hline
-  Equation&  $1.35 \cdot \frac{1.00}{1.35}^ {sec(\theta_s)} $\\
-  %%Equation&  $-{\bf \nabla \cdot q} + g$ = $\rho C \frac{\partial T}{\partial t}$\\
+
+  Equation&  $ I  = I \times \frac{\cos{\theta}  \times \partial \Omega  \times \partial A}{\cos{\theta}  \times \partial\Omega_0 \times \partial A_0}$\\ 
+
   \hline
 
   Description & 
-          The above equation gives the daily sun intensity at noon. 
-
-        1.35 kW is the solar intensity measured by satellites.
-
-         sec is the second of arc.
-
-         $(\theta_s)$ is the angle of sun from zenith refer to the figurephyic. 
-
-This equation assumes that the earth is flat, so a factor was applied to account for the curvature of the earth(and therefore the earth’s atmosphere). These factors, and the angle of the sun with respect to the panel, then determine the insolation on the panel. \\
+         I is the liuminous intensity.\\
+         &$\theta$ is the angle between the illuminating source and the normal source.\\
+			&$\Omega$ is the solid angle subtended by the aperture from the viewpoint of the emitting area element.\\
+       &A is the area of the observing aperture.
+ \\
 
 
 
   \hline
   Source &
-           \url{https://www.solarpaneltilt.com/#other}\\
+           \url{https://en.wikipedia.org/wiki/Lambert%27s_cosine_law}\\
   % The above web link should be replaced with a proper citation to a publication
   \hline
   Ref.\ By & \dref{ROCT}\\
@@ -655,18 +701,18 @@ This equation assumes that the earth is flat, so a factor was applied to account
 
 \subsubsection{General Definitions}\label{sec_gendef}
 
-\plt{General Definitions (GDs) are a refinement of one or more TMs, and/or of
+\iffalse\plt{General Definitions (GDs) are a refinement of one or more TMs, and/or of
   other GDs.  The GDs are less abstract than the TMs.  Generally the reduction
   in abstraction is possible through invoking (using/referencing) Assumptions.
   For instance, the TM could be Newton's Law of Cooling stated abstracting.  The
-  GD could take the general law and apply it to get a 1D equation.}
+  GD could take the general law and apply it to get a 1D equation.}\fi
 
 This section collects the laws and equations that will be used in building the
 instance models.
 
-\plt{Some projects may not have any content for this section, but the section
+\iffalse\plt{Some projects may not have any content for this section, but the section
   heading should be kept.}  \plt{Modify the examples below for your problem, and
-  add additional definitions as appropriate.}
+  add additional definitions as appropriate.}\fi
 
 ~\newline
 
@@ -676,35 +722,35 @@ instance models.
 \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
 \hline
 \rowcolor[gray]{0.9}
-Number& GD\refstepcounter{defnum}\thedefnum \label{NL}\\
+Number& GD\refstepcounter{defnum}\thedefnum \label{C_Z}\\
 \hline
-Label &\bf Calculate the zenith angle \\
+Label &\bf Calculate Zenith Angle \\
 \hline
 % Units&$MLt^{-3}T^0$\\
 % \hline
-SI Units&\si{degree}\\
+SI Units& degree$^\circ$\\
 \hline
-Equation&$ \theta_s = \Phi_l - \delta_s $  \\
+Equation&  \[
+    \theta_{S_{day}}= 
+\begin{cases}
+      \Phi_{SP} - \delta_{day} ,& \text{if } 0 \leq \Phi_{SP}, \delta_{day} \leq  90^\circ \text{N } \lor\  0 \leq \Phi_{SP},  \delta_{day}  \leq  90^\circ \text{S }\\
+    \Phi_{SP} + \delta_{day} ,& \text{if } \begin{cases} 
+     0 \leq \Phi_{SP}\leq  90^\circ \text{N } \land\  0 \leq \delta_{day}  \leq  90^\circ \text{S } \\
+     0 \leq \Phi_{SP}\leq  90^\circ \text{S } \land\  0 \leq \delta_{day}  \leq  90^\circ \text{N }
+      \end{cases}
+\end{cases}
+\]\\
 \hline
-Description &
-This equation describes the zenith angle associated with the location of the solar panel.
-$\theta_s $ is the zeith angle
+ Description & 
+          This equation describes the zenith angle associated with the solar panel.\\
+&$\theta_{S_{day}} $ is the zeith angle of the sun in the day.\\
+&$\Phi_{SP}$  is the local latitude of the solar panel.\\
+&$\delta_{day} $ is the declination of the vertical noon sun in the day.\\
 
-$\Phi_l$  is the local latitude of the solar panel
 
-$\delta_s $ is the declination of the sun during the day.\\
-\iffalse Newton's law of cooling describes convective cooling from a surface.  The law is
-stated as: the rate of heat loss from a body is proportional to the difference
-in temperatures between the body and its surroundings.
 
-& $q(t)$ is the thermal flux (\si{\watt\per\square\metre}).\\
-& $h$ is the heat transfer coefficient, assumed independent of $T$ (\aref{A_hcoeff})
-	(\si{\watt\per\square\metre\per\celsius}).\\
-&$\Delta T(t)$= $T(t) - T_{\text{env}}(t)$ is the time-dependent thermal gradient
-between the environment and the object (\si{\celsius}).
-\\\fi
 \hline
-  Source & Citation here \\
+  Source & Citation here \url{https://ntrs.nasa.gov/archive/nasa/casi.ntrs.nasa.gov/19680025707.pdf}\\
   \hline
   Ref.\ By & \ddref{FluxCoil}, \ddref{FluxPCM}\\
   \hline
@@ -720,18 +766,18 @@ between the environment and the object (\si{\celsius}).
 
 \subsubsection{Data Definitions}\label{sec_datadef}
 
-\plt{The Data Definitions are definitions of symbols and equations that are
+\iffalse\plt{The Data Definitions are definitions of symbols and equations that are
   given for the problem.  They are not derived; they are simply used by other
   models.  For instance, if a problem depends on density, there may be a data
   definition for the equation defining density.  The DDs are given information
   that you can use in your other modules.}
 
 \plt{All Data Definitions should be used (referenced) by at least one other
-  model.}
+  model.}\fi
 
 This section collects and defines all the data needed to build the instance
-models. The dimension of each quantity is also given.  \plt{Modify the examples
-  below for your problem, and add additional definitions as appropriate.}
+models. The dimension of each quantity is also given. \iffalse \plt{Modify the examples
+  below for your problem, and add additional definitions as appropriate.}\fi
 
 ~\newline
 
@@ -743,52 +789,48 @@ models. The dimension of each quantity is also given.  \plt{Modify the examples
 \rowcolor[gray]{0.9}
 Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{FluxCoil}\\
 \hline
-Label& \bf Heat flux out of coil\\
+Label& \bf The Declination of the Sun\\
 \hline
-Symbol &$q_C$\\
+Symbol &$\delta_{day} $\\
 \hline
 % Units& $Mt^{-3}$\\
 % \hline
-  SI Units & \si{\watt\per\square\metre}\\
+  SI Units & degree$^\circ$\\
   \hline
-  Equation&$q_C(t) = h_C (T_C - T_W(t))$, over area $A_C$\\
+  Equation&{-}\\
   \hline
-  Description & 
-                $T_C$ is the temperature of the coil (\si{\celsius}).  $T_W$ is the temperature of the water (\si{\celsius}).  
-                The heat flux out of the coil, $q_C$ (\si{\watt\per\square\metre}), is found by
-                assuming that Newton's Law 
-                of Cooling applies (\aref{A_Newt_coil}).  This law (\dref{NL}) is used on the surface of
-                the coil, which has area $A_C$ (\si{\square\metre}) and heat 
-                transfer coefficient $h_C$
-                (\si{\watt\per\square\metre\per\celsius}).  This equation
-                assumes that the temperature of the coil is constant over time (\aref{A_tcoil}) and that it does not vary along the length
-                of the coil (\aref{A_tlcoil}).
-  \\
+  Description &
+       "day" means every day in the period of days which depends on the user's input.\\
+       &The degree of $\delta_{day} $ can be determinated by the the Analemma Figure.\\
   \hline
-  Sources& Citation here \\
+  Sources& \url{https://www.cengage.com/resource_uploads/downloads/0495555061_137179.pdf}\\
   \hline
-  Ref.\ By & \iref{ewat}\\
+  Ref.\ By &  \iref{C_Z}\\
   \hline
 \end{tabular}
 \end{minipage}\\
 
+\begin{figure}[H]
+  \includegraphics[scale=0.5]{Analemma.pdf}
+\end{figure}
+
+
 \subsubsection{Instance Models} \label{sec_instance}    
 
-\plt{The motivation for this section is to reduce the problem defined in
+\iffalse\plt{The motivation for this section is to reduce the problem defined in
   ``Physical System Description'' (Section~\ref{sec_phySystDescrip}) to one
   expressed in mathematical terms. The IMs are built by refining the TMs and/or
   GDs.  This section should remain abstract.  The SRS should specify the
-  requirements without considering the implementation.}
+  requirements without considering the implementation.}\fi
 
 This section transforms the problem defined in Section~\ref{Sec_pd} into 
 one which is expressed in mathematical terms. It uses concrete symbols defined 
 in Section~\ref{sec_datadef} to replace the abstract symbols in the models 
 identified in Sections~\ref{sec_theoretical} and~\ref{sec_gendef}.
 
-The goals \plt{reference your goals} are solved by \plt{reference your instance
-  models}.  \plt{other details, with cross-references where appropriate.}
+The goals \nameref{sec_GS} are solved by IM\ref{C_SI}. \iffalse \plt{other details, with cross-references where appropriate.}
 \plt{Modify the examples below for your problem, and add additional models as
-  appropriate.}
+  appropriate.}\fi
 
 ~\newline
 
@@ -800,34 +842,31 @@ The goals \plt{reference your goals} are solved by \plt{reference your instance
 \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
   \hline
   \rowcolor[gray]{0.9}
-  Number& IM\refstepcounter{instnum}\theinstnum \label{ewat}\\
+  Number& IM\refstepcounter{instnum}\theinstnum \label{C_SI}\\
   \hline
-  Label& \bf Calculate the zenith angle to find $\theta_s$\\
+  Label& \bf Calculating the Sun intensity\\
   \hline
 
-  Input&$\Phi_l$, $delta_s$\\
+  Input&$\Phi_{SP}$\\
 
   \hline
-  Output
-$\theta_s$ \\ 
+  Output & $ I_{S_day}  = 1.35 \cdot \frac{1.00}{1.35}^ {sec(\theta_{S_{day}})} $\\ 
   \hline
   Description&
- $\theta_s$ is the zenith angle.
+ The above equation gives the daily sun intensity at noon. 
 
-\medskip
+        1.35 kW is the solar intensity measured by satellites.
 
-  If the $\Phi_l$ and sun are in the same hemisphere 
-	$ \theta_s = \Phi_l - \delta_s $ \\ & then $ \theta_s = \Phi_l + \delta_s $ \\
+         sec is the second of arc.
 
-\iffalse  &$T_P$ is the PCM temperature (\si{\celsius}).\\
-  &$T_C$ is the coil temperature (\si{\celsius}).\\
-  &$\tau_W = \frac{m_W C_W}{h_C A_C}$ is a constant (\si{\second}).\\
-  &$\eta = \frac{h_P A_P}{h_C A_C}$ is a constant (dimensionless).\\
-  & The above equation applies as long as the water is in liquid form,
-  $0<T_W<100^o\text{C}$, where $0^o\text{C}$ and $100^o\text{C}$ are the melting
-  and boiling points of water, respectively (\aref{A_OpRange}, \aref{A_Pressure}).\\\fi
+         $(\theta_{S_{day}})$ is the zenith angle of the sun in the day. The equation of  $(\theta_{S_{day}})$ had described in GD1.
+
+This equation assumes that the earth is flat, so a factor was applied to account for the curvature of the earth(and therefore the earth’s atmosphere). These factors, and the angle of the sun with respect to the panel, then determine the insolation on the panel. \\
+
   \hline
-  Sources& Citation here  \url{https://www.youtube.com/watch?v=snzUrP_Ay9Q}\\ \\
+  Sources& Citation here  \url{https://www.solarpaneltilt.com/#other}\\
+
+
   \hline
   Ref.\ By & \iref{epcm}\\
   \hline
@@ -841,6 +880,7 @@ $\theta_s$ \\
 \plt{The derivation shows how the IM is derived from the TMs/GDs.  In cases
   where the derivation cannot be described under the Description field, it will
   be necessary to include this subsection.}
+
 
 \subsubsection{Input Data Constraints} \label{sec_DataConstraints}    
 
