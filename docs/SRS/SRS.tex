@@ -653,7 +653,7 @@ likely change [LC], in which the respective assumption is used.
 
 \begin{itemize}
 
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{environmentCondition}]: The environmental condition of the solar panel location assumed as users have an unobstructed view of the sky, with no trees, hills, clouds, dust, or haze ever blocking the sun.(RefBy: \iref{C_SI})\\
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{a_spe}]: The environmental condition of the solar panel location assumed as users have an unobstructed view of the sky, with no trees, hills, clouds, dust, or haze ever blocking the sun.(RefBy: \iref{C_SI})\\
 
 \item[A\refstepcounter{assumpnum}\theassumpnum \label{a_dsip}]: The default solar intensity is 1.35 kW. It was measured by the satellites.(RefBy: \iref{C_SI})\\
 
@@ -1173,7 +1173,7 @@ is completely recorded in traceability matrices in the SRS and module guide
 
 \noindent \begin{itemize}
 
-\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_G}:] The goal of the system is to predict the optimum tilt energy without considering the individual environmental difference from each case.
+\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_G}:] The goal of the system is to predict the optimum tilt energy without considering the individual environmental difference from each case.\aref{a_spe}
 
 \iffalse\plt{Give
     the unlikely changes.  The design can assume that the changes listed will
@@ -1203,19 +1203,20 @@ the assumptions.
 \begin{landscape}
 \begin{table}[h!]
 \centering
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|}
 \hline
-	& \aref{a_dsip}& \aref{a_dsia}& \aref{a_dp} \\
+	& \aref{a_spe}& \aref{a_dsip}& \aref{a_dsia}& \aref{a_dp} \\
 \hline
-\tref{C_LCL}        & X& & & & & & & & & & & & & & & & & & \\ \hline
-\dref{C_ZA}           & & X& & & & & & & & & & & & & & & & & \\ \hline
-\ddref{C_DS}    & & & & & & & X& X& X& & & & & & & & & & \\ \hline
-\iref{C_SI}         & & & & & & & & & & & X& X& & X& X& X& & & X \\ \hline
-\iref{C_SEO}         & & & & & & & & & & & & X& X& & & X& X& X& \\ \hline
-\iref{I_HWAT}       & & & & & & & & & & & & & & X& & & & & X \\ \hline
-\iref{I_HPCM}       & & & & & & & & & & & & & X& & & & & X & \\ \hline
-\lcref{LC_SI}     & & & & X& & & & & & & & & & & & & & & \\ \hline
-\lcref{LC_P}    & & & & & & & & X& & & & & & & & & & & \\ \hline
+
+\tref{C_LCL}    & & & &   \\ \hline
+\dref{C_ZA}     & & X & \\ \hline
+\ddref{C_DS}  & & X &  \\ \hline
+\iref{C_SI}       X X X &  \\ \hline
+\iref{C_TA}      X X X &  \\ \hline
+\iref{C_SEO}   X X X X  \\ \hline
+\lcref{LC_SI}   & X & X  \\ \hline
+\lcref{LC_P}    & & & &  \\ \hline
+\lcref{LC_G}    X & & &  \\ \hline
 
 \hline
 \end{tabular}
@@ -1231,11 +1232,12 @@ the assumptions.
 \hline        
 	& \tref{C_LCL}& \dref{C_ZA} & \ddref{C_DS}& \iref{C_SI} &\iref{C_SEO} \\
 \hline
-\tref{C_LCL}        & X& & & & & & & &  \\ \hline
-\dref{C_ZA}           & & X& & & & & &  \\ \hline
-\ddref{C_DS}    & & & & & & & X& X&\\ \hline
-\iref{C_SI}         & & & & & & & & &  \\ \hline
-\iref{C_SEO}        & & & & & & & & & \\ \hline
+\tref{C_LCL}        & X & & & & & & & &  \\ \hline
+\dref{C_ZA}           &  X&  & & & & & &  \\ \hline
+\ddref{C_DS}    & & & & X& & &  &  &\\ \hline
+\iref{C_SI}         & X& X& X& X & & & & &  \\ \hline
+\iref{C_TA}         &  X& X& X&  X& X& & & & \\ \hline
+\iref{C_SEO}        &  & & & X&  X& & X & & \\ \hline
 
 
 \hline
@@ -1246,18 +1248,19 @@ the assumptions.
 
 \begin{table}[h!]
 \centering
-\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
-	& \iref{C_SI}& \iref{C_SEO}& \ref{sec_DataConstraints}& \rref{R_RawInputs}& \rref{R_MassInputs} \\
+	& \iref{C_SI}&\iref{C_TA}  & \iref{C_SEO}& \ref{sec_DataConstraints}& \rref{R_Inputs}& \rref{R_OutputInputs} & \rref{R_Calculate}& \rref{R_VerifyOutput}& \rref{R_Output}\\
+
 \hline
-\iref{C_SI}            & & X& & & & X& X \\ \hline
-\iref{C_SEO}            & X& & & X& & X& X \\ \hline
-\rref{R_Inputs}     & & & & & & & \\ \hline
-\rref{R_OutputInputs}    & & & & & & X& \\ \hline
-\rref{R_OutputInputs}   & & & & & X& & \\ \hline
-\rref{R_Calculate}  & X& X& & & & X& X \\ \hline
-\rref{R_VerifyOutput}     & X& & & & & & \\ \hline 
-\rref{R_Output}       & & X& & & & & \\ \hline
+\iref{C_SI}            & X X X & & & X& X \\ \hline
+\iref{C_TA}         X & X X & & & X& X  \\ \hline
+\iref{C_SEO}            X X& X & X& & X& X \\ \hline
+\rref{R_Inputs}     X X X X & & & \\ \hline
+\rref{R_OutputInputs}    X X X X & & X& \\ \hline
+\rref{R_Calculate}  X X X X& & & & X& X \\ \hline
+\rref{R_VerifyOutput}     X X& X & & & & \\ \hline 
+\rref{R_Output}       X X X X & & & & \\ \hline
 \hline
 \end{tabular}
 \caption{Traceability Matrix Showing the Connections Between Requirements and Instance Models}
