@@ -164,11 +164,21 @@ systems.  The symbols are listed in alphabetical order.
 \midrule 
 $\theta_{S_{day}}$ & \si[per-mode=symbol] {\degree} & zenith angle of sun in the day
 \\
-$\Phi_{SP}$ & \si[per-mode=symbol] {(\degree \  ')N/S} & the latituade of the solar panel
+$\theta_{T}$ & \si[per-mode=symbol] {\degree} & the tilt angle for adjusting the solar panel
+\\
+$\Phi_P$ & \si[per-mode=symbol] {(\degree \  ')N/S} & the latituade of the solar panel
 \\ 
 $\delta_{day}$ & \si[per-mode=symbol] {\degree \ N/S} & the declination of the vertical noon sun in the day
 \\ 
 $I_{S_{day}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the intensity of the sun in a day
+\\ 
+$P_{E}$ & \si[per-mode=symbol] {k\watt} &the estimated solar panel output energy
+\\ 
+$P_{A}$ & \si[per-mode=symbol] {\square{m}} & the solar panel area
+\\ 
+$P_{r}$ & \si[per-mode=symbol] {\%} & solar panel yield or efficiency
+\\ 
+$PR$ & \si[per-mode=symbol] {\%} & performance ratio, coefficient for losses 
 \\ 
 \bottomrule
 \end{longtable*}
@@ -411,7 +421,7 @@ the software and the output expecting from the software.\\
 \item Ensure the input date format matches the requirement from SC.
 \item Ensure the condition of the solar panel, and the surrounding environment of the solar panel.
 \end{itemize}
-\item \progname{} Responsibilities:
+\item SC Responsibilities:
 \begin{itemize}
 \item Detect data type mismatch, such as a string of characters instead of a
   floating point number.
@@ -433,7 +443,7 @@ mechanics such as the formation of the latitude and the earth's tilt angle in th
   different role from the ``intended reader,'' as given in
   Section~\ref{sec_IntendedReader}.  As in Section~\ref{sec_IntendedReader}, the
   user characteristics should be specific an unambiguous.  For instance, ``The
-  end user of \progname{} should have an understanding of undergraduate Level 1
+  end user of SC should have an understanding of undergraduate Level 1
   Calculus and Physics.''}\fi
 
 \subsection{System Constraints}
@@ -511,7 +521,7 @@ to power.
   interactions between the elements and their physical environment; ii) the
   interactions between elements; and, iii) the initial or boundary conditions.}\fi
 
-The physical system of \progname{}, as shown in Figure~?,
+The physical system of SC, as shown in Figure: $\nameref{Fig_PhysicFigure}$,
 includes the following elements:
 
 \begin{itemize}
@@ -531,7 +541,7 @@ includes the following elements:
 \begin{center}
 \rotatebox{0}
 {
- \includegraphics[width=0.8\textwidth]{PhysicFigure.pdf}
+ \includegraphics[width=0.5\textwidth]{PhysicFigure.pdf}
  }
  \caption{\label{Fig_PhysicFigure} The Physic System}
  \end{center}
@@ -616,7 +626,7 @@ n of the system
   \includegraphics[scale=0.9]{RelationsBetweenTM_GD_IM_DD_A.pdf}
 \end{figure}
 
-The instance models that govern \progname{} are presented in
+The instance models that govern SC are presented in
 Subsection~\ref{sec_instance}.  The information to understand the meaning of the
 instance models and their derivation is also presented, so that the instance
 models can be verified.
@@ -641,7 +651,12 @@ likely change [LC], in which the respective assumption is used.
 
 \item[A\refstepcounter{assumpnum}\theassumpnum \label{environmentCondition}]: The environmental condition of the solar panel location assumed as users have an unobstructed view of the sky, with no trees, hills, clouds, dust, or haze ever blocking the sun.(RefBy: \iref{C_SI})\\
 
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{environmentCondition}]: The default solar intensity is 1.35 kW. It was measured by the satellites.(RefBy: \iref{C_SI})\\
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{a_dsip}]: The default solar intensity is 1.35 kW. It was measured by the satellites.(RefBy: \iref{C_SI})\\
+
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{a_dsia}]: This system calculate the solar zenith angle at noon.(RefBy: \dref{C_ZA})\\
+
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{a_dp}]: Base
+ on the resource of \cite{EMPA2011}, this system definite the variable of $P_r$ as 18.7\%.(RefBy: \iref{C_SEC})\\
 
   \iffalse\plt{Short description of each assumption.  Each assumption
     should have a meaningful label.  Use cross-references to identify the
@@ -658,7 +673,7 @@ likely change [LC], in which the respective assumption is used.
   (Section~\ref{sec_phySystDescrip}). Examples of theoretical models are
   physical laws, constitutive equations, relevant conversion factors, etc.}\fi
 
-This section focuses on the general equations and laws that \progname{} is based
+This section focuses on the general equations and laws that SC is based
 on.  
 
 ~\newline
@@ -669,24 +684,26 @@ on.
 \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
   \hline
   \rowcolor[gray]{0.9}
-  Number& T\refstepcounter{theorynum}\thetheorynum \label{LCL}\\
+  Number& T\refstepcounter{theorynum}\thetheorynum \label{C_LCL}\\
   \hline
   Label&\bf Lambert's cosine law\\
   \hline
 
-  Equation&  $ I  = I \times \frac{\cos{\theta}  \times \partial \Omega  \times \partial A}{\cos{\theta}  \times \partial\Omega_0 \times \partial A_0}$\\ 
+  Equation&  $ I_0  = I \times \frac{\cos{\theta}  \times \partial \Omega  \times \partial A}{\cos{\theta}  \times \partial\Omega_0 \times \partial A_0}$\\ 
 
   \hline
 
   Description & 
-         I is the liuminous intensity.\\
-         &$\theta$ is the angle between the illuminating source and the normal source.\\
-			&$\Omega$ is the solid angle subtended by the aperture from the viewpoint of the emitting area element.\\
-       &A is the area of the observing aperture.
- \\
-
-
-
+			In the following source, Lambert's cosine law state that "the radiant intensity or luminous intensity observed from an ideal diffusely reflecting surface or ideal diffuse radiator is directly proportional to the cosine of the angle $\theta$ between the direction of the incident light and the surface normal."\\
+			&$I_0$ is the radiance of illumination.\\
+			&I is the number of the photons.\\
+			&$\cos{\theta}  \times \partial \Omega  \times \partial A$is the number of photo
+ns per second emitted into the wedge at angle $\theta$ \\
+			&where $\partial \Omega$is an equal angle that represents each wedge in the circle.\\
+							&$\partial A$ is the area element .\\
+							&$\partial\Omega_0$ is the portion of the observer's total angular field-of-view 
+of the scene.\\
+							&$\partial A_0$ is an aperture of area .\\
   \hline
   Source &
            \url{https://en.wikipedia.org/wiki/Lambert%27s_cosine_law}\\
@@ -722,7 +739,7 @@ instance models.
 \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
 \hline
 \rowcolor[gray]{0.9}
-Number& GD\refstepcounter{defnum}\thedefnum \label{C_Z}\\
+Number& GD\refstepcounter{defnum}\thedefnum \label{C_ZA}\\
 \hline
 Label &\bf Calculate Zenith Angle \\
 \hline
@@ -733,10 +750,10 @@ SI Units& $\circ$\\
 Equation&  \[
     \theta_{S_{day}}= 
 \begin{cases}
-      \Phi_{SP} - \delta_{day} ,& \text{if } 0 \leq \Phi_{SP}, \delta_{day} \leq  90^\circ \text{N } \lor\  0 \leq \Phi_{SP},  \delta_{day}  \leq  90^\circ \text{S }\\
-    \Phi_{SP} + \delta_{day} ,& \text{if } \begin{cases} 
-     0 \leq \Phi_{SP}\leq  90^\circ \text{N } \land\  0 \leq \delta_{day}  \leq  90^\circ \text{S } \\
-     0 \leq \Phi_{SP}\leq  90^\circ \text{S } \land\  0 \leq \delta_{day}  \leq  90^\circ \text{N }
+      \Phi_P - \delta_{day} ,& \text{if } 0 \leq \Phi_P, \delta_{day} \leq  90^\circ \text{N } \lor\  0 \leq \Phi_P,  \delta_{day}  \leq  90^\circ \text{S }\\
+    \Phi_P + \delta_{day} ,& \text{if } \begin{cases} 
+     0 \leq \Phi_P\leq  90^\circ \text{N } \land\  0 \leq \delta_{day}  \leq  90^\circ \text{S } \\
+     0 \leq \Phi_P\leq  90^\circ \text{S } \land\  0 \leq \delta_{day}  \leq  90^\circ \text{N }
       \end{cases}
 \end{cases}
 \]\\
@@ -744,7 +761,7 @@ Equation&  \[
  Description & 
           This equation describes the zenith angle associated with the solar panel.\\
 &$\theta_{S_{day}} $ is the zeith angle of the sun in the day.\\
-&$\Phi_{SP}$  is the local latitude of the solar panel.\\
+&$\Phi_P$  is the local latitude of the solar panel.\\
 &$\delta_{day} $ is the declination of the vertical noon sun in the day.\\
 
 
@@ -811,7 +828,7 @@ models. The dimension of each quantity is also given. \iffalse \plt{Modify the e
 \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
 \hline
 \rowcolor[gray]{0.9}
-Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{C_DC}\\
+Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{C_DS}\\
 \hline
 Label& \bf The Declination of the Sun\\
 \hline
@@ -819,7 +836,7 @@ Symbol &$\delta_{day} $\\
 \hline
 % Units& $Mt^{-3}$\\
 % \hline
-  SI Units & degree$^\circ$\\
+  SI Units & $^\circ$\\
   \hline
   Equation&{-}\\
   \hline
@@ -829,7 +846,7 @@ Symbol &$\delta_{day} $\\
   \hline
   Sources& \url{https://www.cengage.com/resource_uploads/downloads/0495555061_137179.pdf}\\
   \hline
-  Ref.\ By &  \iref{C_Z}\\
+  Ref.\ By &  \dref{C_ZA}\\
   \hline
 \end{tabular}
 \end{minipage}\\
@@ -871,28 +888,22 @@ The goals \nameref{sec_GS} are solved by IM\ref{C_SI}. \iffalse \plt{other detai
   Label& \bf Calculating the Sun intensity\\
   \hline
 
-  Input&$\Phi_{SP}$\\
+  Input&$\Phi_P$\\
 
   \hline
-  Output & $ I_{S_day}  = 1.35 \cdot \frac{1.00}{1.35}^ {sec(\theta_{S_{day}})} $\\ 
+  Output & $ I_{S_{day}}  = 1.35 \cdot \frac{1.00}{1.35}^ {sec(\theta_{S_{day}})} $\\ 
   \hline
   Description&
- The above equation gives the daily sun intensity at noon. 
+ As the $\nameref{sec_assumpt}$ describes, this equation is giveing the daily sun intensity at noon. Moreover, this equation assumes that the earth is flat, so a factor was applied to account for the curvature of the earth(and therefore the earth’s atmosphere). These factors, and the angle of the sun with respect to the panel, then determine the insolation on the panel. \\
 
-        1.35 kW is the solar intensity measured by satellites.
-
-         sec is the second of arc.
-
-         $(\theta_{S_{day}})$ is the zenith angle of the sun in the day. The equation of  $(\theta_{S_{day}})$ had described in GD1.
-
-This equation assumes that the earth is flat, so a factor was applied to account for the curvature of the earth(and therefore the earth’s atmosphere). These factors, and the angle of the sun with respect to the panel, then determine the insolation on the panel. \\
+         &$(\theta_{S_{day}})$ is the zenith angle of the sun in the day. The equation of  $(\theta_{S_{day}})$ is described in $\dref{C_ZA}$.\\
 
   \hline
   Sources&  \url{https://www.solarpaneltilt.com/#other}\\
 
 
   \hline
-  Ref.\ By & \text{-}\\
+  Ref.\ By & \iref{C_SEC}\\
   \hline
 \end{tabular}
 \end{minipage}\\
@@ -900,11 +911,60 @@ This equation assumes that the earth is flat, so a factor was applied to account
 %~\newline
 
 \subsubsection*{Derivation of ...}
+		The above equation is driven by the $\tref{C_LCL} $ , which is describing the calculation of the radiance of the illumination.\\
+		Where 	$I$ is $1.35 k\si\watt$, which is the solar intensity, and $\frac{1}{\cos{\theta}}$ is $sec(\theta_{S_{day}})$\\
 
-\plt{The derivation shows how the IM is derived from the TMs/GDs.  In cases
+ 
+\iffalse\plt{The derivation shows how the IM is derived from the TMs/GDs.  In cases
   where the derivation cannot be described under the Description field, it will
-  be necessary to include this subsection.}
+  be necessary to include this subsection.}\fi
 
+
+~\newline
+
+
+\noindent
+\begin{minipage}{\textwidth}
+\renewcommand*{\arraystretch}{1.5}
+\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+  \hline
+  \rowcolor[gray]{0.9}
+  Number& IM\refstepcounter{instnum}\theinstnum \label{C_SEO}\\
+  \hline
+  Label& \bf Calculating the Solar Energy Output\\
+  \hline
+
+  Input&$P_A$\\
+
+  \hline
+  Output & $ P_E = P_A \times P_r \times  I_{S_{day}} \times PR$\\ 
+  \hline
+  Description&
+		P is the solar panel.\\
+&$P_E$ is the estimated solar panel output energy.\\
+&$P_A$ is the solar panel area.\\
+&$P_r$ is solar panel yield or efficiency.\\
+
+&$I_{S_{day}}$ is the solar intensity in a day of the noon.\\
+&$PR$ is the performance ratio, coefficient for losses\\
+\\
+
+  \hline
+  Sources&  \url{https://photovoltaic-software.com/principle-ressources/how-calculate-solar-energy-power-pv-systems}\\
+
+  \hline
+  Ref.\ By & \text{-}\\
+  \hline
+\end{tabular}
+\end{minipage}\\
+
+\subsubsection*{Derivation of ...}
+		The above equation is using the output from $\iref{C_SI} $ , which is describing the sun intensity.\\
+		Some of the variable in this equation has its defult value, which describes in the section
+of $\nameref{sec_assumpt}$\\
+
+
+%~\newline
 
 \subsubsection{Input Data Constraints} \label{sec_DataConstraints}    
 
@@ -931,16 +991,19 @@ Table~\ref{TblSpecParams}.
   \textbf{Var} & \textbf{Physical Constraints} & \textbf{Software Constraints} &
                              \textbf{Typical Value} & \textbf{Uncertainty}\\
   \midrule 
-  $L$ & $L > 0$ & $L_{\text{min}} \leq L \leq L_{\text{max}}$ & 1.5 \si[per-mode=symbol] {\metre} & 10\%
+  $\Phi_P$ & $0 \leq \Phi_P \leq 90^\circ \text{N/S}$ & $\text{-}$ & {\text{43°15'39.3"N}} & 10\%\\
+
   \\
   \bottomrule
 \end{longtable*}
 \end{table}
 
 \noindent 
-\begin{description}
+\iffalse\begin{description}
+
 \item[(*)] \plt{you might need to add some notes or clarifications}
-\end{description}
+
+\end{description}\fi
 
 \begin{table}[!h]
 \caption{Specification Parameter Values} \label{TblSpecParams}
@@ -949,20 +1012,19 @@ Table~\ref{TblSpecParams}.
   \toprule
   \textbf{Var} & \textbf{Value} \\
   \midrule 
-  $L_\text{min}$ & 0.1 \si{\metre}\\
+  $\text{-}$ & \text{-}\\
   \bottomrule
 \end{longtable*}
 \end{table}
 
+
+
 \subsubsection{Properties of a Correct Solution} \label{sec_CorrectSolution}
 
 \noindent
-A correct solution must exhibit \plt{fill in the details}.  \plt{These
-  properties are in addition to the stated requirements.  There is no need to
-  repeat the requirements here.  These additional properties may not exist for
-  every problem.  Examples include conservation laws (like conservation of
-  energy or mass) and known constraints on outputs (which are usually summarized
-  in tabular form.  A sample table is shown in Table~\ref{TblOutputVar}}
+Table:$\nameref{TblOutputVar}$ shows the data constraints on the output variables. The column
+for physical constraints gives the physical limitations on the range of values that can be
+taken by the variable.
 
 \begin{table}[!h]
 \caption{Output Variables} \label{TblOutputVar}
@@ -971,41 +1033,68 @@ A correct solution must exhibit \plt{fill in the details}.  \plt{These
   \toprule
   \textbf{Var} & \textbf{Physical Constraints} \\
   \midrule 
-  $T_W$ & $T_\text{init} \leq T_W \leq T_C$ (by~\aref{A_charge})
+  $\theta_{tilt}$ & $0 \leq \theta_{tilt} \leq 90^\circ$ (by~\aref{A_charge})\\
+  $P_E$ & $0 \leq P_E \leq \text{Rated Maximum Power}$ (by~\aref{A_charge})
   \\
   \bottomrule
 \end{longtable*}
 \end{table}
 
+\begin{description}
+
+\item[ ] Rated Maximum Power is measured by manufacturers which shows the 
+maximum power the solar panel can generate.
+
+\end{description}
+
 \section{Requirements}
 
-\plt{The requirements refine the goal statement.  They will make heavy use of
-  references to the instance models.}
+\iffalse\plt{The requirements refine the goal statement.  They will make heavy use of
+  references to the instance models.}\fi
 
 This section provides the functional requirements, the business tasks that the
 software is expected to complete, and the nonfunctional requirements, the
 qualities that the software is expected to exhibit.
 
+
+
 \subsection{Functional Requirements}
+
 
 \noindent \begin{itemize}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Inputs}:] \plt{Requirements
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_Inputs}:] Input the values 
+requested by the system, which is the latitude of the solar panel, the date starts the calculation and the ending date.
+
+ \iffalse\plt{Requirements
     for the inputs that are supplied by the user.  This information has to be
-    explicit.}
+    explicit.}\fi
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_OutputInputs}:] \plt{It isn't
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_OutputInputs}:] Output the 
+valid values for the problem defined by $\nameref{Sec_pd} $, which is the optimum 
+tilt angle for solar panel, the predicted solar energy output.
+
+\iffalse\plt{It isn't
     always required, but often echoing the inputs as part of the output is a
-    good idea.}
+    good idea.}\fi
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate}:] \plt{Calculation
-    related requirements.}
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate}:] Determine the tilt angle 
+by using $\iref{C_SI}$ and the solar energy output by using $\iref{C_SEO}$
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_VerifyOutput}:]
-  \plt{Verification related requirements.}
+\iffalse\plt{Calculation
+    related requirements.}\fi
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Output}:] \plt{Output related
-    requirements.}
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_VerifyOutput}:] Verify the output 
+by using the Table: $\nameref{TblOutputVar}$
+
+
+  \iffalse\plt{Verification related requirements.}\fi
+
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_Output}:]Reading the section of 
+$\nameref{Sec_assumpt}$ to know the related requirements regarding the outputs.
+
+\iffalse \plt{Output related
+    requirements.}\fi
 
 \end{itemize}
 
@@ -1018,8 +1107,12 @@ qualities that the software is expected to exhibit.
 
 \noindent \begin{itemize}
 
-\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_meaningfulLabel}:] \plt{Give
-    the likely changes, with a reference to the related assumption (aref), as appropriate.}
+\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_meaningfulLabel}:] The system currently using the latest data of the solar's intensity, the calculation can be modified if this data upgrade in the future.$/aref{a_dsia}$
+
+\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_meaningfulLabel}:] The system currently using the latest data of the solar panel's efficiency, the calculation can be modified if this data upgrade in the future.$/aref{a_dp}$
+
+\iffalse\plt{Give
+    the likely changes, with a reference to the related assumption (aref), as appropriate.}\fi
 
 \end{itemize}
 
@@ -1027,9 +1120,11 @@ qualities that the software is expected to exhibit.
 
 \noindent \begin{itemize}
 
-\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_meaningfulLabel}:] \plt{Give
+\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_meaningfulLabel}:] The goal of the system is to predict the optimum tilt energy without considering the individual environmental difference from each case.
+
+\iffalse\plt{Give
     the unlikely changes.  The design can assume that the changes listed will
-    not occur.}
+    not occur.}\fi
 
 \end{itemize}
 
@@ -1057,27 +1152,18 @@ the assumptions.
 \centering
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
-	& \aref{A_OnlyThermalEnergy}& \aref{A_hcoeff}& \aref{A_mixed}& \aref{A_tpcm}& \aref{A_const_density}& \aref{A_const_C}& \aref{A_Newt_coil}& \aref{A_tcoil}& \aref{A_tlcoil}& \aref{A_Newt_pcm}& \aref{A_charge}& \aref{A_InitTemp}& \aref{A_OpRangePCM}& \aref{A_OpRange}& \aref{A_htank}& \aref{A_int_heat}& \aref{A_vpcm}& \aref{A_PCM_state}& \aref{A_Pressure} \\
+	& \aref{a_dsip}& \aref{a_dsia}& \aref{a_dp} \\
 \hline
-\tref{T_COE}        & X& & & & & & & & & & & & & & & & & & \\ \hline
-\tref{T_SHE}        & & & & & & & & & & & & & & & & & & & \\ \hline
-\tref{T_LHE}        & & & & & & & & & & & & & & & & & & & \\ \hline
-\dref{NL}           & & X& & & & & & & & & & & & & & & & & \\ \hline
-\dref{ROCT}         & & & X& X& X& X& & & & & & & & & & & & & \\ \hline
-\ddref{FluxCoil}    & & & & & & & X& X& X& & & & & & & & & & \\ \hline
-\ddref{FluxPCM}     & & & X& X& & & & & & X& & & & & & & & & \\ \hline
-\ddref{D_HOF}       & & & & & & & & & & & & & & & & & & & \\ \hline
-\ddref{D_MF}        & & & & & & & & & & & & & & & & & & & \\ \hline
-\iref{ewat}         & & & & & & & & & & & X& X& & X& X& X& & & X \\ \hline
-\iref{epcm}         & & & & & & & & & & & & X& X& & & X& X& X& \\ \hline
+\tref{C_LCL}        & X& & & & & & & & & & & & & & & & & & \\ \hline
+\dref{C_ZA}           & & X& & & & & & & & & & & & & & & & & \\ \hline
+\ddref{C_DS}    & & & & & & & X& X& X& & & & & & & & & & \\ \hline
+\iref{C_SI}         & & & & & & & & & & & X& X& & X& X& X& & & X \\ \hline
+\iref{C_SEO}         & & & & & & & & & & & & X& X& & & X& X& X& \\ \hline
 \iref{I_HWAT}       & & & & & & & & & & & & & & X& & & & & X \\ \hline
 \iref{I_HPCM}       & & & & & & & & & & & & & X& & & & & X & \\ \hline
 \lcref{LC_tpcm}     & & & & X& & & & & & & & & & & & & & & \\ \hline
 \lcref{LC_tcoil}    & & & & & & & & X& & & & & & & & & & & \\ \hline
-\lcref{LC_tlcoil}   & & & & & & & & & X& & & & & & & & & & \\ \hline
-\lcref{LC_charge}   & & & & & & & & & & & X& & & & & & & & \\ \hline
-\lcref{LC_InitTemp} & & & & & & & & & & & & X& & & & & & & \\ \hline
-\lcref{LC_htank}    & & & & & & & & & & & & & & & X& & & & \\
+
 \hline
 \end{tabular}
 \caption{Traceability Matrix Showing the Connections Between Assumptions and Other Items}
@@ -1088,23 +1174,18 @@ the assumptions.
 
 \begin{table}[h!]
 \centering
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
 \hline        
-	& \tref{T_COE}& \tref{T_SHE}& \tref{T_LHE}& \dref{NL}& \dref{ROCT} & \ddref{FluxCoil}& \ddref{FluxPCM} & \ddref{D_HOF}& \ddref{D_MF}& \iref{ewat}& \iref{epcm}& \iref{I_HWAT}& \iref{I_HPCM} \\
+	& \tref{C_LCL}& \dref{C_ZA} & \ddref{C_DS}& \iref{C_SI} &\iref{C_SEO} & \iref{I_HWAT}& \iref{I_HPCM}\\
 \hline
-\tref{T_COE}     & & & & & & & & & & & & & \\ \hline
-\tref{T_SHE}     & & & X& & & & & & & & & & \\ \hline
-\tref{T_LHE}     & & & & & & & & & & & & & \\ \hline
-\dref{NL}        & & & & & & & & & & & & & \\ \hline
-\dref{ROCT}      & X& & & & & & & & & & & & \\ \hline
-\ddref{FluxCoil} & & & & X& & & & & & & & & \\ \hline
-\ddref{FluxPCM}  & & & & X& & & & & & & & & \\ \hline
-\ddref{D_HOF}    & & & & & & & & & & & & & \\ \hline
-\ddref{D_MF}     & & & & & & & & X& & & & & \\ \hline
-\iref{ewat}      & & & & & X& X& X& & & & X& & \\ \hline
-\iref{epcm}      & & & & & X& & X& & X& X& & & X \\ \hline
-\iref{I_HWAT}    & & X& & & & & & & & & & & \\ \hline
-\iref{I_HPCM}    & & X& X& & & & X& X& X& & X& & \\
+\tref{C_LCL}        & X& & & & & & & &  \\ \hline
+\dref{C_ZA}           & & X& & & & & &  \\ \hline
+\ddref{C_DS}    & & & & & & & X& X&\\ \hline
+\iref{C_SI}         & & & & & & & & &  \\ \hline
+\iref{C_SEO}        & & & & & & & & & \\ \hline
+\iref{I_HWAT}       & & & & & & & & & \\ \hline
+\iref{I_HPCM}       & & & & & & & & &\\ \hline
+
 \hline
 \end{tabular}
 \caption{Traceability Matrix Showing the Connections Between Items of Different Sections}
@@ -1115,23 +1196,16 @@ the assumptions.
 \centering
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline
-	& \iref{ewat}& \iref{epcm}& \iref{I_HWAT}& \iref{I_HPCM}& \ref{sec_DataConstraints}& \rref{R_RawInputs}& \rref{R_MassInputs} \\
+	& \iref{C_SI}& \iref{C_SEO}& \ref{sec_DataConstraints}& \rref{R_RawInputs}& \rref{R_MassInputs} \\
 \hline
-\iref{ewat}            & & X& & & & X& X \\ \hline
-\iref{epcm}            & X& & & X& & X& X \\ \hline
-\iref{I_HWAT}          & & & & & & X& X \\ \hline
-\iref{I_HPCM}          & & X& & & & X& X \\ \hline
-\rref{R_RawInputs}     & & & & & & & \\ \hline
-\rref{R_MassInputs}    & & & & & & X& \\ \hline
-\rref{R_CheckInputs}   & & & & & X& & \\ \hline
-\rref{R_OutputInputs}  & X& X& & & & X& X \\ \hline
-\rref{R_TempWater}     & X& & & & & & \\ \hline 
-\rref{R_TempPCM}       & & X& & & & & \\ \hline
-\rref{R_EnergyWater}   & & & X& & & & \\ \hline
-\rref{R_EnergyPCM}     & & & & X& & & \\ \hline
-\rref{R_VerifyOutput}  & & & X& X& & & \\ \hline
-\rref{R_timeMeltBegin} & & X& & & & & \\ \hline
-\rref{R_timeMeltEnd}   & & X& & & & & \\ 
+\iref{C_SI}            & & X& & & & X& X \\ \hline
+\iref{C_SEO}            & X& & & X& & X& X \\ \hline
+\rref{R_Inputs}     & & & & & & & \\ \hline
+\rref{R_OutputInputs}    & & & & & & X& \\ \hline
+\rref{R_OutputInputs}   & & & & & X& & \\ \hline
+\rref{R_Calculate}  & X& X& & & & X& X \\ \hline
+\rref{R_VerifyOutput}     & X& & & & & & \\ \hline 
+\rref{R_Output}       & & X& & & & & \\ \hline
 \hline
 \end{tabular}
 \caption{Traceability Matrix Showing the Connections Between Requirements and Instance Models}
@@ -1180,6 +1254,8 @@ Their values are defined in this section for easy maintenance.}
 
 \bibliographystyle {plainnat}
 \bibliography {../../refs/References}
+
+\nocite{*}
 
 \newpage
 
