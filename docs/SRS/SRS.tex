@@ -168,9 +168,11 @@ $\theta_{T}$ & \si[per-mode=symbol] {\degree} & the tilt angle for adjusting the
 \\
 $\Phi_P$ & \si[per-mode=symbol] {(\degree \  ')N/S} & the latituade of the solar panel
 \\ 
-$\delta_{day}$ & \si[per-mode=symbol] {\degree \ N/S} & the declination of the vertical noon sun in the day
+$\delta_{date}$ & \si[per-mode=symbol] {\degree \ N/S} & the declination of the vertical noon sun in the day
 \\ 
-$I_{S_{day}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the intensity of the sun in a day
+$I_{S_{day}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the intensity of the sun in a day of the noon
+\\ 
+$I_{S}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the solar intensity in a period of days of the noon
 \\ 
 $P_{E}$ & \si[per-mode=symbol] {k\watt} &the estimated solar panel output energy
 \\ 
@@ -179,6 +181,8 @@ $P_{A}$ & \si[per-mode=symbol] {\square{m}} & the solar panel area
 $P_{r}$ & \si[per-mode=symbol] {\%} & solar panel yield or efficiency
 \\ 
 $PR$ & \si[per-mode=symbol] {\%} & performance ratio, coefficient for losses 
+\\ 
+$\text{date}$ & \si[per-mode=symbol] {\text{-}} & is a sequence of dates from the day starts estimating the angle to the ending day
 \\ 
 \bottomrule
 \end{longtable*}
@@ -491,7 +495,7 @@ easier to correctly understand the requirements:
 
 \item Declination of the Sun: The angle between the rays of the Sun and the plane of the Earth's equator.
 
-\item Tilt angle: The angle for adjusting the solar panel result in the panel get the direct sunlight.
+\item Tilt angle: The angle for adjusting the solar panel result in the panel get the direct sunlight. According to the Figure:\nameref{Fig_PhysicFigure}, tilt angle is equal to the zenith angle.
 
 \item The period of days: The period of days depends on the input days of the users.
 
@@ -502,7 +506,7 @@ to power.
 
 \item Latitude: Latitude is an angle which ranges from 0 $^\circ$ at the Equator to 90$^\circ$ (North or South) at the poles. 
 
-\item Zenith Angle: The angle between the sun and the vertical.
+\item Zenith Angle: The angle between the sun and the vertical. According to the Figure:\nameref{Fig_PhysicFigure}, zenith angle is equal to the tilt angle.
 
 \end{itemize}
 
@@ -716,6 +720,8 @@ of the scene.\\
 
 ~\newline
 
+
+
 \subsubsection{General Definitions}\label{sec_gendef}
 
 \iffalse\plt{General Definitions (GDs) are a refinement of one or more TMs, and/or of
@@ -750,10 +756,10 @@ SI Units& $\circ$\\
 Equation&  \[
     \theta_{S_{day}}= 
 \begin{cases}
-      \Phi_P - \delta_{day} ,& \text{if } 0 \leq \Phi_P, \delta_{day} \leq  90^\circ \text{N } \lor\  0 \leq \Phi_P,  \delta_{day}  \leq  90^\circ \text{S }\\
-    \Phi_P + \delta_{day} ,& \text{if } \begin{cases} 
-     0 \leq \Phi_P\leq  90^\circ \text{N } \land\  0 \leq \delta_{day}  \leq  90^\circ \text{S } \\
-     0 \leq \Phi_P\leq  90^\circ \text{S } \land\  0 \leq \delta_{day}  \leq  90^\circ \text{N }
+      \Phi_P - \delta_{date} ,& \text{if } 0 \leq \Phi_P, \delta_{date} \leq  90^\circ \text{N } \lor\  0 \leq \Phi_P,  \delta_{date}  \leq  90^\circ \text{S }\\
+    \Phi_P + \delta_{date} ,& \text{if } \begin{cases} 
+     0 \leq \Phi_P\leq  90^\circ \text{N } \land\  0 \leq \delta_{date}  \leq  90^\circ \text{S } \\
+     0 \leq \Phi_P\leq  90^\circ \text{S } \land\  0 \leq \delta_{date}  \leq  90^\circ \text{N }
       \end{cases}
 \end{cases}
 \]\\
@@ -762,7 +768,7 @@ Equation&  \[
           This equation describes the zenith angle associated with the solar panel.\\
 &$\theta_{S_{day}} $ is the zeith angle of the sun in the day.\\
 &$\Phi_P$  is the local latitude of the solar panel.\\
-&$\delta_{day} $ is the declination of the vertical noon sun in the day.\\
+&$\delta_{date} $ is the declination of the vertical noon sun in the day.\\
 
 
 
@@ -832,7 +838,7 @@ Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{C_DS}\\
 \hline
 Label& \bf The Declination of the Sun\\
 \hline
-Symbol &$\delta_{day} $\\
+Symbol &$\delta_{date} $\\
 \hline
 % Units& $Mt^{-3}$\\
 % \hline
@@ -841,8 +847,8 @@ Symbol &$\delta_{day} $\\
   Equation&{-}\\
   \hline
   Description &
-       "day" means every day in the period of days which depends on the user's input.\\
-       &The degree of $\delta_{day} $ can be determinated by the the Analemma Figure.\\
+       "date" means every date in the period of days which depends on the user's input.\\
+       &The degree of $\delta_{date} $ can be determinated by the the Analemma Figure.\\
   \hline
   Sources& \url{https://www.cengage.com/resource_uploads/downloads/0495555061_137179.pdf}\\
   \hline
@@ -888,7 +894,7 @@ The goals \nameref{sec_GS} are solved by IM\ref{C_SI}. \iffalse \plt{other detai
   Label& \bf Calculating the Sun intensity\\
   \hline
 
-  Input&$\Phi_P$\\
+  Input&$\Phi_P, date$\\
 
   \hline
   Output & $ I_{S_{day}}  = 1.35 \cdot \frac{1.00}{1.35}^ {sec(\theta_{S_{day}})} $\\ 
@@ -897,13 +903,14 @@ The goals \nameref{sec_GS} are solved by IM\ref{C_SI}. \iffalse \plt{other detai
  As the $\nameref{sec_assumpt}$ describes, this equation is giveing the daily sun intensity at noon. Moreover, this equation assumes that the earth is flat, so a factor was applied to account for the curvature of the earth(and therefore the earth’s atmosphere). These factors, and the angle of the sun with respect to the panel, then determine the insolation on the panel. \\
 
          &$(\theta_{S_{day}})$ is the zenith angle of the sun in the day. The equation of  $(\theta_{S_{day}})$ is described in $\dref{C_ZA}$.\\
+			
 
   \hline
   Sources&  \url{https://www.solarpaneltilt.com/#other}\\
 
 
   \hline
-  Ref.\ By & \iref{C_SEO}\\
+  Ref.\ By & \iref{C_TA}\\
   \hline
 \end{tabular}
 \end{minipage}\\
@@ -918,6 +925,40 @@ The goals \nameref{sec_GS} are solved by IM\ref{C_SI}. \iffalse \plt{other detai
 \iffalse\plt{The derivation shows how the IM is derived from the TMs/GDs.  In cases
   where the derivation cannot be described under the Description field, it will
   be necessary to include this subsection.}\fi
+
+~\newline
+
+\noindent
+\begin{minipage}{\textwidth}
+\renewcommand*{\arraystretch}{1.5}
+\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+  \hline
+  \rowcolor[gray]{0.9}
+  Number& IM\refstepcounter{instnum}\theinstnum \label{C_TA}\\
+  \hline
+  Label& \bf Calculating the Tilt Angle\\
+  \hline
+
+  Input&$\theta_{S_{day}},I_{S_{day}}$\\
+
+  \hline
+  Output & $ I_{T} , I_{S}$\\ 
+  \hline
+  Description&
+	Using Instance Model \iref{C_SI} can get a angle to adjust the solar panel and the sun itensity for each date in the period of days. Then using Iteration Method to calculate to optimum angle and the sun itensity for the period of days.
+\\
+
+  \hline
+  Sources&  \url{https://www.solarpaneltilt.com/#other}\\
+
+
+  \hline
+  Ref.\ By & \iref{C_SEO}\\
+  \hline
+\end{tabular}
+\end{minipage}\\
+
+%~\newline
 
 
 ~\newline
@@ -937,7 +978,7 @@ The goals \nameref{sec_GS} are solved by IM\ref{C_SI}. \iffalse \plt{other detai
   Input&$P_A$\\
 
   \hline
-  Output & $ P_E = P_A \times P_r \times  I_{S_{day}} \times PR$\\ 
+  Output & $ P_E = P_A \times P_r \times  I_{S} \times PR$\\ 
   \hline
   Description&
 		P is the solar panel.\\
@@ -945,7 +986,7 @@ The goals \nameref{sec_GS} are solved by IM\ref{C_SI}. \iffalse \plt{other detai
 &$P_A$ is the solar panel area.\\
 &$P_r$ is solar panel yield or efficiency.\\
 
-&$I_{S_{day}}$ is the solar intensity in a day of the noon.\\
+&$I_{S}$ is the solar intensity in a period of days of the noon.\\
 &$PR$ is the performance ratio, coefficient for losses\\
 \\
 
@@ -1091,7 +1132,7 @@ by using the Table: $\nameref{TblOutputVar}$
   \iffalse\plt{Verification related requirements.}\fi
 
 \item[R\refstepcounter{reqnum}\thereqnum \label{R_Output}:]Reading the section of 
-$\nameref{Sec_assumpt}$ to know the related requirements regarding the outputs.
+$\nameref{sec_assumpt}$ to know the related requirements regarding the outputs.
 
 \iffalse \plt{Output related
     requirements.}\fi
@@ -1100,8 +1141,20 @@ $\nameref{Sec_assumpt}$ to know the related requirements regarding the outputs.
 
 \subsection{Nonfunctional Requirements}
 
-\plt{List your nonfunctional requirements.  You may consider using a fit
-  criterion to make them verifiable.}
+\iffalse\plt{List your nonfunctional requirements.  You may consider using a fit
+  criterion to make them verifiable.}\fi
+This section provides the non-functional requirements, the qualities that the software is
+expected to exhibit.
+
+\noindent\begin{itemize}
+\item[ ]Correct: The outputs of the code have the properties described in Section: \nameref{sec_CorrectSolution}
+\item[ ]Verifiable: The code is tested with complete verification and validation plan
+\item[ ]Understandable: The code is modularized with complete module guide and module interface specification
+\item[ ]Reusable: The code is modularized
+\item[ ]Maintainable: The traceability between requirements, assumptions, theoretical models, general definitions, data definitions, instance models, likely changes, unlikely changes, and modules
+is completely recorded in traceability matrices in the SRS and module guide
+\item[ ]Portable: The code is able to be run in different environments
+\end{itemize}
 
 \section{Likely Changes}    
 
@@ -1144,7 +1197,7 @@ the assumptions.
 \plt{You will have to modify these tables for your problem.}
 
 \plt{The traceability matrix is challenging to maintain manually.  Please do
-  your best.  In the future tools (like Drasil) will make this much easier.}
+ your best.  In the future tools (like Drasil) will make this much easier.}
 
 \afterpage{
 \begin{landscape}
