@@ -223,13 +223,13 @@ $PR$ & \si[per-mode=symbol] {\%} & performance ratio, coefficient for losses
 \iffalse\plt{Feel free to change the appearance of the report by modifying the LaTeX
   commands.}\fi
 
-\plt{This template document assumes that a single program is being documented.
+\iffalse\plt{This template document assumes that a single program is being documented.
   If you are documenting a family of models, you should start with a commonality
   analysis.  A separate template is provided for this.  For program
   families you should look at \cite{Smith2006, SmithMcCutchanAndCarette2017}.
   Single family member programs are often programs based on a single physical
   model.  General purpose tools are usually documented as a family.  Families of
-  physical models also come up.}
+  physical models also come up.}\fi
 
 \iffalse\plt{The SRS is not generally written, or read, sequentially.  The SRS is a
   reference document.  It is generally read in an ad hoc order, as the need
@@ -656,7 +656,7 @@ likely change [LC], in which the respective assumption is used.
 \item[A\refstepcounter{assumpnum}\theassumpnum \label{a_dsia}]: This system calculate the solar zenith angle at noon.(RefBy: \dref{C_ZA})\\
 
 \item[A\refstepcounter{assumpnum}\theassumpnum \label{a_dp}]: Base
- on the resource of \cite{EMPA2011}, this system definite the variable of $P_r$ as 18.7\%.(RefBy: \iref{C_SEC})\\
+ on the resource of \cite{EMPA2011}, this system definite the variable of $P_r$ as 18.7\%.(RefBy: \iref{C_SEO})\\
 
   \iffalse\plt{Short description of each assumption.  Each assumption
     should have a meaningful label.  Use cross-references to identify the
@@ -767,9 +767,9 @@ Equation&  \[
 
 
 \hline
-  Source & \url{https://ntrs.nasa.gov/archive/nasa/casi.ntrs.nasa.gov/19680025707.pdf}\\
+  Source & \cite{Harold1968}\\
   \hline
-  Ref.\ By & \ddref{C_DC}\\
+  Ref.\ By & \ddref{C_DS}\\
   \hline
 \end{tabular}
 \end{minipage}\\
@@ -903,7 +903,7 @@ The goals \nameref{sec_GS} are solved by IM\ref{C_SI}. \iffalse \plt{other detai
 
 
   \hline
-  Ref.\ By & \iref{C_SEC}\\
+  Ref.\ By & \iref{C_SEO}\\
   \hline
 \end{tabular}
 \end{minipage}\\
@@ -1107,9 +1107,9 @@ $\nameref{Sec_assumpt}$ to know the related requirements regarding the outputs.
 
 \noindent \begin{itemize}
 
-\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_meaningfulLabel}:] The system currently using the latest data of the solar's intensity, the calculation can be modified if this data upgrade in the future.$/aref{a_dsia}$
+\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_SI}:] The system currently using the latest data of the solar's intensity, the calculation can be modified if this data upgrade in the future.$\aref{a_dsia}$
 
-\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_meaningfulLabel}:] The system currently using the latest data of the solar panel's efficiency, the calculation can be modified if this data upgrade in the future.$/aref{a_dp}$
+\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_P}:] The system currently using the latest data of the solar panel's efficiency, the calculation can be modified if this data upgrade in the future.$\aref{a_dp}$
 
 \iffalse\plt{Give
     the likely changes, with a reference to the related assumption (aref), as appropriate.}\fi
@@ -1120,7 +1120,7 @@ $\nameref{Sec_assumpt}$ to know the related requirements regarding the outputs.
 
 \noindent \begin{itemize}
 
-\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_meaningfulLabel}:] The goal of the system is to predict the optimum tilt energy without considering the individual environmental difference from each case.
+\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_G}:] The goal of the system is to predict the optimum tilt energy without considering the individual environmental difference from each case.
 
 \iffalse\plt{Give
     the unlikely changes.  The design can assume that the changes listed will
@@ -1161,8 +1161,8 @@ the assumptions.
 \iref{C_SEO}         & & & & & & & & & & & & X& X& & & X& X& X& \\ \hline
 \iref{I_HWAT}       & & & & & & & & & & & & & & X& & & & & X \\ \hline
 \iref{I_HPCM}       & & & & & & & & & & & & & X& & & & & X & \\ \hline
-\lcref{LC_tpcm}     & & & & X& & & & & & & & & & & & & & & \\ \hline
-\lcref{LC_tcoil}    & & & & & & & & X& & & & & & & & & & & \\ \hline
+\lcref{LC_SI}     & & & & X& & & & & & & & & & & & & & & \\ \hline
+\lcref{LC_P}    & & & & & & & & X& & & & & & & & & & & \\ \hline
 
 \hline
 \end{tabular}
@@ -1176,15 +1176,14 @@ the assumptions.
 \centering
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
 \hline        
-	& \tref{C_LCL}& \dref{C_ZA} & \ddref{C_DS}& \iref{C_SI} &\iref{C_SEO} & \iref{I_HWAT}& \iref{I_HPCM}\\
+	& \tref{C_LCL}& \dref{C_ZA} & \ddref{C_DS}& \iref{C_SI} &\iref{C_SEO} \\
 \hline
 \tref{C_LCL}        & X& & & & & & & &  \\ \hline
 \dref{C_ZA}           & & X& & & & & &  \\ \hline
 \ddref{C_DS}    & & & & & & & X& X&\\ \hline
 \iref{C_SI}         & & & & & & & & &  \\ \hline
 \iref{C_SEO}        & & & & & & & & & \\ \hline
-\iref{I_HWAT}       & & & & & & & & & \\ \hline
-\iref{I_HPCM}       & & & & & & & & &\\ \hline
+
 
 \hline
 \end{tabular}
@@ -1245,21 +1244,22 @@ instance models, requirements, and data constraints on each other.
 
 \section{Values of Auxiliary Constants}
 
-\plt{Show the values of the symbolic parameters introduced in the report.}
+\iffalse\plt{Show the values of the symbolic parameters introduced in the report.}
 
 \plt{The definition of the requirements will likely call for SYMBOLIC\_CONSTANTS.
-Their values are defined in this section for easy maintenance.}
+Their values are defined in this section for easy maintenance.}\fi
+
+There are no auxiliary constants.
 
 \newpage
 
 \bibliographystyle {plainnat}
 \bibliography {../../refs/References}
 
-\nocite{*}
 
 \newpage
 
-\noindent \plt{The following is not part of the template, just some things to consider
+\iffalse\noindent \plt{The following is not part of the template, just some things to consider
   when filing in the template.}
 
 \noindent \plt{Grammar, flow and \LaTeX advice:
@@ -1297,6 +1297,6 @@ Their values are defined in this section for easy maintenance.}
 \item If you say the format of the output (plot, table etc), then your
   requirement could be more abstract
 \end{itemize}
-}
+}\fi
 
 \end{document}
