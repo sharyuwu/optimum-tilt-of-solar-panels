@@ -283,11 +283,10 @@ $\text{date}$ & \si[per-mode=symbol] {\text{-}} & is a sequence of dates from th
 
 \medskip
 
-Due to the increasing concepts of creating an earth-friendly environment, the kits using renewable energy bocome more popular in the market. In all type of renweable energy, solar energy is the most common type of renewable resourse for a home. However, it is an enpensive technology, and its cell efficiency is restricted by seaons. Therefore, Sun Catcher is created for home users to gain optimum energy from daily sunlight.
+Due to the increasing concepts of creating an earth-friendly environment, the kits using renewable energy becomes more popular in the market. Solar energy is the most common type of renewable resource for a home. However, it is an expensive technology, and its cell efficiency is restricted by seasons. Therefore, Sun Catcher is created for home users to gain optimum energy from daily sunlight.
 
 
-The following sections provides an overview of the Software Requirements Specification
-(SRS) for Sun Catcher. The developed program will be referred to as SC. This section explains the purpose of this document, the scope of the requirements, the characteristics of the intended reader, and the organization of the document.
+The following sections provide an overview of the Software Requirements Specification (SRS) for Sun Catcher(SC). This section explains the purpose and the organization of the document, the scope of the requirements, and the characteristics of the intended reader.
 
 
 \iffalse\plt{The introduction section is written to introduce the problem.  It starts
@@ -660,7 +659,7 @@ likely change [LC], in which the respective assumption is used.
 
 \item[A\refstepcounter{assumpnum}\theassumpnum \label{a_dsia}]: This system calculate the solar zenith angle at noon.(RefBy: \dref{C_ZA})\\
 
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{a_dp}]: Base
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{a_dp}]: Based
  on the resource of \cite{EMPA2011}, this system definite the variable of $P_r$ as 18.7\%.(RefBy: \iref{C_SEO})\\
 
   \iffalse\plt{Short description of each assumption.  Each assumption
@@ -791,17 +790,17 @@ determined by the relationship\\
 		  $\Phi$ is the latituade.\\
 		  $\delta$ is the solar declination.\\
 		  $\text{h}$ is the solar hour angle.\\
-Base on the Level 1 celestial mechanics, the solar zenith angle 
+Based on the Level 1 celestial mechanics, the solar zenith angle 
 is equal to 90$^\circ$ - the solar elevation angle\\
 			which can write as\\
 $\cos{\theta} = \sin{\alpha} = \sin{\Phi} \times \sin{\delta} + \cos{\Phi} \times \cos{\delta} \times \cos{\text{h}}$
-			Base on the \nameref{sec_assumpt} section, it assumes that SC calculate the solar zenith 
+			Based on the \nameref{sec_assumpt} section, it assumes that SC calculate the solar zenith 
 angle at noon which mean solar hour angle = 0$^\circ$.\\
 			Therefore, $\cos{\text{h}} = 0$\\
 				Rewrite the equation as,\\
 $\cos{\theta} = \sin{\alpha} = \sin{\Phi} \times \sin{\delta} + \cos{\Phi} \times \cos{\delta} \times 1$\\
 $\Rightarrow  \cos{\theta} = \sin{\alpha} = \sin{\Phi} \times \sin{\delta} + \cos{\Phi} \times \cos{\delta}$\\
-			Base on the Level 1 calcucltion, we have\\
+			Based on the Level 1 calcucltion, we have\\
 $\cos{\Phi \pm \delta} = \sin{\alpha} = \sin{\Phi} \times \sin{\delta} + \cos{\Phi} \times \cos{\delta}$\\
 			Therefore, we have
 			$\theta = \Phi \pm \delta$\\
