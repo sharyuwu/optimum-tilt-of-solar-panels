@@ -127,6 +127,11 @@ description of the unit and the SI name.
     \si{k} & mass   & kilo\\
     \si{m} &  length   & metre \\
     \si{\watt} & power & Watt (W = \si{\joule\per\second})\\
+	  N & direction & North\\
+	  S & direction & South\\
+	  year & date & date\\
+	  month & date & date\\
+	  day & date & date\\
     \bottomrule
   \end{tabular}
   %	\caption{Provide a caption}
@@ -150,7 +155,7 @@ description of the unit and the SI name.
   \href{https://www.nist.gov/pml/weights-and-measures/writing-metric-units}
   {NIST} web-page.}\fi
 
-\subsection{Table of Symbols}
+\subsection{Table of Symbols}\label{tb_TS}
 
 The table that follows summarizes the symbols used in this document along with
 their units.  The choice of symbols was made to be consistent with the heat
@@ -166,13 +171,17 @@ $\theta_{S_{day}}$ & \si[per-mode=symbol] {\degree} & zenith angle of sun in the
 \\
 $\theta_{T}$ & \si[per-mode=symbol] {\degree} & the tilt angle for adjusting the solar panel
 \\
-$\Phi_P$ & \si[per-mode=symbol] {(\degree \  ')N/S} & the latituade of the solar panel
+$\Phi_P$ & \si[per-mode=symbol] {(\degree, \N/S, \  ')} & the latituade of the solar panel
 \\ 
-$\delta_{date}$ & \si[per-mode=symbol] {\degree \ N/S} & the declination of the vertical noon sun in the day
+$\delta_{date}$ & \si[per-mode=symbol] {(\degree, \ N/S)} & the declination of the vertical noon sun in the day
 \\ 
-$I_{S_{day}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the intensity of the sun in a day of the noon
+$I_{S}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the intensity of the sun measured by the satellites
 \\ 
-$I_{S}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the solar intensity in a period of days of the noon
+$I_{S_{date}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the intensity of the sun in a day of the noon
+\\ 
+$I_{S_{date}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the solar intensity in a period of days of the noon
+\\ 
+$I_{S_{T}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the solar intensity hits on the tilted solar panel. 
 \\ 
 $P_{E}$ & \si[per-mode=symbol] {k\watt} &the estimated solar panel output energy
 \\ 
@@ -182,7 +191,11 @@ $P_{r}$ & \si[per-mode=symbol] {\%} & solar panel yield or efficiency
 \\ 
 $PR$ & \si[per-mode=symbol] {\%} & performance ratio, coefficient for losses 
 \\ 
-$\text{date}$ & \si[per-mode=symbol] {\text{-}} & is a sequence of dates from the day starts estimating the angle to the ending day
+$date$ & \si[per-mode=symbol] {\text{-}} & a sequence of dates from the day starts estimating the angle to the ending day
+\\ 
+$day_{Start}$ & \si[per-mode=symbol] {\text{-}} & the day starts estimating the angle
+\\ 
+$day_{End}$ & \si[per-mode=symbol] {\text{-}} & the day stops estimating the angle
 \\ 
 \bottomrule
 \end{longtable*}
@@ -386,10 +399,10 @@ characteristics and lists the system constraints. \iffalse \plt{This text can li
   same, while specific details are changed between family members.}\fi
 
 \subsection{System Context}
-\nameref{Fig_SystemContext} shows the design pattern of this program from users 
-to the system than the output. The circle represents the users of this software. The rectangle
-represents the software system: Sun Catcher. The arrow represents the inputs that drive
-the software and the output expecting from the software.\\
+\nameref{Fig_SystemContext} shows the design pattern of this program from users to
+ the system then the output. The circle represents the users of this software. The rectangle 
+represents the software system: Sun Catcher(SC). The arrow represents the inputs that 
+drive the software and the output expecting from the software system.\\
 
 \iffalse\plt{Your system context will include a figure that shows the abstract view of
   the software.  Often in a scientific context, the program can be viewed
@@ -429,7 +442,7 @@ the software and the output expecting from the software.\\
 \item Detect data type mismatch, such as a string of characters instead of a
   floating point number.
 \item Comfirm the inputs quality to satisfy the required physical and software constraints.
-\item Predict an optimum tilt angle, the expected gaining solar energy, and a report that shows the comparison of different results.
+\item Predict an optimum tilt angle and the expected gaining solar energy, and show the result explicitly to users (such as generating a report with linear graphic ).
 
 \end{itemize}
 \end{itemize}
@@ -501,7 +514,7 @@ easier to correctly understand the requirements:
 \item Sun panel: The adjustable panel, which has solar cells on it, able to converse solar energy
 to power.
 
-\item Sun Intensity: The amount of incoming solar energy, or radiation, that reaches the Earth's surface.
+\item solar intensity: The amount of incoming solar energy, or radiation, that reaches the Earth's surface.
 
 \item Latitude: Latitude is an angle which ranges from 0 $^\circ$ at the Equator to 90$^\circ$ (North or South) at the poles. 
 
@@ -563,15 +576,14 @@ includes the following elements:
   amount of technical language.  They should be understandable by non-domain
   experts.}\fi
 
-\noindent Given the user located latitude, the day started to estimate angle,the day when the  estimation end, the goal statements are:
+\noindent Given the user located latitude($\Phi_{P}$), the day started to estimate angle($day_{Start}$),the day when the  estimation end($day_{End}$), the goal statements are:
 
 \begin{itemize}
 
-\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] Predict the optimum tilt angle in the period of days.
+\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] Predict the optimum tilt angle in the period of days($\theta_{T}$).
 
-\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] Predict the optimum produced solar energy in the period of days.
+\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] Predict the optimum produced solar energy in the period of days($P_{E}$).
 
-\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] Predict the possibility the amount of money user might save.
 
 \end{itemize}
 
@@ -653,14 +665,22 @@ likely change [LC], in which the respective assumption is used.
 
 \begin{itemize}
 
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{a_spe}]: The environmental condition of the solar panel location assumed as users have an unobstructed view of the sky, with no trees, hills, clouds, dust, or haze ever blocking the sun.(RefBy: \iref{C_SI})\\
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{a_spe}]: The environmental condition of the solar panel location assumed as users have an unobstructed view of the sky, with no trees, hills, clouds, dust, or haze ever blocking the sun.(RefBy: \dref{C_SI})\\
 
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{a_dsip}]: The default solar intensity is 1.35 kW. It was measured by the satellites.(RefBy: \iref{C_SI})\\
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{a_dsip}]: The default value of solar intensity($I_S$) is provided in Section: \nameref{sec_VAC}.(RefBy: \dref{C_SI})\\
 
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{a_dsia}]: This system calculate the solar zenith angle at noon.(RefBy: \dref{C_ZA})\\
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{a_dsia}]: This system calculate the solar zenith angle at noon.(RefBy: \ddref{C_ZA})\\
 
 \item[A\refstepcounter{assumpnum}\theassumpnum \label{a_dp}]: Based
  on the resource of \cite{EMPA2011}, this system definite the variable of $P_r$ as 18.7\%.(RefBy: \iref{C_SEO})\\
+
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{a_tilta}]: Based
+ on the resource of \cite{Charles2001}, the value of $\theta_{T}$ is refine by: \iref{C_SEO} and \nameref{TblOutputVar}\\
+
+
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{a_panele}]: Based
+ on the label of every solar panel, the value of $P_E$ is refine by: \iref{C_SEO} and \nameref{TblOutputVar}\\
+
 
   \iffalse\plt{Short description of each assumption.  Each assumption
     should have a meaningful label.  Use cross-references to identify the
@@ -715,7 +735,7 @@ of the scene.\\
            \cite{Martin2001}\\
   % The above web link should be replaced with a proper citation to a publication
   \hline
-  Ref.\ By & RefBy: \iref{C_SI}\\
+  Ref.\ By &  \dref{C_SI}\\
   \hline
 \end{tabular}
 \end{minipage}\\
@@ -739,79 +759,51 @@ instance models.
   heading should be kept.}  \plt{Modify the examples below for your problem, and
   add additional definitions as appropriate.}\fi
 
-~\newline
-
 \noindent
 \begin{minipage}{\textwidth}
 \renewcommand*{\arraystretch}{1.5}
 \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-\hline
-\rowcolor[gray]{0.9}
-Number& GD\refstepcounter{defnum}\thedefnum \label{C_ZA}\\
-\hline
-Label &\bf Calculate Zenith Angle \\
-\hline
-% Units&$MLt^{-3}T^0$\\
-% \hline
-SI Units& $\circ$\\
-\hline
-Equation&  \[
-    \theta_{S_{day}}= 
-\begin{cases}
-      \Phi_P - \delta_{date} ,& \text{if } 0 \leq \Phi_P, \delta_{date} \leq  90^\circ \text{N } \lor\  0 \leq \Phi_P,  \delta_{date}  \leq  90^\circ \text{S }\\
-    \Phi_P + \delta_{date} ,& \text{if } \begin{cases} 
-     0 \leq \Phi_P\leq  90^\circ \text{N } \land\  0 \leq \delta_{date}  \leq  90^\circ \text{S } \\
-     0 \leq \Phi_P\leq  90^\circ \text{S } \land\  0 \leq \delta_{date}  \leq  90^\circ \text{N }
-      \end{cases}
-\end{cases}
-\]\\
-\hline
- Description & 
-          This equation describes the zenith angle associated with the solar panel.\\
-&$\theta_{S_{day}} $ is the zeith angle of the sun in the day.\\
-&$\Phi_P$  is the local latitude of the solar panel.\\
-&$\delta_{date} $ is the declination of the vertical noon sun in the day.\\
-
-
-
-\hline
-  Source & \cite{Harold1968}\\
   \hline
-  Ref.\ By & \ddref{C_DS}\\
+  \rowcolor[gray]{0.9}
+  Number& GD\refstepcounter{defnum}\thedefnum \label{C_SI}\\
+  \hline
+  Label& \bf Calculating the Solar intensity\\
+  \hline
+
+  SI Units&$\theta_{S_{day}}$\\
+
+  \hline
+  Equation& $ I_{S_{date}}  = I_{S} \cdot \frac{1.00}{I_{S}}^ {sec(\theta_{S_{day}})} $\\ 
+  \hline
+  Description&
+	This equation is calculating the total solar intensity during the period of date.\\
+        &$(\theta_{S_{day}})$ is the zenith angle of the sun in the day. It is input from $\ddref{C_ZA}$.\\
+		
+			&$I_{S}$  is solar intensity. Its default value has described in the Assumption: \aref{a_dsip}.\\
+  \hline
+  Sources&  \url{https://www.solarpaneltilt.com/#other}\cite{Charles2001}\\
+
+  \hline
+  Ref.\ By & \iref{C_TA}\\
   \hline
 \end{tabular}
 \end{minipage}\\
 
-\subsubsection*{Detailed derivation of simplified rate of change of temperature}
+%~\newline
 
-	According to the resource \cite{Harold1968}, it states the the solar elevation angle $\sin{\alpha}$ is
-determined by the relationship\\
-					$\sin{\alpha} = \sin{\Phi} \times \sin{\delta} + \cos{\Phi} \times \cos{\delta} \times \cos{\text{h}}$\\
-		where \\
-		  $\alpha$ is the solar elevation.\\
-		  $\Phi$ is the latituade.\\
-		  $\delta$ is the solar declination.\\
-		  $\text{h}$ is the solar hour angle.\\
-Based on the Level 1 celestial mechanics, the solar zenith angle 
-is equal to 90$^\circ$ - the solar elevation angle\\
-			which can write as\\
-$\cos{\theta} = \sin{\alpha} = \sin{\Phi} \times \sin{\delta} + \cos{\Phi} \times \cos{\delta} \times \cos{\text{h}}$
-			Based on the \nameref{sec_assumpt} section, it assumes that SC calculate the solar zenith 
-angle at noon which mean solar hour angle = 0$^\circ$.\\
-			Therefore, $\cos{\text{h}} = 0$\\
-				Rewrite the equation as,\\
-$\cos{\theta} = \sin{\alpha} = \sin{\Phi} \times \sin{\delta} + \cos{\Phi} \times \cos{\delta} \times 1$\\
-$\Rightarrow  \cos{\theta} = \sin{\alpha} = \sin{\Phi} \times \sin{\delta} + \cos{\Phi} \times \cos{\delta}$\\
-			Based on the Level 1 calcucltion, we have\\
-$\cos{\Phi \pm \delta} = \sin{\alpha} = \sin{\Phi} \times \sin{\delta} + \cos{\Phi} \times \cos{\delta}$\\
-			Therefore, we have
-			$\theta = \Phi \pm \delta$\\
+\subsubsection*{Derivation of simplified the calculation of total solar intensity}
+		The above equation is driven by the $\tref{C_LCL} $ , which is describing the calculation of the radiance of the illumination.\\
+		This formula assumes that the earth is flat, so a factor was applied to account for the curvature of the earth (and therefore the earth’s atmosphere). These factors and the angle of the sun with respect to the panel represent as \ $ \frac{1.00}{I_{S}}^ {sec(\theta_{S_{day}})}$\\
+		Where $\frac{1}{\cos{\theta_{S_{day}}}}$ is $sec(\theta_{S_{day}})$\\
+
+ 
+\iffalse\plt{The derivation shows how the IM is derived from the TMs/GDs.  In cases
+  where the derivation cannot be described under the Description field, it will
+  be necessary to include this subsection.}\fi
+
+~\newline
 
 
-\iffalse\plt{This may be necessary when the necessary information does not fit in the
-  description field.}
-\plt{Derivations are important for justifying a given GD.  You want it to be
-  clear where the equation came from.}\fi
 
 \subsubsection{Data Definitions}\label{sec_datadef}
 
@@ -837,6 +829,8 @@ models. The dimension of each quantity is also given. \iffalse \plt{Modify the e
 \hline
 \rowcolor[gray]{0.9}
 Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{C_DS}\\
+
+
 \hline
 Label& \bf The Declination of the Sun\\
 \hline
@@ -849,12 +843,12 @@ Symbol &$\delta_{date} $\\
   Equation&{-}\\
   \hline
   Description &
-       "date" means every date in the period of days which depends on the user's input.\\
-       &The degree of $\delta_{date} $ can be determinated by the the Analemma Figure.\\
+       'date' defines in the table: \nameref{tb_TS} and refer from \ddref{C_D}.\\
+       &The degree of $\delta_{date} $ can be determinated by Figure: \nameref{Fig_Analemma}.\\
   \hline
   Sources& \url{https://www.cengage.com/resource_uploads/downloads/0495555061_137179.pdf}\\
   \hline
-  Ref.\ By &  \dref{C_ZA}\\
+  Ref.\ By &  \ddref{C_ZA}\\
   \hline
 \end{tabular}
 \end{minipage}\\
@@ -865,6 +859,106 @@ Symbol &$\delta_{date} $\\
  \caption{\label{Fig_Analemma} Analemma}
 \end{figure}
 
+
+~\newline
+
+\noindent
+\begin{minipage}{\textwidth}
+\renewcommand*{\arraystretch}{1.5}
+\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+\hline
+\rowcolor[gray]{0.9}
+Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{C_ZA}\\
+\hline
+Label &\bf Calculate Zenith Angle \\
+\hline
+Symbol &$\theta_{S_{day}}$\\
+\hline
+% Units&$MLt^{-3}T^0$\\
+% \hline
+SI Units& $\circ$\\
+\hline
+Equation&  \[
+    \theta_{S_{day}}= 
+\begin{cases}
+      \Phi_P - \delta_{date} ,& \text{if } 0 \leq \Phi_P, \delta_{date} \leq  90^\circ \text{N } \lor\  0 \leq \Phi_P,  \delta_{date}  \leq  90^\circ \text{S }\\
+    \Phi_P + \delta_{date} ,& \text{if } \begin{cases} 
+     0 \leq \Phi_P\leq  90^\circ \text{N } \land\  0 \leq \delta_{date}  \leq  90^\circ \text{S } \\
+     0 \leq \Phi_P\leq  90^\circ \text{S } \land\  0 \leq \delta_{date}  \leq  90^\circ \text{N }
+      \end{cases}
+\end{cases}
+\]\\
+\hline
+ Description & 
+          This equation describes the zenith angle associated with the solar panel.\\
+&$\theta_{S_{day}} $ is the zeith angle of the sun in the day.\\
+&$\Phi_P$  is the local latitude of the solar panel from the users' input described at \nameref{sec_GS}.\\
+&$\delta_{date} $ is the declination of the vertical noon sun in the day. It is input from \ddref{C_DS}\\
+\hline
+  Source & \cite{Harold1968}\\
+  \hline
+  Ref.\ By & \dref{C_SI}\\
+  \hline
+\end{tabular}
+\end{minipage}\\
+\subsubsection*{Detailed derivation of simplified the calculation of zenith angle}
+
+	According to the resource \cite{Harold1968}, it states the the solar elevation angle $\sin{\alpha}$ is
+determined by the relationship\\
+					$\sin{\alpha} = \sin{\Phi} \times \sin{\delta} + \cos{\Phi} \times \cos{\delta} \times \cos{\text{h}}$\\
+		where \\
+		  $\alpha$ is the solar elevation.\\
+		  $\Phi$ is the latituade.\\
+		  $\delta$ is the solar declination.\\
+		  $\text{h}$ is the solar hour angle.\\
+Based on the Level 1 celestial mechanics, the solar zenith angle 
+is equal to 90$^\circ$ - the solar elevation angle\\
+			which can write as\\
+$\cos{\theta} = \sin{\alpha} = \sin{\Phi} \times \sin{\delta} + \cos{\Phi} \times \cos{\delta} \times \cos{\text{h}}$
+			Based on the \nameref{sec_assumpt} section, it assumes that SC calculate the solar zenith 
+angle at noon which mean solar hour angle = 0$^\circ$.\\
+			Therefore, $\cos{\text{h}} = 0$\\
+				Rewrite the equation as,\\
+$\cos{\theta} = \sin{\alpha} = \sin{\Phi} \times \sin{\delta} + \cos{\Phi} \times \cos{\delta} \times 1$\\
+$\Rightarrow  \cos{\theta} = \sin{\alpha} = \sin{\Phi} \times \sin{\delta} + \cos{\Phi} \times \cos{\delta}$\\
+			Based on the Level 1 calcucltion, we have\\
+$\cos{\Phi \pm \delta} = \sin{\alpha} = \sin{\Phi} \times \sin{\delta} + \cos{\Phi} \times \cos{\delta}$\\
+			Therefore, we have
+			$\theta = \Phi \pm \delta$\\
+
+
+
+
+~\newline
+
+
+\noindent
+\begin{minipage}{\textwidth}
+\renewcommand*{\arraystretch}{1.5}
+\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+\hline
+\rowcolor[gray]{0.9}
+Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{C_D}\\
+\hline
+Label& \bf Calcuted the squence of the days\\
+\hline
+Symbol &$date $\\
+\hline
+
+  SI Units & $(year, month, day)$\\
+  \hline
+  Equation& $date = day_{Start} - day_{End}$ \\
+  \hline
+  Description &
+       $day_{Start}$, $day_{End}$ are the days depending on the users' input described at  \nameref{sec_GS}.\\
+		  
+  \hline
+  Sources& - \\
+  \hline
+  Ref.\ By &  \ddref{C_DS}\\
+  \hline
+\end{tabular}
+\end{minipage}\\
 
 \subsubsection{Instance Models} \label{sec_instance}    
 
@@ -887,49 +981,6 @@ The goals \nameref{sec_GS} are solved by IM\ref{C_SI}. \iffalse \plt{other detai
 
 %Instance Model 1
 
-\noindent
-\begin{minipage}{\textwidth}
-\renewcommand*{\arraystretch}{1.5}
-\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-  \hline
-  \rowcolor[gray]{0.9}
-  Number& IM\refstepcounter{instnum}\theinstnum \label{C_SI}\\
-  \hline
-  Label& \bf Calculating the Sun intensity\\
-  \hline
-
-  Input&$\Phi_P, date$\\
-
-  \hline
-  Output & $ I_{S_{day}}  = 1.35 \cdot \frac{1.00}{1.35}^ {sec(\theta_{S_{day}})} $\\ 
-  \hline
-  Description&
- As the $\nameref{sec_assumpt}$ describes, this equation is giveing the daily sun intensity at noon. Moreover, this equation assumes that the earth is flat, so a factor was applied to account for the curvature of the earth(and therefore the earth’s atmosphere). These factors, and the angle of the sun with respect to the panel, then determine the insolation on the panel. \\
-
-         &$(\theta_{S_{day}})$ is the zenith angle of the sun in the day. The equation of  $(\theta_{S_{day}})$ is described in $\dref{C_ZA}$.\\
-			
-
-  \hline
-  Sources&  \url{https://www.solarpaneltilt.com/#other}\\
-
-
-  \hline
-  Ref.\ By & \iref{C_TA}\\
-  \hline
-\end{tabular}
-\end{minipage}\\
-
-%~\newline
-
-\subsubsection*{Derivation of ...}
-		The above equation is driven by the $\tref{C_LCL} $ , which is describing the calculation of the radiance of the illumination.\\
-		Where 	$I$ is $1.35 k\si\watt$, which is the solar intensity, and $\frac{1}{\cos{\theta}}$ is $sec(\theta_{S_{day}})$\\
-
- 
-\iffalse\plt{The derivation shows how the IM is derived from the TMs/GDs.  In cases
-  where the derivation cannot be described under the Description field, it will
-  be necessary to include this subsection.}\fi
-
 ~\newline
 
 \noindent
@@ -943,17 +994,20 @@ The goals \nameref{sec_GS} are solved by IM\ref{C_SI}. \iffalse \plt{other detai
   Label& \bf Calculating the Tilt Angle\\
   \hline
 
-  Input&$\theta_{S_{day}},I_{S_{day}}$\\
+  Input&$\theta_{S_{day}},I_{S_{date}}$\\
 
   \hline
-  Output & $ I_{T} , I_{S}$\\ 
+  Output & $ \theta_{T} , I_{S_{T}}$\\
+& $I_{S_{T}}  = I_{S} \cdot \frac{1.00}{I_{S_{date}}}^ {sec(\theta_{S_{day}})}  \text{where} \ \theta_{T} \ \text{is the valuse that has the hightest} \ I_{S_{T}}$\\ 
   \hline
   Description&
-	Using Instance Model \iref{C_SI} can get a angle to adjust the solar panel and the sun itensity for each date in the period of days. Then using Iteration Method to calculate to optimum angle and the sun itensity for the period of days.
+	Using General Definition: \dref{C_SI} can get the total solar intensity $I_{S_{date}}$ during the period od date. Then using the value $I_{S_{date}}$ recalculates the optimum angle $\theta_{T}$. \\
+		&$I_{S_{date}}$ is input from \dref{C_SI}.\\
+		&$\theta_{S_{day}}$ is input from \ddref{C_DS}.
 \\
 
   \hline
-  Sources&  \url{https://www.solarpaneltilt.com/#other}\\
+  Sources&  \url{https://www.solarpaneltilt.com/#other}\cite{Charles2001}\\
 
 
   \hline
@@ -982,7 +1036,7 @@ The goals \nameref{sec_GS} are solved by IM\ref{C_SI}. \iffalse \plt{other detai
   Input&$P_A$\\
 
   \hline
-  Output & $ P_E = P_A \times P_r \times  I_{S} \times PR$\\ 
+  Output & $ P_E = P_A \times P_r \times  I_{S_{date}} \times PR$\\ 
   \hline
   Description&
 		P is the solar panel.\\
@@ -990,7 +1044,7 @@ The goals \nameref{sec_GS} are solved by IM\ref{C_SI}. \iffalse \plt{other detai
 &$P_A$ is the solar panel area.\\
 &$P_r$ is solar panel yield or efficiency.\\
 
-&$I_{S}$ is the solar intensity in a period of days of the noon.\\
+&$I_{S_{date}}$ is the solar intensity in a period of days of the noon. It is input from \iref{C_TA} \\
 &$PR$ is the performance ratio, coefficient for losses\\
 \\
 
@@ -1003,8 +1057,8 @@ The goals \nameref{sec_GS} are solved by IM\ref{C_SI}. \iffalse \plt{other detai
 \end{tabular}
 \end{minipage}\\
 
-\subsubsection*{Derivation of ...}
-		The above equation is using the output from $\iref{C_SI} $ , which is describing the sun intensity.\\
+\subsubsection*{Derivation of simplify the solar energy output}
+		The above equation is using the output from $\dref{C_SI} $ , which is describing the solar intensity.\\
 		Some of the variable in this equation has its defult value, which describes in the section
 of $\nameref{sec_assumpt}$\\
 
@@ -1036,8 +1090,9 @@ Table~\ref{TblSpecParams}.
   \textbf{Var} & \textbf{Physical Constraints} & \textbf{Software Constraints} &
                              \textbf{Typical Value} & \textbf{Uncertainty}\\
   \midrule 
-  $\Phi_P$ & $0 \leq \Phi_P \leq 90^\circ \text{N/S}$ & $\text{-}$ & {\text{43°15'39.3"N}} & 10\%\\
-
+  $\Phi_P$ & $0 \leq \Phi_P \leq (90^\circ,  N or S)$ & $\text{-}$ & {$(43^\circ, N, 15'39.3")$} & 10\%\\
+  $month$ & $0 \leq month \leq 12$ & $\text{-}$ & $12$& 10\%\\
+  $day$ & $0 \leq day \leq 31$ & $\text{-}$ & $01$ & 10\%\\
   \\
   \bottomrule
 \end{longtable*}
@@ -1078,8 +1133,8 @@ taken by the variable.
   \toprule
   \textbf{Var} & \textbf{Physical Constraints} \\
   \midrule 
-  $\theta_{tilt}$ & $0 \leq \theta_{tilt} \leq 90^\circ$ (by~\aref{A_charge})\\
-  $P_E$ & $0 \leq P_E \leq \text{Rated Maximum Power}$ (by~\aref{A_charge})
+  $\theta_{T}$ & $0 \leq \theta_{T} \leq 90^\circ$ (by~\aref{a_tilta})\\
+  $P_E$ & $0 \leq P_E \leq \text{Rated Maximum Power}$ (by~\aref{a_panele})
   \\
   \bottomrule
 \end{longtable*}
@@ -1124,7 +1179,7 @@ tilt angle for solar panel, the predicted solar energy output.
     good idea.}\fi
 
 \item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate}:] Determine the tilt angle 
-by using $\iref{C_SI}$ and the solar energy output by using $\iref{C_SEO}$
+by using $\dref{C_SI}$ and the solar energy output by using $\iref{C_SEO}$
 
 \iffalse\plt{Calculation
     related requirements.}\fi
@@ -1153,7 +1208,8 @@ expected to exhibit.
 \noindent\begin{itemize}
 \item[ ]Correct: The outputs of the code have the properties described in Section: \nameref{sec_CorrectSolution}
 \item[ ]Verifiable: The code is tested with complete verification and validation plan
-\item[ ]Understandable: The code is modularized with complete module guide and module interface specification
+\item[ ]Understandable: The interface of this software shoulf support users to get the result within five
+stepts, and the output result should easily understand by the users.
 \item[ ]Reusable: The code is modularized
 \item[ ]Maintainable: The traceability between requirements, assumptions, theoretical models, general definitions, data definitions, instance models, likely changes, unlikely changes, and modules
 is completely recorded in traceability matrices in the SRS and module guide
@@ -1196,31 +1252,32 @@ instance models with each other. Table~\ref{Table:R_trace} shows the
 dependencies of instance models, requirements, and data constraints on each
 other. Table~\ref{Table:A_trace} shows the dependencies of theoretical models,
 general definitions, data definitions, instance models, and likely changes on
-the assumptions.
+the assumptions.\\
 
-\plt{You will have to modify these tables for your problem.}
+\iffalse\plt{You will have to modify these tables for your problem.}
 
 \plt{The traceability matrix is challenging to maintain manually.  Please do
-your best.  In the future tools (like Drasil) will make this much easier.}
+your best.  In the future tools (like Drasil) will make this much easier.}\fi
 
 \afterpage{
 \begin{landscape}
 \begin{table}[h!]
 \centering
-\begin{tabular}{|c|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|c|c|}
 \hline
-	& \aref{a_spe}& \aref{a_dsip}& \aref{a_dsia}& \aref{a_dp} \\
+	& \aref{a_spe}& \aref{a_dsip}& \aref{a_dsia}& \aref{a_dp} & \aref{a_tilta}& \aref{a_panele} \\
 \hline
  
-\tref{C_LCL}    &    &    &    &     \\ \hline
-\dref{C_ZA}     &    &    & X &     \\ \hline
-\ddref{C_DS}   &    &    & X &     \\ \hline
-\iref{C_SI}       & X & X & X &     \\ \hline
-\iref{C_TA}      &    &    &     &     \\ \hline
-\iref{C_SEO}   &    &    &     & X  \\ \hline
-\lcref{LC_SI}   &     & X &    &     \\ \hline
-\lcref{LC_P}    &     &    &    & X  \\ \hline
-\lcref{LC_G}    & X &   &     &     \\ \hline
+\tref{C_LCL}     &    &    &     &    &     &     \\ \hline
+\ddref{C_ZA}    &    &    & X &    &     &      \\ \hline
+\ddref{C_DS}   &    &    & X &     &     &    \\ \hline
+\ddref{C_D}     &    &    &    &     &     &      \\ \hline
+\dref{C_SI}      & X & X & X &    &     &     \\ \hline
+\iref{C_TA}      &    & X &     &     & X &    \\ \hline
+\iref{C_SEO}   & X &    &     & X & X &  X  \\ \hline
+\lcref{LC_SI}   &     & X &    &     &     &    \\ \hline
+\lcref{LC_P}    &     &    &    & X  &     &    \\ \hline
+\lcref{LC_G}    & X &   &     &     &     &    \\ \hline
 
 \hline
 \end{tabular}
@@ -1232,16 +1289,17 @@ your best.  In the future tools (like Drasil) will make this much easier.}
 
 \begin{table}[h!]
 \centering
-\begin{tabular}{|c|c|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline        
-	& \tref{C_LCL}& \dref{C_ZA} & \ddref{C_DS}& \iref{C_SI} &\iref{C_SEO} \\
+	& \tref{C_LCL}& \ddref{C_ZA} & \ddref{C_DS}&\ddref{C_D} & \dref{C_SI} &\iref{C_TA}  &\iref{C_SEO} \\
 \hline
-\tref{C_LCL}        &    &    &     &    &     \\ \hline
-\dref{C_ZA}         &    &    &     &    &      \\ \hline
-\ddref{C_DS}       &    &    &     &    &     \\ \hline
-\iref{C_SI}           & X & X & X  &    &       \\ \hline
-\iref{C_TA}          &    &     &     & X &      \\ \hline
-\iref{C_SEO}       &    &     &     & X &        \\ \hline
+\tref{C_LCL}        &    &    &     &    &    &    &     \\ \hline
+\ddref{C_ZA}       &    &    & X  &    &    &    &      \\ \hline
+\ddref{C_DS}       &    &    &     & X &    &    &     \\ \hline
+\ddref{C_D}         &    &    &     &    &    &    &     \\ \hline
+\dref{C_SI}          & X & X &     &    &    &    &       \\ \hline
+\iref{C_TA}          &    &     &     &    & X &    &      \\ \hline
+\iref{C_SEO}       &    &     &     &    &    & X &        \\ \hline
 
 
 \hline
@@ -1254,17 +1312,16 @@ your best.  In the future tools (like Drasil) will make this much easier.}
 \centering
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
-	& \iref{C_SI}&\iref{C_TA}  & \iref{C_SEO}& \ref{sec_DataConstraints}& \rref{R_Inputs}& \rref{R_OutputInputs} & \rref{R_Calculate}& \rref{R_VerifyOutput}& \rref{R_Output}\\
+	& \iref{C_TA}  & \iref{C_SEO}& \ref{sec_DataConstraints}& \rref{R_Inputs}& \rref{R_OutputInputs} & \rref{R_Calculate}& \rref{R_VerifyOutput}& \rref{R_Output}\\
 
 \hline
-\iref{C_SI}            			&    &    &    & X & X &     &     &     &     \\ \hline
-\iref{C_TA}         				& X &    &    &    &    &     & X  &     &X \\ \hline
-\iref{C_SEO}           		&    & X &    &    &    &     & X  &     &X \\ \hline
-\rref{R_Inputs}    				& X & X &    & X &    & X  &     &     &     \\ \hline
-\rref{R_OutputInputs}  & X & X & X &    &    &     &     &     &     \\ \hline
-\rref{R_Calculate}  		& X & X & X &    &    &     &     &     &     \\ \hline
-\rref{R_VerifyOutput}  & X & X & X &    &    &     &      &     &    \\ \hline 
-\rref{R_Output}       		& X & X & X &    &    &     &      &     &    \\ \hline
+\iref{C_TA}         				&    &    & X & X &     & X  & X  &X \\ \hline
+\iref{C_SEO}           		& X &    &    &    &     & X  & X  &X \\ \hline
+\rref{R_Inputs}    				& X &    & X &    & X  &     &     &     \\ \hline
+\rref{R_OutputInputs}  & X & X &    &    &     &     &     &     \\ \hline
+\rref{R_Calculate}  		& X & X &    &    &     &     &     &     \\ \hline
+\rref{R_VerifyOutput}  & X & X &    &    &     &      &     &    \\ \hline 
+\rref{R_Output}       		& X & X &    &    & X &      &     &    \\ \hline
 \hline
 \end{tabular}
 \caption{Traceability Matrix Showing the Connections Between Requirements and Instance Models}
@@ -1302,16 +1359,34 @@ instance models, requirements, and data constraints on each other.\fi
 % 	\end{center}
 % \end{figure}
 
-\section{Values of Auxiliary Constants}
+\section{Values of Auxiliary Constants}\label{sec_VAC}
 
 \iffalse\plt{Show the values of the symbolic parameters introduced in the report.}
 
 \plt{The definition of the requirements will likely call for SYMBOLIC\_CONSTANTS.
 Their values are defined in this section for easy maintenance.}\fi
 
-There are no auxiliary constants.
+This section contains the standard values that are used for calculations in SC.
 
-\newpage
+
+~\newline
+
+\renewcommand{\arraystretch}{1.2}
+
+%\begin{table}[ht]
+  \noindent \begin{tabular}{l l l l} 
+    \toprule		
+    \textbf{Symbol} & \textbf{Description} & \textbf{Value}& \textbf{Unit}\\
+    \midrule 
+    $I_{S}$ & Solar insensity &1.35 & $\frac{k\si\watt}{m^2}$ \\
+ 
+    \bottomrule
+  \end{tabular}
+  %	\caption{Provide a caption}
+%\end{table}
+
+
+
 
 \bibliographystyle {plainnat}
 \bibliography {../../refs/References}
