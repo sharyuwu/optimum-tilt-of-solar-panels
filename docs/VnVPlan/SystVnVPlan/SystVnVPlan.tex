@@ -1,42 +1,42 @@
 \documentclass[12pt, titlepage]{article}
 
+\usepackage{amsmath, mathtools}
 \usepackage{booktabs}
-\usepackage{tabularx}
-\usepackage{hyperref}
-\hypersetup{
-    colorlinks,
-    citecolor=black,
-    filecolor=black,
-    linkcolor=red,
-    urlcolor=blue
-}
-\usepackage[round]{natbib}
+\usepackage{tabularx} 
+\usepackage{hyperref} 
+\hypersetup{ colorlinks, citecolor=black, filecolor=black, linkcolor=red,
+urlcolor=blue }
 
+% For easy change of table widths
+\newcommand{\colZwidth}{1.0\textwidth}
+\newcommand{\colAwidth}{0.13\textwidth}
+\newcommand{\colBwidth}{0.82\textwidth}
+\newcommand{\colCwidth}{0.1\textwidth}
+\newcommand{\colDwidth}{0.05\textwidth}
+\newcommand{\colEwidth}{0.8\textwidth}
+\newcommand{\colFwidth}{0.17\textwidth}
+\newcommand{\colGwidth}{0.5\textwidth}
+\newcommand{\colHwidth}{0.28\textwidth}
+
+%\usepackage[round]{natbib}
+\usepackage[square,sort,comma,numbers]{natbib} 
 \input{../../Comments}
 \input{../../Common}
-
 \begin{document}
+\title{Project Title: System Verification and Validation Plan for Sun Catcher}
 
-\title{Project Title: System Verification and Validation Plan for \progname{}} 
-\author{Author Name}
-\date{\today}
-	
-\maketitle
-
+\author{Sharon(Yu-Shiuan) Wu} \date{\today} \maketitle
 \pagenumbering{roman}
 
 \section{Revision History}
 
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
-\toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
-\midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
-\bottomrule
-\end{tabularx}
-
-\newpage
-
+\toprule {\bf Date} & {\bf Version} & {\bf Notes}\\ 
+\midrule 
+2019/11/04 1 & 1.0 & First version of System VnV\\ 
+Date 2 & 1.1 & -\\ 
+\bottomrule 
+\end{tabularx} \newpage
 \tableofcontents
 
 \listoftables
@@ -48,197 +48,894 @@ Date 2 & 1.1 & Notes\\
 \section{Symbols, Abbreviations and Acronyms}
 
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{l l} 
-  \toprule		
-  \textbf{symbol} & \textbf{description}\\
-  \midrule 
-  T & Test\\
-  \bottomrule
-\end{tabular}\\
+\begin{tabular}{l l} \toprule \textbf{symbol} & \textbf{description}\\
+ \midrule T & Test\\ 
+SC & Sun Catcher\\ 
+$\Phi_P$ & the latituade of the solar panel \\ 
+$\delta_{date}$ & the declination of the vertical noon sun in the day \\
+$I_{S}$ &  the intensity of the sun measured by the satellites \\ 
+$P_{A_{h}}$ & the height of the solar panel \\ 
+$P_{A_{w}}$ & the width of the solar panel \\ 
+$date$ & the date duration between the calculation starting date and the ending
+date \\
+$\mathit{year}_\text{Start}$ & the year of the calcuation's starting date\\ 
+$\mathit{month}_\text{Start}$ & the month of the calcuation's starting date\\ 
+$\mathit{day}_\text{Start}$ & the day of the calcuation's starting date\\ 
+$\mathit{year}_\text{End}$ & the year of the calcuation's ending date\\ 
+$\mathit{month}_\text{End}$ & the month of the calcuation's ending date\\ 
+$\mathit{day}_\text{End}$ & the day of the calcuation's ending date\\ 
+\bottomrule
+\end{tabular}\\ 
 
-\wss{symbols, abbreviations or acronyms -- you can simply reference the SRS
-  tables, if appropriate}
+\wss{symbols, abbreviations or acronyms -- you can simply
+reference the SRS tables, if appropriate} 
 
 \newpage
 
 \pagenumbering{arabic}
 
-This document ... \wss{provide an introductory blurb and roadmap of the
-  Verification and Validation plan}
+This document provides an outline of the system verification and validation for
+the \progname. The general introduction section provides readers a summary of
+the functions in \progname and the related documents as the resources for
+testing. The plan section provides readers the plan for verifying and
+validatingSC's software requirements specification(SRS) and introduces the
+method, tools, and external data to implement the testing. The system test
+description
+providesthe readers with the test cases related to functional and nonfunctional
+requirements in \progname. The test builds for uncovering the errors and
+boosting the confidence of the software while ensuring an acceptable
+performanceis provided. 
+
+\wss{provide an introductory blurb and roadmap of the Verification and
+Validation plan}
+
 
 \section{General Information}
-
 \subsection{Summary}
 
-\wss{Say what software is being tested.  Give its name and a brief overview of
-  its general functions.}
+The subsection belows are the test cases of \progname. \progname ~is the
+software that calculate the optimum tilt angle of the date duration that
+decidedby users. Then it takes the calculated angle to estimate the optimal
+solar energy output.
 
-\subsection{Objectives}
+\wss{Say what software is being tested. Give its name and a brief overview of
+its general functions.}
 
-\wss{State what is intended to be accomplished.  The objective will be around
-  the qualities that are most important for your project.  You might have
-  something like: ``build confidence in the software correctness,''
-  ``demonstrate adequate usability.'' etc.  You won't list all of the qualities,
-  just those that are most important.}
+\subsection{Objectives}\label{Objectives}
+The goal of the test is to build confidence in the software correctness and
+strengthen the robustness of the software. The functional and nonfunctional
+requirements of \progname~ are tested by this Verification and Validation Plan.
+The equations that related to the functional requirements are found in the SRS
+\cite{YS2019}. 
 
-\subsection{Relevant Documentation}
+The functional requirements are:
+\begin{itemize} 
+\item[ ]R1: \progname~should able to read the user's input value from the
+system's interface. \item[ ]R2: \progname~should able to output the result in
+the corrected format.
+\item[ ]R3: \progname~should able to calculate the date duration between the
+calculation starting date and the ending date.
+\item[ ]R4: \progname~should able to calculate the optimum tilt angle of the
+date duration.
+\item[ ]R5: \progname~should able to calculate the produced solar energy
+satisfied the date duration.
+\item[ ]R6: \progname~should able to show the difference in produced solar
+energy satisfied the different date durations.
+\item[ ]R7: Verify the output. \item[ ]R8: The system should output the
+calculated results of the outcomes in a manner consistent with decision making.
+ \end{itemize}
 
-\wss{Reference relevant documentation.  This will definitely include your SRS}
+The nonfunctional requirements are: 
+\begin{itemize} 
+\item[ ]NFR1. Correct: The output should give correct results.
+\item[ ]NFR2. Verifiable: The code is tested with complete verification and
+validationplan
+\item[ ]NFR3. Understandable: The code is understandable for readers. 
+\item[ ]NFR4. Reusable: The code is modularized
+\item[ ]NFR5. Maintainable: The traceability between requirements, assumptions,
+theoretical models, general definitions, data definitions, instance models,
+likely changes, unlikely changes, and modules is completely recorded in
+traceability matrices in the SRS and module guide
+\item[ ]NFR6. Portable: The code is able to be run in different environments 
+\end{itemize}
 
-\section{Plan}
-	
-\subsection{Verification and Validation Team}
+\wss{State what is intended to be accomplished. The objective will be around
+thequalities that are most important for your project. You might have something
+like: ``build confidence in the software correctness,'' ``demonstrate adequate
+usability.'' etc. You won't list all of the qualities, just those that are most
+important.}
 
-\wss{Probably just you.  :-)}
+\subsection{Relevant Documentation}\label{RD}
 
+\begin{itemize} 
+\item[ ]The SRS of the \progname can be found in [Wu~\cite{YS2019}] 
+\item[ ]The external documents for verifying the equations used in \progname~
+can be found in [Landau \cite{Charles2001} ] and
+[MarkandVijaysinh\cite{JacobsonandJadhav} ]
+
+ \end{itemize} 
+\wss{Reference relevant documentation. This will definitely include your SRS}
+
+ \section{Plan}	
+\subsection{Verification and Validation Team} The test team includes the
+following members:\\ Main reviewer: Sharon Wu\\ \wss{Probably just you. :-)}
 \subsection{SRS Verification Plan}
 
-\wss{List any approaches you intend to use for SRS verification.  This may just
-  be ad hoc feedback from reviewers, like your classmates, or you may have
-  something more rigorous/systematic in mind..}
+\begin{itemize}
+
+\item Get feedback from the reviewers: Sasha Soraine, Zhi Zhang, and Doctor
+Smith, after SRS is completed and put to the GitHub.
+\item Check the document by using SRS-Checklist and Writing-Checklist before
+publishing to GitHub.
+
+\end{itemize}
+
+\wss{List any approaches you intend to use for SRS verification. This may just
+be ad hoc feedback from reviewers, like your classmates, or you may have
+something more rigorous/systematic in mind..}
 
 \subsection{Design Verification Plan}
+\begin{itemize}
 
-\wss{Plans for design verification}
+\item The design should be verified by complete and success the test cases in
+the system VnV plan under the section \ref{STD}.
+\item The design should satisfy all the functional and nonfunctional
+requirementthat stated in the SRS document \cite{YS2019}.
 
-\subsection{Implementation Verification Plan}
+\end{itemize}
 
-\wss{You should at least point to the tests listed in this document and the unit
-  testing plan.}
+\wss{Plans for design verification}\label{Planfordv}
 
-\wss{In this section you would also give any details of any plans for static verification of
-  the implementation.  Potential techniques include code walkthroughs, code
-  inspection, static analyzers, etc.}
+\subsection{Implementation Verification Plan} 
+The following tools will be used to facilitate testing: 
+
+\begin{itemize}
+\item[ ]Rubber Duck Debugging: Performed by author, Yu-Shiuan Wu. The 
+author should verbally explain the code line by line.
+\item[ ]Haskell Program Coverage: Dynamic Testing Tool, a tool-kit to record 
+and display the code coverage of a Haskell Program. It aims to reinforce the 
+correctness of the software and to eliminate the infeasibility problems.(Gill
+and Runciman\cite{GillandRunciman})
+\item[ ]QuickCheck: Automatic testing tool for Haskell programs, a library for
+random testing of program properties. It aims to boost the robustness of the 
+software.(Claessen\cite{QuickCheck})
+		
+\end{itemize} 
+
+\wss{You should at least point to the tests listed in this document and the
+unittesting plan.} \wss{In this section you would also give any details of any
+plansfor static verification of the implementation. Potential techniques
+includecodewalkthroughs, code inspection, static analyzers, etc.}
 
 \subsection{Software Validation Plan}
 
-\wss{If there is any external data that can be used for validation, you should
-  point to it here.  If there are no plans for validation, you should state that
-  here.}
+\progname should be valid by satisfied all the functional requirement in SRS 
+plan.\\
+Based on the physical concept of \progname, the author, Yu-Shiauan Wu, should
+record the actual solar energy by using the output from \progname. Then verify
+whether the calculated tilt angle can increase the energy gaining.
 
-\section{System Test Description}
-	
+\wss{If there is any external data that can be used for validation, you should
+point to it here. If there are no plans for validation, you should state that
+here.}
+
+\section{System Test Description}\label{STD}	
 \subsection{Tests for Functional Requirements}
 
+The subsection below is designed to cover the functional requirements of
+\progname, which also describes in section \ref{Objectives}.\\
+The test is divided into four subsections, which are input reading, input
+bounds,
+output calculation, and output verification. Input reading testing is designed
+for
+testing the ability to receive information from the software interface. Input
+bounds
+testing and output calculation testing are designed for testing the robustness
+of the
+software. Output verification testing is designed for the correctness of the 
+implemented equation.
+
 \wss{Subsets of the tests may be in related, so this section is divided into
-  different areas.  If there are no identifiable subsets for the tests, this
-  level of document structure can be removed.}
+different areas. If there are no identifiable subsets for the tests, this level
+of document structure can be removed.} \wss{Include a blurb here to explain why
+the subsections below cover the requirements. References to the SRS would be
+good.}
 
-\wss{Include a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good.}
+\subsubsection{Input Reading}
 
-\subsubsection{Area of Testing1}
+This test covers the requirements, R1, in section \ref{Objectives}. Based on
+the SRS document\cite{YS2019}, \progname has to identity users' inputs and
+then assign the values to designated equations or modules.
 
 \wss{It would be nice to have a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good.  If a section
-  covers tests for input constraints, you should reference the data constraints
-  table in the SRS.}
-		
-\paragraph{Title for Test}
+cover the requirements. References to the SRS would be good. If a section
+coverstests for input constraints, you should reference the data constraints
+table in the SRS.}
 
+\paragraph{Identity users' input}
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{InputReading-id1\\}
 
-Control: Manual versus Automatic
+Control: Manual. Input the input value from the keyboard.
 					
-Initial State: 
+Initial State: No input value
 					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
+Input: Input the value of requirements of \progname. It required to input the
+value of latitude, the area of the solar panel, the day started to estimate
+angle and day when the estimation end.\\
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-					
-How test will be performed: 
-					
-\item{test-id2\\}
+ The given inputs are:\\
+ ~$\Phi_P$: 43.250943 
+~$P_{A_{h}}$:1455
+~$P_{A_{w}}$:665
+~$\mathit{year}_\text{Start}$:(2019) ~$\mathit{month}_\text{Start}$:(01) 
+~$\mathit{day}_\text{Start}$:(01) ~$\mathit{year}_\text{End}$:(2019) 
+~$\mathit{month}_\text{End}$:(12) 
+~$\mathit{day}_\text{End}$:(31)\\
 
-Control: Manual versus Automatic
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
+ Output: The expected result wil for the given inputs is:\\ 
+~$\Phi_P$: 43.250943
+~$P_{A_{h}}$:1455
+~$P_{A_{w}}$:665
+~$\mathit{year}_\text{Start}$:(2019) 
+~$\mathit{month}_\text{Start}$:(01) 
+~$\mathit{day}_\text{Start}$:(01) 
+~$\mathit{year}_\text{End}$:(2019) 
+~$\mathit{month}_\text{End}$:(12) 
+~$\mathit{day}_\text{End}$:(31)\\
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+\wss{The expected result for the given inputs}
 
-How test will be performed: 
+Test Case Derivation: The output is justified if the output value is equal to
+the corresponding input value.
+\wss{Justify the expected value given in the Output field} 
 
+How test will be performed:
+\begin{itemize}
+\item Input the value from the keyboard following the instruction of the
+software interface.
+\item Verified the output showing on the screen by the test case derivation
+instruction. \end{itemize}
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
 
-...
+\subsubsection{Input Bounds}
+
+This test covers the requirements, R1, in section \ref{Objectives}. Based on
+the SRS document\cite{YS2019}, the input data constraints can be found in the
+table, Specification Parameter Values, under the section, Input Data
+Constraints.
+
+
+\paragraph{The Robustness of Input Bounds} 
+\begin{enumerate}
+\item{InputBounds-id2\\} 
+
+Control: Manual. 
+
+Input the extreme ends of the value of latitude. 
+Initial State: No input value
+Input: Based on SRS\cite{YS2019} of the \progname\cite{YS2019}, the boundaried
+of latitude is $-90 \leq \Phi_P \leq 90$.\\
+Therefore, the given inputs is:\\
+input (1) $\Phi_P$: 90 
+~input (2) $\Phi_P$: 90 
+~input (3) $\Phi_P$: 91 
+~input(4) $\Phi_P$: -91\\ 
+
+Output: The expected result wil for the given inputs is:\\
+output (1) $\Phi_P$: 90 
+~output (2) $\Phi_P$: 90 
+~output (3) $\Phi_P$: Latitude is not greater than 90 
+~output (4) $\Phi_P$: Latitude is not less than -90\\
+
+\wss{The expected result for the given inputs}
+
+Test Case Derivation: The output is justified if the output value is equal to
+the corresponding input value. When the input value is over the boundary 
+of latitude, the system activates the error handler. \\ 
+\wss{Justify the expected value given in the Output field} 
+
+How test will be performed:
+
+\begin{itemize} 
+
+\item Input the value from the keyboard following the instruction of the
+software interface.
+\item Verified the output showing on the screen by the test case derivation
+instruction.
+\end{itemize}
+\item{InputBounds-id3\\}
+Control: Manual. 
+Input the extreme ends of the value of calendar. 
+Initial State:
+~$\mathit{year}_\text{Start}$:(2019) 
+~$\mathit{month}_\text{Start}$:(02)
+~$\mathit{year}_\text{End}$:(2020) 
+~$\mathit{month}_\text{End}$:(02) 
+
+Input: Based on calendar, the given inputs is:\\ 
+Input(1)~$\mathit{day}_\text{Start}$:(28) 
+~$\mathit{day}_\text{End}$:(28)\\ 
+Input(2)~$\mathit{day}_\text{Start}$:(29) 
+~$\mathit{day}_\text{End}$:(29)\\ 
+
+Output:The expected result wil for the given inputs is:\\
+ Output(1)~$\mathit{day}_\text{Start}$:(28)
+ ~$\mathit{day}_\text{End}$:(28)\\
+ Output(2) 2020.02.29 does not exist\\ 
+
+\wss{The expected result for the given inputs}
+
+Test Case Derivation: The output is justified if the output value is equal to
+the corresponding input value. When the input integer is over the boundary of
+the calendar, the system activates the error handler. \\
+
+ \wss{Justify the expected value given in the Output field} 
+
+How test will be performed:
+\begin{itemize} 
+\item Input the value from the keyboard following the instruction of the
+software interface. 
+\item Verified the output showing on the screen by the test case derivation
+ instruction. 
+\end{itemize}
+
+\item{InputBounds-id4\\}
+Control: Manual. Input the extreme ends of the value of the Gregorian 
+calendar. 
+Initial State: No any given value.
+Input: Based on the calendar, the given inputs is:\\ 
+Input (1)
+~$\mathit{year}_\text{Start}$:(0) ~$\mathit{month}_\text{Start}$:(0)
+~$\mathit{day}_\text{Start}$:(0)\\ 
+Input (2) ~$\mathit{year}_\text{Start}$:(-1)
+~$\mathit{month}_\text{Start}$:(-1) ~$\mathit{day}_\text{Start}$:(-1)\\
+
+Output: The expected result wil for the given inputs is:\\ 
+Output (1) 0,0,0 doesnot exist.\\ 
+Output (2) -1,-1,-1 does not exist.
+
+\wss{The expected resultfor the given inputs}
+
+Test Case Derivation: When any input value less than equal than 0, the system
+activates the error handler. \\ 
+
+\wss{Justify the expected value given in the Output field} 
+
+How test will be performed: 
+
+\begin{itemize} 
+\item Input the value from the keyboard following the instruction of the
+software interface. 
+\item Verified the output showing on the screen by the test case derivation
+instruction.
+\end{itemize} 
+\end{enumerate}
+
+\subsubsection{Output Calculation}
+
+This test covers the requirements, R3 to R6, in section \ref{Objectives}.
+This test relates to the previous test input reading testing. After the 
+system reads the inputs from the software interface, the system starts
+calculating the outputs.
+
+
+\wss{It would be nice to have a blurb here to explain why the subsections below
+cover the requirements. References to the SRS would be good. If a section
+coverstests for input constraints, you should reference the data constraints
+table in the SRS.} 
+
+\paragraph{The Robustness of the Calculation}
+
+\begin{enumerate}
+\item{CalculateOutput-id5\\}
+
+Control: Automatic. Input the random cases that satisfied the values' property.
+Initial State: No input value
+
+Input: Input the value of requirements of \progname that drive the calculation
+of the date duration. To calculate the date duration, it needs
+~$\mathit{year}_\text{Start}$ ~$\mathit{month}_\text{Start}$
+~$\mathit{day}_\text{Start}$ ~$\mathit{year}_\text{End}$
+~$\mathit{month}_\text{End}$ ~$\mathit{day}_\text{End}$ 
+
+The given inputs are:\\
+Input (1..50)~$\mathit{year}_\text{Start}$: A random picked integer\\
+~$\mathit{month}_\text{Start}$: A random picked integer\\
+~$\mathit{day}_\text{Start}$: A random picked integer\\
+~$\mathit{year}_\text{End}$: A random picked integer\\
+~$\mathit{month}_\text{End}$: A random picked integer\\
+~$\mathit{day}_\text{End}$: A random picked integer\\
+
+Output: The expected result wil for the given inputs is:\\ Output (1..50) :
+Show``OK, passed 49 tests '' on the screen\\
+
+\wss{The expected result for the given inputs}
+
+Test Case Derivation: Based on the description in QuickCheck\cite{QuickCheck},
+the output is justified if the output shows \verb|``OK, passed input-numbers of tests ''|
+
+\wss{Justify the expected value given in the Output field} 
+How test will be performed: 
+\begin{itemize}
+\item Implement the test cases with QuickCheck\cite{QuickCheck}, describes in 
+section \ref{Planfordv}.
+\item Verified the output showing on the screen by the test case derivation
+instruction.
+\end{itemize}
+
+\item{CalculateOutput-id6\\}
+Control: Automatic. Input the random cases that satisfied the values' property.
+
+Initial State: No input value
+
+Input: Input the value of requirements of \progname that drive the calculation
+of the zenith angle. To calculate the zenith angle, it needs 
+~$\Phi_P$ and ~$\delta_{date}$\\ 
+
+The given inputs are:\\ 
+Input (1..50)~$\Phi_P$: A random picked rational number\\ 
+~$\delta_{date}$: A random picked integer\\
+
+Output: The expected result wil for the given inputs is:\\ 
+Output (1..50) : Show\verb|``OK, passed 49 tests ''| on the screen\\
+
+\wss{The expected result for the given inputs}
+
+Test Case Derivation: Based on the description in QuickCheck\cite{QuickCheck},
+the output is justified if the output shows \verb|``OK, passed input-numbers of tests ''|
+\wss{Justify the expected value given in the Output field} 
+
+How test will be performed: 
+\begin{itemize} 
+\item Implement the test cases with QuickCheck\cite{QuickCheck}, describes in 
+section \ref{Planfordv}.
+\item Verified the output showing on the screen by the test case derivation
+instruction.
+\end{itemize} 
+
+\item{CalculateOutput-id7\\}
+Control: Automatic. Input the random cases that satisfied the values' property.
+
+Initial State: Based on the assumption in SRS\cite{YS2019}, $I_{S}$ = 1.35
+
+Input: Input the value of requirements of \progname that drive the calculation
+of the Solar intensity. To calculate the solar intensity, it needs
+~$\theta_{S_{day}}$
+
+The given inputs are:\\ 
+Input (1..50)~$\theta_{S_{day}}$: A random picked rational number\\
+
+Output: The expected result wil for the given inputs is:\\ 
+Output (1..50) : Show\verb|``OK, passed 49 tests ''| on the screen\\
+
+\wss{The expected result for the given inputs}
+
+Test Case Derivation: Based on the description in QuickCheck\cite{QuickCheck},
+the output is justified if the output shows \verb|``OK, passed input-numbers of tests ''|
+
+ \wss{Justify the expected value given in the Output field}
+
+How test will be performed:
+ \begin{itemize} 
+\item Implement the test cases with QuickCheck\cite{QuickCheck}, describes in 
+section \ref{Planfordv}.
+\item Verified the output showing on the screen by the test case derivation
+instruction.
+\end{itemize} 
+\end{enumerate}
+
+\subsubsection{Output Verification}\label{STD_VO} 
+
+This test covers the requirements, R2, R7 and R8, in section \ref{Objectives}. This
+test
+uses external data\ref{RD} to verify the output. Based on the SRS 
+document\cite{YS2019}, the output data constraints can be found in the
+table, Output Variables, under the section, Properties of a Correct Solution. 
+
+\paragraph{The Correctness of the Calculation}
+\begin{enumerate}
+\item{VerifyOutput-id8\\}
+Control: Automatic. The test cases contain cases that
+$|\mathit{year}_\text{Start} - \mathit{year}_\text{End}| = 0$ and
+$|\mathit{year}_\text{Start} - \mathit{year}_\text{End}| \geq 0$.
+
+Initial State:No input value
+
+Input: Input the value of requirements of \progname that drive the calculation
+of the date duration. To calculate the date duration, it needs
+~$\mathit{year}_\text{Start}$ 
+~$\mathit{month}_\text{Start}$
+~$\mathit{day}_\text{Start}$ 
+~$\mathit{year}_\text{End}$
+~$\mathit{month}_\text{End}$
+ ~$\mathit{day}_\text{End}$ 
+
+The given inputs are:\\
+Input (1)~$\mathit{year}_\text{Start}$: 2017 ~$\mathit{month}_\text{Start}$: 01
+~$\mathit{day}_\text{Start}$: 01 ~$\mathit{year}_\text{End}$: 2017
+~$\mathit{month}_\text{End}$: 12 ~$\mathit{day}_\text{End}$: 31\\ 
+
+Input (2)~$\mathit{year}_\text{Start}$: 2018 ~$\mathit{month}_\text{Start}$: 06
+~$\mathit{day}_\text{Start}$: 20 ~$\mathit{year}_\text{End}$: 2019
+~$\mathit{month}_\text{End}$: 07 ~$\mathit{day}_\text{End}$: 26\\
+
+Output: The expected result wil for the given inputs is the date duration:\\
+Output (1) : 365 Output (2) : 402
+
+\wss{The expected result for the given inputs}
+
+Test Case Derivation: Based on the calendar, $\text{absolute error} = 0$ where
+$\text{absolute error} = |\text{ expected output} - \text{ actual output}|$
+\wss{Justify the expected value given in the Output field} 
+How test will be performed: 
+\begin{itemize}
+\item Input the input values from a file, VerifyOutputId1.txt. 
+\item Verified the output by the test case derivation
+instruction. 
+\item If all the absolute error of the test cases is equal to 0, then the test
+success, otherwise the test fails.
+
+\end{itemize}
+
+\item{VerifyOutput-id9\\}
+
+Control: Automatic. The test cases contain cases that\\ $0 \leq \Phi_P,
+~\delta_\text{date} \leq 90$,\\$-90 \leq \Phi_P, ~\delta_\text{date} < 0$,
+\\$-90 \leq \delta_\text{date} < 0 ~ \land ~ 0 \leq \Phi_P \leq 90$, \\$-90
+\leq\Phi_P < 0 ~ \land ~0 \leq \delta_\text{date} \leq 90$ 
+
+Initial State: No input value
+
+Input: Input the value of requirements of \progname that drive the calculation
+of the zenith angle. To calculate the zenith angle, it needs ~$\Phi_P$ and
+~$\delta_\text{date}$ 
+
+The given inputs are:\\ 
+Input (1)~$\Phi_P$: 43.250943
+~$\delta_{date}$: 20\\ 
+Input (2)~$\Phi_P$: -43.250943 ~$\delta_{date}$: -20\\
+Input (3)~$\Phi_P$: -43.250943 ~$\delta_{date}$: 20\\ 
+Input (4)~$\Phi_P$: 43.250943 ~$\delta_{date}$: -20\\
+
+Output: The expected result wil for the given inputs is the zenith angle:\\
+Output (1) 23.250943\\ Output (2) 23.250943\\ Output (3) 63.250943\\ Output (4)
+63.250943\\
+
+\wss{The expected result for the given inputs}
+
+Test Case Derivation: Based on the equation described in SRS\cite{YS2019}, we
+get the expected result. Therefore, $\text{absolute error} = 0$ where
+$\text{absolute error} = |\text{ expected output} - \text{ actual output}|$,
+
+\wss{Justify the expected value given in the Output field} 
+How test will be performed: 
+\begin{itemize} 
+\item Input the input values from a file, VerifyOutputId2.txt. 
+\item Verified the output by the test case derivation instruction. 
+\item If all the absolute error of the test cases is equal to 0, then the test
+success, otherwise the test fails.
+\end{itemize}
+
+\item{VerifyOutput-id10\\} 
+
+This test case is driven by the previous test case, VerifyOutput-id2.
+Therefore,if the previous test case success, VerifyOutput-id3is implemented.\\
+Moreover, this test case used the external data from [Jacobsonand
+Jadhav\cite{JacobsonandJadhav}] as the expected output and the expected
+input latitude.\\ 
+
+Control: Automatic. The test cases contain cases that $\Phi_P
+= \text{expected input latitude}$ and $\Phi_P \ne \text{expected input
+latitude}$. 
+
+Initial State: Based on the assumption in SRS\cite{YS2019}, $I_{S}$:1.35, and
+based on the assumption in [Jacobson and Jadhav\cite{JacobsonandJadhav}],
+$\mathit{year}_\text{Start}$: 2018
+~$\mathit{month}_\text{Start}$: 01 
+~$\mathit{day}_\text{Start}$: 01;
+~$\mathit{year}_\text{End}$: 2018 
+~$\mathit{month}_\text{End}$: 12
+~$\mathit{day}_\text{End}$: 31\\ 
+
+Input: Input the value of requirements of
+\progname that driven the calculation of the optimal tilt angle. To calculate
+the solar intensity, it needs ~$\theta_{S_{day}}$, which is diven by the input
+latitude. 
+
+The given inputs are:\\
+ Input (1)$\Phi_P$: 64.13 \\ 
+Input(2)$\Phi_P$:63.13\\
+
+Output: The expected result wil for the given inputs is the optimal tilt
+angle:\\ Output (1) : 43\\ Output (2) : 43\\
+
+\wss{The expected result for the given inputs}
+
+Test Case Derivation: Based on the equation described in SRS\cite{YS2019}, we
+get the \textbf{actual result}. Then we calculate the relative error using the
+data in the
+ [JacobsonandJadhav\cite{JacobsonandJadhav}] as our \textbf{expected result}. 
+Therefore, $\text{relative error} \approx 0$ where $\text{relative error} =
+ | 1 - \frac{\text{actual result}}{ \text{expected result}} |$ 
+
+\wss{Justify the expected value given in the Output field}
+
+How test will be performed: 
+\begin{itemize}
+\item Build a linear graph using the expected input latitude as the x-axis 
+and expected output as the y-axis. 
+\item Input the input values from a file, VerifyOutputId3.txt.
+\item Calculate the \textbf{actual result} by the equation descibes in in
+SRS\cite{YS2019}
+\item Place the point($P_\text{actual input}$)(x-axis: input latitude, y-axis:
+actual result) in the linear graph
+\item Find the point($P_\text{upper bound}$),the lowest upper bound of
+$P_\text{actual input}$ and point($P_\text{lower bound}$), the greatest upper
+bound of $P_\text{actual input}$
+\item Calculate the area between $P_\text{upper bound}$ and $P_\text{actual
+input}$; and $P_\text{lower bound}$ and $P_\text{actual input}$ using the
+equation,\\
+$\mathit{Area}$ = $\frac{|(x_{\text{input latitude}}-x_{\text{expected
+latitude}})| \times |(y_{\text{actual result}}-y_{\text{expected result}})|}{2}$
+\item If $\mathit{Area}_{\text{actual input - \textbf{upper bound}}} <
+\mathit{Area}_{\text{actual input - \textbf{lower bound}}}$,
+then \textbf{expected result} = the y-axis of $P_\text{upper bound}$, otherwise
+\textbf{expected result} = the y-axis of $P_\text{lower bound}$
+\item Verified the output by the test case derivation instruction. 
+\item If all the relative error of the test cases is approximately
+0, then the test success, otherwise the test fails. 
+\end{itemize}
+
+\item{VerifyOutput-id11\\} 
+
+This test case is driven by the previous test case,
+VerifyOutput-id1, VerifyOutput-id2 and VerifyOutput-id3. Therefore, if the
+previous test case success, VerifyOutput-id4 is implemented.\\
+
+Moreover, this test case used the external data from [Landau\cite{Charles2001}]
+as the expected output, expected input latitude\\
+
+Control: Automatic. The test cases contain cases that $\Phi_P = \text{expected
+input latitude}$, $\Phi_P \ne \text{expected input latitude}$. 
+
+Initial State:
+Basedon the assumption in SRS\cite{YS2019}, $I_{S}$: 1.35, and based on the
+assumption in [Landau\cite{Charles2001}], the date duration of the winter in
+northern hemisphere is from\\
+~ $\mathit{year}_\text{Start}$: 2018
+~$\mathit{month}_\text{Start}$: 10 
+~$\mathit{day}_\text{Start}$: 05 \\
+ to
+~$\mathit{year}_\text{End}$: 2019 
+~$\mathit{month}_\text{End}$: 03
+~$\mathit{day}_\text{End}$: 05\\
+
+ Input: Input the value of requirements of
+\progname that driven the calculation of the Solar intensity. To calculate the
+solar intensity, it needs ~$\theta_{S_{day}}$, which is diven by the input
+latitude. 
+
+The given inputs are:\\ 
+Input (1)$\Phi_P$: 30 \\ 
+Input (2)$\Phi_P$: 31\\
+
+Output: The expected result wil for the given inputs is average the solar
+intensity during winter:\\ 
+Output (1) : 5.6\\ 
+Output (2) : 5.6\\
+
+\wss{The expected result for the given inputs}
+
+Test Case Derivation: Based on the equation described in SRS\cite{YS2019}, we
+get the expected result. Therefore, $\text{relative error} \approx 0$ where
+$\text{relative error} = | 1 - \frac{\text{actual output}}{ \text{expected
+output}} |$
+
+\wss{Justify the expected value given in the Output field}
+
+How test will be performed: 
+
+\begin{itemize} 
+\item Input the input values from a file, VerifyOutputId4.txt. 
+\item Calculate the daily solar intensity during winter 
+\item Calculate the average solar intensity during winter, using the equation,\\the average solar intensity = $\frac{\text{the sum of the daily solar
+intensity}}{\text{date duration of winter}}$
+\item Output the average solar intensity as the actual output
+\item Verified the output by the test case derivation instruction. 
+\item If all the relative error of the test cases is approximately 0, then the
+test success, otherwise the test fails.
+\end{itemize}
+\end{enumerate}
 
 \subsection{Tests for Nonfunctional Requirements}
 
 \wss{The nonfunctional requirements for accuracy will likely just reference the
-  appropriate functional tests from above.  The test cases should mention
-  reporting the relative error for these tests.}
+appropriate functional tests from above. The test cases should mention
+reportingthe relative error for these tests.} \wss{Tests related to usability
+could
+include conducting a usability test and survey.} \subsubsection{Correctness}
+\paragraph{The correctness of the System}
 
-\wss{Tests related to usability could include conducting a usability test and
-  survey.}
+\begin{enumerate} 
 
-\subsubsection{Area of Testing1}
-		
-\paragraph{Title for Test}
+\item{correctness-id1\\} 
 
+Type: Dynamic analysis
+The outputs of the system test under section \ref{STD_VO}. To get a
+reliable output, \progname is expected to pass all the test cases under the
+section \ref{STD_VO}.
+
+How test will be performed: Active the test cases under section
+\ref{STD_VO}, when the code is modified.
+
+\item{correctness-id2\\}
+
+Type: Dynamic analysis - Code Coverage
+
+Use the code coverage tool, Haskell Program Coverage(HPC), to test the code
+coverage. The description of HPC can be found in section \ref{Planfordv}.
+
+Input/Condition: The main code of \progname
+
+Output: The percentage of the coverage 
+
+How test will be performed:
+
+\begin{itemize} 
+\item Use the compiler, ghc-6.8.1 or later version, to active Haskell Program
+Coverage.
+\item Enable hpc with the command line, -fhpc.
+\item The test case success, if the output gets the 100% of the coverage,
+otherwise
+the test case fails. 
+\end{itemize}
+\end{enumerate} 
+
+
+\subsubsection{Portability} 
+\paragraph{The portability of the system}
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{portability-id3\\}
 
-Type: 
+Type: Manual
 					
-Initial State: 
+Initial State: -
 					
-Input/Condition: 
+Input/Condition: Implement \progname in diverse environments.
 					
-Output/Result: 
+Output/Result: If the \progname works functionally.
 					
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
-
+How test will be performed:
+ \begin{itemize}
+\item Implement \progname ~on the
+virtual machines with the system enviroment of Windows 10, MacOs. 
+\item Run every function of \progname. 
+\item If function works, then success, otherwise fail. 
+\end{itemize} 
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
 
-...
-
+\newpage
 \subsection{Traceability Between Test Cases and Requirements}
 
-\wss{Provide a table that shows which test cases are supporting which
-  requirements.}
-				
-\bibliographystyle{plainnat}
 
-\bibliography{SRS}
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline        
+	& R1& R2 & R3 &R4 & R5 &R6  &R7 &R8 \\
+\hline
+id1        & X &    &     &    &    &    &   &     \\ \hline
+id2        & X &    &     &    &    &    &   &     \\ \hline
+id3        & X &    &     &    &    &    &   &     \\ \hline
+id4        & X &    &     &    &    &    &   &     \\ \hline
+id5        &    &    & X  &    &    &    &   &     \\ \hline
+id6        &    &    &     & X &    &    &   &     \\ \hline
+id7        &    &    &     &    & X &    &   &     \\ \hline
+id8        &    &    &     &    &    &    & X & X   \\ \hline
+id9        &    &    & X  &    &    &    & X & X   \\ \hline
+id10      &    & X &     & X &    & X & X & X   \\ \hline
+id11      &    &    &     & X &    &    & X & X  \\ \hline
+
+
+\hline
+\end{tabular}
+\caption{Traceability Between Functional Requirements Test Cases and
+Requirements}
+\label{Table:trace}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline        
+	& NFR1& NFR2 & NFR3 &NFR4 & NFR5 &NFR6 \\
+\hline
+id1        & X &    &     &    &    &     \\ \hline
+id2        & X &    &     &    &    &     \\ \hline
+id3        &    &    &     &    &    & X  \\ \hline
+
+
+\hline
+\end{tabular}
+\caption{Traceability Between NonFunctional Requirements Test Cases and
+Requirements}
+\label{Table:trace}
+\end{table}
+
+
+\wss{Provide a table that shows which test cases are supporting which
+requirements.}
+
+
+\newpage
+
+\bibliographystyle{unsrtnat}
+\bibliography{../../../refs/References} 
+%\bibliography{../../docs/SRS}
+
 
 \newpage
 
 \section{Appendix}
 
-This is where you can place additional information.
 
 \subsection{Symbolic Parameters}
 
-The definition of the test cases will call for SYMBOLIC\_CONSTANTS.
-Their values are defined in this section for easy maintenance.
+  \noindent \begin{tabular}{l l l} 
+    \toprule		
+    \textbf{Symbol} & \textbf{Description} & \textbf{Value}\\
+    \midrule 
+    $I_{S}$ & Solar insensity &1.35  \\
+    \bottomrule
+  \end{tabular}
+  %	\caption{Provide a caption}
+%\end{table}
 
-\subsection{Usability Survey Questions?}
 
+ \subsection{Usability Survey Questions?}
 \wss{This is a section that would be appropriate for some projects.}
+
+
+\begin{table}[h!]
+  \noindent \begin{tabular}{l l l} 
+    \toprule		
+    \textbf{Symbol} & \textbf{Answer} \\
+    \midrule 
+    Do you think this software helps? & Yes/ No  \\
+    Do you think this software is easy to use? & Yes/ No  \\
+    Do you think this software is easy to use for elders? & Yes/ No  \\
+    Do you think this software is easy to use for children(under 12)? & Yes/ No  \\
+    Do you think this software works flawlessly? & Yes/ No  \\
+    How many time you open this software in a week? & \_\_\_\_\_\_\_\_\_times  \\
+	 How many stars  would you like to give to this software?(1 - 10 starts) & \_\_\_\_\_\_\_\_\_starts  \\
+    Do you like to recommend  this software to others? & Yes/ No  \\
+    \bottomrule
+  \end{tabular}
+  \caption{Survey for home users}
+\end{table}
+
+\begin{table}[h!]
+  \noindent \begin{tabular}{l l l} 
+    \toprule		
+    \textbf{Symbol} & \textbf{Answer} \\
+    \midrule 
+    The steps take to get the optimum tilt angle & \_\_\_\_\_\_\_\_\_steps  \\
+    How long it need to get the optimum tilt angle & \_\_\_\_\_\_\_\_\_times  \\
+    The steps take to get the expected solar energy gaining & \_\_\_\_\_\_\_\_\_steps  \\
+    How long it need to get the expected solar energy gaining & \_\_\_\_\_\_\_\_\_times  \\
+    The power consume after using the software for an hour & \_\_\_\_\_\_\_\_\_\%  \\
+    The memory consume after install the software  & \_\_\_\_\_\_\_\_\_\%  \\
+    How many error alerts you take at the fist time using the software? & \_\_\_\_\_\_\_\_\_times  \\
+    How many error alerts you take at the second time using the software? & \_\_\_\_\_\_\_\_\_times  \\
+    \bottomrule
+  \end{tabular}
+  \caption{Survey for researching  group}
+\end{table}
+
 
 \end{document}
