@@ -27,8 +27,7 @@
 \hypersetup{
     bookmarks=true,         % show bookmarks bar?
       colorlinks=true,       % false: boxed links; true: colored links
-    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
-    citecolor=green,        % color of links to bibliography
+linkcolor=red, % color of internal links (change box color with linkbordercolor)citecolor=green, % color of links to bibliography
     filecolor=magenta,      % color of file links
     urlcolor=cyan           % color of external links
 }
@@ -80,7 +79,7 @@
 
 \begin{document}
 
-\title{Software Requirements Specification for Sun Catcher} 
+\title{Software Requirements Specification for \progname} 
 \author{Yu-Shiuan Wu}
 \date{\today}
 	
@@ -99,7 +98,7 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
+2019/10./16 & 1.0 & First version of SRS update to GitHub\\
 Date 2 & 1.1 & Notes\\
 \bottomrule
 \end{tabularx}
@@ -112,10 +111,10 @@ This section records information for easy reference.
 
 \subsection{Table of Units}
 
-Throughout this document SI (Syst\`{e}me International d'Unit\'{e}s) is employed
-as the unit system.  In addition to the basic units, several derived units are
-used as described below.  For each unit, the symbol is given followed by a
-description of the unit and the SI name.
+Throughout this document SI (Syst\`{e}me International d'Unit\'{e}s) is
+employedas the unit system. In addition to the basic units, several derived
+units are used as described below.  For each unit, the symbol is given 
+followed by a description of the unit and the SI name.
 ~\newline
 
 \renewcommand{\arraystretch}{1.2}
@@ -126,21 +125,25 @@ description of the unit and the SI name.
     \midrule 
     \si{\degree} & angle & degree\\
     \si{'} & angle	& - \\
-    \si{k} & mass   & kilo \wss{mass is in kg, kilo should be kilograms}\\
+    \si{k} & mass   & kilograms\\
     \si{m} &  length   & metre \\
     \si{\watt} & power & Watt (W = \si{\joule\per\second})\\
-	  N & direction & North \wss{N and S are not units}\\
-	  S & direction & South\\
-	  year & date & date \wss{defining a date type is a great idea, but
-                        dates are not units}\\
-	  month & date & date\\
-	  day & date & date\\
     \bottomrule
   \end{tabular}
   %	\caption{Provide a caption}
 %\end{table}
 
-\iffalse\plt{Only include the units that your SRS actually uses.}
+ \wss{defining a date type is a great idea, but dates are not units}
+ \an{I have deleted the ``date type'' from the units table. Moreover
+redefine the Symbols of date more explicitly, so I can avoid placing
+ months, days, and years in the same symbol.}
+ \wss{N and S are not units}
+ \an{I will treat N and S direction as a positive and negative symbol.} 
+
+
+
+
+\plt{Only include the units that your SRS actually uses.}
 
 \plt{Derived units, like newtons, pascal, etc, should show their derivation
     (the units they are derived from) if their constituent units are in the
@@ -156,7 +159,7 @@ description of the unit and the SI name.
   etc.  The one exception to this is degree Celsius.  Details on writing metric
   units can be found on the 
   \href{https://www.nist.gov/pml/weights-and-measures/writing-metric-units}
-  {NIST} web-page.}\fi
+  {NIST} web-page.}
 
 \subsection{Table of Symbols}\label{tb_TS}
 
@@ -169,57 +172,62 @@ systems.  The symbols are listed in alphabetical order.
 %\noindent \begin{tabularx}{1.0\textwidth}{l l X}
 \noindent \begin{longtable*}{l l p{12cm}} \toprule
   \textbf{symbol} & \textbf{unit} & \textbf{description}\\
-  \midrule $\theta_{S_{day}}$ & \si[per-mode=symbol] {\degree} & zenith angle of
-  sun in the day
+\midrule 
+$\theta_{S_{\text{day}}}$ & \si[per-mode=symbol] {\degree} & zenith angle of
+sun in the day
   \\
   $\theta_{T}$ & \si[per-mode=symbol] {\degree} & the tilt angle for adjusting
   the solar panel
   \\
-  $\Phi_P$ & \si[per-mode=symbol] {(\degree, \N/S, \ ')} & the latituade
-  \wss{Spellcheck!} of the solar panel \wss{the units are degrees. N and S are
+  $\Phi_P$ & \si[per-mode=symbol] {(\degree, \ ')} & the latitude
+   of the solar panel \wss{the units are degrees. N and S are
     not units.  I can see that this could be confusing.  Defining a data type
-    will help you.  I'll include some details below.}
+    will help you.  I'll include some details below.} \an{Yes, I it fixed by treating the N and S
+    as + and - }
   \\
-  $\delta_{date}$ & \si[per-mode=symbol] {(\degree, \ N/S)} & the declination of
-  the vertical noon sun in the day
+$\delta_{\text{date}}$ & \si[per-mode=symbol] {(\degree, \ N/S)} & the daily declination of
+the vertical noon sun in the date duration
   \\
   $I_{S}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the intensity of
   the sun measured by the satellites
   \\
-  $I_{S_{date}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the
-  intensity of the sun in a day of the noon
+  $I_{S_{\text{daily}}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the daily 
+solar intensity of the noon in the date duration($date$).
   \\
-  $I_{S_{date}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the solar
-  intensity in a period of days of the noon
+  $I_{S_{\text{total}}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the total 
+solar intensity of the noon in the date duration($date$).
   \\
-  $I_{S_{T}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the solar
-  intensity hits on the tilted solar panel.
+  $I_{S_{\text{max}}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the hightest 
+solar intensity of the noon in the date duration($date$).
   \\
   $P_{E}$ & \si[per-mode=symbol] {k\watt} &the estimated solar panel output
   energy
   \\
-  $P_{A}$ & \si[per-mode=symbol] {\square{m}} & the solar panel area
+  $P_{A_{\text{h}}}$ &\si[per-mode=symbol] {\square{m}} & the height of the solar panel
   \\
-  $P_{r}$ & \si[per-mode=symbol] {\%} & solar panel yield or efficiency
+  $P_{A_{\text{w}}}$ &\si[per-mode=symbol] {\square{m}} &the width of the solar panel 
+  \\
+  $P_{\text{r}}$ & \si[per-mode=symbol] {\%} & solar panel yield or efficiency
   \\
   $PR$ & \si[per-mode=symbol] {\%} & performance ratio, coefficient for losses
   \\
-  $date$ & \si[per-mode=symbol] {\text{-}} & a sequence of dates from the day
-  starts estimating the angle to the ending day
+  $date$ & \si[per-mode=symbol] {\text{-}} & the date duration between the 
+  calculation starting date and the ending date
   \\
-  $day_{Start}$ & \si[per-mode=symbol] {\text{-}} & the day starts estimating
-  the angle \wss{Please check with the Writing-Checklist.tex document for the
-    format of variables that are words in LaTeX.  This should be
-    $\mathit{day}_\text{Start}$.  I know it is tedious, but it doesn't look
-    right otherwise.}
-  \\
-  $day_{End}$ & \si[per-mode=symbol] {\text{-}} & the day stops estimating the
-  angle
-  \\
-  \bottomrule
+  $\mathit{year}_\text{Start}$& \si[per-mode=symbol] {\text{-}} & the year of the
+  calcuation's starting date\\
+  $\mathit{month}_\text{Start}$& \si[per-mode=symbol] {\text{-}} & the month of
+  the calcuation's starting date\\ 
+  $\mathit{day}_\text{Start}$ & \si[per-mode=symbol] {\text{-}} & the day of the
+  calcuation's starting date\\
+  $\mathit{year}_\text{End}$ & \si[per-mode=symbol] {\text{-}} & the year of the
+  calcuation's ending date\\
+  $\mathit{month}_\text{End}$& \si[per-mode=symbol] {\text{-}} & the month of the
+  calcuation's ending date\\
+\bottomrule
 \end{longtable*}
-\iffalse\plt{Use your problems actual symbols.  The si package is a good idea to use for
-  units.}\fi
+\plt{Use your problems actual symbols. The si package is a good idea to use for
+units.}
 
 \subsection{Abbreviations and Acronyms}
 
@@ -237,37 +245,37 @@ systems.  The symbols are listed in alphabetical order.
   PS & Physical System Description\\
   R & Requirement\\
   SRS & Software Requirements Specification\\
-  SC & Sun Catcher\\
+  SC & \progname\\
   T & Theoretical Model\\
   \bottomrule
 \end{tabular}\\
 
-\iffalse\plt{Add any other abbreviations or acronyms that you add}\fi
+\plt{Add any other abbreviations or acronyms that you add}
 
 \newpage
 
 \pagenumbering{arabic}
 
-\iffalse\plt{This SRS template is based on \citet{SmithAndLai2005, SmithEtAl2007}.  It
+\plt{This SRS template is based on \citet{SmithAndLai2005, SmithEtAl2007}.  It
   will get you started.  You should not modify the section headings, without
   first discussing the change with the course instructor.  Modification means
   you are not following the template, which loses some of the advantage of a
   template, especially standardization.  Although the bits shown below do not
   include type information, you may need to add this information for your
-  problem.  If you are unsure, please can ask the instructor.}\fi
+  problem.  If you are unsure, please can ask the instructor.}
 
-\iffalse\plt{Feel free to change the appearance of the report by modifying the LaTeX
-  commands.}\fi
+\plt{Feel free to change the appearance of the report by modifying the LaTeX
+  commands.}
 
-\iffalse\plt{This template document assumes that a single program is being documented.
-  If you are documenting a family of models, you should start with a commonality
-  analysis.  A separate template is provided for this.  For program
+\plt{This template document assumes that a single program is being documented.
+If you are documenting a family of models, you should start with a commonality
+analysis. A separate template is provided for this. For program
   families you should look at \cite{Smith2006, SmithMcCutchanAndCarette2017}.
   Single family member programs are often programs based on a single physical
-  model.  General purpose tools are usually documented as a family.  Families of
-  physical models also come up.}\fi
+model. General purpose tools are usually documented as a family. Families of
+physical models also come up.}
 
-\iffalse\plt{The SRS is not generally written, or read, sequentially.  The SRS is a
+\plt{The SRS is not generally written, or read, sequentially.  The SRS is a
   reference document.  It is generally read in an ad hoc order, as the need
   arises.  For writing an SRS, and for reading one for the first time, the
   suggested order of sections is:
@@ -278,9 +286,9 @@ systems.  The symbols are listed in alphabetical order.
 \item Introduction
 \item Specific System Description
 \end{itemize}
-}\fi
+}
 
-\iffalse\\plt{Guiding principles for the SRS document:
+\plt{Guiding principles for the SRS document:
 \begin{itemize}
 \item Do not repeat the same information at the same abstraction level.  If
   information is repeated, the repetition should be at a different abstraction
@@ -288,16 +296,16 @@ systems.  The symbols are listed in alphabetical order.
   assumptions, but the scope section will not go into as much detail as the
   assumptions section.
 \end{itemize}
-}\fi
+}
 
-\iffalse\plt{The template description comments should be disabled before submitting this
-  document for grading.}
+\plt{The template description comments should be disabled before submitting 
+this document for grading.}
 
-\plt{You can borrow any wording from the text given in the template.  It is part
-  of the template, and not considered an instance of academic integrity.  Of
-  course, you need to cite the source of the template.}\fi
+\plt{You can borrow any wording from the text given in the template. It is part
+of the template, and not considered an instance of academic integrity. Of
+  course, you need to cite the source of the template.}
 
-\iffalse\plt{When the documentation is done, it should be possible to trace back to the
+\plt{When the documentation is done, it should be possible to trace back to the
   source of every piece of information.  Some information will come from
   external sources, like terminology.  Other information will be derived, like
   General Definitions.}
@@ -309,7 +317,7 @@ systems.  The symbols are listed in alphabetical order.
   of the Intended Reader (Section~\ref{sec_IntendedReader}) can learn,
   understand and verify the captured domain knowledge.  They should not have to
   trust the authors of the SRS on any statements.  They should be able to
-  independently verify/derive every statement made.}\fi
+  independently verify/derive every statement made.}
 
 \section{Introduction}
 
@@ -319,23 +327,25 @@ Due to the increasing concepts of creating an earth-friendly environment, the
 kits using renewable energy becomes more popular in the market. Solar energy is
 the most common type of renewable resource for a home. However, it is an
 expensive technology, and its cell efficiency is restricted by
-seasons. Therefore, Sun Catcher is created for home users to gain optimum energy
-from daily sunlight.
+seasons. Therefore, \progname is created for home users to gain optimum
+energyfrom daily sunlight.
 
 
 The following sections provide an overview of the Software Requirements
-Specification (SRS) for Sun Catcher(SC). \wss{remember to check with the writing
-  checklists!}  This section explains the purpose and the organization of the
-document, the scope of the requirements, and the characteristics of the intended
-reader.  \wss{You should put use 80 character wide columns of text in your tex
+Specification (SRS) for \progname(SC). \wss{remember to check with the
+writingchecklists!} This section explains the purpose and the organization of
+the
+document, the scope of the requirements, and the characteristics of the
+intendedreader. \wss{You should put use 80 character wide columns of text in
+your tex
   file.  It is better for diffs, and easier to read on different editors.}
 
 
-\iffalse\plt{The introduction section is written to introduce the problem.  It starts
-  general and focuses on the problem domain. The general advice is to start with
-a paragraph or two that describes the problem, followed by a ``roadmap''
+\plt{The introduction section is written to introduce the problem.  It starts
+general and focuses on the problem domain. The general advice is to start witha
+paragraph or two that describes the problem, followed by a ``roadmap''
 paragraph.  A roadmap orients the reader by telling them what sub-sections to
-expect in the Introduction section.}\fi
+expect in the Introduction section.}
 
 \wss{Rather than iffalse, you could have just set comments to false in the
   Comments.tex file.  Although as it is set up right now, you would get all of
@@ -346,60 +356,74 @@ expect in the Introduction section.}\fi
 
 \medskip
 
-The purpose of this document is to record the correct requirements of SC. The goal statement provided readers a consistent idea of what problem is solved. The theoretical models and the instance models, which state the mathematical terms supporting the theoretical models, are explained unambiguously for readers to reuse and verify the software. In the section of System Constraints, its contents will stay abstract because the content should only say what problem is being solved, but not how to solve it.
+The purpose of this document is to record the correct requirements of SC. The
+goal statement provided readers a consistent idea of what problem is solved.
+Thetheoretical models and the instance models, which state the mathematical
+terms
+supporting the theoretical models, are explained unambiguously for readers to
+reuse and verify the software. In the section of System Constraints, its
+contents will stay abstract because the content should only say what problem is
+being solved, but not how to solve it.
 
-This document will be used as a starting point for subsequent development phases, including writing the design specification and the software verification and validation plan.
-The design document will show how the requirements are to be realized, including decisions
-on the numerical algorithms and programming environment. The verification and validation
-plan will show the steps that will be used to increase confidence in the software documentation and the implementation. 
+This document will be used as a starting point for subsequent development
+phases, including writing the design specification and the software
+verificationand validation plan.
+The design document will show how the requirements are to be realized,
+includingdecisions
+on the numerical algorithms and programming environment. The verification and
+validation
+plan will show the steps that will be used to increase confidence in the
+software documentation and the implementation.
 
 
-\iffalse\plt{This section summarizes the purpose of the SRS document.  It does not focus
-  on the problem itself.  The problem is described in the ``Problem
-  Description'' section (Section~\ref{Sec_pd}).  The purpose is for the document
-  in the context of the project itself, not in the context of the CAS 741
+\plt{This section summarizes the purpose of the SRS document. It does not focus
+on the problem itself. The problem is described in the ``Problem
+Description'' section (Section~\ref{Sec_pd}). The purpose is for the document
+inthe context of the project itself, not in the context of the CAS 741
   course.  Although the ``purpose'' of the document is to get a grade in 741,
   you should not mention this.  Instead, ``fake it'' as if this is a real
   project.  The purpose section will be similar between projects.  The purpose
   of the document is the purpose of the SRS, including communication, planning
-  for the design stage, etc.}\fi
+  for the design stage, etc.}
 
 \subsection{Scope of Requirements}
 
 The scope of the requirements includes stability analysis of a two-dimensional
 (2D) solar panel and the sun as the solar resource. The solar panel is assumed
 to place in a location near sea level, and the sky view above is unobstructed,
-with no trees, hills, clouds, dust, or haze ever blocking the sun.  \wss{Clarify
-  that for the purpose of the calculations you are making these assumptions.
+with no trees, hills, clouds, dust, or haze ever blocking the sun. \wss{Clarify
+that for the purpose of the calculations you are making these assumptions.
   The actual solar panel will never reach the ideal energy output given in the
   calculations by \progname.}  \wss{I tried to use \progname{}, but you haven't
   redefined it to SC.   You should do tha that in the Common.tex file.}
 
-\iffalse\plt{Modelling the real world requires simplification.  The full complexity of
+\plt{Modelling the real world requires simplification.  The full complexity of
   the actual physics, chemistry, biology is too much for existing models, and
   for existing computational solution techniques.  Rather than say what is in
   the scope, it is usually easier to say what is not.  You can think of it as
   the scope is initially everything, and then it is constrained to create the
-  actual scope.  For instance, the problem can be restricted to 2 dimensions, or
-  it can ignore the effect of temperature (or pressure) on the material
+actual scope. For instance, the problem can be restricted to 2 dimensions, or
+itcan
+ignore the effect of temperature (or pressure) on the material
   properties, etc.}  
 
 \plt{The scope section is related to the assumptions section
   (Section~\ref{sec_assumpt}).  However, the scope and the assumptions are not
-  at the same level of abstraction.  The scope is at a high level.  The focus is
-  on the ``big picture'' assumptions.  The assumptions section lists, and
-  describes, all of the assumptions.}\fi
+at the same level of abstraction. The scope is at a high level. The focus is on
+the ``big picture'' assumptions. The assumptions section lists, and
+  describes, all of the assumptions.}
 
 \subsection{Characteristics of Intended Reader} \label{sec_IntendedReader}
 
-This section summarized the expectation of the readers' knowledge and skills for
-understanding this SRS. Readers should have a general knowledge of how a solar
+This section summarized the expectation of the readers' knowledge and skills
+forunderstanding this SRS. Readers should have a general knowledge of how a
+solar
 panel works and know the common factors that affect energy absorption.
 \wss{Usually these characteristics are given in terms of education level, and
   possibly education specialization.  You also want to mention that the reader
   should understand the longitude and latitude coordinate system.}
 
-\iffalse\plt{This section summarizes the skills and knowledge of the readers of the
+\plt{This section summarizes the skills and knowledge of the readers of the
   SRS.  It does NOT have the same purpose as the ``User Characteristics''
   section (Section~\ref{SecUserCharacteristics}).  The intended readers are the
   people that will read, review and maintain the SRS.  They are the people that
@@ -412,55 +436,66 @@ panel works and know the common factors that affect energy absorption.
   as specifically as possible.  Rather than say, the user should have an
   understanding of physics, say what kind of physics and at what level.  For
   instance, is high school physics adequate, or should the reader have had a
-  graduate course on advanced quantum mechanics?}\fi
+  graduate course on advanced quantum mechanics?}
 
 \subsection{Organization of Document}
 
-The organization of this document follows the template for an SRS for scientific computing
-software proposed by \cite{Koothoor2013} as well as \cite{SmithAndLai2005}. The presentation follows the standard pattern of presenting goals, theories, definitions, and assumptions. For readers
-that would like a more bottom up approach, they can start reading the instance models in
-Section:  \nameref{sec_instance}) and trace back to find any additional information they require.
-The goal statements (Section:  \nameref{sec_GS}) are refined to the theoretical models
-and the theoretical models (Section:  \nameref{sec_theoretical}) to the instance models (Section:  \nameref{sec_instance}). The instance models provide the set of algebraic equations that must be
+The organization of this document follows the template for an SRS for
+scientificcomputing
+software proposed by \cite{Koothoor2013} as well as \cite{SmithAndLai2005}. The
+presentation follows the standard pattern of presenting goals, theories,
+definitions, and assumptions. For readers
+that would like a more bottom up approach, they can start reading the instance
+models in
+Section: \nameref{sec_instance}) and trace back to find any additional
+information they require.
+The goal statements (Section: \nameref{sec_GS}) are refined to the theoretical
+models
+and the theoretical models (Section: \nameref{sec_theoretical}) to the instance
+models (Section: \nameref{sec_instance}). The instance models provide the set
+ofalgebraic equations that must be
 solved.
 
-\iffalse\plt{This section provides a roadmap of the SRS document.  It will help the
+\plt{This section provides a roadmap of the SRS document.  It will help the
   reader orient themselves.  It will provide direction that will help them
-  select which sections they want to read, and in what order.  This section will
-  be similar between project.}\fi
+select which sections they want to read, and in what order. This section will
+besimilar between project.}
 
 \section{General System Description}
 
 This section provides general information about the system.  It identifies the
 interfaces between the system and its environment, describes the user
-characteristics and lists the system constraints. \iffalse \plt{This text can likely be
-  borrowed verbatim.}\fi
+characteristics and lists the system constraints.  \plt{This text can likely be
+  borrowed verbatim.}
 
-\iffalse\plt{The purpose of this section is to provide general information about the
+\plt{The purpose of this section is to provide general information about the
   system so the specific requirements in the next section will be easier to
   understand. The general system description section is designed to be
-  changeable independent of changes to the functional requirements documented in
-  the specific system description. The general system description provides a
+changeable independent of changes to the functional requirements documented in
+the specific system description. The general system description provides a
   context for a family of related models.  The general description can stay the
-  same, while specific details are changed between family members.}\fi
+  same, while specific details are changed between family members.}
 
 \subsection{System Context}
-\nameref{Fig_SystemContext} shows the design pattern of this program from users to
- the system then the output. The circle represents the users of this software. The rectangle 
-represents the software system: Sun Catcher(SC). The arrow represents the inputs that 
+\nameref{Fig_SystemContext} shows the design pattern of this program from users
+to
+the system then the output. The circle represents the users of this software.
+The rectangle
+represents the software system: \progname(SC). The arrow represents the
+inputsthat
 drive the software and the output expecting from the software system.\\
 
-\iffalse\plt{Your system context will include a figure that shows the abstract view of
+\plt{Your system context will include a figure that shows the abstract view of
   the software.  Often in a scientific context, the program can be viewed
   abstractly following the design pattern of Inputs $\rightarrow$ Calculations
   $\rightarrow$ Outputs.  The system context will therefore often follow this
-  pattern.  The user provides inputs, the system does the calculations, and then
-  provides the outputs to the user.  The figure should not show all of the
+pattern. The user provides inputs, the system does the calculations, and then
+provides the outputs to the user. The figure should not show all of the
   inputs, just an abstract view of the main categories of inputs (like material
   properties, geometry, etc.).  Likewise, the outputs should be presented from
-  an abstract point of view.  In some cases the diagram will show other external
-  entities, besides the user.  For instance, when the software product is a
-  library, the user will be another software program, not an actual end user.}\fi
+an abstract point of view. In some cases the diagram will show other external
+entities, besides the user. For instance, when the software product is a
+  library, the user will be another software program, not an actual end user.}
 
 \begin{figure}[H]
 \begin{center}
@@ -472,9 +507,10 @@ drive the software and the output expecting from the software system.\\
 
 \medskip
 
-\iffalse\plt{For each of the entities in the system context diagram its responsibilities
-  should be listed.  Whenever possible the system should check for data quality,
-  but for some cases the user will need to assume that responsibility.}\fi
+\plt{For each of the entities in the system context diagram its
+responsibilitiesshould be listed. Whenever possible the system should check for
+data quality, but for some cases the user will need to assume that
+responsibility.}
 
 \begin{itemize}
 \item User Responsibilities:
@@ -490,7 +526,8 @@ drive the software and the output expecting from the software system.\\
 \begin{itemize}
 \item Detect data type mismatch, such as a string of characters instead of a
   floating point number.
-\item Comfirm \wss{spellcheck!} the inputs quality to satisfy the required physical and software constraints.
+\item Comfirm \wss{spellcheck!} the inputs quality to satisfy the required
+physical and software constraints.
 \item Predict an optimum tilt angle and the expected gaining solar energy, and
   show the result explicitly to users (such as generating a report with linear
   graphic ). \wss{You can write this more abstractly.  The specifics of the
@@ -502,63 +539,66 @@ drive the software and the output expecting from the software system.\\
 \subsection{User Characteristics} \label{SecUserCharacteristics}
 
 The end-users of SC is expecting to understand the Level 1 Calculation method
-such as angle addition and subtraction theorems and understand the Level 1 celestial
+such as angle addition and subtraction theorems and understand the Level 1
+celestial
 mechanics such as the formation of the latitude and the earth's tilt angle in
 the four seasons.  \wss{I don't think Level 1 Calculation and Level 1 celestial
   mechanics are standard terms.  Are they?  Also, your user characteristics are
   more involved than your intended reader characteristics.  Did you get these
   two sections backwards?}
 
-\iffalse\plt{This section summarizes the knowledge/skills expected of the user.
+\plt{This section summarizes the knowledge/skills expected of the user.
   Measuring usability, which is often a required non-function requirement,
   requires knowledge of a typical user.  As mentioned above, the user is a
   different role from the ``intended reader,'' as given in
-  Section~\ref{sec_IntendedReader}.  As in Section~\ref{sec_IntendedReader}, the
-  user characteristics should be specific an unambiguous.  For instance, ``The
+Section~\ref{sec_IntendedReader}. As in Section~\ref{sec_IntendedReader}, the
+user characteristics should be specific an unambiguous. For instance, ``The
   end user of SC should have an understanding of undergraduate Level 1
-  Calculus and Physics.''}\fi
+  Calculus and Physics.''}
 
 \subsection{System Constraints}
 
 There are no system constraints.
 
-\iffalse\plt{System constraints differ from other type of requirements because they
+\plt{System constraints differ from other type of requirements because they
   limit the developers’ options in the system design and they identify how the
   eventual system must fit into the world. This is the only place in the SRS
-  where design decisions can be specified.  That is, the quality requirement for
-  abstraction is relaxed here.  However, system constraints should only be
-  included if they are truly required. In the context of CAS 741, you often will
-  may not have any system constraints.}\fi
+where design decisions can be specified. That is, the quality requirement for
+abstraction is relaxed here. However, system constraints should only be
+included if they are truly required. In the context of CAS 741, you often will
+may not have any system constraints.}
 
 \section{Specific System Description}
 
 This section first presents the problem description, which gives a high-level
-view of the problem to be solved.  This is followed by the solution characteristics
-specification, which presents the assumptions, theories, definitions and finally
-the instance models.  \iffalse\plt{Add any project specific details that are relevant
-  for the section overview.}\fi
+view of the problem to be solved. This is followed by the solution
+characteristics
+specification, which presents the assumptions, theories, definitions and
+finallythe instance models. \plt{Add any project specific details that are
+relevant
+  for the section overview.}
 
 \subsection{Problem Description} \label{Sec_pd}
 
-Sun Catcher is intended to solve the unpredictable energy efficiency of solar
+\progname is intended to solve the unpredictable energy efficiency of solar
 panels.  Due to the tilt angle of the earth when it rotates by axis, the
-latitude of the sun will consistently move. With the fixed location of the solar
-panel, it is unlikely to get the direct the direct sunlight for the maximum
-output. Therefore, it causes inadequate performance in gaining energy.  \iffalse
+latitude of the sun will consistently move. With the fixed location of the
+solarpanel, it is unlikely to get the direct the direct sunlight for the
+maximumoutput. Therefore, it causes inadequate performance in gaining energy.
 \plt{What problem does your program solve?  The description here should be in
-  the problem space, not the solution space.}\fi
+  the problem space, not the solution space.}
 
 \subsubsection{Terminology and  Definitions}
 
-\iffalse\plt{This section is expressed in words, not with equations.  It provide the
+\plt{This section is expressed in words, not with equations.  It provide the
   meaning of the different words and phrases used in the domain of the problem.
 The terminology is used to introduce concepts from the world outside of the
-mathematical model  The terminology provides a real world connection to give the
-mathematical model meaning.}\fi
+mathematical model The terminology provides a real world connection to give
+themathematical model meaning.}
 
 This subsection provides a list of terms that are used in the subsequent
-sections and their meaning, with the purpose of reducing ambiguity and making it
-easier to correctly understand the requirements:
+sections and their meaning, with the purpose of reducing ambiguity and making
+iteasier to correctly understand the requirements:
 
 \begin{itemize}
 
@@ -569,10 +609,11 @@ easier to correctly understand the requirements:
   get the direct sunlight. According to the Figure:\nameref{Fig_PhysicFigure},
   tilt angle is equal to the zenith angle.  \wss{I think you mean that for
     optimum efficiency the tilt angle should equal the zenith angle, but the
-    tilt angle is not always equal to the zenith angle.  That is, you can have a
-    solar panel that has a different tilt angle from the zenith angle.}
+tilt angle is not always equal to the zenith angle. That is, you can have a
+solar panel that has a different tilt angle from the zenith angle.}
 
-\item The period of days: The period of days depends on the input days of the users.
+\item The period of days: The period of days depends on the input days of the
+users.
 
 \item Sun panel: The adjustable panel, which has solar cells on it, able to
   converse solar energy to power.
@@ -583,26 +624,26 @@ easier to correctly understand the requirements:
 \item Latitude: The angle which ranges from 0 $^\circ$ at the Equator to
   90$^\circ$ (North or South) at the poles.
 
-\item Zenith Angle: The angle between the sun and the vertical. According to the
-  Figure:\nameref{Fig_PhysicFigure}, zenith angle is equal to the tilt angle.
+\item Zenith Angle: The angle between the sun and the vertical. According to
+theFigure:\nameref{Fig_PhysicFigure}, zenith angle is equal to the tilt angle.
   \wss{Please see my comment under tilt angle.}
 
 \end{itemize}
 
 \subsubsection{Physical System Description} \label{sec_phySystDescrip}
 
-\iffalse\plt{The purpose of this section is to clearly and unambiguously state the
+\plt{The purpose of this section is to clearly and unambiguously state the
   physical system that is to be modelled. Effective problem solving requires a
   logical and organized approach. The statements on the physical system to be
   studied should cover enough information to solve the problem. The physical
   description involves element identification, where elements are defined as
   independent and separable items of the physical system. Some example elements
   include acceleration due to gravity, the mass of an object, and the size and
-  shape of an object. Each element should be identified and labelled, with their
-  interesting properties specified clearly. The physical description can also
+shape of an object. Each element should be identified and labelled, with their
+interesting properties specified clearly. The physical description can also
   include interactions of the elements, such as the following: i) the
   interactions between the elements and their physical environment; ii) the
-  interactions between elements; and, iii) the initial or boundary conditions.}\fi
+  interactions between elements; and, iii) the initial or boundary conditions.}
 
 The physical system of SC, as shown in Figure: $\nameref{Fig_PhysicFigure}$,
 includes the following elements:
@@ -619,7 +660,7 @@ includes the following elements:
  
  
 
-\iffalse\plt{A figure here makes sense for most SRS documents}\fi
+\plt{A figure here makes sense for most SRS documents}
 
 \begin{figure}[h!]
 \begin{center}
@@ -634,7 +675,7 @@ includes the following elements:
 \subsubsection{Goal Statements} \label{sec_GS}
 
 
-\iffalse\plt{The goal statements refine the ``Problem Description''
+\plt{The goal statements refine the ``Problem Description''
   (Section~\ref{Sec_pd}).  A goal is a functional objective the system under
   consideration should achieve. Goals provide criteria for sufficient
   completeness of a requirements specification and for requirements
@@ -642,7 +683,7 @@ includes the following elements:
   (Section~\ref{sec_instance}). Large and complex goals should be decomposed
   into smaller sub-goals.  The goals are written abstractly, with a minimal
   amount of technical language.  They should be understandable by non-domain
-  experts.}\fi
+  experts.}
 
 \noindent Given the user located latitude($\Phi_{P}$), the area of the solar
 panel($P_A$), the day started to estimate angle($day_{Start}$),the day when the
@@ -662,12 +703,14 @@ estimation end($day_{End}$), the goal statements are: \wss{you should have
 
 \subsection{Solution Characteristics Specification} \label{sec_SCS}
 
-The instance models that govern SC are presented in Section: \nameref{sec_instance}. The
-information to understand the meaning of the instance models and their derivation is also
+The instance models that govern SC are presented in Section:
+\nameref{sec_instance}. The
+information to understand the meaning of the instance models and their
+derivation is also
 presented, so that the instance models can be verified.
 
 
-\iffalse\plt{This section specifies the information in the solution domai
+\plt{This section specifies the information in the solution domai
 n of the system
   to be developed. This section is intended to express what is required in
   such a way that analysts and stakeholders get a clear picture, and the
@@ -677,15 +720,16 @@ n of the system
   problem, and to collect and substantiate all physical data pertinent to the
   problem.}
 
-\plt{This section presents the solution characteristics by successively refining
-  models.  It starts with the abstract/general Theoretical Models (TMs) and
+\plt{This section presents the solution characteristics by successively
+refiningmodels.
+It starts with the abstract/general Theoretical Models (TMs) and
   refines them to the concrete/specific Instance Models (IMs).  If necessary
-  there are intermediate refinements to General Definitions (GDs).  All of these
-  refinements can potentially use Assumptions (A) and Data Definitions (DD).
+there are intermediate refinements to General Definitions (GDs). All of these
+refinements can potentially use Assumptions (A) and Data Definitions (DD).
   TMs are refined to create new models, that are called GMs or IMs. DDs are not
   refined; they are just used. GDs and IMs are derived, or refined, from other
-  models. DDs are not derived; they are just given. TMs are also just given, but
-  they are refined, not used.  If a potential DD includes a derivation, then
+models. DDs are not derived; they are just given. TMs are also just given, but
+they are refined, not used. If a potential DD includes a derivation, then
   that means it is refining other models, which would make it a GD or an IM.}
 
 \plt{The above makes a distinction between ``refined'' and ``used.'' A model is
@@ -695,8 +739,8 @@ n of the system
   definition, like the definition of density, we aren't refining, or changing
   that definition, we are just using it.}
 
-\plt{The same information can be a TM in one problem and a DD in another.  It is
-  about how the information is used.  In one problem the definition of
+\plt{The same information can be a TM in one problem and a DD in another. It is
+about how the information is used. In one problem the definition of
   acceleration can be a TM, in another it would be a DD.}
 
 \plt{There is repetition between the information given in the different chunks
@@ -708,7 +752,7 @@ n of the system
 \noindent \plt{The relationships between the parts of the document are show in
   the following figure.  In this diagram ``may ref'' has the same role as
   ``uses'' above.  The figure adds ``Likely Changes,'' which are able to
-  reference (use) Assumptions.}\fi
+  reference (use) Assumptions.}
 
 \begin{figure}[H]
   \includegraphics[scale=0.9]{RelationsBetweenTM_GD_IM_DD_A.pdf}
@@ -716,19 +760,19 @@ n of the system
 \end{figure}
 
 The instance models that govern SC are presented in
-Subsection~\ref{sec_instance}.  The information to understand the meaning of the
-instance models and their derivation is also presented, so that the instance
+Subsection~\ref{sec_instance}. The information to understand the meaning of
+theinstance models and their derivation is also presented, so that the instance
 models can be verified.
 
 \subsubsection{Assumptions} \label{sec_assumpt}
 
-\iffalse\plt{The assumptions are a refinement of the scope.  The scope is general, where
-  the assumptions are specific.  All assumptions should be listed, even those
-  that domain experts know so well that they are rarely (if ever) written down.}
-\plt{The document should not take for granted that the reader knows which
+\plt{The assumptions are a refinement of the scope. The scope is general, where
+the assumptions are specific. All assumptions should be listed, even those
+that domain experts know so well that they are rarely (if ever) written
+down.}\plt{The document should not take for granted that the reader knows which
   assumptions have been made. In the case of unusual assumptions, it is
-  recommended that the documentation either include, or point to, an explanation
-  and justification for the assumption.}\fi
+recommended that the documentation either include, or point to, an explanation
+and justification for the assumption.}
 
 This section simplifies the original problem and helps in developing the
 theoretical model by filling in the missing information for the physical
@@ -738,31 +782,44 @@ likely change [LC], in which the respective assumption is used.
 
 \begin{itemize}
 
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{a_spe}]: The environmental condition of the solar panel location assumed as users have an unobstructed view of the sky, with no trees, hills, clouds, dust, or haze ever blocking the sun.(RefBy: \dref{C_SI})\\
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{a_spe}]: The
+environmentalcondition of the solar panel location assumed as users have an
+unobstructed viewof the sky, with no trees, hills, clouds, dust, or haze ever
+blocking the
+sun.(RefBy: \dref{C_SI})\\
 
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{a_dsip}]: The default value of solar intensity($I_S$) is provided in Section: \nameref{sec_VAC}.(RefBy: \dref{C_SI})\\
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{a_dsip}]: The default
+value of solar intensity($I_S$) is provided in Section:
+\nameref{sec_VAC}.(RefBy: \dref{C_SI})\\
 
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{a_dsia}]: This system calculate the solar zenith angle at noon.(RefBy: \ddref{C_ZA})\\
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{a_dsia}]: This system
+calculate the solar zenith angle at noon.(RefBy: \ddref{C_ZA})\\
 
 \item[A\refstepcounter{assumpnum}\theassumpnum \label{a_dp_r}]: Based
- on the resource of \cite{EMPA2011}, this system definite the variable of $P_r$ is refine by.(RefBy: \iref{C_SEO} and \nameref{sec_VAC})\\
+on the resource of \cite{EMPA2011}, this system definite the variable of $P_r$
+is refine by.(RefBy: \iref{C_SEO} and \nameref{sec_VAC})\\
 
 \item[A\refstepcounter{assumpnum}\theassumpnum \label{a_dpr}]: Based
- on the resource of  \url{https://photovoltaic-software.com/principle-ressources/how-calculate-solar-energy-power-pv-systems}, this system definite the variable of $PR$ is refine by.(RefBy: \iref{C_SEO} and \nameref{sec_VAC})\\
+on the resource of
+\url{https://photovoltaic-software.com/principle-ressources/how-calculate-solar-energy-power-pv-systems},
+this system definite the variable of $PR$ is refine by.(RefBy: \iref{C_SEO} and
+\nameref{sec_VAC})\\
 
 \item[A\refstepcounter{assumpnum}\theassumpnum \label{a_tilta}]: Based
- on the resource of \cite{Charles2001}, the value of $\theta_{T}$ is refine by: \iref{C_TA} and \nameref{TblOutputVar}\\
+on the resource of \cite{Charles2001}, the value of $\theta_{T}$ is refine by:
+\iref{C_TA} and \nameref{TblOutputVar}\\
 
 
 \item[A\refstepcounter{assumpnum}\theassumpnum \label{a_panele}]: Based
- on the label of every solar panel, the value of $P_E$ is refine by: \iref{C_SEO} and \nameref{TblOutputVar}\\
+on the label of every solar panel, the value of $P_E$ is refine by:
+\iref{C_SEO}and \nameref{TblOutputVar}\\
 
 
-  \iffalse\plt{Short description of each assumption.  Each assumption
+  \plt{Short description of each assumption.  Each assumption
     should have a meaningful label.  Use cross-references to identify the
     appropriate traceability to T, GD, DD etc., using commands like dref, ddref
     etc.  Each assumption should be atomic - that is, there should not be an
-    explicit (or implicit) ``and'' in the text of an assumption.}\fi
+    explicit (or implicit) ``and'' in the text of an assumption.}
 
 \end{itemize}
 
@@ -770,21 +827,20 @@ likely change [LC], in which the respective assumption is used.
   example in the SRS by Deema
   (\url{https://github.com/deemaalomair1/CAS741_project/tree/master/docs/SRS}.
   Dealing with latitudes and longitudes is going to be confusing until you
-  determine how they are represented.  The following web-page has a good summary
-of the representation of longitude and latitude:
+determine how they are represented. The following web-page has a good summaryof
+the representation of longitude and latitude:
 \url{https://en.wikipedia.org/wiki/ISO_6709}.  My vote is to use positive and
 negative signs, instead of N, S, W, E.  You can define North as positive and
 East as positive, then the sign gives you the direction.  The numbers are for
 degree, minutes and seconds.  Therefore, the coordinates could be represented
 using a type defined with a tuple.}
-\wss{You should also think about a type for dates.  Again, a tuple makes sense.}
+\wss{You should also think about a type for dates. Again, a tuple makes
+sense.}\subsubsection{Theoretical Models}\label{sec_theoretical}
 
-\subsubsection{Theoretical Models}\label{sec_theoretical}
-
-\iffalse\plt{Theoretical models are sets of abstract mathematical equations or axioms
+\plt{Theoretical models are sets of abstract mathematical equations or axioms
   for solving the problem described in Section ``Physical System Description''
   (Section~\ref{sec_phySystDescrip}). Examples of theoretical models are
-  physical laws, constitutive equations, relevant conversion factors, etc.}\fi
+  physical laws, constitutive equations, relevant conversion factors, etc.}
 
 This section focuses on the general equations and laws that SC is based
 on.  
@@ -802,9 +858,9 @@ on.
   Label&\bf Lambert's cosine law\\
   \hline
 
-  Equation&  $  I_0  = I \times \frac{\cos{\theta}  \times \partial \Omega  \times \partial A}{\cos{\theta}  \times \partial\Omega_0 \times \partial A_0}$\\ 
+Equation& $ I_0 = I \times \frac{\cos{\theta} \times \partial \Omega \times
+\partial A}{\cos{\theta} \times \partial\Omega_0 \times \partial A_0}$\\
 
-%I_0 = \frac { \partial{\Phi}}{ \partial{\Omega}} = \frac{I \times \cos{\theta}}{r ^ 2}$\\
 
   \hline
 
@@ -820,12 +876,13 @@ on.
 			&I is the number of the photons. \wss{When you show a
                    symbol outside of an equation, it should be formatted as in
                    the equation.  In this case $I$.}\\
-			&$\cos{\theta}  \times \partial \Omega  \times \partial A$is the number of photo
-ns per second emitted into the wedge at angle $\theta$ \\
-			&where $\partial \Omega$is an equal angle that represents each wedge in the circle.\\
+&$\cos{\theta} \times \partial \Omega \times \partial A$is the number of
+photonsper second emitted into the wedge at angle $\theta$ \\
+&where $\partial \Omega$is an equal angle that represents each wedge in the
+circle.\\
 							&$\partial A$ is the area element .\\
-							&$\partial\Omega_0$ is the portion of the observer's total angular field-of-view 
-of the scene.\\
+&$\partial\Omega_0$ is the portion of the observer's total angular
+field-of-viewof the scene.\\
 							&$\partial A_0$ is an
                                                    aperture of area
                                                    . \wss{Again, look at the
@@ -833,8 +890,8 @@ of the scene.\\
   \hline
   Source &
            \cite{Martin2001}\\
-  % The above web link should be replaced with a proper citation to a publication
-  \hline
+% The above web link should be replaced with a proper citation to a publication
+\hline
   Ref.\ By &  \dref{C_SI}\\
   \hline
 \end{tabular}
@@ -846,18 +903,18 @@ of the scene.\\
 
 \subsubsection{General Definitions}\label{sec_gendef}
 
-\iffalse\plt{General Definitions (GDs) are a refinement of one or more TMs, and/or of
+\plt{General Definitions (GDs) are a refinement of one or more TMs, and/or of
   other GDs.  The GDs are less abstract than the TMs.  Generally the reduction
   in abstraction is possible through invoking (using/referencing) Assumptions.
-  For instance, the TM could be Newton's Law of Cooling stated abstracting.  The
-  GD could take the general law and apply it to get a 1D equation.}\fi
+For instance, the TM could be Newton's Law of Cooling stated abstracting. The
+GDcould take the general law and apply it to get a 1D equation.}
 
 This section collects the laws and equations that will be used in building the
 instance models.
 
-\iffalse\plt{Some projects may not have any content for this section, but the section
-  heading should be kept.}  \plt{Modify the examples below for your problem, and
-  add additional definitions as appropriate.}\fi
+\plt{Some projects may not have any content for this section, but the section
+heading should be kept.} \plt{Modify the examples below for your problem, and
+add additional definitions as appropriate.}
 
 \noindent
 \begin{minipage}{\textwidth}
@@ -870,16 +927,19 @@ instance models.
   Label& \bf Calculating the Solar intensity\\
   \hline
 
-  SI Units&$\theta_{S_{day}}$\\
+  SI Units&$\theta_{S_{\text{day}}}$\\
 
   \hline
-  Equation& $ I_{S_{date}}  = I_{S} \cdot \frac{1.00}{I_{S}}^ {sec(\theta_{S_{day}})} $\\ 
+Equation& $ I_{S_{\text{total}}} = I_{S} \cdot \frac{1.00}{I_{S}}^
+{sec(\theta_{S_{\text{day}}})} $\\
   \hline
   Description&
-	This equation is calculating the total solar intensity during the period of date.\\
-        &$(\theta_{S_{day}})$ is the zenith angle of the sun in the day. It is input from $\ddref{C_ZA}$.\\
+This equation is calculating the total solar intensity in the date duration\\
+&$(\theta_{S_{\text{day}}})$ is the zenith angle of the sun in the day. It is input
+from $\ddref{C_ZA}$.\\
 		
-			&$I_{S}$  is solar intensity. Its default value has described in the Assumption: \aref{a_dsip}.\\
+&$I_{S}$ is solar intensity. Its default value has described in the Assumption:
+\aref{a_dsip}.\\
   \hline
   Sources&  \url{https://www.solarpaneltilt.com/#other}\cite{Charles2001}\\
 
@@ -891,17 +951,22 @@ instance models.
 
 %~\newline
 
-\subsubsection*{Derivation of simplified the calculation of total solar intensity}
-		The above equation is driven by the $\tref{C_LCL} $ , which is describing the calculation of the radiance of the illumination.\\
-		This formula assumes that the earth is flat, so a factor was applied to account for the curvature of the earth (and therefore the earth’s atmosphere). These factors and the angle of the sun with respect to the panel represent as \ $ \frac{1.00}{I_{S}}^ {sec(\theta_{S_{day}})}$\\
-		Where $\frac{1}{\cos{\theta_{S_{day}}}}$ is $sec(\theta_{S_{day}})$\\
+\subsubsection*{Derivation of simplified the calculation of total solar
+intensity}
+The above equation is driven by the $\tref{C_LCL} $ , which is describing the
+calculation of the radiance of the illumination.\\
+This formula assumes that the earth is flat, so a factor was applied to account
+for the curvature of the earth (and therefore the earth’s atmosphere). These
+factors and the angle of the sun with respect to the panel represent as \ $
+\frac{1.00}{I_{S}}^ {sec(\theta_{S_{\text{day}}})}$\\
+		Where $\frac{1}{\cos{\theta_{S_{\text{day}}}}}$ is $sec(\theta_{S_{\text{day}}})$\\
 
  \wss{I like that your T1 and GD1 are explicitly connected by your derivation.
    Good.}
  
-\iffalse\plt{The derivation shows how the IM is derived from the TMs/GDs.  In cases
+\plt{The derivation shows how the IM is derived from the TMs/GDs.  In cases
   where the derivation cannot be described under the Description field, it will
-  be necessary to include this subsection.}\fi
+  be necessary to include this subsection.}
 
 ~\newline
 
@@ -909,18 +974,18 @@ instance models.
 
 \subsubsection{Data Definitions}\label{sec_datadef}
 
-\iffalse\plt{The Data Definitions are definitions of symbols and equations that are
+\plt{The Data Definitions are definitions of symbols and equations that are
   given for the problem.  They are not derived; they are simply used by other
   models.  For instance, if a problem depends on density, there may be a data
   definition for the equation defining density.  The DDs are given information
   that you can use in your other modules.}
 
 \plt{All Data Definitions should be used (referenced) by at least one other
-  model.}\fi
+  model.}
 
 This section collects and defines all the data needed to build the instance
-models. The dimension of each quantity is also given. \iffalse \plt{Modify the examples
-  below for your problem, and add additional definitions as appropriate.}\fi
+models. The dimension of each quantity is also given.  \plt{Modify the examples
+  below for your problem, and add additional definitions as appropriate.}
 
 ~\newline
 
@@ -936,7 +1001,7 @@ Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{C_DS}\\
 \hline
 Label& \bf The Declination of the Sun\\
 \hline
-Symbol &$\delta_{date} $\\
+Symbol &$\delta_{\text{date}} $\\
 \hline
 % Units& $Mt^{-3}$\\
 % \hline
@@ -945,18 +1010,19 @@ Symbol &$\delta_{date} $\\
   Equation&{-}\\
   \hline
   Description &
-       'date' defines in the table: \nameref{tb_TS} and refer from \ddref{C_D}.\\
-       &The degree of $\delta_{date} $ can be determinated \wss{spell check!} by Figure: \nameref{Fig_Analemma}.\\
+'date' defines in the table: \nameref{tb_TS} and refer from \ddref{C_D}.\\&The
+degree of $\delta_{\text{date}} $ can be determinated by
+Figure: \nameref{Fig_Analemma}.\\
   \hline
-  Sources& \url{https://www.cengage.com/resource_uploads/downloads/0495555061_137179.pdf}\\
-  \hline
+Sources&
+\url{https://www.cengage.com/resource_uploads/downloads/0495555061_137179.pdf}\\\hline
   Ref.\ By &  \ddref{C_ZA}\\
   \hline
 \end{tabular}
 \end{minipage}\\
 
-\wss{What is declination?  You should repeat your definition from earlier in the
-  document.}
+\wss{What is declination? You should repeat your definition from earlier in the
+document.}
 
 \begin{figure}[H]
 	\center
@@ -977,28 +1043,33 @@ Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{C_ZA}\\
 \hline
 Label &\bf Calculate Zenith Angle \\
 \hline
-Symbol &$\theta_{S_{day}}$\\
+Symbol &$\theta_{S_{\text{day}}}$\\
 \hline
 % Units&$MLt^{-3}T^0$\\
 % \hline
 SI Units& $\circ$\\
 \hline
 Equation&  \[
-    \theta_{S_{day}}= 
+    \theta_{S_{\text{day}}}= 
 \begin{cases}
-      \Phi_P - \delta_{date} ,& \text{if } 0 \leq \Phi_P, \delta_{date} \leq  90^\circ \text{N } \lor\  0 \leq \Phi_P,  \delta_{date}  \leq  90^\circ \text{S }\\
-    \Phi_P + \delta_{date} ,& \text{if } \begin{cases} 
-     0 \leq \Phi_P\leq  90^\circ \text{N } \land\  0 \leq \delta_{date}  \leq  90^\circ \text{S } \\
-     0 \leq \Phi_P\leq  90^\circ \text{S } \land\  0 \leq \delta_{date}  \leq  90^\circ \text{N }
+\Phi_P - \delta_{\text{date}} ,& \text{if } 0 \leq \Phi_P, \delta_{\text{date}} \leq 90^\circ
+\text{N } \lor\ 0 \leq \Phi_P, \delta_{\text{date}} \leq 90^\circ \text{S }\\
+    \Phi_P + \delta_{\text{date}} ,& \text{if } \begin{cases} 
+0 \leq \Phi_P\leq 90^\circ \text{N } \land\ 0 \leq \delta_{\text{date}} \leq 90^\circ
+\text{S } \\
+0 \leq \Phi_P\leq 90^\circ \text{S } \land\ 0 \leq \delta_{\text{date}} \leq 90^\circ
+\text{N }
       \end{cases}
 \end{cases}
 \]\\
 \hline
  Description & 
-          This equation describes the zenith angle associated with the solar panel.\\
-&$\theta_{S_{day}} $ is the zeith angle of the sun in the day.\\
-&$\Phi_P$  is the local latitude of the solar panel from the users' input described at \nameref{sec_GS}.\\
-&$\delta_{date} $ is the declination of the vertical noon sun in the day. It is input from \ddref{C_DS}\\
+This equation describes the zenith angle associated with the solar
+panel.\\&$\theta_{S_{\text{day}}} $ is the zeith angle of the sun in the day.\\
+&$\Phi_P$ is the local latitude of the solar panel from the users' input
+described at \nameref{sec_GS}.\\
+&$\delta_{\text{date}} $ is the declination of the vertical noon sun in the day. It is
+input from \ddref{C_DS}\\
 \hline
   Source & \cite{Harold1968}\\
   \hline
@@ -1006,28 +1077,36 @@ Equation&  \[
   \hline
 \end{tabular}
 \end{minipage}\\
-\subsubsection*{Detailed derivation of simplified the calculation of zenith angle}
+\subsubsection*{Detailed derivation of simplified the calculation of zenith
+angle}
 
-	According to the resource \cite{Harold1968}, it states the the solar elevation angle $\sin{\alpha}$ is
+According to the resource \cite{Harold1968}, it states the the solar elevation
+angle $\sin{\alpha}$ is
 determined by the relationship\\
-					$\sin{\alpha} = \sin{\Phi} \times \sin{\delta} + \cos{\Phi} \times \cos{\delta} \times \cos{\text{h}}$\\
+$\sin{\alpha} = \sin{\Phi} \times \sin{\delta} + \cos{\Phi} \times \cos{\delta}
+\times \cos{\text{h}}$\\
 		where \\
 		  $\alpha$ is the solar elevation.\\
-		  $\Phi$ is the latituade.\\
+		  $\Phi$ is the latitude.\\
 		  $\delta$ is the solar declination.\\
 		  $\text{h}$ is the solar hour angle.\\
 Based on the Level 1 celestial mechanics, the solar zenith angle 
 is equal to 90$^\circ$ - the solar elevation angle\\
 			which can write as\\
-$\cos{\theta} = \sin{\alpha} = \sin{\Phi} \times \sin{\delta} + \cos{\Phi} \times \cos{\delta} \times \cos{\text{h}}$
-			Based on the \nameref{sec_assumpt} section, it assumes that SC calculate the solar zenith 
+$\cos{\theta} = \sin{\alpha} = \sin{\Phi} \times \sin{\delta} + \cos{\Phi}
+\times \cos{\delta} \times \cos{\text{h}}$
+Based on the \nameref{sec_assumpt} section, it assumes that SC calculate the
+solar zenith
 angle at noon which mean solar hour angle = 0$^\circ$.\\
 			Therefore, $\cos{\text{h}} = 0$\\
 				Rewrite the equation as,\\
-$\cos{\theta} = \sin{\alpha} = \sin{\Phi} \times \sin{\delta} + \cos{\Phi} \times \cos{\delta} \times 1$\\
-$\Rightarrow  \cos{\theta} = \sin{\alpha} = \sin{\Phi} \times \sin{\delta} + \cos{\Phi} \times \cos{\delta}$\\
+$\cos{\theta} = \sin{\alpha} = \sin{\Phi} \times \sin{\delta} + \cos{\Phi}
+\times \cos{\delta} \times 1$\\
+$\Rightarrow \cos{\theta} = \sin{\alpha} = \sin{\Phi} \times \sin{\delta} +
+\cos{\Phi} \times \cos{\delta}$\\
 			Based on the Level 1 calcucltion, we have\\
-$\cos{\Phi \pm \delta} = \sin{\alpha} = \sin{\Phi} \times \sin{\delta} + \cos{\Phi} \times \cos{\delta}$\\
+$\cos{\Phi \pm \delta} = \sin{\alpha} = \sin{\Phi} \times \sin{\delta} +
+\cos{\Phi} \times \cos{\delta}$\\
 			Therefore, we have
 			$\theta = \Phi \pm \delta$\\
 
@@ -1055,7 +1134,8 @@ Symbol &$date $\\
   Equation& $date = day_{Start} - day_{End}$ \\
   \hline
   Description &
-       $day_{Start}$, $day_{End}$ are the days depending on the users' input described at  \nameref{sec_GS}.\\
+$day_{Start}$, $day_{End}$ are the days depending on the users' input described
+at \nameref{sec_GS}.\\
 		  
   \hline
   Sources& - \\
@@ -1069,20 +1149,21 @@ Symbol &$date $\\
 
 \subsubsection{Instance Models} \label{sec_instance}    
 
-\iffalse\plt{The motivation for this section is to reduce the problem defined in
+\plt{The motivation for this section is to reduce the problem defined in
   ``Physical System Description'' (Section~\ref{sec_phySystDescrip}) to one
   expressed in mathematical terms. The IMs are built by refining the TMs and/or
   GDs.  This section should remain abstract.  The SRS should specify the
-  requirements without considering the implementation.}\fi
+  requirements without considering the implementation.}
 
 This section transforms the problem defined in Section~\ref{Sec_pd} into 
 one which is expressed in mathematical terms. It uses concrete symbols defined 
 in Section~\ref{sec_datadef} to replace the abstract symbols in the models 
 identified in Sections~\ref{sec_theoretical} and~\ref{sec_gendef}.
 
-The goals \nameref{sec_GS} are solved by IM\ref{C_SI}. \iffalse \plt{other details, with cross-references where appropriate.}
+The goals \nameref{sec_GS} are solved by IM\ref{C_SI}. \plt{other details, with
+cross-references where appropriate.}
 \plt{Modify the examples below for your problem, and add additional models as
-  appropriate.}\fi
+  appropriate.}
 
 ~\newline
 
@@ -1101,20 +1182,61 @@ The goals \nameref{sec_GS} are solved by IM\ref{C_SI}. \iffalse \plt{other detai
   Label& \bf Calculating the Tilt Angle\\
   \hline
 
-  Input&$\theta_{S_{day}},I_{S_{date}}$\\
+  Input&$\theta_{S_{\text{day}}},I_{S_{date}}$\\
 
   \hline
-  Output & $ \theta_{T} , I_{S_{T}}$\\
-& $I_{S_{T}}  = I_{S} \cdot \frac{1.00}{I_{S_{date}}}^ {sec(\theta_{S_{day}})}
+  Output & $ \theta_{T} , I_{S_{\text{max}}}$\\
+& $I_{S_{\text{max}}}  = I_{S} \cdot \frac{1.00}{I_{S_{\text{total}}}}^ {sec(\theta_{S_{\text{day}}})}
                                          \text{where} \ \theta_{T} \ \text{is
                                          the valuse that has the hightest} \
-                                         I_{S_{T}}$ \wss{write this using argmax
-  \url{https://en.wikipedia.org/wiki/Arg_max}.}\\ 
+I_{S_{\text{max}}}$ \wss{write this using argmax
+\url{https://en.wikipedia.org/wiki/Arg_max}.}\\
   \hline
   Description&
-	Using General Definition: \dref{C_SI} can get the total solar intensity $I_{S_{date}}$ during the period od date. Then using the value $I_{S_{date}}$ recalculates the optimum angle $\theta_{T}$. \\
+Using General Definition: \dref{C_SI} can get the total solar intensity
+$I_{S_{date}}$ during the period od date. Then using the value $I_{S_{date}}$
+recalculates the optimum angle $\theta_{T}$. \\
 		&$I_{S_{date}}$ is input from \dref{C_SI}.\\
-		&$\theta_{S_{day}}$ is input from \ddref{C_DS}.
+		&$\theta_{S_{\text{day}}}$ is input from \ddref{C_DS}.
+\\
+
+  \hline
+  Sources&  \url{https://www.solarpaneltilt.com/#other}\cite{Charles2001}\\
+
+
+  \hline
+  Ref.\ By & \iref{C_DSI}\\
+  \hline
+\end{tabular}
+\end{minipage}\\
+
+%~\newline
+~\newline
+
+\noindent
+\begin{minipage}{\textwidth}
+\renewcommand*{\arraystretch}{1.5}
+\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+  \hline
+  \rowcolor[gray]{0.9}
+  Number& IM\refstepcounter{instnum}\theinstnum \label{C_DSI}\\
+  \hline
+  Label& \bf Calculating the Daily Sun Intentisy\\
+  \hline
+
+  Input&$\theta_{S_{\text{day}}},I_{S_{\text{max}}}$\\
+
+  \hline
+  Output & $ I_{S_{\text{daily}}}$\\
+& $I_{S_{\text{daily}}} = I_{S} \cdot \frac{1.00}{I_{S_{\text{max}}}}^ {sec(\theta_{S_{\text{day}}})}
+$\\
+  \hline
+  Description&
+Using General Definition: \dref{C_TA} can get the optimal solar intensity
+$I_{S_{T}}$ of the date duration($date$). Then using the value $I_{S_{T}}$
+recalculates the optimum daily sun intensity $I_{S_{\text{daily}}}$. \\
+		&$I_{S_{T}}$ is input from \dref{C_TA}.\\
+		&$\theta_{S_{\text{day}}}$ is input from \ddref{C_DS}.
 \\
 
   \hline
@@ -1126,9 +1248,6 @@ The goals \nameref{sec_GS} are solved by IM\ref{C_SI}. \iffalse \plt{other detai
   \hline
 \end{tabular}
 \end{minipage}\\
-
-%~\newline
-
 
 ~\newline
 
@@ -1147,20 +1266,24 @@ The goals \nameref{sec_GS} are solved by IM\ref{C_SI}. \iffalse \plt{other detai
   Input&$P_A$\\
 
   \hline
-  Output & $ P_E = P_A \times P_r \times  I_{S_{date}} \times PR$\\ 
+  Output & $ P_E = P_A \times P_r \times  I_{S_{\text{daily}}} \times PR$\\ 
   \hline
   Description&
 		P is the solar panel.\\
 &$P_E$ is the estimated solar panel output energy.\\
 &$P_A$ is the solar panel area. It is input by the users\\
-&$P_r$ is solar panel yield or efficiency.  Its default value has described in the Assumption: \aref{a_dp_r}.\\
+&$P_r$ is solar panel yield or efficiency. Its default value has described in
+the Assumption: \aref{a_dp_r}.\\
 
-&$I_{S_{date}}$ is the solar intensity in a period of days of the noon. It is input from \iref{C_TA} \\
-&$PR$ is the performance ratio, coefficient for losses.  Its default value has described in the Assumption: \aref{a_dpr}.\\
+&$I_{S_{date}}$ is the solar intensity in a period of days of the noon. It is
+input from \iref{C_TA} \\
+&$PR$ is the performance ratio, coefficient for losses. Its default value has
+described in the Assumption: \aref{a_dpr}.\\
 \\
 
   \hline
-  Sources&  \url{https://photovoltaic-software.com/principle-ressources/how-calculate-solar-energy-power-pv-systems}\\
+Sources&
+\url{https://photovoltaic-software.com/principle-ressources/how-calculate-solar-energy-power-pv-systems}\\
 
   \hline
   Ref.\ By & \text{-}\\
@@ -1169,8 +1292,10 @@ The goals \nameref{sec_GS} are solved by IM\ref{C_SI}. \iffalse \plt{other detai
 \end{minipage}\\
 
 \subsubsection*{Derivation of simplify the solar energy output}
-		The above equation is using the output from $\dref{C_SI} $ , which is describing the solar intensity.\\
-		Some of the variable in this equation has its defult value, which describes in the section
+The above equation is using the output from $\dref{C_SI} $ , which is
+describingthe solar intensity.\\
+Some of the variable in this equation has its defult value, which describes in
+the section
 of $\nameref{sec_assumpt}$\\
 
 
@@ -1183,12 +1308,13 @@ variables.  The column for physical constraints gives the physical limitations
 on the range of values that can be taken by the variable.  The column for
 software constraints restricts the range of inputs to reasonable values.  The
 software constraints will be helpful in the design stage for picking suitable
-algorithms.  The constraints are conservative, to give the user of the model the
-flexibility to experiment with unusual situations.  The column of typical values
-is intended to provide a feel for a common scenario.  The uncertainty column
-provides an estimate of the confidence with which the physical quantities can be
-measured.  This information would be part of the input if one were performing an
-uncertainty quantification exercise.
+algorithms. The constraints are conservative, to give the user of the model
+theflexibility to experiment with unusual situations. The column of typical
+valuesis intended to provide a feel for a common scenario. The uncertainty
+column
+provides an estimate of the confidence with which the physical quantities can
+bemeasured. This information would be part of the input if one were performing
+anuncertainty quantification exercise.
 
 The specification parameters in Table~\ref{TblInputVar} are listed in
 Table~\ref{TblSpecParams}.
@@ -1198,10 +1324,10 @@ Table~\ref{TblSpecParams}.
   \renewcommand{\arraystretch}{1.2}
 \noindent \begin{longtable*}{l l l l c} 
   \toprule
-  \textbf{Var} & \textbf{Physical Constraints} & \textbf{Software Constraints} &
-                             \textbf{Typical Value} & \textbf{Uncertainty}\\
+\textbf{Var} & \textbf{Physical Constraints} & \textbf{Software Constraints} &
+\textbf{Typical Value} & \textbf{Uncertainty}\\
   \midrule 
-  $\Phi_P$ & $0 \leq \Phi_P \leq (90^\circ,  N or S)$ & $\text{-}$ & {$(43^\circ, N, 15'39.3")$} & 10\%\\
+$\Phi_P$ & $- 90^\circ \leq \Phi_P \leq 90^\circ $ & $\text{-}$ & {$(43^\circ, 15'39.3")$} & 10\%\\
   $month$ & $0 \leq month \leq 12$ & $\text{-}$ & $12$& 10\%\\
   $day$ & $0 \leq day \leq 31$ & $\text{-}$ & $01$ & 10\%\\
   \\
@@ -1210,11 +1336,11 @@ Table~\ref{TblSpecParams}.
 \end{table}
 
 \noindent 
-\iffalse\begin{description}
+\begin{description}
 
 \item[(*)] \plt{you might need to add some notes or clarifications}
 
-\end{description}\fi
+\end{description}
 
 \begin{table}[!h]
 \caption{Specification Parameter Values} \label{TblSpecParams}
@@ -1233,8 +1359,10 @@ Table~\ref{TblSpecParams}.
 \subsubsection{Properties of a Correct Solution} \label{sec_CorrectSolution}
 
 \noindent
-Table:$\nameref{TblOutputVar}$ shows the data constraints on the output variables. The column
-for physical constraints gives the physical limitations on the range of values that can be
+Table:$\nameref{TblOutputVar}$ shows the data constraints on the output
+variables. The column
+for physical constraints gives the physical limitations on the range of values
+that can be
 taken by the variable.
 
 \begin{table}[!h]
@@ -1260,8 +1388,8 @@ maximum power the solar panel can generate.
 
 \section{Requirements}
 
-\iffalse\plt{The requirements refine the goal statement.  They will make heavy use of
-  references to the instance models.}\fi
+\plt{The requirements refine the goal statement.  They will make heavy use of
+  references to the instance models.}
 
 This section provides the functional requirements, the business tasks that the
 software is expected to complete, and the nonfunctional requirements, the
@@ -1275,61 +1403,72 @@ qualities that the software is expected to exhibit.
 \noindent \begin{itemize}
 
 \item[R\refstepcounter{reqnum}\thereqnum \label{R_Inputs}:] Input the values 
-requested by the system, which is the latitude of the solar panel, the date starts the calculation and the ending date.\\
+requested by the system, which is the latitude of the solar panel, the date
+starts the calculation and the ending date.\\
 
- \iffalse\plt{Requirements
+ \plt{Requirements
     for the inputs that are supplied by the user.  This information has to be
-    explicit.}\fi
+    explicit.}
 
 \item[R\refstepcounter{reqnum}\thereqnum \label{R_OutputInputs}:] Output the 
-valid values for the problem defined by $\nameref{Sec_pd} $, which is the optimum 
+valid values for the problem defined by $\nameref{Sec_pd} $, which is the
+optimum
 tilt angle for solar panel, the predicted solar energy output.\\
 
-\iffalse\plt{It isn't
+\plt{It isn't
     always required, but often echoing the inputs as part of the output is a
-    good idea.}\fi
+    good idea.}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate}:] Determine the tilt angle 
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate}:] Determine the
+tilt angle
 by using $\dref{C_SI}$ and the solar energy output by using $\iref{C_SEO}$\\
 
-\iffalse\plt{Calculation
-    related requirements.}\fi
+\plt{Calculation
+    related requirements.}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_VerifyOutput}:] Verify the output 
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_VerifyOutput}:] Verify the
+output
 by using the Table: $\nameref{TblOutputVar}$\\
 
 
-  \iffalse\plt{Verification related requirements.}\fi
+  \plt{Verification related requirements.}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Output}:]Reading the section of 
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_Output}:]Reading the section
+of
 $\nameref{sec_assumpt}$ to know the related requirements regarding the outputs.
 \wss{I do not understand this requirement.}\\
 
-\iffalse \plt{Output related
-  requirements.}\fi
+ \plt{Output related
+  requirements.}
 
 \end{itemize}
 
 \wss{I would like to see a requirement that lets you compare different
-  scenarios.  The user should also be able to enter in a different set of inputs
-  and see the results, along with the percent relative change in energy output
+scenarios. The user should also be able to enter in a different set of inputs
+and see the results, along with the percent relative change in energy output
   compared to the first scenario.  You'll want to include the specific formula
   for percent relative change.}
 
 \subsection{Nonfunctional Requirements}
 
-\iffalse\plt{List your nonfunctional requirements.  You may consider using a fit
-  criterion to make them verifiable.}\fi
-This section provides the non-functional requirements, the qualities that the software is
+\plt{List your nonfunctional requirements.  You may consider using a fit
+  criterion to make them verifiable.}
+This section provides the non-functional requirements, the qualities that the
+software is
 expected to exhibit.
 
 \noindent\begin{itemize}
-\item[ ]Correct: The outputs of the code have the properties described in Section: \nameref{sec_CorrectSolution}
-\item[ ]Verifiable: The code is tested with complete verification and validation plan
-\item[ ]Understandable: The interface of this software shoulf support users to get the result within five
+\item[ ]Correct: The outputs of the code have the properties described in
+Section: \nameref{sec_CorrectSolution}
+\item[ ]Verifiable: The code is tested with complete verification and
+validationplan
+\item[ ]Understandable: The interface of this software shoulf support users to
+get the result within five
 stepts, and the output result should easily understand by the users.
 \item[ ]Reusable: The code is modularized
-\item[ ]Maintainable: The traceability between requirements, assumptions, theoretical models, general definitions, data definitions, instance models, likely changes, unlikely changes, and modules
+\item[ ]Maintainable: The traceability between requirements, assumptions,
+theoretical models, general definitions, data definitions, instance models,
+likely changes, unlikely changes, and modules
 is completely recorded in traceability matrices in the SRS and module guide
 \item[ ]Portable: The code is able to be run in different environments
 \end{itemize}
@@ -1338,14 +1477,21 @@ is completely recorded in traceability matrices in the SRS and module guide
 
 \noindent \begin{itemize}
 
-\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_SI}:] The system currently using the latest data of the solar's intensity, the calculation can be modified if this data upgrade in the future.$\aref{a_dsia}$
+\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_SI}:] The system currently
+using the latest data of the solar's intensity, the calculation can be modified
+if this data upgrade in the future.$\aref{a_dsia}$
 
-\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_P}:] The system currently using the latest data of the solar panel's efficiency, the calculation can be modified if this data upgrade in the future.$\aref{a_dp_r}$
+\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_P}:] The system currently
+usingthe latest data of the solar panel's efficiency, the calculation can be
+modifiedif this data upgrade in the future.$\aref{a_dp_r}$
 
-\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_Pr}:] The system currently using the latest data of the Performance Ratio, the calculation can be modified if this data upgrade in the future.$\aref{a_dpr}$
+\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_Pr}:] The system currently
+using the latest data of the Performance Ratio, the calculation can be modified
+if this data upgrade in the future.$\aref{a_dpr}$
 
-\iffalse\plt{Give
-    the likely changes, with a reference to the related assumption (aref), as appropriate.}\fi
+\plt{Give
+the likely changes, with a reference to the related assumption (aref), as
+appropriate.}
 
 \end{itemize}
 
@@ -1353,31 +1499,35 @@ is completely recorded in traceability matrices in the SRS and module guide
 
 \noindent \begin{itemize}
 
-\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_G}:] The goal of the system is to predict the optimum tilt energy without considering the individual environmental difference from each case.\aref{a_spe}
+\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_G}:] The goal of the system is
+to predict the optimum tilt energy without considering the individual
+environmental difference from each case.\aref{a_spe}
 
-\iffalse\plt{Give
+\plt{Give
     the unlikely changes.  The design can assume that the changes listed will
-    not occur.}\fi
+    not occur.}
 
 \end{itemize}
 
 \section{Traceability Matrices and Graphs}
 
 The purpose of the traceability matrices is to provide easy references on what
-has to be additionally modified if a certain component is changed.  Every time a
-component is changed, the items in the column of that component that are marked
-with an ``X'' may have to be modified as well.  Table~\ref{Table:trace} shows the
-dependencies of theoretical models, general definitions, data definitions, and
+has to be additionally modified if a certain component is changed. Every time
+acomponent is changed, the items in the column of that component that are
+markedwith an ``X'' may have to be modified as well. Table~\ref{Table:trace}
+shows
+thedependencies of theoretical models, general definitions, data definitions,
+and
 instance models with each other. Table~\ref{Table:R_trace} shows the
 dependencies of instance models, requirements, and data constraints on each
 other. Table~\ref{Table:A_trace} shows the dependencies of theoretical models,
 general definitions, data definitions, instance models, and likely changes on
 the assumptions.\\
 
-\iffalse\plt{You will have to modify these tables for your problem.}
+\plt{You will have to modify these tables for your problem.}
 
 \plt{The traceability matrix is challenging to maintain manually.  Please do
-your best.  In the future tools (like Drasil) will make this much easier.}\fi
+your best.  In the future tools (like Drasil) will make this much easier.}
 
 \afterpage{
 \begin{landscape}
@@ -1385,7 +1535,8 @@ your best.  In the future tools (like Drasil) will make this much easier.}\fi
 \centering
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline
-	& \aref{a_spe}& \aref{a_dsip}& \aref{a_dsia} & \aref{a_dp_r} & \aref{a_dpr}& \aref{a_tilta}& \aref{a_panele} \\
+& \aref{a_spe}& \aref{a_dsip}& \aref{a_dsia} & \aref{a_dp_r} & \aref{a_dpr}&
+\aref{a_tilta}& \aref{a_panele} \\
 \hline
  
 \tref{C_LCL}     &    &    &     &    &     &     &     \\ \hline
@@ -1402,7 +1553,8 @@ your best.  In the future tools (like Drasil) will make this much easier.}\fi
 
 \hline
 \end{tabular}
-\caption{Traceability Matrix Showing the Connections Between Assumptions and Other Items}
+\caption{Traceability Matrix Showing the Connections Between Assumptions and
+Other Items}
 \label{Table:A_trace}
 \end{table}
 \end{landscape}
@@ -1412,7 +1564,8 @@ your best.  In the future tools (like Drasil) will make this much easier.}\fi
 \centering
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline        
-	& \tref{C_LCL}& \ddref{C_ZA} & \ddref{C_DS}&\ddref{C_D} & \dref{C_SI} &\iref{C_TA}  &\iref{C_SEO} \\
+& \tref{C_LCL}& \ddref{C_ZA} & \ddref{C_DS}&\ddref{C_D} & \dref{C_SI}
+&\iref{C_TA} &\iref{C_SEO} \\
 \hline
 \tref{C_LCL}        &    &    &     &    &    &    &     \\ \hline
 \ddref{C_ZA}       &    &    & X  &    &    &    &      \\ \hline
@@ -1425,7 +1578,8 @@ your best.  In the future tools (like Drasil) will make this much easier.}\fi
 
 \hline
 \end{tabular}
-\caption{Traceability Matrix Showing the Connections Between Items of Different Sections}
+\caption{Traceability Matrix Showing the Connections Between Items of Different
+Sections}
 \label{Table:trace}
 \end{table}
 
@@ -1433,7 +1587,9 @@ your best.  In the future tools (like Drasil) will make this much easier.}\fi
 \centering
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
-	& \iref{C_TA}  & \iref{C_SEO}& \ref{sec_DataConstraints}& \rref{R_Inputs}& \rref{R_OutputInputs} & \rref{R_Calculate}& \rref{R_VerifyOutput}& \rref{R_Output}\\
+& \iref{C_TA} & \iref{C_SEO}& \ref{sec_DataConstraints}& \rref{R_Inputs}&
+\rref{R_OutputInputs} & \rref{R_Calculate}& \rref{R_VerifyOutput}&
+\rref{R_Output}\\
 
 \hline
 \iref{C_TA}         				&    &    & X & X &     & X  & X  &X \\ \hline
@@ -1445,19 +1601,20 @@ your best.  In the future tools (like Drasil) will make this much easier.}\fi
 \rref{R_Output}       		& X & X &    &    & X &      &     &    \\ \hline
 \hline
 \end{tabular}
-\caption{Traceability Matrix Showing the Connections Between Requirements and Instance Models}
+\caption{Traceability Matrix Showing the Connections Between Requirements and
+Instance Models}
 \label{Table:R_trace}
 \end{table}
 
 The purpose of the traceability graphs is also to provide easy references on
 what has to be additionally modified if a certain component is changed.  The
 arrows in the graphs represent dependencies. The component at the tail of an
-arrow is depended on by the component at the head of that arrow. Therefore, if a
-component is changed, the components that it points to should also be
+arrow is depended on by the component at the head of that arrow. Therefore, if
+acomponent is changed, the components that it points to should also be
 changed. Figure~\ref{Fig_ATrace} shows the dependencies of theoretical models,
 general definitions, data definitions, instance models, likely changes, and
-assumptions on each other. \iffalse Figure~\ref{Fig_RTrace} shows the dependencies of
-instance models, requirements, and data constraints on each other.\fi
+assumptions on each other.  Figure~\ref{Fig_RTrace} shows the dependencies of
+instance models, requirements, and data constraints on each other.
 
 % \begin{figure}[h!]
 % 	\begin{center}
@@ -1465,7 +1622,8 @@ instance models, requirements, and data constraints on each other.\fi
 % 		{
 % 			\includegraphics[width=\textwidth]{ATrace.png}
 % 		}
-% 		\caption{\label{Fig_ATrace} Traceability Matrix Showing the Connections Between Items of Different Sections}
+% \caption{\label{Fig_ATrace} Traceability Matrix Showing the Connections
+%Between Items of Different Sections}
 % 	\end{center}
 % \end{figure}
 
@@ -1476,16 +1634,18 @@ instance models, requirements, and data constraints on each other.\fi
 % 		{
 % 			\includegraphics[width=0.7\textwidth]{RTrace.png}
 % 		}
-% 		\caption{\label{Fig_RTrace} Traceability Matrix Showing the Connections Between Requirements, Instance Models, and Data Constraints}
+% \caption{\label{Fig_RTrace} Traceability Matrix Showing the Connections
+%Between Requirements, Instance Models, and Data Constraints}
 % 	\end{center}
 % \end{figure}
 
 \section{Values of Auxiliary Constants}\label{sec_VAC}
 
-\iffalse\plt{Show the values of the symbolic parameters introduced in the report.}
+\plt{Show the values of the symbolic parameters introduced in the report.}
 
-\plt{The definition of the requirements will likely call for SYMBOLIC\_CONSTANTS.
-Their values are defined in this section for easy maintenance.}\fi
+\plt{The definition of the requirements will likely call for
+SYMBOLIC\_CONSTANTS.
+Their values are defined in this section for easy maintenance.}
 
 This section contains the standard values that are used for calculations in SC.
 
@@ -1510,7 +1670,7 @@ This section contains the standard values that are used for calculations in SC.
 
 
 
-%bibliographystyle {plainnat}
+
 
 \bibliographystyle{unsrtnat}
 \bibliography {../../refs/References}
@@ -1519,7 +1679,8 @@ This section contains the standard values that are used for calculations in SC.
 
 \newpage
 
-\iffalse\noindent \plt{The following is not part of the template, just some things to consider
+\noindent \plt{The following is not part of the template, just some things to
+consider
   when filing in the template.}
 
 \noindent \plt{Grammar, flow and \LaTeX advice:
@@ -1557,6 +1718,6 @@ This section contains the standard values that are used for calculations in SC.
 \item If you say the format of the output (plot, table etc), then your
   requirement could be more abstract
 \end{itemize}
-}\fi
+}
 
 \end{document}
