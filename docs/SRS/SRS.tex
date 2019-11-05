@@ -126,12 +126,13 @@ description of the unit and the SI name.
     \midrule 
     \si{\degree} & angle & degree\\
     \si{'} & angle	& - \\
-    \si{k} & mass   & kilo\\
+    \si{k} & mass   & kilo \wss{mass is in kg, kilo should be kilograms}\\
     \si{m} &  length   & metre \\
     \si{\watt} & power & Watt (W = \si{\joule\per\second})\\
-	  N & direction & North\\
+	  N & direction & North \wss{N and S are not units}\\
 	  S & direction & South\\
-	  year & date & date\\
+	  year & date & date \wss{defining a date type is a great idea, but
+                        dates are not units}\\
 	  month & date & date\\
 	  day & date & date\\
     \bottomrule
@@ -167,39 +168,55 @@ systems.  The symbols are listed in alphabetical order.
 \renewcommand{\arraystretch}{1.2}
 %\noindent \begin{tabularx}{1.0\textwidth}{l l X}
 \noindent \begin{longtable*}{l l p{12cm}} \toprule
-\textbf{symbol} & \textbf{unit} & \textbf{description}\\
-\midrule 
-$\theta_{S_{day}}$ & \si[per-mode=symbol] {\degree} & zenith angle of sun in the day
-\\
-$\theta_{T}$ & \si[per-mode=symbol] {\degree} & the tilt angle for adjusting the solar panel
-\\
-$\Phi_P$ & \si[per-mode=symbol] {(\degree, \N/S, \  ')} & the latituade of the solar panel
-\\ 
-$\delta_{date}$ & \si[per-mode=symbol] {(\degree, \ N/S)} & the declination of the vertical noon sun in the day
-\\ 
-$I_{S}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the intensity of the sun measured by the satellites
-\\ 
-$I_{S_{date}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the intensity of the sun in a day of the noon
-\\ 
-$I_{S_{date}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the solar intensity in a period of days of the noon
-\\ 
-$I_{S_{T}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the solar intensity hits on the tilted solar panel. 
-\\ 
-$P_{E}$ & \si[per-mode=symbol] {k\watt} &the estimated solar panel output energy
-\\ 
-$P_{A}$ & \si[per-mode=symbol] {\square{m}} & the solar panel area
-\\ 
-$P_{r}$ & \si[per-mode=symbol] {\%} & solar panel yield or efficiency
-\\ 
-$PR$ & \si[per-mode=symbol] {\%} & performance ratio, coefficient for losses 
-\\ 
-$date$ & \si[per-mode=symbol] {\text{-}} & a sequence of dates from the day starts estimating the angle to the ending day
-\\ 
-$day_{Start}$ & \si[per-mode=symbol] {\text{-}} & the day starts estimating the angle
-\\ 
-$day_{End}$ & \si[per-mode=symbol] {\text{-}} & the day stops estimating the angle
-\\ 
-\bottomrule
+  \textbf{symbol} & \textbf{unit} & \textbf{description}\\
+  \midrule $\theta_{S_{day}}$ & \si[per-mode=symbol] {\degree} & zenith angle of
+  sun in the day
+  \\
+  $\theta_{T}$ & \si[per-mode=symbol] {\degree} & the tilt angle for adjusting
+  the solar panel
+  \\
+  $\Phi_P$ & \si[per-mode=symbol] {(\degree, \N/S, \ ')} & the latituade
+  \wss{Spellcheck!} of the solar panel \wss{the units are degrees. N and S are
+    not units.  I can see that this could be confusing.  Defining a data type
+    will help you.  I'll include some details below.}
+  \\
+  $\delta_{date}$ & \si[per-mode=symbol] {(\degree, \ N/S)} & the declination of
+  the vertical noon sun in the day
+  \\
+  $I_{S}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the intensity of
+  the sun measured by the satellites
+  \\
+  $I_{S_{date}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the
+  intensity of the sun in a day of the noon
+  \\
+  $I_{S_{date}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the solar
+  intensity in a period of days of the noon
+  \\
+  $I_{S_{T}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the solar
+  intensity hits on the tilted solar panel.
+  \\
+  $P_{E}$ & \si[per-mode=symbol] {k\watt} &the estimated solar panel output
+  energy
+  \\
+  $P_{A}$ & \si[per-mode=symbol] {\square{m}} & the solar panel area
+  \\
+  $P_{r}$ & \si[per-mode=symbol] {\%} & solar panel yield or efficiency
+  \\
+  $PR$ & \si[per-mode=symbol] {\%} & performance ratio, coefficient for losses
+  \\
+  $date$ & \si[per-mode=symbol] {\text{-}} & a sequence of dates from the day
+  starts estimating the angle to the ending day
+  \\
+  $day_{Start}$ & \si[per-mode=symbol] {\text{-}} & the day starts estimating
+  the angle \wss{Please check with the Writing-Checklist.tex document for the
+    format of variables that are words in LaTeX.  This should be
+    $\mathit{day}_\text{Start}$.  I know it is tedious, but it doesn't look
+    right otherwise.}
+  \\
+  $day_{End}$ & \si[per-mode=symbol] {\text{-}} & the day stops estimating the
+  angle
+  \\
+  \bottomrule
 \end{longtable*}
 \iffalse\plt{Use your problems actual symbols.  The si package is a good idea to use for
   units.}\fi
@@ -298,10 +315,20 @@ $day_{End}$ & \si[per-mode=symbol] {\text{-}} & the day stops estimating the ang
 
 \medskip
 
-Due to the increasing concepts of creating an earth-friendly environment, the kits using renewable energy becomes more popular in the market. Solar energy is the most common type of renewable resource for a home. However, it is an expensive technology, and its cell efficiency is restricted by seasons. Therefore, Sun Catcher is created for home users to gain optimum energy from daily sunlight.
+Due to the increasing concepts of creating an earth-friendly environment, the
+kits using renewable energy becomes more popular in the market. Solar energy is
+the most common type of renewable resource for a home. However, it is an
+expensive technology, and its cell efficiency is restricted by
+seasons. Therefore, Sun Catcher is created for home users to gain optimum energy
+from daily sunlight.
 
 
-The following sections provide an overview of the Software Requirements Specification (SRS) for Sun Catcher(SC). This section explains the purpose and the organization of the document, the scope of the requirements, and the characteristics of the intended reader.
+The following sections provide an overview of the Software Requirements
+Specification (SRS) for Sun Catcher(SC). \wss{remember to check with the writing
+  checklists!}  This section explains the purpose and the organization of the
+document, the scope of the requirements, and the characteristics of the intended
+reader.  \wss{You should put use 80 character wide columns of text in your tex
+  file.  It is better for diffs, and easier to read on different editors.}
 
 
 \iffalse\plt{The introduction section is written to introduce the problem.  It starts
@@ -309,6 +336,11 @@ The following sections provide an overview of the Software Requirements Specific
 a paragraph or two that describes the problem, followed by a ``roadmap''
 paragraph.  A roadmap orients the reader by telling them what sub-sections to
 expect in the Introduction section.}\fi
+
+\wss{Rather than iffalse, you could have just set comments to false in the
+  Comments.tex file.  Although as it is set up right now, you would get all of
+  the comments on, the wss comments and the plt comments.  Therefore, I like
+  your solution better.  Another option would be to delete the plt comments.}
 
 \subsection{Purpose of Document}
 
@@ -332,8 +364,16 @@ plan will show the steps that will be used to increase confidence in the softwar
   of the document is the purpose of the SRS, including communication, planning
   for the design stage, etc.}\fi
 
-\subsection{Scope of Requirements} 
-The scope of the requirements includes stability analysis of a two-dimensional (2D) solar panel and the sun as the solar resource. The solar panel is assumed to place in a location near sea level, and the sky view above is unobstructed, with no trees, hills, clouds, dust, or haze ever blocking the sun.
+\subsection{Scope of Requirements}
+
+The scope of the requirements includes stability analysis of a two-dimensional
+(2D) solar panel and the sun as the solar resource. The solar panel is assumed
+to place in a location near sea level, and the sky view above is unobstructed,
+with no trees, hills, clouds, dust, or haze ever blocking the sun.  \wss{Clarify
+  that for the purpose of the calculations you are making these assumptions.
+  The actual solar panel will never reach the ideal energy output given in the
+  calculations by \progname.}  \wss{I tried to use \progname{}, but you haven't
+  redefined it to SC.   You should do tha that in the Common.tex file.}
 
 \iffalse\plt{Modelling the real world requires simplification.  The full complexity of
   the actual physics, chemistry, biology is too much for existing models, and
@@ -352,7 +392,12 @@ The scope of the requirements includes stability analysis of a two-dimensional (
 
 \subsection{Characteristics of Intended Reader} \label{sec_IntendedReader}
 
-This section summarized the expectation of the readers' knowledge and skills for understanding this SRS. Readers should have a general knowledge of how a solar panel works and know the common factors that affect energy absorption.
+This section summarized the expectation of the readers' knowledge and skills for
+understanding this SRS. Readers should have a general knowledge of how a solar
+panel works and know the common factors that affect energy absorption.
+\wss{Usually these characteristics are given in terms of education level, and
+  possibly education specialization.  You also want to mention that the reader
+  should understand the longitude and latitude coordinate system.}
 
 \iffalse\plt{This section summarizes the skills and knowledge of the readers of the
   SRS.  It does NOT have the same purpose as the ``User Characteristics''
@@ -435,15 +480,21 @@ drive the software and the output expecting from the software system.\\
 \item User Responsibilities:
 \begin{itemize}
 \item Provide the input data related to the solar panel. 
-\item Ensure the input date format matches the requirement from SC.
-\item Ensure the condition of the solar panel, and the surrounding environment of the solar panel.
+\item Ensure the input date format matches the requirement from SC.  \wss{I
+    think you can just say ``Ensure the input is formatted correctly.''}
+\item Ensure the condition of the solar panel, and the surrounding environment
+  of the solar panel. \wss{The responsibilities are for using the software, not
+    for using a solar panel.  I don't think you need this responsibility.}
 \end{itemize}
 \item SC Responsibilities:
 \begin{itemize}
 \item Detect data type mismatch, such as a string of characters instead of a
   floating point number.
-\item Comfirm the inputs quality to satisfy the required physical and software constraints.
-\item Predict an optimum tilt angle and the expected gaining solar energy, and show the result explicitly to users (such as generating a report with linear graphic ).
+\item Comfirm \wss{spellcheck!} the inputs quality to satisfy the required physical and software constraints.
+\item Predict an optimum tilt angle and the expected gaining solar energy, and
+  show the result explicitly to users (such as generating a report with linear
+  graphic ). \wss{You can write this more abstractly.  The specifics of the
+    output will be given in your requirements.}
 
 \end{itemize}
 \end{itemize}
@@ -452,7 +503,11 @@ drive the software and the output expecting from the software system.\\
 
 The end-users of SC is expecting to understand the Level 1 Calculation method
 such as angle addition and subtraction theorems and understand the Level 1 celestial
-mechanics such as the formation of the latitude and the earth's tilt angle in the four seasons.
+mechanics such as the formation of the latitude and the earth's tilt angle in
+the four seasons.  \wss{I don't think Level 1 Calculation and Level 1 celestial
+  mechanics are standard terms.  Are they?  Also, your user characteristics are
+  more involved than your intended reader characteristics.  Did you get these
+  two sections backwards?}
 
 \iffalse\plt{This section summarizes the knowledge/skills expected of the user.
   Measuring usability, which is often a required non-function requirement,
@@ -485,12 +540,13 @@ the instance models.  \iffalse\plt{Add any project specific details that are rel
 
 \subsection{Problem Description} \label{Sec_pd}
 
-Sun Catcher is intended to solve the unpredictable energy efficiency of solar panels.
-Due to the tilt angle of the earth when it rotates by axis, the latitude of the sun will 
-consistently move. With the fixed location of the solar panel, it is unlikely to get the direct
-the direct sunlight for the maximum output. Therefore, it causes inadequate performance in gaining energy.
-\iffalse \plt{What problem does your program solve?
-The description here should be in the problem space, not the solution space.}\fi
+Sun Catcher is intended to solve the unpredictable energy efficiency of solar
+panels.  Due to the tilt angle of the earth when it rotates by axis, the
+latitude of the sun will consistently move. With the fixed location of the solar
+panel, it is unlikely to get the direct the direct sunlight for the maximum
+output. Therefore, it causes inadequate performance in gaining energy.  \iffalse
+\plt{What problem does your program solve?  The description here should be in
+  the problem space, not the solution space.}\fi
 
 \subsubsection{Terminology and  Definitions}
 
@@ -506,20 +562,30 @@ easier to correctly understand the requirements:
 
 \begin{itemize}
 
-\item Declination of the Sun: The angle between the rays of the Sun and the plane of the Earth's equator.
+\item Declination of the Sun: The angle between the rays of the Sun and the
+  plane of the Earth's equator.
 
-\item Tilt angle: The angle for adjusting the solar panel result in the panel get the direct sunlight. According to the Figure:\nameref{Fig_PhysicFigure}, tilt angle is equal to the zenith angle.
+\item Tilt angle: The angle for adjusting the solar panel result in the panel
+  get the direct sunlight. According to the Figure:\nameref{Fig_PhysicFigure},
+  tilt angle is equal to the zenith angle.  \wss{I think you mean that for
+    optimum efficiency the tilt angle should equal the zenith angle, but the
+    tilt angle is not always equal to the zenith angle.  That is, you can have a
+    solar panel that has a different tilt angle from the zenith angle.}
 
 \item The period of days: The period of days depends on the input days of the users.
 
-\item Sun panel: The adjustable panel, which has solar cells on it, able to converse solar energy
-to power.
+\item Sun panel: The adjustable panel, which has solar cells on it, able to
+  converse solar energy to power.
 
-\item solar intensity: The amount of incoming solar energy, or radiation, that reaches the Earth's surface.
+\item Solar intensity: The amount of incoming solar energy, or radiation, that
+  reaches the Earth's surface.
 
-\item Latitude: The angle which ranges from 0 $^\circ$ at the Equator to 90$^\circ$ (North or South) at the poles. 
+\item Latitude: The angle which ranges from 0 $^\circ$ at the Equator to
+  90$^\circ$ (North or South) at the poles.
 
-\item Zenith Angle: The angle between the sun and the vertical. According to the Figure:\nameref{Fig_PhysicFigure}, zenith angle is equal to the tilt angle.
+\item Zenith Angle: The angle between the sun and the vertical. According to the
+  Figure:\nameref{Fig_PhysicFigure}, zenith angle is equal to the tilt angle.
+  \wss{Please see my comment under tilt angle.}
 
 \end{itemize}
 
@@ -543,7 +609,8 @@ includes the following elements:
 
 \begin{itemize}
 
-\item[ ] PS1: Solar panel, the panel with solar cells that able to absorb solar energy from the sun.
+\item[ ] PS1: Solar panel, the panel with solar cells that able to absorb solar
+  energy from the sun.
 
 \item[ ] PS2: Sun, proving solar energy to the solar panel
 
@@ -577,13 +644,18 @@ includes the following elements:
   amount of technical language.  They should be understandable by non-domain
   experts.}\fi
 
-\noindent Given the user located latitude($\Phi_{P}$), the area of the solar panel($P_A$), the day started to estimate angle($day_{Start}$),the day when the  estimation end($day_{End}$), the goal statements are:
+\noindent Given the user located latitude($\Phi_{P}$), the area of the solar
+panel($P_A$), the day started to estimate angle($day_{Start}$),the day when the
+estimation end($day_{End}$), the goal statements are: \wss{you should have
+  spaces before opening brackets.  Please see the document review checklists.}
 
 \begin{itemize}
 
-\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] Predict the optimum tilt angle in the period of days($\theta_{T}$).
+\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] Predict
+  the optimum tilt angle in the period of days($\theta_{T}$).
 
-\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] Predict the optimum produced solar energy in the period of days($P_{E}$).
+\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] Predict
+  the optimum produced solar energy in the period of days($P_{E}$).
 
 
 \end{itemize}
@@ -694,6 +766,19 @@ likely change [LC], in which the respective assumption is used.
 
 \end{itemize}
 
+\wss{I suggest that you add a section for Type Definitions.  You can see an
+  example in the SRS by Deema
+  (\url{https://github.com/deemaalomair1/CAS741_project/tree/master/docs/SRS}.
+  Dealing with latitudes and longitudes is going to be confusing until you
+  determine how they are represented.  The following web-page has a good summary
+of the representation of longitude and latitude:
+\url{https://en.wikipedia.org/wiki/ISO_6709}.  My vote is to use positive and
+negative signs, instead of N, S, W, E.  You can define North as positive and
+East as positive, then the sign gives you the direction.  The numbers are for
+degree, minutes and seconds.  Therefore, the coordinates could be represented
+using a type defined with a tuple.}
+\wss{You should also think about a type for dates.  Again, a tuple makes sense.}
+
 \subsubsection{Theoretical Models}\label{sec_theoretical}
 
 \iffalse\plt{Theoretical models are sets of abstract mathematical equations or axioms
@@ -724,16 +809,27 @@ on.
   \hline
 
   Description & 
-			In the following source, Lambert's cosine law state that "the radiant intensity or luminous intensity observed from an ideal diffusely reflecting surface or ideal diffuse radiator is directly proportional to the cosine of the angle $\theta$ between the direction of the incident light and the surface normal."\\
+			In the following source, Lambert's cosine law state that
+                "the radiant intensity or luminous intensity observed from an
+                ideal diffusely reflecting surface or ideal diffuse radiator is
+                directly proportional to the cosine of the angle $\theta$
+                between the direction of the incident light and the surface
+                normal." \wss{look at the writing checklist for a discussion of
+                opening and closing quotation marks.}\\
 			&$I_0$ is the radiance of illumination.\\
-			&I is the number of the photons.\\
+			&I is the number of the photons. \wss{When you show a
+                   symbol outside of an equation, it should be formatted as in
+                   the equation.  In this case $I$.}\\
 			&$\cos{\theta}  \times \partial \Omega  \times \partial A$is the number of photo
 ns per second emitted into the wedge at angle $\theta$ \\
 			&where $\partial \Omega$is an equal angle that represents each wedge in the circle.\\
 							&$\partial A$ is the area element .\\
 							&$\partial\Omega_0$ is the portion of the observer's total angular field-of-view 
 of the scene.\\
-							&$\partial A_0$ is an aperture of area .\\
+							&$\partial A_0$ is an
+                                                   aperture of area
+                                                   . \wss{Again, look at the
+                                                   writing checklists.}\\
   \hline
   Source &
            \cite{Martin2001}\\
@@ -800,6 +896,8 @@ instance models.
 		This formula assumes that the earth is flat, so a factor was applied to account for the curvature of the earth (and therefore the earth’s atmosphere). These factors and the angle of the sun with respect to the panel represent as \ $ \frac{1.00}{I_{S}}^ {sec(\theta_{S_{day}})}$\\
 		Where $\frac{1}{\cos{\theta_{S_{day}}}}$ is $sec(\theta_{S_{day}})$\\
 
+ \wss{I like that your T1 and GD1 are explicitly connected by your derivation.
+   Good.}
  
 \iffalse\plt{The derivation shows how the IM is derived from the TMs/GDs.  In cases
   where the derivation cannot be described under the Description field, it will
@@ -848,7 +946,7 @@ Symbol &$\delta_{date} $\\
   \hline
   Description &
        'date' defines in the table: \nameref{tb_TS} and refer from \ddref{C_D}.\\
-       &The degree of $\delta_{date} $ can be determinated by Figure: \nameref{Fig_Analemma}.\\
+       &The degree of $\delta_{date} $ can be determinated \wss{spell check!} by Figure: \nameref{Fig_Analemma}.\\
   \hline
   Sources& \url{https://www.cengage.com/resource_uploads/downloads/0495555061_137179.pdf}\\
   \hline
@@ -856,6 +954,9 @@ Symbol &$\delta_{date} $\\
   \hline
 \end{tabular}
 \end{minipage}\\
+
+\wss{What is declination?  You should repeat your definition from earlier in the
+  document.}
 
 \begin{figure}[H]
 	\center
@@ -964,6 +1065,8 @@ Symbol &$date $\\
 \end{tabular}
 \end{minipage}\\
 
+\wss{Adding a data type for date would help make this clearer.}
+
 \subsubsection{Instance Models} \label{sec_instance}    
 
 \iffalse\plt{The motivation for this section is to reduce the problem defined in
@@ -1002,7 +1105,11 @@ The goals \nameref{sec_GS} are solved by IM\ref{C_SI}. \iffalse \plt{other detai
 
   \hline
   Output & $ \theta_{T} , I_{S_{T}}$\\
-& $I_{S_{T}}  = I_{S} \cdot \frac{1.00}{I_{S_{date}}}^ {sec(\theta_{S_{day}})}  \text{where} \ \theta_{T} \ \text{is the valuse that has the hightest} \ I_{S_{T}}$\\ 
+& $I_{S_{T}}  = I_{S} \cdot \frac{1.00}{I_{S_{date}}}^ {sec(\theta_{S_{day}})}
+                                         \text{where} \ \theta_{T} \ \text{is
+                                         the valuse that has the hightest} \
+                                         I_{S_{T}}$ \wss{write this using argmax
+  \url{https://en.wikipedia.org/wiki/Arg_max}.}\\ 
   \hline
   Description&
 	Using General Definition: \dref{C_SI} can get the total solar intensity $I_{S_{date}}$ during the period od date. Then using the value $I_{S_{date}}$ recalculates the optimum angle $\theta_{T}$. \\
@@ -1195,12 +1302,19 @@ by using the Table: $\nameref{TblOutputVar}$\\
   \iffalse\plt{Verification related requirements.}\fi
 
 \item[R\refstepcounter{reqnum}\thereqnum \label{R_Output}:]Reading the section of 
-$\nameref{sec_assumpt}$ to know the related requirements regarding the outputs.\\
+$\nameref{sec_assumpt}$ to know the related requirements regarding the outputs.
+\wss{I do not understand this requirement.}\\
 
 \iffalse \plt{Output related
-    requirements.}\fi
+  requirements.}\fi
 
 \end{itemize}
+
+\wss{I would like to see a requirement that lets you compare different
+  scenarios.  The user should also be able to enter in a different set of inputs
+  and see the results, along with the percent relative change in energy output
+  compared to the first scenario.  You'll want to include the specific formula
+  for percent relative change.}
 
 \subsection{Nonfunctional Requirements}
 
