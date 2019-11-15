@@ -107,22 +107,23 @@ Our design follows the rules layed out by \citet{ParnasEtAl1984}, as follows:
   secrets of separate modules.
 \item Each data structure is implemented in only one module.
 \item Any other program that requires information stored in a module's data
-  structures must obtain it by calling access programs belonging to that module.
-\end{itemize}
+structures must obtain it by calling access programs belonging to that
+module.\end{itemize}
 
 After completing the first stage of the design, the Software Requirements
-Specification (SRS), the Module Guide (MG) is developed~\citep{ParnasEtAl1984}. The MG
+Specification (SRS), the Module Guide (MG) is developed~\citep{ParnasEtAl1984}.
+The MG
 specifies the modular structure of the system and is intended to allow both
 designers and maintainers to easily identify the parts of the software.  The
 potential readers of this document are as follows:
 
 \begin{itemize}
-\item New project members: This document can be a guide for a new project member
-  to easily understand the overall structure and quickly find the
+\item New project members: This document can be a guide for a new project
+memberto easily understand the overall structure and quickly find the
   relevant modules they are searching for.
 \item Maintainers: The hierarchical structure of the module guide improves the
-  maintainers' understanding when they need to make changes to the system. It is
-  important for a maintainer to update the relevant sections of the document
+maintainers' understanding when they need to make changes to the system. It is
+important for a maintainer to update the relevant sections of the document
   after changes have been made.
 \item Designers: Once the module guide has been written, it can be used to
   check for consistency, feasibility and flexibility. Designers can verify the
@@ -137,9 +138,9 @@ was constructed according to the likely changes. Section \ref{SecConnection}
 specifies the connections between the software requirements and the
 modules. Section \ref{SecMD} gives a detailed description of the
 modules. Section \ref{SecTM} includes two traceability matrices. One checks
-the completeness of the design against the requirements provided in the SRS. The
-other shows the relation between anticipated changes and the modules. Section
-\ref{SecUse} describes the use relation between modules.
+the completeness of the design against the requirements provided in the SRS.
+Theother shows the relation between anticipated changes and the modules.
+Section\ref{SecUse} describes the use relation between modules.
 
 \section{Anticipated and Unlikely Changes} \label{SecChange}
 
@@ -152,22 +153,43 @@ unlikely changes are listed in Section \ref{SecUchange}.
 
 Anticipated changes are the source of the information that is to be hidden
 inside the modules. Ideally, changing one of the anticipated changes will only
-require changing the one module that hides the associated decision. The approach
-adapted here is called design for
+require changing the one module that hides the associated decision. The
+approachadapted here is called design for
 change.
 
 \begin{description}
 \item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific
   hardware on which the software is running.
+\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The initial of the
+  input parameter.
+\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The constraint of theinput data.
 \item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The format of the
-  initial input data.
-\item ...
+  input parameter.
+\item[\refstepcounter{acnum} \actheacnum \label{acOutput}:] The constraint of
+the output data.
+\item[\refstepcounter{acnum} \actheacnum \label{acOutput}:] The format of the
+  output data.
+\item[\refstepcounter{acnum} \actheacnum \label{acSolarEnergy}:] How to
+calculate the output solar energy.
+\item[\refstepcounter{acnum} \actheacnum \label{acDateDuration}:]  How to
+calculate the date duration.
+\item[\refstepcounter{acnum} \actheacnum \label{acTiltAngle}:] How to calculate
+the optimum tilt angle.
+\item[\refstepcounter{acnum} \actheacnum \label{acSunIntensity}:] The algorithm
+of sun intensity.
+\item[\refstepcounter{acnum} \actheacnum \label{acZenithAngle}:] The algorithm
+of zenith angle.
+\item[\refstepcounter{acnum} \actheacnum \label{acSunDeclination}:] The
+algorithm of sun declination angle.
+\item[\refstepcounter{acnum} \actheacnum \label{acPlot}:]  The
+implementation for plotting the data.
+
 \end{description}
 
 \subsection{Unlikely Changes} \label{SecUchange}
 
-The module design should be as general as possible. However, a general system is
-more complex. Sometimes this complexity is not necessary. Fixing some design
+The module design should be as general as possible. However, a general system
+ismore complex. Sometimes this complexity is not necessary. Fixing some design
 decisions at the system architecture stage can simplify the software design. If
 these decision should later need to be changed, then many parts of the design
 will potentially need to be modified. Hence, it is not intended that these
@@ -176,7 +198,8 @@ decisions will be changed.
 \begin{description}
 \item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] Input/Output devices
   (Input: File and/or Keyboard, Output: File, Memory, and/or Screen).
-\item ...
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] The goal of \progname
+is always predict the title angle and the solar energy absorption.
 \end{description}
 
 \section{Module Hierarchy} \label{SecMH}
@@ -188,7 +211,20 @@ actually be implemented.
 
 \begin{description}
 \item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
-\item ...
+\item [\refstepcounter{mnum} \mthemnum \label{mIP}:] Input Parameters Module
+\item [\refstepcounter{mnum} \mthemnum \label{mIF}:] Input Format Module
+\item [\refstepcounter{mnum} \mthemnum \label{mOP}:] Output Parameters Module
+\item [\refstepcounter{mnum} \mthemnum \label{mSEA}:] Solar Energy Output
+Module\item [\refstepcounter{mnum} \mthemnum \label{mOTA}:] Optimum Tilt Angle
+Module
+\item [\refstepcounter{mnum} \mthemnum \label{mSI}:] Sun Intensity Equation
+Module
+\item [\refstepcounter{mnum} \mthemnum \label{mZA}:] Zenith Angle Equation
+Module
+\item [\refstepcounter{mnum} \mthemnum \label{mSD}:] Sun Declination Equation
+Module
+\item [\refstepcounter{mnum} \mthemnum \label{mDD}:] Date Duration Module
+\item [\refstepcounter{mnum} \mthemnum \label{mP}:] Plotting Module
 \end{description}
 
 
@@ -202,19 +238,21 @@ actually be implemented.
 {Hardware-Hiding Module} & ~ \\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\ 
-& ?\\
+\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module}& Input Parameters Module\\
+& Output Parameters Module\\
+& Solar Energy Absorption Module\\
+& Optimum Tilt Angle Module\\
 \midrule
 
-\multirow{3}{0.3\textwidth}{Software Decision Module} & {?}\\
-& ?\\
-& ?\\
+\multirow{3}{0.3\textwidth}{Software Decision Module} & {Sun Intensity Equation
+Module}\\
+& Optimum Sun Intensity Equation Module\\
+& Zenith Angle Equation Module\\
+& Maximum Sun Intensity's Angle Module\\
+& Sun Declination Module\\
+& Date Duration Module\\
+& Plotting Module\\
+& Sequence Data Structure Module\\
 \bottomrule
 
 \end{tabular}
@@ -233,9 +271,9 @@ between requirements and modules is listed in Table \ref{TblRT}.
   design decisions need to be made.  Rather than make these decisions implicit,
   they are explicitly recorded here.  For instance, if a program has security
   requirements, a specific design decision may be made to satisfy those
-  requirements with a password.  In scientific examples, the choice of algorithm
-could potentially go here, if that is a decision that is exposed by the
-interface.}
+requirements with a password. In scientific examples, the choice of
+algorithmcould potentially go here, if that is a decision that is exposed by
+theinterface.}
 
 \section{Module Decomposition} \label{SecMD}
 
@@ -246,12 +284,13 @@ module. The \emph{Services} field specifies \emph{what} the module will do
 without documenting \emph{how} to do it. For each module, a suggestion for the
 implementing software is given under the \emph{Implemented By} title. If the
 entry is \emph{OS}, this means that the module is provided by the operating
-system or by standard programming language libraries.  \emph{\progname{}} means the
+system or by standard programming language libraries. \emph{\progname{}} means
+the
 module will be implemented by the \progname{} software.
 
 Only the leaf modules in the hierarchy have to be implemented. If a dash
-(\emph{--}) is shown, this means that the module is not a leaf and will not have
-to be implemented.
+(\emph{--}) is shown, this means that the module is not a leaf and will not
+haveto be implemented.
 
 \subsection{Hardware Hiding Modules (\mref{mHH})}
 
@@ -276,14 +315,57 @@ to be implemented.
 \item[Implemented By:] --
 \end{description}
 
-\subsubsection{Input Format Module (\mref{mInput})}
+\subsubsection{Input Parameters Module (\mref{mIP})}
+
+\begin{description}
+\item[Secrets:]The initialization of the input parameter.
+\item[Services:]Verifies the user's input with the constraints of the input
+data and then converts the users' input into the initial input parameter.
+\item[Implemented By:] \progname
+\end{description}
+
+\subsubsection{Input Format Module (\mref{mIF})}
 
 \begin{description}
 \item[Secrets:]The format and structure of the input data.
 \item[Services:]Converts the input data into the data structure used by the
   input parameters module.
-\item[Implemented By:] [Your Program Name Here]
+\item[Implemented By:] \progname
 \end{description}
+
+
+\subsubsection{Output Parameters Module (\mref{mOP})}
+
+\begin{description}
+\item[Secrets:]The initialization of the output parameter.
+\item[Services:]Verifies the output from the related equation with the
+constraints of the output data and then converts the data into the initial 
+output parameter.
+\item[Implemented By:] \progname
+\end{description}
+
+\subsubsection{Solar Energy Output Module (\mref{mSEA})}
+
+\begin{description}
+\item[Secrets:] The equation of calculate the solar energy output, using the
+data from input parameter module.
+\item[Services:] Define the solar energy output equation, using the data from
+input parameter module.
+\item[Implemented By:] \progname
+\end{description}
+
+\subsubsection{Optimum Tilt Angle Module (\mref{mOTA})}
+
+\begin{description}
+\item[Secrets:]The equation of calculate the optimal tilt angle, using the
+datafrom input parameter module.
+\item[Services:] Define the optimal tilt angle equation, using the data from
+input
+parameter module.
+\item[Implemented By:] \progname
+\end{description}
+
+
 
 \subsubsection{Etc.}
 
@@ -301,7 +383,84 @@ to be implemented.
 \item[Implemented By:] --
 \end{description}
 
+
+\subsubsection{Sun Intensity Equation Module (\mref{mSI})}
+
+\begin{description}
+\item[Secrets:]The equation of calculate the sun intensity corresponding to
+thezenith angle of sun every day.
+\item[Services:] Proves the algorithm calculate the initial sun intensity.
+Calculates the initial sun intensity by using govering equation,initial
+parameter, and the data provide from Zenith Angle Equation Module.
+
+\item[Implemented By:] Sun.Intensity
+\end{description}
+
+\subsubsection{ Optimum Sun Intensity Equation Module (\mref{mMSI})}
+
+\begin{description}
+\item[Secrets:]The equation of calculate the sun intensity corresponding to
+thezenith angle of sun every day.
+\item[Services:] Proves the algorithm calculate the optimal sun intensity.
+Calculates optimal sun intensity by using govering equation, the greatest point
+of sun intensity, and the data provide from Zenith Angle Equation Module.
+
+\item[Implemented By:] Sun.Intensity
+\end{description}
+
+\subsubsection{Maximum Sun Intensity's Angle Module (\mref{mSIA})}
+
+\begin{description}
+\item[Secrets:]The equation of calculate the sun intensity corresponding to
+thezenith angle of sun every day.
+\item[Services:] Proves the algorithm calculate the angle correcponding sun
+intensity. Calculates angle corresponding the maximum sun intensity within the
+date duration.
+
+\item[Implemented By:] Sun.Intensity
+\end{description}
+
+\subsubsection{Zenith Angle Equation Module (\mref{mZA})}
+
+\begin{description}
+\item[Secrets:]The equation of calculate the zenith angle corresponding to sun 
+declination.
+\item[Services:] Calculate the zenith angle using govering equation, and the
+data
+provide from Sun Declination Equation Module
+\item[Implemented By:] Sun.ZenithAngle
+\end{description}
+
+\subsubsection{Sun Declination Module (\mref{mSD})}
+
+\begin{description}
+\item[Secrets:]The equation of calculate the sun declination corresponding to
+date within the date duration.
+\item[Services:]Calculate the zenith angle using govering equation, and the
+dataprovide from Date Duration Equation Module
+\item[Implemented By:] Sun.Declination
+\end{description}
+
+
+\subsubsection{Date Duration Module (\mref{mDD})}
+
+\begin{description}
+\item[Secrets:]The algorithm of calculate the date duration, using the data 
+from input parameter module.
+\item[Services:] Provides the date duration calculating function. Calculate the 
+date duration by using the data from input parameter module.
+\item[Implemented By:] Data.Time
+\end{description}
+
+\subsubsection{Plotting Module (\mref{mP})}
+
+\begin{description}
+\item[Secrets:]The data structure and algorithm for plotting module.
+\item[Services:] Provide the plot function.
+\item[Implemented By:] Graphics.EasyPlot
+\end{description}
 \subsubsection{Etc.}
+
 
 \section{Traceability Matrix} \label{SecTM}
 
@@ -320,10 +479,14 @@ R1 & \mref{mHH}, \mref{mInput}, \mref{mParams}, \mref{mControl}\\
 R2 & \mref{mInput}, \mref{mParams}\\
 R3 & \mref{mVerify}\\
 R4 & \mref{mOutput}, \mref{mControl}\\
-R5 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R6 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R7 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R8 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
+R5 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS},
+\mref{mSolver}, \mref{mPlot}\\
+R6 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS},
+\mref{mSolver}, \mref{mPlot}\\
+R7 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS},
+\mref{mPlot}\\
+R8 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS},
+\mref{mPlot}\\
 R9 & \mref{mVerifyOut}\\
 R10 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}\\
 R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
@@ -360,15 +523,16 @@ R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
 \section{Use Hierarchy Between Modules} \label{SecUse}
 
 In this section, the uses hierarchy between modules is
-provided. \citet{Parnas1978} said of two programs A and B that A {\em uses} B if
-correct execution of B may be necessary for A to complete the task described in
+provided. \citet{Parnas1978} said of two programs A and B that A {\em uses} B
+ifcorrect execution of B may be necessary for A to complete the task described
+in
 its specification. That is, A {\em uses} B if there exist situations in which
 the correct functioning of A depends upon the availability of a correct
 implementation of B.  Figure \ref{FigUH} illustrates the use relation between
 the modules. It can be seen that the graph is a directed acyclic graph
 (DAG). Each level of the hierarchy offers a testable and usable subset of the
-system, and modules in the higher level of the hierarchy are essentially simpler
-because they use modules from the lower levels.
+system, and modules in the higher level of the hierarchy are essentially
+simplerbecause they use modules from the lower levels.
 
 \begin{figure}[H]
 \centering

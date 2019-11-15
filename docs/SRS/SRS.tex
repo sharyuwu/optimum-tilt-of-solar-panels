@@ -27,7 +27,9 @@
 \hypersetup{
     bookmarks=true,         % show bookmarks bar?
       colorlinks=true,       % false: boxed links; true: colored links
-linkcolor=red, % color of internal links (change box color with linkbordercolor)citecolor=green, % color of links to bibliography
+linkcolor=red, % color of internal links (change box color with
+%linkbordercolor)
+citecolor=green, % color of links to bibliography
     filecolor=magenta,      % color of file links
     urlcolor=cyan           % color of external links
 }
@@ -182,48 +184,51 @@ sun in the day
   $\Phi_P$ & \si[per-mode=symbol] {(\degree, \ ')} & the latitude
    of the solar panel \wss{the units are degrees. N and S are
     not units.  I can see that this could be confusing.  Defining a data type
-    will help you.  I'll include some details below.} \an{Yes, I it fixed by treating the N and S
+will help you. I'll include some details below.} \an{Yes, I it fixed by treating
+the N and S
     as + and - }
   \\
-$\delta_{\text{date}}$ & \si[per-mode=symbol] {(\degree, \ N/S)} & the daily declination of
+$\delta_{\text{date}}$ & \si[per-mode=symbol] {(\degree, \ N/S)} & the daily
+declination of
 the vertical noon sun in the date duration
   \\
   $I_{S}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the intensity of
   the sun measured by the satellites
   \\
-  $I_{S_{\text{daily}}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the daily 
+$I_{S_{\text{daily}}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the
+daily
 solar intensity of the noon in the date duration($date$).
   \\
-  $I_{S_{\text{total}}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the total 
+$I_{S_{\text{total}}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the
+total
 solar intensity of the noon in the date duration($date$).
   \\
-  $I_{S_{\text{max}}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the hightest 
+$I_{S_{\text{max}}}$ & \si[per-mode=symbol] {\frac{k\watt}{\square{m}}} & the
+hightest
 solar intensity of the noon in the date duration($date$).
   \\
   $P_{E}$ & \si[per-mode=symbol] {k\watt} &the estimated solar panel output
   energy
   \\
-  $P_{A_{\text{h}}}$ &\si[per-mode=symbol] {\square{m}} & the height of the solar panel
+$P_{A_{\text{h}}}$ &\si[per-mode=symbol] {\square{m}} & the height of the solar
+panel
   \\
-  $P_{A_{\text{w}}}$ &\si[per-mode=symbol] {\square{m}} &the width of the solar panel 
+$P_{A_{\text{w}}}$ &\si[per-mode=symbol] {\square{m}} &the width of the solar
+panel
   \\
-  $P_{\text{r}}$ & \si[per-mode=symbol] {\%} & solar panel yield or efficiency
+$P_{\text{r}}$ & \si[per-mode=symbol] {\%} & solar panel yield or efficiency
   \\
-  $PR$ & \si[per-mode=symbol] {\%} & performance ratio, coefficient for losses
+$PR$ & \si[per-mode=symbol] {\%} & performance ratio, coefficient for losses
   \\
-  $date$ & \si[per-mode=symbol] {\text{-}} & the date duration between the 
+$date$ & \si[per-mode=symbol] {\text{-}} & the date duration between the 
   calculation starting date and the ending date
   \\
-  $\mathit{year}_\text{Start}$& \si[per-mode=symbol] {\text{-}} & the year of the
-  calcuation's starting date\\
-  $\mathit{month}_\text{Start}$& \si[per-mode=symbol] {\text{-}} & the month of
+$\mathit{year}_\text{Start}$& \si[per-mode=symbol] {\text{-}} & the year of the  calcuation's starting date\\
+$\mathit{month}_\text{Start}$& \si[per-mode=symbol] {\text{-}} & the month of
   the calcuation's starting date\\ 
-  $\mathit{day}_\text{Start}$ & \si[per-mode=symbol] {\text{-}} & the day of the
-  calcuation's starting date\\
-  $\mathit{year}_\text{End}$ & \si[per-mode=symbol] {\text{-}} & the year of the
-  calcuation's ending date\\
-  $\mathit{month}_\text{End}$& \si[per-mode=symbol] {\text{-}} & the month of the
-  calcuation's ending date\\
+$\mathit{day}_\text{Start}$ & \si[per-mode=symbol] {\text{-}} & the day of the  calcuation's starting date\\
+$\mathit{year}_\text{End}$ & \si[per-mode=symbol] {\text{-}} & the year of the  calcuation's ending date\\
+$\mathit{month}_\text{End}$& \si[per-mode=symbol] {\text{-}} & the month of the  calcuation's ending date\\
 \bottomrule
 \end{longtable*}
 \plt{Use your problems actual symbols. The si package is a good idea to use for
@@ -332,13 +337,14 @@ energyfrom daily sunlight.
 
 
 The following sections provide an overview of the Software Requirements
-Specification (SRS) for \progname(SC). \wss{remember to check with the
-writingchecklists!} This section explains the purpose and the organization of
+Specification (SRS) for \progname (SC). \wss{remember to check with the
+writingchecklists!}\an{OK} This section explains the purpose and the
+organization of
 the
 document, the scope of the requirements, and the characteristics of the
 intendedreader. \wss{You should put use 80 character wide columns of text in
-your tex
-  file.  It is better for diffs, and easier to read on different editors.}
+your texfile. It is better for diffs, and easier to read on different
+editors.}\an{OK}
 
 
 \plt{The introduction section is written to introduce the problem.  It starts
@@ -391,11 +397,17 @@ inthe context of the project itself, not in the context of the CAS 741
 The scope of the requirements includes stability analysis of a two-dimensional
 (2D) solar panel and the sun as the solar resource. The solar panel is assumed
 to place in a location near sea level, and the sky view above is unobstructed,
-with no trees, hills, clouds, dust, or haze ever blocking the sun. \wss{Clarify
-that for the purpose of the calculations you are making these assumptions.
-  The actual solar panel will never reach the ideal energy output given in the
-  calculations by \progname.}  \wss{I tried to use \progname{}, but you haven't
-  redefined it to SC.   You should do tha that in the Common.tex file.}
+with no trees, hills, clouds, dust, or haze ever blocking the sun. Based on the 
+assumption, \progname is designed to calculate the ideal energy output. However,
+the resulting angle might not be ideal for the actual cases because of the different 
+environments and the variable panels. The uses should adjust a different of a few
+angle to match their actual conditions.
+\wss{Clarify that for the purpose of the calculations you are making these 
+assumptions. The actual solar panel will never reach the ideal energy output given 
+in the calculations by \progname.}\an{Yes, I should make the assumption more
+explicitly here}  \wss{I tried to use \progname{}, but you haven't
+  redefined it to SC.   You should do tha that in the Common.tex file.}\an{Fixed, please
+try to search it again:)}
 
 \plt{Modelling the real world requires simplification.  The full complexity of
   the actual physics, chemistry, biology is too much for existing models, and
@@ -403,8 +415,7 @@ that for the purpose of the calculations you are making these assumptions.
   the scope, it is usually easier to say what is not.  You can think of it as
   the scope is initially everything, and then it is constrained to create the
 actual scope. For instance, the problem can be restricted to 2 dimensions, or
-itcan
-ignore the effect of temperature (or pressure) on the material
+it can ignore the effect of temperature (or pressure) on the material
   properties, etc.}  
 
 \plt{The scope section is related to the assumptions section
@@ -417,8 +428,7 @@ the ``big picture'' assumptions. The assumptions section lists, and
 
 This section summarized the expectation of the readers' knowledge and skills
 forunderstanding this SRS. Readers should have a general knowledge of how a
-solar
-panel works and know the common factors that affect energy absorption.
+solar panel works and know the common factors that affect energy absorption.
 \wss{Usually these characteristics are given in terms of education level, and
   possibly education specialization.  You also want to mention that the reader
   should understand the longitude and latitude coordinate system.}
@@ -516,17 +526,19 @@ responsibility.}
 \item User Responsibilities:
 \begin{itemize}
 \item Provide the input data related to the solar panel. 
-\item Ensure the input date format matches the requirement from SC.  \wss{I
-    think you can just say ``Ensure the input is formatted correctly.''}
-\item Ensure the condition of the solar panel, and the surrounding environment
-  of the solar panel. \wss{The responsibilities are for using the software, not
-    for using a solar panel.  I don't think you need this responsibility.}
+\item Ensure the input is formatted correctly  \wss{I
+    think you can just say ``Ensure the input is formatted correctly.''} \an{Ok, I indeed
+can make it more abstract}
+\item Ensure the input value are respond to the input constraint
+\wss{The responsibilities are for using the software, not
+    for using a solar panel.  I don't think you need this responsibility.}\an{Delete the origin
+content. Yes, this condition should just be placed in the assumption not here.}
 \end{itemize}
 \item SC Responsibilities:
 \begin{itemize}
 \item Detect data type mismatch, such as a string of characters instead of a
   floating point number.
-\item Comfirm \wss{spellcheck!} the inputs quality to satisfy the required
+\item Confirm \wss{spellcheck!}\an{Yes} the inputs quality to satisfy the required
 physical and software constraints.
 \item Predict an optimum tilt angle and the expected gaining solar energy, and
   show the result explicitly to users (such as generating a report with linear
@@ -935,7 +947,8 @@ Equation& $ I_{S_{\text{total}}} = I_{S} \cdot \frac{1.00}{I_{S}}^
   \hline
   Description&
 This equation is calculating the total solar intensity in the date duration\\
-&$(\theta_{S_{\text{day}}})$ is the zenith angle of the sun in the day. It is input
+&$(\theta_{S_{\text{day}}})$ is the zenith angle of the sun in the day. It is
+input
 from $\ddref{C_ZA}$.\\
 		
 &$I_{S}$ is solar intensity. Its default value has described in the Assumption:
@@ -959,7 +972,8 @@ This formula assumes that the earth is flat, so a factor was applied to account
 for the curvature of the earth (and therefore the earth’s atmosphere). These
 factors and the angle of the sun with respect to the panel represent as \ $
 \frac{1.00}{I_{S}}^ {sec(\theta_{S_{\text{day}}})}$\\
-		Where $\frac{1}{\cos{\theta_{S_{\text{day}}}}}$ is $sec(\theta_{S_{\text{day}}})$\\
+Where $\frac{1}{\cos{\theta_{S_{\text{day}}}}}$ is
+$sec(\theta_{S_{\text{day}}})$\\
 
  \wss{I like that your T1 and GD1 are explicitly connected by your derivation.
    Good.}
@@ -1052,12 +1066,15 @@ SI Units& $\circ$\\
 Equation&  \[
     \theta_{S_{\text{day}}}= 
 \begin{cases}
-\Phi_P - \delta_{\text{date}} ,& \text{if } 0 \leq \Phi_P, \delta_{\text{date}} \leq 90^\circ
+\Phi_P - \delta_{\text{date}} ,& \text{if } 0 \leq \Phi_P, \delta_{\text{date}}
+\leq 90^\circ
 \text{N } \lor\ 0 \leq \Phi_P, \delta_{\text{date}} \leq 90^\circ \text{S }\\
     \Phi_P + \delta_{\text{date}} ,& \text{if } \begin{cases} 
-0 \leq \Phi_P\leq 90^\circ \text{N } \land\ 0 \leq \delta_{\text{date}} \leq 90^\circ
+0 \leq \Phi_P\leq 90^\circ \text{N } \land\ 0 \leq \delta_{\text{date}} \leq
+90^\circ
 \text{S } \\
-0 \leq \Phi_P\leq 90^\circ \text{S } \land\ 0 \leq \delta_{\text{date}} \leq 90^\circ
+0 \leq \Phi_P\leq 90^\circ \text{S } \land\ 0 \leq \delta_{\text{date}} \leq
+90^\circ
 \text{N }
       \end{cases}
 \end{cases}
@@ -1068,7 +1085,8 @@ This equation describes the zenith angle associated with the solar
 panel.\\&$\theta_{S_{\text{day}}} $ is the zeith angle of the sun in the day.\\
 &$\Phi_P$ is the local latitude of the solar panel from the users' input
 described at \nameref{sec_GS}.\\
-&$\delta_{\text{date}} $ is the declination of the vertical noon sun in the day. It is
+&$\delta_{\text{date}} $ is the declination of the vertical noon sun in the day.
+It is
 input from \ddref{C_DS}\\
 \hline
   Source & \cite{Harold1968}\\
@@ -1186,7 +1204,8 @@ cross-references where appropriate.}
 
   \hline
   Output & $ \theta_{T} , I_{S_{\text{max}}}$\\
-& $I_{S_{\text{max}}}  = I_{S} \cdot \frac{1.00}{I_{S_{\text{total}}}}^ {sec(\theta_{S_{\text{day}}})}
+& $I_{S_{\text{max}}} = I_{S} \cdot \frac{1.00}{I_{S_{\text{total}}}}^
+{sec(\theta_{S_{\text{day}}})}
                                          \text{where} \ \theta_{T} \ \text{is
                                          the valuse that has the hightest} \
 I_{S_{\text{max}}}$ \wss{write this using argmax
@@ -1228,7 +1247,8 @@ recalculates the optimum angle $\theta_{T}$. \\
 
   \hline
   Output & $ I_{S_{\text{daily}}}$\\
-& $I_{S_{\text{daily}}} = I_{S} \cdot \frac{1.00}{I_{S_{\text{max}}}}^ {sec(\theta_{S_{\text{day}}})}
+& $I_{S_{\text{daily}}} = I_{S} \cdot \frac{1.00}{I_{S_{\text{max}}}}^
+{sec(\theta_{S_{\text{day}}})}
 $\\
   \hline
   Description&
@@ -1327,7 +1347,8 @@ Table~\ref{TblSpecParams}.
 \textbf{Var} & \textbf{Physical Constraints} & \textbf{Software Constraints} &
 \textbf{Typical Value} & \textbf{Uncertainty}\\
   \midrule 
-$\Phi_P$ & $- 90^\circ \leq \Phi_P \leq 90^\circ $ & $\text{-}$ & {$(43^\circ, 15'39.3")$} & 10\%\\
+$\Phi_P$ & $- 90^\circ \leq \Phi_P \leq 90^\circ $ & $\text{-}$ & {$(43^\circ,
+15'39.3")$} & 10\%\\
   $month$ & $0 \leq month \leq 12$ & $\text{-}$ & $12$& 10\%\\
   $day$ & $0 \leq day \leq 31$ & $\text{-}$ & $01$ & 10\%\\
   \\
@@ -1402,44 +1423,54 @@ qualities that the software is expected to exhibit.
 
 \noindent \begin{itemize}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Inputs}:] Input the values 
-requested by the system, which is the latitude of the solar panel, the date
-starts the calculation and the ending date.\\
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_Inputs}:] \progname~should able to read the input the values 
+requested by the system from the
+system's interface which provides by users. The input values include
+the latitude of the solar panel, the date starts the calculation and the ending date.\\
+
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_Inputs}:]\progname~should able to verify the input values by using the 
+table of input's constrain: \nameref{TblInputVar}. \\
 
  \plt{Requirements
     for the inputs that are supplied by the user.  This information has to be
     explicit.}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_OutputInputs}:] Output the 
-valid values for the problem defined by $\nameref{Sec_pd} $, which is the
-optimum
-tilt angle for solar panel, the predicted solar energy output.\\
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_OutputInputs}:] \progname~should able to output valid values for the problem defined by $\nameref{Sec_pd} $ in the corrected format.\\
+
+
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_OutputInputs}:] \progname~should able to verify the output by the output's constrain. \\
 
 \plt{It isn't
     always required, but often echoing the inputs as part of the output is a
     good idea.}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate}:] Determine the
-tilt angle
-by using $\dref{C_SI}$ and the solar energy output by using $\iref{C_SEO}$\\
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate}:] \progname~should able to determine the tilt angle by using $\iref{C_TA}$\\
+
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate}:] \progname~should able to determine the solar energy output by 
+using $\iref{C_SEO}$\\
 
 \plt{Calculation
     related requirements.}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_VerifyOutput}:] Verify the
-output
-by using the Table: $\nameref{TblOutputVar}$\\
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_VerifyOutput}:] 
+\progname~should able to verify the output by using the table of output's constrain: $\nameref{TblOutputVar}$\\
 
 
   \plt{Verification related requirements.}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Output}:]Reading the section
-of
-$\nameref{sec_assumpt}$ to know the related requirements regarding the outputs.
-\wss{I do not understand this requirement.}\\
 
- \plt{Output related
-  requirements.}
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_Outputshowg}:] \progname~should able to show the comparison
+between the outputs corresponding to the different user's input in a graphic.\\
+\wss{I do not understand this requirement.} \an{Changed the original requirement}\\
+
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_Outputshowt}:] \progname~should able to show the comparison
+between the outputs corresponding to the different user's input in a table.\\
+
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_Outputconsist}:]
+The system output should remain consistent with
+the corresponding of the input values.
+
+\plt{Output related requirements.}
 
 \end{itemize}
 
@@ -1447,7 +1478,8 @@ $\nameref{sec_assumpt}$ to know the related requirements regarding the outputs.
 scenarios. The user should also be able to enter in a different set of inputs
 and see the results, along with the percent relative change in energy output
   compared to the first scenario.  You'll want to include the specific formula
-  for percent relative change.}
+  for percent relative change.} \an{Plan to show the difference of the outputs using
+ a graphic and a table.}
 
 \subsection{Nonfunctional Requirements}
 
