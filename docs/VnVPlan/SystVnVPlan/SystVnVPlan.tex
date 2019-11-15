@@ -51,13 +51,10 @@ Date 2 & 1.1 & -\\
 \begin{tabular}{l l} \toprule \textbf{symbol} & \textbf{description}\\
  \midrule T & Test\\ 
 SC & Sun Catcher\\ 
-$\Phi_P$ & the latituade of the solar panel \\ 
-$\delta_{date}$ & the declination of the vertical noon sun in the day \\
+$\Phi_P$ & the latitude of the solar panel \\ 
 $I_{S}$ &  the intensity of the sun measured by the satellites \\ 
 $P_{A_{h}}$ & the height of the solar panel \\ 
 $P_{A_{w}}$ & the width of the solar panel \\ 
-$date$ & the date duration between the calculation starting date and the ending
-date \\
 $\mathit{year}_\text{Start}$ & the year of the calcuation's starting date\\ 
 $\mathit{month}_\text{Start}$ & the month of the calcuation's starting date\\ 
 $\mathit{day}_\text{Start}$ & the day of the calcuation's starting date\\ 
@@ -76,15 +73,15 @@ reference the SRS tables, if appropriate}
 
 This document provides an outline of the system verification and validation for
 the \progname. The general introduction section provides readers a summary of
-the functions in \progname and the related documents as the resources for
+the functions in \progname ~and the related documents as the resources for
 testing. The plan section provides readers the plan for verifying and
-validatingSC's software requirements specification(SRS) and introduces the
+validating SC's software requirements specification(SRS) and introduces the
 method, tools, and external data to implement the testing. The system test
 description
-providesthe readers with the test cases related to functional and nonfunctional
+provides the readers with the test cases related to functional and nonfunctional
 requirements in \progname. The test builds for uncovering the errors and
 boosting the confidence of the software while ensuring an acceptable
-performanceis provided. 
+performance is provided. 
 
 \wss{provide an introductory blurb and roadmap of the Verification and
 Validation plan}
@@ -94,7 +91,7 @@ Validation plan}
 \subsection{Summary}
 
 The subsection belows are the test cases of \progname. \progname ~is the
-software that calculate the optimum tilt angle of the date duration that
+software that calculate the optimum tilt angle of the days duration that
 decidedby users. Then it takes the calculated angle to estimate the optimal
 solar energy output.
 
@@ -104,28 +101,45 @@ its general functions.}
 \subsection{Objectives}\label{Objectives}
 The goal of the test is to build confidence in the software correctness and
 strengthen the robustness of the software. The functional and nonfunctional
-requirements of \progname~ are tested by this Verification and Validation Plan.
-The equations that related to the functional requirements are found in the SRS
-\cite{YS2019}. 
+requirements of \progname~, and its related equations and constraints are 
+found in the SRS \cite{YS2019}. The Verification and Validation Plan follows
+by the requirements described in the SRS \cite{YS2019}.
 
-The functional requirements are:
-\begin{itemize} 
+The object of the Verification and Validation Plan is:
+\noindent \begin{itemize}
+
+\item[ ] To build the robustness of the system input.
+\item[ ] To build the confidence of the correctness of the system output.
+
+\noindent \end{itemize}
+
+The functional requirements of  \progname~ are:
+\noindent \begin{itemize}
+
 \item[ ]R1: \progname~should able to read the user's input value from the
-system's interface. \item[ ]R2: \progname~should able to output the result in
-the corrected format.
-\item[ ]R3: \progname~should able to calculate the date duration between the
-calculation starting date and the ending date.
-\item[ ]R4: \progname~should able to calculate the optimum tilt angle of the
-date duration.
-\item[ ]R5: \progname~should able to calculate the produced solar energy
-satisfied the date duration.
-\item[ ]R6: \progname~should able to show the difference in produced solar
-energy satisfied the different date durations.
-\item[ ]R7: Verify the output. \item[ ]R8: The system should output the
-calculated results of the outcomes in a manner consistent with decision making.
- \end{itemize}
+system's interface.
 
-The nonfunctional requirements are: 
+\item[ ]R2: \progname~should able to verify the input by the input's constrain.
+
+\item[ ]R3: \progname~should able to output the result in
+the corrected format.
+
+\item[ ]R4: \progname~should able to determine the tilt angle
+
+\item[ ]R5: \progname~should able to verify the output by the output's constrain. 
+
+\item[ ]R6: \progname~should able to show the comparison
+between the outputs corresponding to the different user's input in a graphic.
+
+\item[ ]R7: \progname~should able to show the comparison
+between the outputs corresponding to the different user's input in a table.
+
+\item[ ]R8: The system output should remain consistent with
+the corresponding of the input values.
+
+\end{itemize}
+
+The nonfunctional requirements  of  \progname~ are: 
 \begin{itemize} 
 \item[ ]NFR1. Correct: The output should give correct results.
 \item[ ]NFR2. Verifiable: The code is tested with complete verification and
@@ -140,7 +154,7 @@ traceability matrices in the SRS and module guide
 \end{itemize}
 
 \wss{State what is intended to be accomplished. The objective will be around
-thequalities that are most important for your project. You might have something
+the qualities that are most important for your project. You might have something
 like: ``build confidence in the software correctness,'' ``demonstrate adequate
 usability.'' etc. You won't list all of the qualities, just those that are most
 important.}
@@ -158,7 +172,11 @@ can be found in [Landau \cite{Charles2001} ] and
 
  \section{Plan}	
 \subsection{Verification and Validation Team} The test team includes the
-following members:\\ Main reviewer: Sharon Wu\\ \wss{Probably just you. :-)}
+following members:\\ 
+Main reviewer: Sharon(Yu-Shiuan) Wu\\ 
+Secondary reviewer: Deema Alomair, Bo Cao, Sasha Soraine, Zhi Zhang, 
+and Doctor Smith\\
+\wss{Probably just you. :-)}
 \subsection{SRS Verification Plan}
 
 \begin{itemize}
@@ -190,7 +208,7 @@ requirementthat stated in the SRS document \cite{YS2019}.
 The following tools will be used to facilitate testing: 
 
 \begin{itemize}
-\item[ ]Rubber Duck Debugging: Performed by author, Yu-Shiuan Wu. The 
+\item[ ]Rubber Duck Debugging: Performed by author, Sharon(Yu-Shiuan) Wu. The 
 author should verbally explain the code line by line.
 \item[ ]Haskell Program Coverage: Dynamic Testing Tool, a tool-kit to record 
 and display the code coverage of a Haskell Program. It aims to reinforce the 
@@ -296,7 +314,8 @@ How test will be performed:
 \item Input the value from the keyboard following the instruction of the
 software interface.
 \item Verified the output showing on the screen by the test case derivation
-instruction. \end{itemize}
+instruction. 
+\end{itemize}
 \end{enumerate}
 
 
@@ -314,19 +333,19 @@ Constraints.
 
 Control: Manual. 
 
-Input the extreme ends of the value of latitude. 
-Initial State: No input value
+Input the extreme ends of the value of latitude.\\
+Initial State: No input value\\
 Input: Based on SRS\cite{YS2019} of the \progname\cite{YS2019}, the boundaried
 of latitude is $-90 \leq \Phi_P \leq 90$.\\
 Therefore, the given inputs is:\\
 input (1) $\Phi_P$: 90 
-~input (2) $\Phi_P$: 90 
+~input (2) $\Phi_P$: -90 
 ~input (3) $\Phi_P$: 91 
 ~input(4) $\Phi_P$: -91\\ 
 
 Output: The expected result wil for the given inputs is:\\
 output (1) $\Phi_P$: 90 
-~output (2) $\Phi_P$: 90 
+~output (2) $\Phi_P$: -90 
 ~output (3) $\Phi_P$: Latitude is not greater than 90 
 ~output (4) $\Phi_P$: Latitude is not less than -90\\
 
@@ -348,29 +367,36 @@ instruction.
 \end{itemize}
 \item{InputBounds-id3\\}
 Control: Manual. 
-Input the extreme ends of the value of calendar. 
-Initial State:
-~$\mathit{year}_\text{Start}$:(2019) 
-~$\mathit{month}_\text{Start}$:(02)
-~$\mathit{year}_\text{End}$:(2020) 
-~$\mathit{month}_\text{End}$:(02) 
+ Input the extreme ends, valid date and invalid date of the value according to the Gregorian calendar. \\
+Initial State: No any given value.\\
 
 Input: Based on calendar, the given inputs is:\\ 
-Input(1)~$\mathit{day}_\text{Start}$:(28) 
-~$\mathit{day}_\text{End}$:(28)\\ 
-Input(2)~$\mathit{day}_\text{Start}$:(29) 
-~$\mathit{day}_\text{End}$:(29)\\ 
+Input(1):
+~$\mathit{year}_\text{Start}$:(0) ~$\mathit{month}_\text{Start}$:(0)
+~$\mathit{day}_\text{Start}$:(0)\\  
+Input(2):
+~$\mathit{year}_\text{Start}$:(-1)
+~$\mathit{month}_\text{Start}$:(-1) ~$\mathit{day}_\text{Start}$:(-1)\\
+
+Input(3):
+~$\mathit{year}_\text{Start}$:(2020)
+~$\mathit{month}_\text{Start}$:(02) ~$\mathit{day}_\text{Start}$:(29)\\
+
+Input(4):
+~$\mathit{year}_\text{Start}$:(2020)
+~$\mathit{month}_\text{Start}$:(02) ~$\mathit{day}_\text{Start}$:(28)\\
+
 
 Output:The expected result wil for the given inputs is:\\
- Output(1)~$\mathit{day}_\text{Start}$:(28)
- ~$\mathit{day}_\text{End}$:(28)\\
- Output(2) 2020.02.29 does not exist\\ 
+Output (1) 0,0,0 doesnot exist.\\ 
+Output (2) -1,-1,-1 does not exist.\\
+ Output(3) 2020.02.29 does not exist\\ 
+ Output(4) 2020.02.28 exist\\ 
 
 \wss{The expected result for the given inputs}
 
 Test Case Derivation: The output is justified if the output value is equal to
-the corresponding input value. When the input integer is over the boundary of
-the calendar, the system activates the error handler. \\
+the corresponding input value. When the input does not exist in the calender, the system activates the error handler. \\
 
  \wss{Justify the expected value given in the Output field} 
 
@@ -383,23 +409,38 @@ software interface.
 \end{itemize}
 
 \item{InputBounds-id4\\}
-Control: Manual. Input the extreme ends of the value of the Gregorian 
-calendar. 
-Initial State: No any given value.
+Control: Manual. Input the test case where starting date is greater than ending date. Input
+the test case where ending date is greater than starting date.\\
+ 
+Initial State: No any given value.\\
 Input: Based on the calendar, the given inputs is:\\ 
 Input (1)
-~$\mathit{year}_\text{Start}$:(0) ~$\mathit{month}_\text{Start}$:(0)
-~$\mathit{day}_\text{Start}$:(0)\\ 
-Input (2) ~$\mathit{year}_\text{Start}$:(-1)
-~$\mathit{month}_\text{Start}$:(-1) ~$\mathit{day}_\text{Start}$:(-1)\\
+~$\mathit{year}_\text{Start}$:(2020)
+~$\mathit{month}_\text{Start}$:(02) ~$\mathit{day}_\text{Start}$:(28)
+
+~$\mathit{year}_\text{End}$:(2021)
+~$\mathit{month}_\text{End}$:(02) ~$\mathit{day}_\text{End}$:(28)\\
+
+Input (2) ~$\mathit{year}_\text{Start}$:(2020)
+~$\mathit{month}_\text{Start}$:(02) ~$\mathit{day}_\text{Start}$:(28)
+
+~$\mathit{year}_\text{End}$:(2019)
+~$\mathit{month}_\text{End}$:(02) ~$\mathit{day}_\text{End}$:(28)\\
+
+Input (3) ~$\mathit{year}_\text{Start}$:(2020)
+~$\mathit{month}_\text{Start}$:(02) ~$\mathit{day}_\text{Start}$:(28)
+
+~$\mathit{year}_\text{End}$:(2020)
+~$\mathit{month}_\text{End}$:(02) ~$\mathit{day}_\text{End}$:(28)\\
 
 Output: The expected result wil for the given inputs is:\\ 
-Output (1) 0,0,0 doesnot exist.\\ 
-Output (2) -1,-1,-1 does not exist.
+Output (1) Valid\\ 
+Output (2) Invalid\\
+Output (3) Valid\\ 
 
 \wss{The expected resultfor the given inputs}
 
-Test Case Derivation: When any input value less than equal than 0, the system
+Test Case Derivation: When the ending date is less than starting date, the system
 activates the error handler. \\ 
 
 \wss{Justify the expected value given in the Output field} 
@@ -430,73 +471,9 @@ table in the SRS.}
 \paragraph{The Robustness of the Calculation}
 
 \begin{enumerate}
+ 
+
 \item{CalculateOutput-id5\\}
-
-Control: Automatic. Input the random cases that satisfied the values' property.
-Initial State: No input value
-
-Input: Input the value of requirements of \progname that drive the calculation
-of the date duration. To calculate the date duration, it needs
-~$\mathit{year}_\text{Start}$ ~$\mathit{month}_\text{Start}$
-~$\mathit{day}_\text{Start}$ ~$\mathit{year}_\text{End}$
-~$\mathit{month}_\text{End}$ ~$\mathit{day}_\text{End}$ 
-
-The given inputs are:\\
-Input (1..50)~$\mathit{year}_\text{Start}$: A random picked integer\\
-~$\mathit{month}_\text{Start}$: A random picked integer\\
-~$\mathit{day}_\text{Start}$: A random picked integer\\
-~$\mathit{year}_\text{End}$: A random picked integer\\
-~$\mathit{month}_\text{End}$: A random picked integer\\
-~$\mathit{day}_\text{End}$: A random picked integer\\
-
-Output: The expected result wil for the given inputs is:\\ Output (1..50) :
-Show``OK, passed 49 tests '' on the screen\\
-
-\wss{The expected result for the given inputs}
-
-Test Case Derivation: Based on the description in QuickCheck\cite{QuickCheck},
-the output is justified if the output shows \verb|``OK, passed input-numbers of tests ''|
-
-\wss{Justify the expected value given in the Output field} 
-How test will be performed: 
-\begin{itemize}
-\item Implement the test cases with QuickCheck\cite{QuickCheck}, describes in 
-section \ref{Planfordv}.
-\item Verified the output showing on the screen by the test case derivation
-instruction.
-\end{itemize}
-
-\item{CalculateOutput-id6\\}
-Control: Automatic. Input the random cases that satisfied the values' property.
-
-Initial State: No input value
-
-Input: Input the value of requirements of \progname that drive the calculation
-of the zenith angle. To calculate the zenith angle, it needs 
-~$\Phi_P$ and ~$\delta_{date}$\\ 
-
-The given inputs are:\\ 
-Input (1..50)~$\Phi_P$: A random picked rational number\\ 
-~$\delta_{date}$: A random picked integer\\
-
-Output: The expected result wil for the given inputs is:\\ 
-Output (1..50) : Show\verb|``OK, passed 49 tests ''| on the screen\\
-
-\wss{The expected result for the given inputs}
-
-Test Case Derivation: Based on the description in QuickCheck\cite{QuickCheck},
-the output is justified if the output shows \verb|``OK, passed input-numbers of tests ''|
-\wss{Justify the expected value given in the Output field} 
-
-How test will be performed: 
-\begin{itemize} 
-\item Implement the test cases with QuickCheck\cite{QuickCheck}, describes in 
-section \ref{Planfordv}.
-\item Verified the output showing on the screen by the test case derivation
-instruction.
-\end{itemize} 
-
-\item{CalculateOutput-id7\\}
 Control: Automatic. Input the random cases that satisfied the values' property.
 
 Initial State: Based on the assumption in SRS\cite{YS2019}, $I_{S}$ = 1.35
@@ -537,93 +514,13 @@ table, Output Variables, under the section, Properties of a Correct Solution.
 
 \paragraph{The Correctness of the Calculation}
 \begin{enumerate}
-\item{VerifyOutput-id8\\}
-Control: Automatic. The test cases contain cases that
-$|\mathit{year}_\text{Start} - \mathit{year}_\text{End}| = 0$ and
-$|\mathit{year}_\text{Start} - \mathit{year}_\text{End}| \geq 0$.
 
-Initial State:No input value
 
-Input: Input the value of requirements of \progname that drive the calculation
-of the date duration. To calculate the date duration, it needs
-~$\mathit{year}_\text{Start}$ 
-~$\mathit{month}_\text{Start}$
-~$\mathit{day}_\text{Start}$ 
-~$\mathit{year}_\text{End}$
-~$\mathit{month}_\text{End}$
- ~$\mathit{day}_\text{End}$ 
 
-The given inputs are:\\
-Input (1)~$\mathit{year}_\text{Start}$: 2017 ~$\mathit{month}_\text{Start}$: 01
-~$\mathit{day}_\text{Start}$: 01 ~$\mathit{year}_\text{End}$: 2017
-~$\mathit{month}_\text{End}$: 12 ~$\mathit{day}_\text{End}$: 31\\ 
 
-Input (2)~$\mathit{year}_\text{Start}$: 2018 ~$\mathit{month}_\text{Start}$: 06
-~$\mathit{day}_\text{Start}$: 20 ~$\mathit{year}_\text{End}$: 2019
-~$\mathit{month}_\text{End}$: 07 ~$\mathit{day}_\text{End}$: 26\\
+\item{VerifyOutput-id6\\} 
 
-Output: The expected result wil for the given inputs is the date duration:\\
-Output (1) : 365 Output (2) : 402
-
-\wss{The expected result for the given inputs}
-
-Test Case Derivation: Based on the calendar, $\text{absolute error} = 0$ where
-$\text{absolute error} = |\text{ expected output} - \text{ actual output}|$
-\wss{Justify the expected value given in the Output field} 
-How test will be performed: 
-\begin{itemize}
-\item Input the input values from a file, VerifyOutputId1.txt. 
-\item Verified the output by the test case derivation
-instruction. 
-\item If all the absolute error of the test cases is equal to 0, then the test
-success, otherwise the test fails.
-
-\end{itemize}
-
-\item{VerifyOutput-id9\\}
-
-Control: Automatic. The test cases contain cases that\\ $0 \leq \Phi_P,
-~\delta_\text{date} \leq 90$,\\$-90 \leq \Phi_P, ~\delta_\text{date} < 0$,
-\\$-90 \leq \delta_\text{date} < 0 ~ \land ~ 0 \leq \Phi_P \leq 90$, \\$-90
-\leq\Phi_P < 0 ~ \land ~0 \leq \delta_\text{date} \leq 90$ 
-
-Initial State: No input value
-
-Input: Input the value of requirements of \progname that drive the calculation
-of the zenith angle. To calculate the zenith angle, it needs ~$\Phi_P$ and
-~$\delta_\text{date}$ 
-
-The given inputs are:\\ 
-Input (1)~$\Phi_P$: 43.250943
-~$\delta_{date}$: 20\\ 
-Input (2)~$\Phi_P$: -43.250943 ~$\delta_{date}$: -20\\
-Input (3)~$\Phi_P$: -43.250943 ~$\delta_{date}$: 20\\ 
-Input (4)~$\Phi_P$: 43.250943 ~$\delta_{date}$: -20\\
-
-Output: The expected result wil for the given inputs is the zenith angle:\\
-Output (1) 23.250943\\ Output (2) 23.250943\\ Output (3) 63.250943\\ Output (4)
-63.250943\\
-
-\wss{The expected result for the given inputs}
-
-Test Case Derivation: Based on the equation described in SRS\cite{YS2019}, we
-get the expected result. Therefore, $\text{absolute error} = 0$ where
-$\text{absolute error} = |\text{ expected output} - \text{ actual output}|$,
-
-\wss{Justify the expected value given in the Output field} 
-How test will be performed: 
-\begin{itemize} 
-\item Input the input values from a file, VerifyOutputId2.txt. 
-\item Verified the output by the test case derivation instruction. 
-\item If all the absolute error of the test cases is equal to 0, then the test
-success, otherwise the test fails.
-\end{itemize}
-
-\item{VerifyOutput-id10\\} 
-
-This test case is driven by the previous test case, VerifyOutput-id2.
-Therefore,if the previous test case success, VerifyOutput-id3is implemented.\\
-Moreover, this test case used the external data from [Jacobsonand
+This test case used the external data from [Jacobsonand
 Jadhav\cite{JacobsonandJadhav}] as the expected output and the expected
 input latitude.\\ 
 
@@ -689,13 +586,9 @@ then \textbf{expected result} = the y-axis of $P_\text{upper bound}$, otherwise
 0, then the test success, otherwise the test fails. 
 \end{itemize}
 
-\item{VerifyOutput-id11\\} 
+\item{VerifyOutput-id7\\} 
 
-This test case is driven by the previous test case,
-VerifyOutput-id1, VerifyOutput-id2 and VerifyOutput-id3. Therefore, if the
-previous test case success, VerifyOutput-id4 is implemented.\\
-
-Moreover, this test case used the external data from [Landau\cite{Charles2001}]
+This test case used the external data from [Landau\cite{Charles2001}]
 as the expected output, expected input latitude\\
 
 Control: Automatic. The test cases contain cases that $\Phi_P = \text{expected
@@ -703,7 +596,7 @@ input latitude}$, $\Phi_P \ne \text{expected input latitude}$.
 
 Initial State:
 Basedon the assumption in SRS\cite{YS2019}, $I_{S}$: 1.35, and based on the
-assumption in [Landau\cite{Charles2001}], the date duration of the winter in
+assumption in [Landau\cite{Charles2001}], the days duration of the winter in
 northern hemisphere is from\\
 ~ $\mathit{year}_\text{Start}$: 2018
 ~$\mathit{month}_\text{Start}$: 10 
@@ -742,7 +635,7 @@ How test will be performed:
 \item Input the input values from a file, VerifyOutputId4.txt. 
 \item Calculate the daily solar intensity during winter 
 \item Calculate the average solar intensity during winter, using the equation,\\the average solar intensity = $\frac{\text{the sum of the daily solar
-intensity}}{\text{date duration of winter}}$
+intensity}}{\text{days duration of winter}}$
 \item Output the average solar intensity as the actual output
 \item Verified the output by the test case derivation instruction. 
 \item If all the relative error of the test cases is approximately 0, then the
@@ -833,13 +726,9 @@ id1        & X &    &     &    &    &    &   &     \\ \hline
 id2        & X &    &     &    &    &    &   &     \\ \hline
 id3        & X &    &     &    &    &    &   &     \\ \hline
 id4        & X &    &     &    &    &    &   &     \\ \hline
-id5        &    &    & X  &    &    &    &   &     \\ \hline
-id6        &    &    &     & X &    &    &   &     \\ \hline
-id7        &    &    &     &    & X &    &   &     \\ \hline
-id8        &    &    &     &    &    &    & X & X   \\ \hline
-id9        &    &    & X  &    &    &    & X & X   \\ \hline
-id10      &    & X &     & X &    & X & X & X   \\ \hline
-id11      &    &    &     & X &    &    & X & X  \\ \hline
+id5        &    &    & X  &    &    &    &   &     \\  \hline
+id6      &    & X &     & X &    & X & X & X   \\ \hline
+id 7      &    &    &     & X &    &    & X & X  \\ \hline
 
 
 \hline
