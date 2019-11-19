@@ -65,7 +65,15 @@ $\mathit{day}_\text{End}$ & the day of the calcuation's ending date\\
 \end{tabular}\\ 
 
 \wss{symbols, abbreviations or acronyms -- you can simply
-reference the SRS tables, if appropriate} 
+  reference the SRS tables, if appropriate}
+
+\wss{It would have been better to not
+include these comments, since it will become confusing as I add new comments.
+Using the diff feature on GitHub will help you to look at only the new comments.}
+
+\wss{For the table above, I suggest removing the word ``the'' from the start of
+  most of the descriptions.  You should also consistently capitalize the first
+  word of each description.}
 
 \newpage
 
@@ -73,9 +81,9 @@ reference the SRS tables, if appropriate}
 
 This document provides an outline of the system verification and validation for
 the \progname. The general introduction section provides readers a summary of
-the functions in \progname ~and the related documents as the resources for
+the functions in \progname{} and the related documents as the resources for
 testing. The plan section provides readers the plan for verifying and
-validating SC's software requirements specification(SRS) and introduces the
+validating SC's Software Requirements Specification (SRS) and introduces the
 method, tools, and external data to implement the testing. The system test
 description
 provides the readers with the test cases related to functional and nonfunctional
@@ -88,6 +96,10 @@ Validation plan}
 
 
 \section{General Information}
+
+\wss{There should usually be text between two section headings.  In this case a
+  ``roadmap'' of this section would be helpful.}
+
 \subsection{Summary}
 
 The subsection belows are the test cases of \progname. \progname ~is the
@@ -99,9 +111,10 @@ solar energy output.
 its general functions.}
 
 \subsection{Objectives}\label{Objectives}
+
 The goal of the test is to build confidence in the software correctness and
 strengthen the robustness of the software. The functional and nonfunctional
-requirements of \progname~, and its related equations and constraints are 
+requirements of \progname, and its related equations and constraints are 
 found in the SRS \cite{YS2019}. The Verification and Validation Plan follows
 by the requirements described in the SRS \cite{YS2019}.
 
@@ -112,6 +125,11 @@ The object of the Verification and Validation Plan is:
 \item[ ] To build the confidence of the correctness of the system output.
 
 \noindent \end{itemize}
+
+\wss{You don't really want to copy and paste the SRS requirements.  This will
+  cause maintenace problems.  Referencing the SRS here should be enough.  You
+  can also use cross-references between documents to reference specific parts of
+  your SRS.}
 
 The functional requirements of  \progname~ are:
 \noindent \begin{itemize}
@@ -198,9 +216,11 @@ something more rigorous/systematic in mind..}
 \item The design should be verified by complete and success the test cases in
 the system VnV plan under the section \ref{STD}.
 \item The design should satisfy all the functional and nonfunctional
-requirementthat stated in the SRS document \cite{YS2019}.
+requirement that stated in the SRS document \cite{YS2019}.
 
 \end{itemize}
+
+\wss{How are you going to verify the design?}
 
 \wss{Plans for design verification}\label{Planfordv}
 
@@ -222,16 +242,20 @@ software.(Claessen\cite{QuickCheck})
 
 \wss{You should at least point to the tests listed in this document and the
 unittesting plan.} \wss{In this section you would also give any details of any
-plansfor static verification of the implementation. Potential techniques
-includecodewalkthroughs, code inspection, static analyzers, etc.}
+plans for static verification of the implementation. Potential techniques
+includecode walkthroughs, code inspection, static analyzers, etc.}
 
 \subsection{Software Validation Plan}
 
-\progname should be valid by satisfied all the functional requirement in SRS 
-plan.\\
+\progname{} should be valid by satisfied all the functional requirement in SRS 
+plan.
+
 Based on the physical concept of \progname, the author, Yu-Shiauan Wu, should
 record the actual solar energy by using the output from \progname. Then verify
 whether the calculated tilt angle can increase the energy gaining.
+
+{Validation means comparison to actual experiments.  I don't think this is what
+  you intend to do.}
 
 \wss{If there is any external data that can be used for validation, you should
 point to it here. If there are no plans for validation, you should state that
@@ -262,8 +286,11 @@ good.}
 \subsubsection{Input Reading}
 
 This test covers the requirements, R1, in section \ref{Objectives}. Based on
-the SRS document\cite{YS2019}, \progname has to identity users' inputs and
+the SRS document~cite{YS2019}, \progname{} has to identity users' inputs and
 then assign the values to designated equations or modules.
+
+\wss{Space are frequently missing between words.  Please check for this during
+  your editing step.}
 
 \wss{It would be nice to have a blurb here to explain why the subsections below
 cover the requirements. References to the SRS would be good. If a section
@@ -318,14 +345,17 @@ instruction.
 \end{itemize}
 \end{enumerate}
 
-
+\wss{This test case should be automated, not manual.  You do not need to enter
+  the values from the keyboard.  The values can be entered into code and the
+  appropriate function(s) called.  This test is really a test that your getters
+  and setters are working.}
+  
 \subsubsection{Input Bounds}
 
 This test covers the requirements, R1, in section \ref{Objectives}. Based on
 the SRS document\cite{YS2019}, the input data constraints can be found in the
 table, Specification Parameter Values, under the section, Input Data
 Constraints.
-
 
 \paragraph{The Robustness of Input Bounds} 
 \begin{enumerate}
@@ -335,8 +365,9 @@ Control: Manual.
 
 Input the extreme ends of the value of latitude.\\
 Initial State: No input value\\
-Input: Based on SRS\cite{YS2019} of the \progname\cite{YS2019}, the boundaried
-of latitude is $-90 \leq \Phi_P \leq 90$.\\
+Input: Based on SRS \cite{YS2019} of the \progname{} \cite{YS2019}, the boundary
+values for latitude are $-90 \leq \Phi_P \leq 90$. \wss{I've fixed some spelling
+  mistakes and spacing mistakes.  Please make an effort for more attention to detail.}\\
 Therefore, the given inputs is:\\
 input (1) $\Phi_P$: 90 
 ~input (2) $\Phi_P$: -90 
@@ -353,7 +384,11 @@ output (1) $\Phi_P$: 90
 
 Test Case Derivation: The output is justified if the output value is equal to
 the corresponding input value. When the input value is over the boundary 
-of latitude, the system activates the error handler. \\ 
+of latitude, the system activates the error handler. \\  \wss{The test case for
+  invalid input should be a separate test case.  In the invalid input case an
+  exception should be raised.  You can write a unit test that verifies that the
+  correct exception is raised, when it is expected to be raised.}
+
 \wss{Justify the expected value given in the Output field} 
 
 How test will be performed:
@@ -366,7 +401,9 @@ software interface.
 instruction.
 \end{itemize}
 \item{InputBounds-id3\\}
-Control: Manual. 
+Control: Manual. \wss{So far all of your tests can be automated.  My guess is
+  that most of the tests you have indicated as manual can be automated tests.}
+  
  Input the extreme ends, valid date and invalid date of the value according to the Gregorian calendar. \\
 Initial State: No any given value.\\
 
@@ -387,16 +424,21 @@ Input(4):
 ~$\mathit{month}_\text{Start}$:(02) ~$\mathit{day}_\text{Start}$:(28)\\
 
 
-Output:The expected result wil for the given inputs is:\\
-Output (1) 0,0,0 doesnot exist.\\ 
+Output:The expected result wil \wss{proof read} for the given inputs is:\\
+Output (1) 0,0,0 doesnot \wss{proof read} exist.\\ 
 Output (2) -1,-1,-1 does not exist.\\
  Output(3) 2020.02.29 does not exist\\ 
  Output(4) 2020.02.28 exist\\ 
 
+ \wss{I like the idea of summarizing multiple test cases, but I think you should
+ use a table for this.  You also should still give each test a unique id.  As it
+is now, you have combined them all in -id3.}
+ 
 \wss{The expected result for the given inputs}
 
 Test Case Derivation: The output is justified if the output value is equal to
-the corresponding input value. When the input does not exist in the calender, the system activates the error handler. \\
+the corresponding input value. When the input does not exist in the calender
+\wss{spell check}, the system activates the error handler. \\
 
  \wss{Justify the expected value given in the Output field} 
 
@@ -483,10 +525,14 @@ of the Solar intensity. To calculate the solar intensity, it needs
 ~$\theta_{S_{day}}$
 
 The given inputs are:\\ 
-Input (1..50)~$\theta_{S_{day}}$: A random picked rational number\\
+Input (1..50)~$\theta_{S_{day}}$: A random  picked rational number \wss{between
+  what bounds?}\\
 
 Output: The expected result wil for the given inputs is:\\ 
 Output (1..50) : Show\verb|``OK, passed 49 tests ''| on the screen\\
+
+\wss{What is the correct output?  You need to explain to the reader how you find
+  the value of the correct output.  What is your test oracle?}
 
 \wss{The expected result for the given inputs}
 
@@ -588,7 +634,9 @@ then \textbf{expected result} = the y-axis of $P_\text{upper bound}$, otherwise
 
 \item{VerifyOutput-id7\\} 
 
-This test case used the external data from [Landau\cite{Charles2001}]
+This test case used the external data from [Landau\cite{Charles2001}] \wss{This
+  is redundant to manually do the citation and to use BibTeX.  Just use BibTeX.
+  If you want to use the author year style, use the Natbib option for BibTeX.}
 as the expected output, expected input latitude\\
 
 Control: Automatic. The test cases contain cases that $\Phi_P = \text{expected
@@ -620,12 +668,15 @@ intensity during winter:\\
 Output (1) : 5.6\\ 
 Output (2) : 5.6\\
 
+\wss{Use table to summarize your test cases.}
+
 \wss{The expected result for the given inputs}
 
 Test Case Derivation: Based on the equation described in SRS\cite{YS2019}, we
 get the expected result. Therefore, $\text{relative error} \approx 0$ where
 $\text{relative error} = | 1 - \frac{\text{actual output}}{ \text{expected
-output}} |$
+output}} |$ \wss{Your error will not be 0.  It will be a small number.  Your
+test case should require reporting this number.}
 
 \wss{Justify the expected value given in the Output field}
 
@@ -666,7 +717,7 @@ How test will be performed: Active the test cases under section
 
 \item{correctness-id2\\}
 
-Type: Dynamic analysis - Code Coverage
+Type: Dynamic analysis - Code Coverage \wss{good idea to report this number.}
 
 Use the code coverage tool, Haskell Program Coverage(HPC), to test the code
 coverage. The description of HPC can be found in section \ref{Planfordv}.
@@ -704,13 +755,22 @@ Output/Result: If the \progname works functionally.
 					
 How test will be performed:
  \begin{itemize}
-\item Implement \progname ~on the
-virtual machines with the system enviroment of Windows 10, MacOs. 
-\item Run every function of \progname. 
+\item Implement \progname{} on the
+virtual machines with the system enviroment of Windows 10, MacOs.  \wss{What is
+  the OS and what is the virtual OS?  Why not Linux too?  Virtual box is easy to
+install and run.}
+\item Run every function of \progname. \wss{What do you mean to run every
+    function?  Why not simply say that the test suite will be run in all of the
+    identified environments?}
 \item If function works, then success, otherwise fail. 
 \end{itemize} 
 \end{enumerate}
 
+\wss{Your project is fairly straightforward Sharon.  If you want to aim for a
+  maximum mark in this course, you'll need to do more than just implement your
+  project.  One place where you could add some extra challenge to the project is
+  to consider assessing usability.  I'm open to discussion if there is something
+  else you would like to add instead.}
 
 \newpage
 \subsection{Traceability Between Test Cases and Requirements}
