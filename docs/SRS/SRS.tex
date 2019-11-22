@@ -82,7 +82,7 @@ citecolor=green, % color of links to bibliography
 \begin{document}
 
 \title{Software Requirements Specification for \progname} 
-\author{Yu-Shiuan Wu}
+\author{Sharon(Yu-Shiuan) Wu}
 \date{\today}
 	
 \maketitle
@@ -175,8 +175,8 @@ systems.  The symbols are listed in alphabetical order.
 \noindent \begin{longtable*}{l l p{12cm}} \toprule
   \textbf{symbol} & \textbf{unit} & \textbf{description}\\
 \midrule 
-$\theta_{S_{\text{day}}}$ & \si[per-mode=symbol] {\degree} & zenith angle of
-sun in the day
+$\theta_{S_{\text{date}}}$ & \si[per-mode=symbol] {\degree} & zenith angle of
+sun in the date of a sequence of day
   \\
   $\theta_{T}$ & \si[per-mode=symbol] {\degree} & the tilt angle for adjusting
   the solar panel
@@ -188,7 +188,7 @@ will help you. I'll include some details below.} \an{Yes, I it fixed by treating
 the N and S
     as + and - }
   \\
-$\delta_{\text{date}}$ & \si[per-mode=symbol] {(\degree, \ N/S)} & the daily
+$\delta_{\text{date}}$ & \si[per-mode=symbol] {\degree} & the daily
 declination of
 the vertical noon sun in the date duration
   \\
@@ -219,9 +219,6 @@ panel
 $P_{\text{r}}$ & \si[per-mode=symbol] {\%} & solar panel yield or efficiency
   \\
 $PR$ & \si[per-mode=symbol] {\%} & performance ratio, coefficient for losses
-  \\
-$date$ & \si[per-mode=symbol] {\text{-}} & the date duration between the 
-  calculation starting date and the ending date
   \\
 $\mathit{year}_\text{Start}$& \si[per-mode=symbol] {\text{-}} & the year of the  calcuation's starting date\\
 $\mathit{month}_\text{Start}$& \si[per-mode=symbol] {\text{-}} & the month of
@@ -337,7 +334,7 @@ energyfrom daily sunlight.
 
 
 The following sections provide an overview of the Software Requirements
-Specification (SRS) for \progname (SC). \wss{remember to check with the
+Specification (SRS) for \progname. \wss{remember to check with the
 writingchecklists!}\an{OK} This section explains the purpose and the
 organization of
 the
@@ -426,9 +423,10 @@ the ``big picture'' assumptions. The assumptions section lists, and
 
 \subsection{Characteristics of Intended Reader} \label{sec_IntendedReader}
 
-This section summarized the expectation of the readers' knowledge and skills
-forunderstanding this SRS. Readers should have a general knowledge of how a
-solar panel works and know the common factors that affect energy absorption.
+The end-users of SC is expecting to understand the Calculation method in Grade 11 such as angle addition and subtraction theorems and 
+understand the celestial mechanics regarding the formation 
+of the latitude and the earth's tilt angle in the four seasons.
+
 \wss{Usually these characteristics are given in terms of education level, and
   possibly education specialization.  You also want to mention that the reader
   should understand the longitude and latitude coordinate system.}
@@ -540,21 +538,21 @@ content. Yes, this condition should just be placed in the assumption not here.}
   floating point number.
 \item Confirm \wss{spellcheck!}\an{Yes} the inputs quality to satisfy the required
 physical and software constraints.
-\item Predict an optimum tilt angle and the expected gaining solar energy, and
-  show the result explicitly to users (such as generating a report with linear
-  graphic ). \wss{You can write this more abstractly.  The specifics of the
+\item Output the calculated result that satisfied the \nameref{sec_GS}
+\wss{You can write this more abstractly.  The specifics of the
     output will be given in your requirements.}
+\an{I changed the statement basing on the advice.}
 
 \end{itemize}
 \end{itemize}
 
 \subsection{User Characteristics} \label{SecUserCharacteristics}
 
-The end-users of SC is expecting to understand the Level 1 Calculation method
-such as angle addition and subtraction theorems and understand the Level 1
-celestial
-mechanics such as the formation of the latitude and the earth's tilt angle in
-the four seasons.  \wss{I don't think Level 1 Calculation and Level 1 celestial
+This section summarized the expectation of the readers' knowledge 
+and skills forunderstanding this SRS. Readers should have a 
+general knowledge of how a solar panel works and know the common factors that affect energy absorption.  
+
+\wss{I don't think Level 1 Calculation and Level 1 celestial
   mechanics are standard terms.  Are they?  Also, your user characteristics are
   more involved than your intended reader characteristics.  Did you get these
   two sections backwards?}
@@ -618,13 +616,13 @@ iteasier to correctly understand the requirements:
   plane of the Earth's equator.
 
 \item Tilt angle: The angle for adjusting the solar panel result in the panel
-  get the direct sunlight. According to the Figure:\nameref{Fig_PhysicFigure},
-  tilt angle is equal to the zenith angle.  \wss{I think you mean that for
+  get the direct sunlight.
+ \wss{I think you mean that for
     optimum efficiency the tilt angle should equal the zenith angle, but the
 tilt angle is not always equal to the zenith angle. That is, you can have a
-solar panel that has a different tilt angle from the zenith angle.}
+solar panel that has a different tilt angle from the zenith angle.}\an{yes, it can. The actual tilt angle depends on the individual cases}
 
-\item The period of days: The period of days depends on the input days of the
+\item Date duration: The period of days  depends on the input days of the
 users.
 
 \item Sun panel: The adjustable panel, which has solar cells on it, able to
@@ -634,11 +632,10 @@ users.
   reaches the Earth's surface.
 
 \item Latitude: The angle which ranges from 0 $^\circ$ at the Equator to
-  90$^\circ$ (North or South) at the poles.
+  90$^\circ$ or  -90$^\circ$ at the poles.
 
-\item Zenith Angle: The angle between the sun and the vertical. According to
-theFigure:\nameref{Fig_PhysicFigure}, zenith angle is equal to the tilt angle.
-  \wss{Please see my comment under tilt angle.}
+\item Zenith Angle: The angle between the sun and the vertical. 
+  \wss{Please see my comment under tilt angle.}\an{Ok}
 
 \end{itemize}
 
@@ -697,18 +694,19 @@ includes the following elements:
   amount of technical language.  They should be understandable by non-domain
   experts.}
 
-\noindent Given the user located latitude($\Phi_{P}$), the area of the solar
-panel($P_A$), the day started to estimate angle($day_{Start}$),the day when the
-estimation end($day_{End}$), the goal statements are: \wss{you should have
+\noindent Given the user located latitude ($\Phi_{P}$), the area of the solar
+panel ($P_A$), the day started to estimate angle ($\mathit{year}_\text{Start}$, $\mathit{month}_\text{Start}$, $\mathit{day}_\text{Start}$),the day when the
+estimation end ($\mathit{year}_\text{End}$, $\mathit{month}_\text{End}$, $\mathit{day}_\text{End}$), the goal statements are: \wss{you should have
   spaces before opening brackets.  Please see the document review checklists.}
+\an{Fixed.}
 
 \begin{itemize}
 
 \item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] Predict
-  the optimum tilt angle in the period of days($\theta_{T}$).
+  the optimum tilt angle in the period of days ($\theta_{T}$).
 
 \item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] Predict
-  the optimum produced solar energy in the period of days($P_{E}$).
+  the optimum produced solar energy in the period of days ($P_{E}$).
 
 
 \end{itemize}
@@ -847,7 +845,17 @@ East as positive, then the sign gives you the direction.  The numbers are for
 degree, minutes and seconds.  Therefore, the coordinates could be represented
 using a type defined with a tuple.}
 \wss{You should also think about a type for dates. Again, a tuple makes
-sense.}\subsubsection{Theoretical Models}\label{sec_theoretical}
+sense.}
+
+\subsubsection{Type Definition}\label{C_TD}
+This section defines the general data type that \progname uses.
+
+\begin{itemize}
+\item[]$\mathit{day} $= a tuple of $(\mathit{year}, \mathit{month}, \mathit{day})$
+\item[]$\mathit{date}$ = a sequence of $\mathit{day}$
+\end{itemize}
+
+\subsubsection{Theoretical Models}\label{sec_theoretical}
 
 \plt{Theoretical models are sets of abstract mathematical equations or axioms
   for solving the problem described in Section ``Physical System Description''
@@ -878,30 +886,28 @@ Equation& $ I_0 = I \times \frac{\cos{\theta} \times \partial \Omega \times
 
   Description & 
 			In the following source, Lambert's cosine law state that
-                "the radiant intensity or luminous intensity observed from an
-                ideal diffusely reflecting surface or ideal diffuse radiator is
-                directly proportional to the cosine of the angle $\theta$
-                between the direction of the incident light and the surface
-                normal." \wss{look at the writing checklist for a discussion of
-                opening and closing quotation marks.}\\
+        \verb|``the radiant intensity or luminous intensity observed from an|
+        \verb|ideal diffusely reflecting surface or ideal diffuse radiator is|
+        \verb|directly proportional to the cosine of the angle $\theta$|
+        \verb|between the direction of the incident light and the surface|
+        \verb|normal.''| \wss{look at the writing checklist for a discussion of
+        opening and closing quotation marks.}\an{ok}\\
 			&$I_0$ is the radiance of illumination.\\
-			&I is the number of the photons. \wss{When you show a
-                   symbol outside of an equation, it should be formatted as in
-                   the equation.  In this case $I$.}\\
-&$\cos{\theta} \times \partial \Omega \times \partial A$is the number of
-photonsper second emitted into the wedge at angle $\theta$ \\
-&where $\partial \Omega$is an equal angle that represents each wedge in the
+			&$I$ is the number of the photons. 
+\wss{When you show a symbol outside of an equation, it should be formatted as in
+ the equation.  In this case $I$.}\an{ok}\\
+&$\cos{\theta} \times \partial \Omega \times \partial A$ is the number of
+photonsper second emitted into the wedge at angle $\theta$. \\
+&where $\partial \Omega$ is an equal angle that represents each wedge in the
 circle.\\
-							&$\partial A$ is the area element .\\
+&$\partial A$ is the area element.\\
 &$\partial\Omega_0$ is the portion of the observer's total angular
 field-of-viewof the scene.\\
-							&$\partial A_0$ is an
-                                                   aperture of area
-                                                   . \wss{Again, look at the
-                                                   writing checklists.}\\
+&$\partial A_0$ is an aperture of area. \\
+&\wss{Again, look at the writing checklists.}\an{ok}\\
   \hline
   Source &
-           \cite{Martin2001}\\
+           [Weik]\cite{Martin2001}\\
 % The above web link should be replaced with a proper citation to a publication
 \hline
   Ref.\ By &  \dref{C_SI}\\
@@ -939,15 +945,15 @@ add additional definitions as appropriate.}
   Label& \bf Calculating the Solar intensity\\
   \hline
 
-  SI Units&$\theta_{S_{\text{day}}}$\\
+  SI Units&$\theta_{S_{\text{date}}}$\\
 
   \hline
 Equation& $ I_{S_{\text{total}}} = I_{S} \cdot \frac{1.00}{I_{S}}^
-{sec(\theta_{S_{\text{day}}})} $\\
+{sec(\theta_{S_{\text{date}}})} $\\
   \hline
   Description&
 This equation is calculating the total solar intensity in the date duration\\
-&$(\theta_{S_{\text{day}}})$ is the zenith angle of the sun in the day. It is
+&$(\theta_{S_{\text{date}}})$ is the zenith angle of the sun in the date in a squence of day. It is
 input
 from $\ddref{C_ZA}$.\\
 		
@@ -971,12 +977,12 @@ calculation of the radiance of the illumination.\\
 This formula assumes that the earth is flat, so a factor was applied to account
 for the curvature of the earth (and therefore the earth’s atmosphere). These
 factors and the angle of the sun with respect to the panel represent as \ $
-\frac{1.00}{I_{S}}^ {sec(\theta_{S_{\text{day}}})}$\\
-Where $\frac{1}{\cos{\theta_{S_{\text{day}}}}}$ is
-$sec(\theta_{S_{\text{day}}})$\\
+\frac{1.00}{I_{S}}^ {sec(\theta_{S_{\text{date}}})}$\\
+Where $\frac{1}{\cos{\theta_{S_{\text{date}}}}}$ is
+$sec(\theta_{S_{\text{date}}})$\\
 
  \wss{I like that your T1 and GD1 are explicitly connected by your derivation.
-   Good.}
+   Good.} \an{Thanks!}
  
 \plt{The derivation shows how the IM is derived from the TMs/GDs.  In cases
   where the derivation cannot be described under the Description field, it will
@@ -1024,12 +1030,14 @@ Symbol &$\delta_{\text{date}} $\\
   Equation&{-}\\
   \hline
   Description &
-'date' defines in the table: \nameref{tb_TS} and refer from \ddref{C_D}.\\&The
-degree of $\delta_{\text{date}} $ can be determinated by
+Declination of the Sun means the angle between the rays of the Sun and the
+  plane of the Earth's equator.\\
+& \verb|``date'' | is a sequence of day, which is a data type defined in \nameref{C_TD}, and refers from \ddref{C_D}.\\
+&The degree of $\delta_{\text{date}} $ can be determinated by
 Figure: \nameref{Fig_Analemma}.\\
   \hline
 Sources&
-\url{https://www.cengage.com/resource_uploads/downloads/0495555061_137179.pdf}\\\hline
+[Holbrow]\cite{Holbrow} [Cengage.com]\cite{Cengage}, \\\hline
   Ref.\ By &  \ddref{C_ZA}\\
   \hline
 \end{tabular}
@@ -1037,6 +1045,16 @@ Sources&
 
 \wss{What is declination? You should repeat your definition from earlier in the
 document.}
+\subsubsection*{Detailed describetion of Analemma}
+
+\verb|``Analemma is often drawn on globes as a bigbottomed ``figure 8,'' |\\ 
+\verb|shows the declination of the sun throughout the year. ''|\\
+The y-axis of analemma represent the degree of sun's declination,
+ \verb|``N''| denotes northern hemisphere and \verb|``S''| denotes southern 
+hemisphere.\\
+
+In \progname, ~plus sign (+) denotes northern hemisphere or the equator and 
+minus sign (-) denotes southern hemisphere.\\
 
 \begin{figure}[H]
 	\center
@@ -1057,14 +1075,14 @@ Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{C_ZA}\\
 \hline
 Label &\bf Calculate Zenith Angle \\
 \hline
-Symbol &$\theta_{S_{\text{day}}}$\\
+Symbol &$\theta_{S_{\text{date}}}$\\
 \hline
 % Units&$MLt^{-3}T^0$\\
 % \hline
 SI Units& $\circ$\\
 \hline
 Equation&  \[
-    \theta_{S_{\text{day}}}= 
+    \theta_{S_{\text{date}}}= 
 \begin{cases}
 \Phi_P - \delta_{\text{date}} ,& \text{if } 0 \leq \Phi_P, \delta_{\text{date}}
 \leq 90^\circ
@@ -1082,7 +1100,9 @@ Equation&  \[
 \hline
  Description & 
 This equation describes the zenith angle associated with the solar
-panel.\\&$\theta_{S_{\text{day}}} $ is the zeith angle of the sun in the day.\\
+panel.\\
+& \verb|``date'' | is a sequence of day, which is a data type defined in \nameref{C_TD}, and refers from \ddref{C_D}.\\
+&$\theta_{S_{\text{date}}} $ is the zeith angle of the sun in the date of a squence of day.\\
 &$\Phi_P$ is the local latitude of the solar panel from the users' input
 described at \nameref{sec_GS}.\\
 &$\delta_{\text{date}} $ is the declination of the vertical noon sun in the day.
@@ -1144,16 +1164,23 @@ Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{C_D}\\
 \hline
 Label& \bf Calcuted the squence of the days\\
 \hline
-Symbol &$date $\\
+Symbol &$\mathit{date} $\\
 \hline
 
-  SI Units & $(year, month, day)$\\
+  SI Units & - \\
   \hline
-  Equation& $date = day_{Start} - day_{End}$ \\
+  Equation& $\mathit{date} = \mathit{day}_{Start} - \mathit{day}_{End}$ \\
   \hline
   Description &
-$day_{Start}$, $day_{End}$ are the days depending on the users' input described
-at \nameref{sec_GS}.\\
+
+$\mathit{day}_{Start}$ is in the data type of $\mathit{day}$, which content a tuple ($\mathit{year}_{Start},\mathit{month}_{Start},\mathit{day}_{Start}$).\\
+
+&$\mathit{day}_{End}$ is in the data type of $\mathit{day}$, which content a tuple ($\mathit{year}_{End},\mathit{month}_{End},\mathit{day}_{End}$)\\
+
+&$\mathit{date}$ is a squence that content the data type $\mathit{day}$\\
+
+&The definition of data type can be found in 
+\nameref{C_TD}.\\
 		  
   \hline
   Sources& - \\
@@ -1200,27 +1227,26 @@ cross-references where appropriate.}
   Label& \bf Calculating the Tilt Angle\\
   \hline
 
-  Input&$\theta_{S_{\text{day}}},I_{S_{date}}$\\
+  Input&$\theta_{S_{\text{date}}},I_{S_{date}}$\\
 
   \hline
-  Output & $ \theta_{T} , I_{S_{\text{max}}}$\\
-& $I_{S_{\text{max}}} = I_{S} \cdot \frac{1.00}{I_{S_{\text{total}}}}^
-{sec(\theta_{S_{\text{day}}})}
-                                         \text{where} \ \theta_{T} \ \text{is
-                                         the valuse that has the hightest} \
-I_{S_{\text{max}}}$ \wss{write this using argmax
-\url{https://en.wikipedia.org/wiki/Arg_max}.}\\
+  Output & $\underset{\theta_{S_{\text{date}}}}{\text{arg max}} f(\theta_{S_{\text{date}}}) := \{ I_{S} \cdot \frac{1.00}{I_{S_{\text{total}}}}^
+{sec(\theta_{S_{\text{date}}})} | \forall y: f(y) < f(\theta_{S_{\text{date}}}) \}$
+\\
+& $\text{where}  \theta_{T} = \theta_{S_{\text{date}}}, I_{S_{\text{max}}} = f(\theta_{T})$\\
+&\wss{write this using argmax
+\url{https://en.wikipedia.org/wiki/Arg_max}.}\an{I have tried this mathematical syntax but not should if it is correct expression}\\
   \hline
   Description&
 Using General Definition: \dref{C_SI} can get the total solar intensity
-$I_{S_{date}}$ during the period od date. Then using the value $I_{S_{date}}$
+$I_{S_{date}}$ during the period of date. Then using the value $I_{S_{date}}$
 recalculates the optimum angle $\theta_{T}$. \\
 		&$I_{S_{date}}$ is input from \dref{C_SI}.\\
-		&$\theta_{S_{\text{day}}}$ is input from \ddref{C_DS}.
+		&$\theta_{S_{\text{date}}}$ is input from \ddref{C_DS}.
 \\
 
   \hline
-  Sources&  \url{https://www.solarpaneltilt.com/#other}\cite{Charles2001}\\
+  Sources&  [Landau]\cite{Charles2001}\\
 
 
   \hline
@@ -1243,12 +1269,12 @@ recalculates the optimum angle $\theta_{T}$. \\
   Label& \bf Calculating the Daily Sun Intentisy\\
   \hline
 
-  Input&$\theta_{S_{\text{day}}},I_{S_{\text{max}}}$\\
+  Input&$\theta_{S_{\text{date}}},I_{S_{\text{max}}}$\\
 
   \hline
   Output & $ I_{S_{\text{daily}}}$\\
 & $I_{S_{\text{daily}}} = I_{S} \cdot \frac{1.00}{I_{S_{\text{max}}}}^
-{sec(\theta_{S_{\text{day}}})}
+{sec(\theta_{S_{\text{date}}})}
 $\\
   \hline
   Description&
@@ -1256,11 +1282,11 @@ Using General Definition: \dref{C_TA} can get the optimal solar intensity
 $I_{S_{T}}$ of the date duration($date$). Then using the value $I_{S_{T}}$
 recalculates the optimum daily sun intensity $I_{S_{\text{daily}}}$. \\
 		&$I_{S_{T}}$ is input from \dref{C_TA}.\\
-		&$\theta_{S_{\text{day}}}$ is input from \ddref{C_DS}.
+		&$\theta_{S_{\text{date}}}$ is input from \ddref{C_DS}.
 \\
 
   \hline
-  Sources&  \url{https://www.solarpaneltilt.com/#other}\cite{Charles2001}\\
+  Sources&  [Landau]\cite{Charles2001}\\
 
 
   \hline
@@ -1303,7 +1329,7 @@ described in the Assumption: \aref{a_dpr}.\\
 
   \hline
 Sources&
-\url{https://photovoltaic-software.com/principle-ressources/how-calculate-solar-energy-power-pv-systems}\\
+[PhotovoltaicSoftware]\cite{Photovoltaic}\\
 
   \hline
   Ref.\ By & \text{-}\\
@@ -1459,12 +1485,8 @@ using $\iref{C_SEO}$\\
   \plt{Verification related requirements.}
 
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Outputshowg}:] \progname~should able to show the comparison
-between the outputs corresponding to the different user's input in a graphic.\\
-\wss{I do not understand this requirement.} \an{Changed the original requirement}\\
-
 \item[R\refstepcounter{reqnum}\thereqnum \label{R_Outputshowt}:] \progname~should able to show the comparison
-between the outputs corresponding to the different user's input in a table.\\
+between the outputs corresponding to the different user's input.\\
 
 \item[R\refstepcounter{reqnum}\thereqnum \label{R_Outputconsist}:]
 The system output should remain consistent with

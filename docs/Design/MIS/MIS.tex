@@ -111,6 +111,8 @@ $\infty$) \\
 natural number & $\mathbb{N}$ & a number without a fractional component in [1,
 $\infty$) \\
 real & $\mathbb{R}$ & any number in (-$\infty$, $\infty$)\\
+degree & $\mathbb{R}$ & any number in (-$\infty$, $\infty$)\\
+
 \bottomrule
 \end{tabular} 
 \end{center}
@@ -123,6 +125,8 @@ are sequences of characters. Tuples contain a list of values, potentially of
 different types. In addition, \progname \ uses functions, which
 are defined by the data types of their inputs and outputs. Local functions are
 described by giving their type signature followed by their specification.
+
+
 
 \section{Module Decomposition}
 
@@ -139,21 +143,23 @@ project.
 {Hardware-Hiding Module} & ~ \\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module}& Input Parameters Module\\
+\multirow{7}{0.3\textwidth}{Behaviour-Hiding
+ Module}& Control Module\\
+& Input Parameters Module\\
+& Input Verify Module\\
 & Output Parameters Module\\
-& Solar Energy Absorption Module\ref{ModuleSEA}\\
-& Optimum Tilt Angle Module\ref{ModuleOT}\\
+& Solar Energy Absorption Module\\
+& Optimum Tilt Angle Module\\
+& Sun Intensity Equation Module\\
+& Zenith Angle Equation Module\\
+& Sun Declination Module\\
+& Days Module\\
 \midrule
 
-\multirow{3}{0.3\textwidth}{Software Decision Module} & {Sun Intensity Equation
-Module}\\
-& Optimum Sun Intensity Equation Module\ref{ModuleOSI}\\
-& Zenith Angle Equation Module\ref{ModuleZA}\\
-& Maximum Sun Intensity's Angle Module\ref{ModuleMSI}\\
-& Sun Declination Equation Module\\
-& Date Duration Module\ref{ModuleDD}\\
-& Plotting Module\\
-
+\multirow{3}{0.3\textwidth}{Software Decision Module} 
+& Count days Module\\
+& Table-layout Module\\
+& Sequence Data Structure Module\\
 \bottomrule
 
 \end{tabular}
@@ -164,20 +170,177 @@ Module}\\
 \newpage
 ~\newpage
 
+\section{Day ADT Module} \label{ModuleADTD} 
+
+\subsection{Template Module}
+Day
+
+\subsection{Uses}
+
+N/A\\
+
+\subsection{Exported Types}
+
+DayT = ?\\
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+initday&  $\mathbb{N}$,$\mathbb{N}$,$\mathbb{N}$  & DayT & - \\
+day &  -  & natural number & - \\
+month &  -  & natural number & - \\
+year &  -  & natural number & - \\
+
+\hline
+\end{tabular}
+\end{center}
+
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+d1 :real \\
+m1 :real \\
+y1 :real \\
+
+\subsubsection{Environment Variables}
+
+N/A\\
+
+\subsubsection{Assumptions}
+
+\noindent  initday(d,m,y):
+\begin{itemize}
+\item transition: d1, m1, y1 := d,m,y
+\item output: out := self
+\end{itemize}
+
+\noindent day( ):
+\begin{itemize}
+\item transition:
+\item output: out := d1
+\end{itemize}
+
+\noindent  month( ):
+\begin{itemize}
+\item transition:
+\item output: out := m1
+\item exception: 
+\end{itemize}
+
+\noindent  year( ):
+\begin{itemize}
+\item transition:
+\item output: out := y1
+\item exception: 
+\end{itemize}
+
+
+\section{Analemma ADT Module} \label{ModuleADTD} 
+
+\subsection{Template Module}
+Analemma
+
+\subsection{Uses}
+
+N/A\\
+
+\subsection{Exported Types}
+
+AnalemmaT = ?\\
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+initanale&  real,real,real  & AnalemmaT & - \\
+x &  -  & real & - \\
+y &  -  & real & - \\
+z &  -  & real & - \\
+
+\hline
+\end{tabular}
+\end{center}
+
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+x1 :real \\
+y1 :real \\
+z1 :real \\
+
+\subsubsection{Environment Variables}
+
+N/A\\
+
+\subsubsection{Assumptions}
+
+\noindent  initanale(x,y,z):
+\begin{itemize}
+\item transition: x1, y1, z1 := x,y,z
+\item output: out := self
+\end{itemize}
+
+\noindent x( ):
+\begin{itemize}
+\item transition:
+\item output: out := x1
+\end{itemize}
+
+\noindent  y( ):
+\begin{itemize}
+\item transition:
+\item output: out := y1
+\item exception: 
+\end{itemize}
+
+\noindent  z( ):
+\begin{itemize}
+\item transition:
+\item output: out := z1
+\item exception: 
+\end{itemize}
+
+
+
 \section{MIS of Optimum Tilt Angle Module} \label{ModuleOT} \wss{Use labels for
   cross-referencing}
 
 \subsection{Module}
-Optimum tile angle
+tile angle
 \wss{Short name for the module}
 
 \subsection{Uses}
-Maximum Sun Intensity's Angle Module\ref{ModuleMSI}
+Sun Intensity,zenith angle
 
 \subsection{Syntax}
 
 
 \subsubsection{Exported Constants}
+
+$I_{S}$ := 1.35\\
+$I_{S_{\text{total}}}$: real\\
+$I_{S_{\text{total}}}$:= intenSum($I_{S}$)\\
+$\theta_{S_{\text{date}}}$: a sequence of degree\\
+$\theta_{S_{\text{date}}}$:= zenith( )\\
 
 \subsubsection{Exported Access Programs}
 
@@ -186,7 +349,7 @@ Maximum Sun Intensity's Angle Module\ref{ModuleMSI}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline 
-$\mathit{angle}_\text{out}$ & - & $\mathbb{R}$ & - \\
+angle &  -  & degree & - \\
 
 
 
@@ -200,12 +363,17 @@ $\mathit{angle}_\text{out}$ & - & $\mathbb{R}$ & - \\
 
 \subsubsection{State Variables}
 
-None
+
+max.inten: real\\
+max.inten :=  intenSingle($I_{S_{\text{total}}}$, $\theta_{S_{\text{date}}}$[0]),\\
+max.deg : degree\\
+max.deg = $\theta_{S_{\text{date}}}$[0]\\
+
 \wss{Not all modules will have state variables.  State variables give the module  a memory.}
 
 \subsubsection{Environment Variables}
 
-None
+N/A
 \wss{This section is not necessary for all modules.  Its purpose is to capture
   when the module has external interaction with the environment, such as for a
   device driver, screen interface, keyboard, file, etc.}
@@ -217,10 +385,15 @@ None
 exceptions, but for practical purposes assumptions are sometimes appropriate.}
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}$\mathit{sun}_\text{in}$():
+\noindent \wss{accessProg} angle( ):
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
+\item transition:\\
+($\forall$z: degree $|$ z $\in$ $\theta_{S_{\text{date}}}$ $	\bullet$ max.inten = ifMax (max.inten, intenSingle($I_{S_{\text{total}}}$,z))$\Rightarrow$ nothing change $|$  otherwise $\Rightarrow$ max.inten =  intenSingle($I_{S_{\text{total}}}$,z),
+max.deg = z)
+
+\item output: max.deg \\
+
+
 \item exception: \wss{if appropriate} 
 \end{itemize}
 
@@ -233,6 +406,9 @@ exceptions, but for practical purposes assumptions are sometimes appropriate.}
 
 \subsubsection{Local Functions}
 
+ifMax: real $\times$ real $\rightarrow$ real\\
+ifMax(x, y) = (x $\geq$ y $\Rightarrow$ x $|$ y $>$ x $\Rightarrow$ y )
+
 \wss{As appropriate} \wss{These functions are for the purpose of specification.
   They are not necessarily something that is going to be implemented
   explicitly.  Even if they are implemented, they are not exported; they only
@@ -240,20 +416,26 @@ exceptions, but for practical purposes assumptions are sometimes appropriate.}
 
 
 
-\section{MIS of Solar Energy Absorption Module} \label{ModuleSEA} \wss{Use labels for
-  cross-referencing}
+\section{MIS of Solar Energy Absorption Module} \label{ModuleSEA} 
 
 \subsection{Module}
-Max sun internsity
-\wss{Short name for the module}
+Energy Absorption
 
 \subsection{Uses}
-Optimum Sun Intensity Equation Module\ref{ModuleOSI}, Plotting Module
+input parameter, solar intensity, tilt angle,zenith angle\\
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
 
+$I_{S}$ := 1.35\\
+$I_{S_{\text{total}}}$: real\\
+$I_{S_{\text{total}}}$:= intenSum($I_{S}$)\\
+$I_{S_{\text{max}}}$ : real\\
+$I_{S_{\text{max}}}$
+ := intenSingle($I_{S}$, angle( ))\\
+$\theta_{S_{\text{date}}}$: a sequence of degree\\
+$\theta_{S_{\text{date}}}$ := zenith( )\\
 \subsubsection{Exported Access Programs}
 
 \begin{center}
@@ -261,11 +443,8 @@ Optimum Sun Intensity Equation Module\ref{ModuleOSI}, Plotting Module
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline 
-$\mathit{energy}_\text{out}$ & $\mathbb{R}$ & $\mathbb{R}$ & - \\
-$\mathit{plot}$ & $(\mathbb{R} \to \mathbb{R})$& - & - \\
+energy & - & real[ ] & - \\
 
-
-\wss{accessProg} & - & - & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -274,47 +453,30 @@ $\mathit{plot}$ & $(\mathbb{R} \to \mathbb{R})$& - & - \\
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-
-None
-\wss{Not all modules will have state variables.  State variables give the module  a memory.}
+$I_{S_{\text{daily}}}$: real[ ]
 
 \subsubsection{Environment Variables}
 
-None
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
+N/A
 
 \subsubsection{Assumptions}
 
 
-\wss{Try to minimize assumptions and anticipate programmer errors via
-exceptions, but for practical purposes assumptions are sometimes appropriate.}
-\subsubsection{Access Routine Semantics}
-
-\noindent \wss{accessProg}$\mathit{sun}_\text{in}$():
+\noindent  energy( ):
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+\item transition: $I_{S_{\text{daily}}}$ := ($\forall$ x : degree $|$ x $\in$ $\theta_{S_{\text{date}}}$ $\bullet$ intenSingle($I_{S_{\text{max}}}$, x))
+
+\item output: out := ( $\forall$ x: real $|$ x $\in$ $I_{S_{\text{daily}}}$ $\bullet$ $P_{A_{\text{w}}}$ $\times$ $P_{A_{\text{h}}}$ $\times$ 18.7 $\times$ 0.75 $\times$ x)
+ 
+\item exception: 
 \end{itemize}
 
-\wss{A module without environment variables or state variables is unlikely to
-  have a state transition.  In this case a state transition can only occur if
-  the module is changing the state of another module.}
-
-\wss{Modules rarely have both a transition and an output.  In most cases you
-  will have one or the other.}
 
 \subsubsection{Local Functions}
 
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-  They are not necessarily something that is going to be implemented
-  explicitly.  Even if they are implemented, they are not exported; they only
-  have local scope.}
 
-\section{MIS of Sun Intensity Equation Module} \label{ModuleSI} \wss{Use labels for
-  cross-referencing}
+\section{MIS of Sun Intensity Equation Module} \label{ModuleSI} 
+\wss{Use labels for cross-referencing}
 
 \wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
 
@@ -322,14 +484,16 @@ exceptions, but for practical purposes assumptions are sometimes appropriate.}
 
 \subsection{Module}
 Sun Intensity
-\wss{Short name for the module}
 
 \subsection{Uses}
-Zenith Angle Equation Module\ref{ModuleZA}
+zenith angle
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
+$I_{S}$ := 1.35\\
+$\theta_{S_{\text{date}}}$: a squence of degree\\
+$\theta_{S_{\text{date}}}$ := zenith( )
 
 \subsubsection{Exported Access Programs}
 
@@ -338,9 +502,9 @@ Zenith Angle Equation Module\ref{ModuleZA}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline 
-$\mathit{sun}_\text{in}$ & $\mathbb{R}$ & $\mathbb{R}$ & - \\
+intenSum & real & real & - \\
+intenSingle & real, degree & real & - \\
 
-\wss{accessProg} & - & - & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -350,51 +514,35 @@ $\mathit{sun}_\text{in}$ & $\mathbb{R}$ & $\mathbb{R}$ & - \\
 
 \subsubsection{State Variables}
 
-None
-\wss{Not all modules will have state variables.  State variables give the module  a memory.}
 
 \subsubsection{Environment Variables}
 
-None
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
+N/A
 
 \subsubsection{Assumptions}
 
-The default value of solar intensity$I_{S}$ is 1.35
 
-\wss{Try to minimize assumptions and anticipate programmer errors via
-exceptions, but for practical purposes assumptions are sometimes appropriate.}
-\subsubsection{Access Routine Semantics}
-
-\noindent \wss{accessProg}$\mathit{sun}_\text{in}$():
+\noindent intenSum( i ):
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+\item output: out := +($\forall$ d: degree $|$ d $\in$ $\theta_{S_{\text{date}}}$ $\bullet$ $I_{S} \cdot \frac{1.00}{i}^{sec(d)} $)
+\item exception: 
 \end{itemize}
 
-\wss{A module without environment variables or state variables is unlikely to
-  have a state transition.  In this case a state transition can only occur if
-  the module is changing the state of another module.}
-
-\wss{Modules rarely have both a transition and an output.  In most cases you
-  will have one or the other.}
+\noindent intenSingle(i, d):
+\begin{itemize}
+\item output: out := $1.35 \cdot \frac{1.00}{i}^
+{sec(d)} $
+\item exception: 
+\end{itemize}
 
 \subsubsection{Local Functions}
 
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-  They are not necessarily something that is going to be implemented
-  explicitly.  Even if they are implemented, they are not exported; they only
-  have local scope.}
 
-\section{MIS of Zenith Angle Equation Module} \label{ModuleZA} \wss{Use labels for
-  cross-referencing}
+\section{MIS of Zenith Angle Equation Module} \label{ModuleZA} 
 
 \subsection{Module}
 Zenith angle
-\wss{Short name for the module}
+
 
 \subsection{Uses}
 Date Duration Module\ref{ModuleDD}
@@ -403,6 +551,9 @@ Date Duration Module\ref{ModuleDD}
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
+$\Phi_{P}$: degree\\
+$\delta_{\text{date}}$: a squence of degree\\
+$\delta_{\text{date}}$:= declination( ) 
 
 \subsubsection{Exported Access Programs}
 
@@ -411,9 +562,8 @@ Date Duration Module\ref{ModuleDD}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline 
-$\mathit{date}$ & $\mathbb{R}$ & $\mathbb{R}$ & - \\
+zenith &  -  & degree[ ] & - \\
 
-\wss{accessProg} & - & - & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -423,59 +573,48 @@ $\mathit{date}$ & $\mathbb{R}$ & $\mathbb{R}$ & - \\
 
 \subsubsection{State Variables}
 
-None
-\wss{Not all modules will have state variables.  State variables give the module  a memory.}
+zenithS: a squence of degree
+
 
 \subsubsection{Environment Variables}
 
-None
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
+N/A
 
 \subsubsection{Assumptions}
 
 
-\wss{Try to minimize assumptions and anticipate programmer errors via
-exceptions, but for practical purposes assumptions are sometimes appropriate.}
-\subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}$\mathit{sun}_\text{in}$():
+
+\noindent \wss{accessProg}zenith( ):
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+\item transition: zenithS := ($\forall$ d: degree $|$ d $\in$ $\delta_{\text{date}}$ $\bullet$ $\Phi_{P}$ $\times$ d $\geq$ 0 $\Rightarrow$ $\Phi_{P}$ - d $|$ otherwise $\Rightarrow$ $\Phi_{P}$ + d)
+
+\item output: out := self
+\item exception: 
 \end{itemize}
 
-\wss{A module without environment variables or state variables is unlikely to
-  have a state transition.  In this case a state transition can only occur if
-  the module is changing the state of another module.}
 
-\wss{Modules rarely have both a transition and an output.  In most cases you
-  will have one or the other.}
 
 \subsubsection{Local Functions}
 
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-  They are not necessarily something that is going to be implemented
-  explicitly.  Even if they are implemented, they are not exported; they only
-  have local scope.}
+
 \newpage
 
-\section{MIS of Sun Declination Module} \label{Module} \wss{Use labels for
-  cross-referencing}
+\section{MIS of Sun Declination Module} \label{ModuleSD} 
 
 \subsection{Module}
 Sun Declination
-\wss{Short name for the module}
+
 
 \subsection{Uses}
-Sun Declination Equation Module
+date duration
 
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
+date: a squence of integer\\
+date := dateduration( )
 
 \subsubsection{Exported Access Programs}
 
@@ -484,10 +623,9 @@ Sun Declination Equation Module
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline 
-$\mathit{zenith}_\text{an}$ & $\mathit{date}$:$\mathbb{N}$,$\mathit{month}$:$\mathbb{N}$
-& $\mathbb{R}$ & - \\
+intidec & - & AnalemmaT[ ] & -\\
+declination & - & degree[ ] & - \\
 
-\wss{accessProg} & - & - & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -497,57 +635,53 @@ $\mathit{zenith}_\text{an}$ & $\mathit{date}$:$\mathbb{N}$,$\mathit{month}$:$\ma
 
 \subsubsection{State Variables}
 
-None
-\wss{Not all modules will have state variables.  State variables give the module  a memory.}
+declinationS: a squence of degree\\
+initdec: a squence of AnalemmaT
 
 \subsubsection{Environment Variables}
 
-None
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
+file: Input a file that contains a sequence of (x: real, y: real, z: real) of 366 days
+
+
 
 \subsubsection{Assumptions}
 
 
-\wss{Try to minimize assumptions and anticipate programmer errors via
-exceptions, but for practical purposes assumptions are sometimes appropriate.}
-\subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}$\mathit{sun}_\text{in}$():
+\noindent  intidec( ):
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+\item transition: initdec := ($\forall$ d: integer,$\forall$ i: integer $|$ d $\in$ date, i $\in$  [0...] $\bullet$ dec.z[i] := file[d].$z$, dec.x[i] := file[d].$x$,dec.y[i] := file[d].$y$)
+
+\item output: self
+\item exception: 
 \end{itemize}
 
-\wss{A module without environment variables or state variables is unlikely to
-  have a state transition.  In this case a state transition can only occur if
-  the module is changing the state of another module.}
+\noindent  declination( ):
+\begin{itemize}
+\item transition: declinationS := ($\forall$: i:DayT $|$ i $\in$ intidec( ) $\bullet$ $\arcsin \frac{i.z}{ \sqrt{i.x^2 + i.y^2 + i.z^2}}$)
 
-\wss{Modules rarely have both a transition and an output.  In most cases you
-  will have one or the other.}
+\item output: self
+\item exception: 
+\end{itemize}
+ 
 
 \subsubsection{Local Functions}
 
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-  They are not necessarily something that is going to be implemented
-  explicitly.  Even if they are implemented, they are not exported; they only
-  have local scope.}
-
-\section{MIS of Date Duration Module} \label{ModuleDD} \wss{Use labels for
-  cross-referencing}
-
+\section{MIS of Days Module} \label{ModuleDD} 
 \subsection{Module}
-Date Duration
-\wss{Short name for the module}
+Days
 
 \subsection{Uses}
-
+Input parameter
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
+
+end: DayT\\
+end.d = $\mathit{day}_\text{End}$\\
+end.m = $\mathit{month}_\text{End}$\\
+end.y = $\mathit{year}_\text{End}$\\
 
 \subsubsection{Exported Access Programs}
 
@@ -556,75 +690,64 @@ Date Duration
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline 
-$\mathit{data}_\text{d}$ & $\mathit{d}_s$:$\mathbb{N}$,$\mathit{m}_s$:$\mathbb{N}$,
-$\mathit{d}_e$:$\mathbb{N}$,$\mathit{m}_e$:$\mathbb{N}$ & $\mathbb{R}$ & - \\
-$\mathit{data}_\text{add}$ & $\mathit{d}_s$:$\mathbb{N}$,$\mathit{m}_s$:$\mathbb{N}$,
-$\mathit{d}_e$:$\mathbb{N}$,$\mathit{m}_e$:$\mathbb{N}$ & $\mathit{d}$:$\mathbb{N}$,$\mathit{m}$:$\mathbb{N}$ & - \\
+perihelion & DayT & DayT & - \\
+dateduration & - & integer[ ] & - \\
 
 
-
-\wss{accessProg} & - & - & - \\
 \hline
 \end{tabular}
 \end{center}
-
+ (day.m = 12 $	\wedge$ day.d $\geq	$ 21 $\Rightarrow$ fixday.y = day.y $|$ otherwise $\Rightarrow$ fixday.y := day.y - 1)
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
+days : a sequence of integer
 
-None
-\wss{Not all modules will have state variables.  State variables give the module  a memory.}
+fixday : DayT
+
+start: DayT\\
+start.d := $\mathit{day}_\text{Start}$\\
+start.m := $\mathit{month}_\text{Start}$\\
+start.y := $\mathit{year}_\text{Start}$\\
 
 \subsubsection{Environment Variables}
 
 None
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
 
 \subsubsection{Assumptions}
 
-
-\wss{Try to minimize assumptions and anticipate programmer errors via
-exceptions, but for practical purposes assumptions are sometimes appropriate.}
-\subsubsection{Access Routine Semantics}
-
-\noindent \wss{accessProg}$\mathit{sun}_\text{in}$():
+\noindent perihelion(day):
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+\item transition: fixday :=  (day.m = 12 $	\wedge$ day.d $\geq	$ 21 $\Rightarrow$ fixday.d = 21, fixday.m = 12, fixday.y = day.y $|$ otherwise $\Rightarrow$ fixday.d = 21, fixday.m = 12, fixday.y := day.y - 1)
+\item output: out := fixday
+\item exception: 
 \end{itemize}
 
-\wss{A module without environment variables or state variables is unlikely to
-  have a state transition.  In this case a state transition can only occur if
-  the module is changing the state of another module.}
+\noindent dateduration(day):
+\begin{itemize}
+\item transition: days := ( negetiveD(start, end) = 1 $\Rightarrow$  countdays(perihelion(start), start)), start := adday(start)
+\item output: days
+\item exception: 
+\end{itemize}
 
-\wss{Modules rarely have both a transition and an output.  In most cases you
-  will have one or the other.}
 
 \subsubsection{Local Functions}
+negetiveD: DayT $\times$ DayT $\rightarrow $ integer\\
+negetiveD(day1, day2) := (countdays(day1, day2) $\geq$ 0 $\Rightarrow$ 1 $|$ otherwise $\Rightarrow$ -1)
 
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-  They are not necessarily something that is going to be implemented
-  explicitly.  Even if they are implemented, they are not exported; they only
-  have local scope.}
-
-
-\section{MIS of Maximum Sun Intensity's Angle Module} \label{ModuleMSI} \wss{Use labels for
-  cross-referencing}
-
+\section{MIS of Count Days Module} \label{ModuleDD} 
 \subsection{Module}
-Tilt angle
-\wss{Short name for the module}
+Count days
+
 
 \subsection{Uses}
-
+N/A
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
+
 
 \subsubsection{Exported Access Programs}
 
@@ -633,132 +756,44 @@ Tilt angle
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline 
-$\mathit{angle}_\text{max}$ & $\mathbb{R}$ & $\mathbb{R}$ & - \\
+countdays & DayT, DayT & integer & - \\
+addays & DayT & DayT & - \\
 
-
-
-\wss{accessProg} & - & - & - \\
 \hline
 \end{tabular}
 \end{center}
-
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
 
-None
-\wss{Not all modules will have state variables.  State variables give the module  a memory.}
+
 
 \subsubsection{Environment Variables}
 
 None
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
 
 \subsubsection{Assumptions}
 
 
-\wss{Try to minimize assumptions and anticipate programmer errors via
-exceptions, but for practical purposes assumptions are sometimes appropriate.}
-\subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}$\mathit{sun}_\text{in}$():
+\noindent countdays(day1, day2):
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+\item transition:
+\item output: out := Count the days from the start  date, day, to the end date, day, but not including the end date.
+\item exception: 
 \end{itemize}
 
-\wss{A module without environment variables or state variables is unlikely to
-  have a state transition.  In this case a state transition can only occur if
-  the module is changing the state of another module.}
+\noindent adday(day):
+\begin{itemize}
+\item transition: 
+\item output: out := the next day of the date, day.
+\item exception: 
+\end{itemize}
 
-\wss{Modules rarely have both a transition and an output.  In most cases you
-  will have one or the other.}
 
 \subsubsection{Local Functions}
 
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-  They are not necessarily something that is going to be implemented
-  explicitly.  Even if they are implemented, they are not exported; they only
-  have local scope.}
-
-
-
-\section{MIS of Optimum Sun Intensity Equation Module} \label{ModuleOSI} \wss{Use labels for
-  cross-referencing}
-
-\subsection{Module}
-Max sun internsity
-\wss{Short name for the module}
-
-\subsection{Uses}
-Zenith Angle Equation Module\ref{ModuleZA}, Maximum Sun Intensity's Angle Module\ref{ModuleMSI}
-
-\subsection{Syntax}
-
-\subsubsection{Exported Constants}
-
-\subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline 
-$\mathit{angle}_\text{max}$ & $\mathbb{R}$ & $\mathbb{R}$ & - \\
-
-
-
-\wss{accessProg} & - & - & - \\
-\hline
-\end{tabular}
-\end{center}
-
-
-\subsection{Semantics}
-
-\subsubsection{State Variables}
-
-None
-\wss{Not all modules will have state variables.  State variables give the module  a memory.}
-
-\subsubsection{Environment Variables}
-
-None
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
-
-\subsubsection{Assumptions}
-
-
-\wss{Try to minimize assumptions and anticipate programmer errors via
-exceptions, but for practical purposes assumptions are sometimes appropriate.}
-\subsubsection{Access Routine Semantics}
-
-\noindent \wss{accessProg}$\mathit{sun}_\text{in}$():
-\begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
-\end{itemize}
-
-\wss{A module without environment variables or state variables is unlikely to
-  have a state transition.  In this case a state transition can only occur if
-  the module is changing the state of another module.}
-
-\wss{Modules rarely have both a transition and an output.  In most cases you
-  will have one or the other.}
-
-\subsubsection{Local Functions}
-
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-  They are not necessarily something that is going to be implemented
-  explicitly.  Even if they are implemented, they are not exported; they only
-  have local scope.}
 
 
 \newpage
