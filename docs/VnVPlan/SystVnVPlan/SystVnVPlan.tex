@@ -25,7 +25,7 @@ urlcolor=blue }
 \begin{document}
 \title{Project Title: System Verification and Validation Plan for Sun Catcher}
 
-\author{Sharon(Yu-Shiuan) Wu} \date{\today} \maketitle
+\author{Sharon (Yu-Shiuan) Wu} \date{\today} \maketitle
 \pagenumbering{roman}
 
 \section{Revision History}
@@ -116,14 +116,7 @@ its general functions.}
 \subsection{Objectives}\label{Objectives}
 
 The goal of the test is to build confidence in the software correctness and
-strengthen the robustness of the software. The functional and nonfunctional
-<<<<<<< HEAD
-requirements of \progname~ ,and its related equations and constraints are
-=======
-requirements of \progname, and its related equations and constraints are 
->>>>>>> aa80c1a3c0ea659fb15863abb49a7aba0000cc59
-found in the SRS \cite{YS2019}. The Verification and Validation Plan follows
-the requirements described in the SRS \cite{YS2019}.
+strengthen the robustness of the software. The functional and nonfunctional requirements of \progname, and its related equations and constraints are found in the SRS \cite{YS2019}. The Verification and Validation Plan follows the requirements described in the SRS \cite{YS2019}.
 
 The object of the Verification and Validation Plan is:
 \noindent \begin{itemize}
@@ -133,8 +126,7 @@ The object of the Verification and Validation Plan is:
 
 \noindent \end{itemize}
 
-\wss{You don't really want to copy and paste the SRS requirements.  This will
-  cause maintenace problems.  Referencing the SRS here should be enough.  You
+\wss{You don't really want to copy and paste the SRS requirements.  This will cause maintenance problems.  Referencing the SRS here should be enough.  You
   can also use cross-references between documents to reference specific parts of
   your SRS.}
 
@@ -200,7 +192,7 @@ can be found in [Landau ] \cite{Charles2001} and
  \section{Plan}	
 \subsection{Verification and Validation Team} The test team includes the
 following members:\\ 
-Main reviewer: Sharon(Yu-Shiuan) Wu\\ 
+Main reviewer: Sharon (Yu-Shiuan) Wu\\ 
 Secondary reviewer: Deema Alomair, Bo Cao, Sasha Soraine, Zhi Zhang, 
 and Doctor Smith\\
 \wss{Probably just you. :-)}
@@ -224,12 +216,8 @@ something more rigorous/systematic in mind..}
 
 \item The design should be verified by complete and success the test cases in
 the system VnV plan under section \ref{STD}.
-\item The design should satisfy all the functional and nonfunctional
-<<<<<<< HEAD
-requirements that stated in the SRS document \cite{YS2019}.
-=======
-requirement that stated in the SRS document \cite{YS2019}.
->>>>>>> aa80c1a3c0ea659fb15863abb49a7aba0000cc59
+\item The design should satisfy all the functional and nonfunctional requirements stated in the SRS document \cite{YS2019}.
+
 
 \end{itemize}
 
@@ -253,16 +241,11 @@ software.[Claessen] \cite{QuickCheck}
 		
 \end{itemize} 
 
-\wss{You should at least point to the tests listed in this document and the
-<<<<<<< HEAD
-unit testing plan.} \wss{In this section you would also give any details of any
+\wss{You should at least point to the tests listed in this document and the unit testing plan.} \wss{In this section you would also give any details of any
 plans for static verification of the implementation. Potential techniques
 including code walkthroughs, code inspection, static analyzers, etc.}
-=======
-unittesting plan.} \wss{In this section you would also give any details of any
-plans for static verification of the implementation. Potential techniques
-includecode walkthroughs, code inspection, static analyzers, etc.}
->>>>>>> aa80c1a3c0ea659fb15863abb49a7aba0000cc59
+
+
 
 \subsection{Software Validation Plan}
 
@@ -273,7 +256,7 @@ Based on the physical concept of \progname, the author, Yu-Shiauan Wu, should
 record the actual solar energy by using the output from \progname. Then verify
 whether the calculated tilt angle can increase the energy gaining.
 
-{Validation means comparison to actual experiments.  I don't think this is what
+\wss{Validation means a comparison to actual experiments.  I don't think this is what
   you intend to do.}
 
 \wss{If there is any external data that can be used for validation, you should
@@ -304,13 +287,7 @@ good.}
 
 \subsubsection{Input Reading}
 
-This test covers the requirements, R1, in section \ref{Objectives}. Based on
-<<<<<<< HEAD
-the SRS document\cite{YS2019}, \progname ~has to identity users' inputs and
-=======
-the SRS document~cite{YS2019}, \progname{} has to identity users' inputs and
->>>>>>> aa80c1a3c0ea659fb15863abb49a7aba0000cc59
-then assign the values to designated equations or modules.
+This test covers the requirements, R1, in section \ref{Objectives}. Based on the SRS document\cite{YS2019}, \progname{}has to identity users' inputs and then assign the values to designated equations or modules.
 
 \wss{Space are frequently missing between words.  Please check for this during
   your editing step.}
@@ -447,13 +424,9 @@ Input(4):
 ~$\mathit{month}_\text{Start}$:(02) ~$\mathit{day}_\text{Start}$:(28)\\
 
 
-<<<<<<< HEAD
+
 Output:The expected result will for the given inputs is:\\
-Output (1) 0,0,0 doesnot exist.\\ 
-=======
-Output:The expected result wil \wss{proof read} for the given inputs is:\\
-Output (1) 0,0,0 doesnot \wss{proof read} exist.\\ 
->>>>>>> aa80c1a3c0ea659fb15863abb49a7aba0000cc59
+Output (1) 0,0,0 does not exist.\\ 
 Output (2) -1,-1,-1 does not exist.\\
  Output(3) 2020.02.29 does not exist\\ 
  Output(4) 2020.02.28 exist\\ 
@@ -465,12 +438,7 @@ is now, you have combined them all in -id3.}
 \wss{The expected result for the given inputs}
 
 Test Case Derivation: The output is justified if the output value is equal to
-<<<<<<< HEAD
 the corresponding input value. When the input does not exist in the calendar, the system activates the error handler. \\
-=======
-the corresponding input value. When the input does not exist in the calender
-\wss{spell check}, the system activates the error handler. \\
->>>>>>> aa80c1a3c0ea659fb15863abb49a7aba0000cc59
 
  \wss{Justify the expected value given in the Output field} 
 
@@ -557,30 +525,26 @@ Input: Input the value of requirements of \progname that drive the calculation
 of the Solar intensity. To calculate the solar intensity, it needs the latitude. of the panel $\Phi_P$\\
 
 The given inputs are:\\ 
-<<<<<<< HEAD
+
 input (1) $\Phi_P$: 90 
 ~input (2) $\Phi_P$: -90 
 ~input (3) $\Phi_P$: 0\\
-=======
-Input (1..50)~$\theta_{S_{day}}$: A random  picked rational number \wss{between
-  what bounds?}\\
->>>>>>> aa80c1a3c0ea659fb15863abb49a7aba0000cc59
+
+Input (1..50)~$\theta_{S_{day}}$: A random  picked rational number \wss{between what bounds?}\\
 
 
-<<<<<<< HEAD
+
+
 Output: The expected result will for the given inputs is:\\ 
 Output (1) Valid
 ~Output (2) Valid
 ~Output (3) Valid \\
-=======
+
 \wss{What is the correct output?  You need to explain to the reader how you find
   the value of the correct output.  What is your test oracle?}
 
 \wss{The expected result for the given inputs}
->>>>>>> aa80c1a3c0ea659fb15863abb49a7aba0000cc59
 
-
-\wss{The expected result for the given inputs}
 
 Test Case Derivation: Based on the output  constraint describes in SRS \cite{YS2019}, the 
 output tilt angle should be $-90 \leq Output \leq 90$
@@ -639,7 +603,7 @@ The given inputs are:\\
 Input (1)$\Phi_P$: 64.13 \\ 
 Input(2)$\Phi_P$:63.13\\
 
-Output: The expected result wil for the given inputs is the optimal tilt
+Output: The expected result will for the given inputs is the optimal tilt
 angle:\\ Output (1) : 43\\ Output (2) : 43\\
 
 \wss{The expected result for the given inputs}
@@ -681,14 +645,10 @@ then \textbf{expected result} = the y-axis of $P_\text{upper bound}$, otherwise
 
 \item{VerifyOutput-id7\\} 
 
-<<<<<<< HEAD
-This test case used the external data from [Landau]\cite{Charles2001}
-=======
-This test case used the external data from [Landau\cite{Charles2001}] \wss{This
+
+This test case used the external data from [Landau]\cite{Charles2001}  \wss{This
   is redundant to manually do the citation and to use BibTeX.  Just use BibTeX.
-  If you want to use the author year style, use the Natbib option for BibTeX.}
->>>>>>> aa80c1a3c0ea659fb15863abb49a7aba0000cc59
-as the expected output, expected input latitude\\
+  If you want to use the author year style, use the Natbib option for BibTeX.} as the expected output, expected input latitude\\
 
 Control: Automatic. The test cases contain cases that $\Phi_P = \text{expected
 input latitude}$, $\Phi_P \ne \text{expected input latitude}$. 
@@ -714,7 +674,7 @@ The given inputs are:\\
 Input (1)$\Phi_P$: 30 \\ 
 Input (2)$\Phi_P$: 31\\
 
-Output: The expected result wil for the given inputs is average the solar
+Output: The expected result will for the given inputs is average the solar
 intensity during winter:\\ 
 Output (1) : 5.6\\ 
 Output (2) : 5.6\\
@@ -803,27 +763,19 @@ Input/Condition: Implement \progname in diverse environments.
 					
 Output/Result: If the \progname works functionally.
 					
-<<<<<<< HEAD
+
 How the test will be performed:
 \begin{itemize}
 \item Implement \progname ~on the
-virtual machines with the system environment of Windows 10, macOS.
-\item Run every function of \progname.
-\item If function works, then success, otherwise fail.
-\end{itemize}
-=======
-How test will be performed:
- \begin{itemize}
-\item Implement \progname{} on the
-virtual machines with the system enviroment of Windows 10, MacOs.  \wss{What is
+virtual machines with the system environment of Windows 10, macOS. \wss{What is
   the OS and what is the virtual OS?  Why not Linux too?  Virtual box is easy to
 install and run.}
-\item Run every function of \progname. \wss{What do you mean to run every
+\item Run every function of \progname.\wss{What do you mean to run every
     function?  Why not simply say that the test suite will be run in all of the
     identified environments?}
-\item If function works, then success, otherwise fail. 
-\end{itemize} 
->>>>>>> aa80c1a3c0ea659fb15863abb49a7aba0000cc59
+\item If function works, then success, otherwise fail.
+\end{itemize}
+
 \end{enumerate}
 
 \wss{Your project is fairly straightforward Sharon.  If you want to aim for a
