@@ -41,7 +41,7 @@ urlcolor=cyan          % color of external links
 
 \title{Module Interface Specification for \progname}
 
-\author{Author Name}
+\author{Sharon (Yu-Shiuan) Wu}
 
 \date{\today}
 
@@ -106,12 +106,13 @@ The following table summarizes the primitive data types used by \progname.
 \textbf{Data Type} & \textbf{Notation} & \textbf{Description}\\ 
 \midrule
 character & char & a single symbol or digit\\
-integer & $\mathbb{Z}$ & a number without a fractional component in (-$\infty$,
+integer & $\mathbb{Z}$ & a number without a fractional component in  (-$\infty$,
 $\infty$) \\
 natural number & $\mathbb{N}$ & a number without a fractional component in [1,
 $\infty$) \\
-real & $\mathbb{R}$ & any number in (-$\infty$, $\infty$)\\
-degree & $\mathbb{R}$ & any number in (-$\infty$, $\infty$)\\
+real & $\mathbb{R}$ & any number in  (-$\infty$, $\infty$)\\
+bool &$\mathbb{B}$ & a statement of True or False\\
+
 
 \bottomrule
 \end{tabular} 
@@ -170,177 +171,154 @@ project.
 \newpage
 ~\newpage
 
-\section{Day ADT Module} \label{ModuleADTD} 
-
-\subsection{Template Module}
-Day
-
-\subsection{Uses}
-
-N/A\\
-
-\subsection{Exported Types}
-
-DayT = ?\\
-
-\subsection{Syntax}
-
-\subsubsection{Exported Constants}
-
-
-\subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-initday&  $\mathbb{N}$,$\mathbb{N}$,$\mathbb{N}$  & DayT & - \\
-day &  -  & natural number & - \\
-month &  -  & natural number & - \\
-year &  -  & natural number & - \\
-
-\hline
-\end{tabular}
-\end{center}
-
-
-\subsection{Semantics}
-
-\subsubsection{State Variables}
-d1 :real \\
-m1 :real \\
-y1 :real \\
-
-\subsubsection{Environment Variables}
-
-N/A\\
-
-\subsubsection{Assumptions}
-
-\noindent  initday(d,m,y):
-\begin{itemize}
-\item transition: d1, m1, y1 := d,m,y
-\item output: out := self
-\end{itemize}
-
-\noindent day( ):
-\begin{itemize}
-\item transition:
-\item output: out := d1
-\end{itemize}
-
-\noindent  month( ):
-\begin{itemize}
-\item transition:
-\item output: out := m1
-\item exception: 
-\end{itemize}
-
-\noindent  year( ):
-\begin{itemize}
-\item transition:
-\item output: out := y1
-\item exception: 
-\end{itemize}
-
-
-\section{Analemma ADT Module} \label{ModuleADTD} 
-
-\subsection{Template Module}
-Analemma
-
-\subsection{Uses}
-
-N/A\\
-
-\subsection{Exported Types}
-
-AnalemmaT = ?\\
-
-\subsection{Syntax}
-
-\subsubsection{Exported Constants}
-
-
-\subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-initanale&  real,real,real  & AnalemmaT & - \\
-x &  -  & real & - \\
-y &  -  & real & - \\
-z &  -  & real & - \\
-
-\hline
-\end{tabular}
-\end{center}
-
-
-\subsection{Semantics}
-
-\subsubsection{State Variables}
-x1 :real \\
-y1 :real \\
-z1 :real \\
-
-\subsubsection{Environment Variables}
-
-N/A\\
-
-\subsubsection{Assumptions}
-
-\noindent  initanale(x,y,z):
-\begin{itemize}
-\item transition: x1, y1, z1 := x,y,z
-\item output: out := self
-\end{itemize}
-
-\noindent x( ):
-\begin{itemize}
-\item transition:
-\item output: out := x1
-\end{itemize}
-
-\noindent  y( ):
-\begin{itemize}
-\item transition:
-\item output: out := y1
-\item exception: 
-\end{itemize}
-
-\noindent  z( ):
-\begin{itemize}
-\item transition:
-\item output: out := z1
-\item exception: 
-\end{itemize}
-
-
-
-\section{MIS of Optimum Tilt Angle Module} \label{ModuleOT} \wss{Use labels for
-  cross-referencing}
+\section{Sun Catcher Type Module} \label{ModuleSCTM} 
 
 \subsection{Module}
-tile angle
-\wss{Short name for the module}
+SunCatTy
 
 \subsection{Uses}
-Sun Intensity,zenith angle
+
+N/A\\
+
+\subsection{Exported Types}
+
+DegreeT = $\mathbb{R}$\\
+DayT = a tuple of (d:$\mathbb{N}$, m:$\mathbb{N}$, y:$\mathbb{N}$)\\
+AnalemmaT = a tuple of (x: $\mathbb{R}$ ,y: $\mathbb{R}$,z: $\mathbb{R}$)\\
 
 \subsection{Syntax}
 
+\subsubsection{Exported Constants}
+N/A\\
+
+\subsubsection{Exported Access Programs}
+N/A\\
+
+\subsection{Semantics}
+N/A\\
+\subsubsection{State Variables}
+N/A\\
+
+\subsubsection{Environment Variables}
+
+N/A\\
+
+\subsubsection{Assumptions}
+For DayT the day will always lie between 1 and 31, the month will always lie between 1 and 12, and year will always be greater than 1.
+
+\section{Day Duration ADT Module} \label{ModuleADTD} 
+
+\subsection{Template Module}
+DayDurTy
+
+\subsection{Uses}
+
+SunCatTy\\
+
+\subsection{Exported Types}
+
+DayDurT = ?\\
+
+\subsection{Syntax}
 
 \subsubsection{Exported Constants}
 
-$I_{S}$ := 1.35\\
-$I_{S_{\text{total}}}$: real\\
-$I_{S_{\text{total}}}$:= intenSum($I_{S}$)\\
-$\theta_{S_{\text{date}}}$: a sequence of degree\\
-$\theta_{S_{\text{date}}}$:= zenith( )\\
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{3cm} p{5cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+new DayDurT& a tuple of (DayT, DayT)  & DayDurT & invalid\_argument \\
+getdurlist &  -  & a sequence of integer & - \\
+setlist  &  DayT  & - & stop\_recursive \\
+setperihelion &  DayT  & - & - \\
+getnext & - & DayT &  - \\
+Countdiff: & a tuple of (DayT, DayT)  & integer & - \\
+
+\hline
+\end{tabular}
+\end{center}
+
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+dayS : DayT\\
+dayE : DayT\\
+periheD: DayT\\
+daduraL: a sequence of integer\\
+dateL: a sequence of DayT\\
+\subsubsection{Environment Variables}
+
+N/A\\
+
+\subsubsection{Assumptions}
+In  getdiff (day1, day2), assume that day 2 is always greater than day 1.
+
+\subsubsection{ Access Routine Semantics}
+
+\noindent  new DayDurT (s,e):
+\begin{itemize}
+\item transition:  dayS, dayE, periheD.d,  periheD.m := s, e, 21, 12;\\
+
+dateL := $\|$ (s = e $\Rightarrow$ $\langle$ e $\rangle$ $|$ otherwise $\Rightarrow$ $\langle$ s, setlist (getnext ( )) $\rangle$) 
+
+\item output: out := self
+\item exception: exc := (s $>$e $\Rightarrow$ invalid\_argument )
+\end{itemize}
+
+\noindent  setlist ( day ):
+\begin{itemize}
+\item transition: dateL := $\|$ (day = dayE $\Rightarrow$ $\langle$ dayE $\rangle$ $|$ otherwise $\Rightarrow$ $\langle$ day, setlist (getnext ( )) $\rangle$) 
+\item output: 
+\item exception: exc :=  (day = dateL [ 0 ] $\Rightarrow$ stop\_recursive)
+\end{itemize}
+
+\noindent  getdurlist ( ):
+\begin{itemize}
+\item transition: daduraL := $\|$ (d: DayT $|$ d $\in$ dateL  $\bullet$ $\langle$ Countdiff (periheD, d) $\rangle$ where setperihelion (d)) 
+\item output: out := daduraL
+\item exception:
+\end{itemize}
+
+\noindent setperihelion (day):
+\begin{itemize}
+\item transition: periheD.y :=  (day.m = 12 $	\wedge$ day.d $\geq	$ 21 $\Rightarrow$  day.y $|$ otherwise $\Rightarrow$  day.y - 1)
+\item output: 
+\item exception: 
+\end{itemize}
+
+\noindent Countdiff (day1, day2):
+\begin{itemize}
+\item transition:
+\item output: out := + (day1 = day2 $\Rightarrow$ 0 $|$ otherwise $\Rightarrow$ Countdiff (getnext (day1), day2) + 1)
+\item exception: 
+\end{itemize}
+
+
+\noindent  getnext (  ):
+\begin{itemize}
+\item transition: 
+\item output: dayS := (dayS $<$ dayE $\Rightarrow$ The next day of dayS according to the calendar $|$ otherwise $\Rightarrow$ dateL [0] )
+\item exception: 
+\end{itemize}
+
+
+\section{MIS of Input Parameters Module} \label{ModuleIP} 
+
+\subsection{Module}
+InputPara
+
+\subsection{Uses}
+HardH
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
 
 \subsubsection{Exported Access Programs}
 
@@ -349,7 +327,348 @@ $\theta_{S_{\text{date}}}$:= zenith( )\\
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline 
-angle &  -  & degree & - \\
+init & - & - & Key\_error \\
+getla & - & DegreeT & - \\
+getph & - & real & - \\
+getpw & - & real & - \\
+getds & - & DayT & - \\
+getde & - & DayT & - \\
+
+
+\hline
+\end{tabular}
+\end{center}
+
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+latitude: DegreeT\\
+dayS: DayT\\
+dayE: DayT\\
+panH: real\\
+panW real
+
+
+\subsubsection{Environment Variables}
+key: Input variables from keyboard.
+
+\subsubsection{Assumptions}
+When users chick the submit bottom from system interface, InputPara.init ( ) implement.
+
+\subsubsection{ Access Routine Semantics}
+
+\noindent  init ( ):
+\begin{itemize}
+\item transition: latitude, panH, panW, dayS, dayE := HardH.la, HardH.pn, HardH.pw, (HardH.ds, HardH.ms, HardH.ys), (HardH.de, HardH.me, HardH.ye)
+\item output:
+\item exception: 
+\end{itemize}
+
+\noindent  getla ( ):
+\begin{itemize}
+\item transition: 
+\item output: latitude
+\item exception: 
+\end{itemize}
+
+\noindent  getph ( ):
+\begin{itemize}
+\item transition: 
+\item output: panH
+\item exception: 
+\end{itemize}
+
+\noindent  getpw ( ):
+\begin{itemize}
+\item transition: 
+\item output: panW
+\item exception: 
+\end{itemize}
+
+\noindent  getds ( ):
+\begin{itemize}
+\item transition: 
+\item output: dayS
+\item exception: 
+\end{itemize}
+
+\noindent  getde ( ):
+\begin{itemize}
+\item transition: 
+\item output: dayE
+\item exception: 
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\section{MIS of Input Verify Module} \label{ModuleIV} 
+
+\subsection{Module}
+InputVer
+
+\subsection{Uses}
+InputPara
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline 
+init & - & - & - \\
+getverlan & - & bool & - \\
+getverpan & - & bool & - \\
+getverday & - & bool & - \\
+\hline
+\end{tabular}
+\end{center}
+
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+latitude: DegreeT\\
+dayS: DayT\\
+dayE: DayT\\
+panH: real\\
+panW real
+
+
+\subsubsection{Environment Variables}
+
+
+\subsubsection{Assumptions}
+InputPara will always implement before InputVer
+
+
+\subsubsection{ Access Routine Semantics}
+
+\noindent  init ( ):
+\begin{itemize}
+\item transition: latitude,panH, panW, dayS, dayE := InputPara.la, InputPara.ph, InputPara.pw,  InputPara.ds, InputPara.de
+\item output:
+\item exception: 
+\end{itemize}
+
+\noindent  getverlan ( ):
+\begin{itemize}
+\item transition: 
+\item output: out := (latitude $\leq	$ 90 $\wedge$ latitude $\geq$ - 90 $\Rightarrow	$ True $|$ otherwise $\Rightarrow	$ False)
+\item exception: 
+\end{itemize}
+
+\noindent  getverpan ( ):
+\begin{itemize}
+\item transition: 
+\item output: out := (panH $>$ 0 $\wedge$ panW $>$ 0 $\Rightarrow	$ True $|$ otherwise $\Rightarrow	$ False)
+\item exception: 
+\end{itemize}
+
+\noindent  getverday ( ):
+\begin{itemize}
+\item transition: 
+\item output: out := ( if dayS and dayE is a valid date in Gregorian calendar $\Rightarrow	$ True $|$ otherwise $\Rightarrow	$ False)
+\item exception: 
+\end{itemize}
+
+
+\subsubsection{Local Functions}
+
+\section{MIS of Output Parameters Module} \label{ModuleIP} 
+
+\subsection{Module}
+OutputPara
+
+\subsection{Uses}
+Table\\
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{5cm} p{5cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline 
+init & - & - & - \\
+addresult & a tulple of ( DegreeT, real, integer) & - & - \\
+getresult & - & a sequence of a tulple of ( DegreeT, real, integer) & - \\
+getdiff & real, real & integer & - \\
+
+
+\hline
+\end{tabular}
+\end{center}
+
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+resultL: a sequence of a tulple of ( t: DegreeT, e: real, diff: integer)\\
+
+
+\subsubsection{Environment Variables}
+
+
+\subsubsection{Assumptions}
+
+
+\subsubsection{ Access Routine Semantics}
+
+\noindent  init ( ):
+\begin{itemize}
+\item transition: resultL := $\{ $ $ \}$
+\item output:
+\item exception: 
+\end{itemize}
+
+\noindent  addresult ( angle, energy ):
+\begin{itemize}
+\item transition: resultL := $\|$ ($|$resultL$|$ = 0 $\Rightarrow$ $\langle$ ( angle, energy, 100 )  $\rangle$ $|$ angle $\notin$ resultL.t $\Rightarrow$ $\langle$ ( angle, energy, getdiff (resultL.e, energy) )  $\rangle$ )
+\item output:
+\item exception: 
+\end{itemize}
+
+\noindent  getresult (  ):
+\begin{itemize}
+\item transition: 
+\item output: out := resultL
+\item exception: 
+\end{itemize}
+
+\noindent  getdiff ( e1, e2 ):
+\begin{itemize}
+\item transition: 
+\item output: out :=
+\large
+$\frac{\text{e2}}{\text{e1}}$ $\times$ 100
+
+\item exception: 
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\section{MIS of Table-layout Module} \label{ModuleTI} 
+
+\subsection{Module}
+Table\\
+
+\subsection{Uses}
+OutputPara\\
+HardH\\
+
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+hRow1: "Tilt Angle"
+hRow2: "Energy Absorption"
+hRow3: "Energy Competition"
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{5cm} p{5cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline 
+init & - & - & - \\
+display & - & - & - \\
+
+\hline
+\end{tabular}
+\end{center}
+
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+resultL: a sequence of a tulple of ( t: DegreeT, e: real, diff: integer)\\
+
+\subsubsection{Environment Variables}
+Output variables will display on the screen.
+
+\subsubsection{Assumptions}
+
+
+\subsubsection{ Access Routine Semantics}
+
+\noindent  init ( ):
+\begin{itemize}
+\item transition: resultL := OutPara.getresult ( )
+\item output:
+\item exception: 
+\end{itemize}
+
+\noindent  display ( ):
+\begin{itemize}
+\item transition:
+\item output: out := display a table that shows the result on the screen.
+
+The text file has the following format, where the first row following heading: hRow1, denotes the result of optimal tilt angle; the second row following heading, hRow2, denotes the result of estimating energy absorption; and the third row following heading, hRow3, denotes the result of different energy absorption between resultL.e [ 0 ] and resultL.e [ 1.. $|$ resultL$|$ ] followed by a symbol $\%$
+
+
+\begin{center}
+\begin{tabular}{p{4.5cm}|p{4cm}|p{1cm}|p{5cm}}
+
+\hline 
+Tilt Angle & resultL.t [ 0 ] & ...  & resultL.t [ $|$ resultL$|$ ] \\
+\hline 
+Energy Absorption & resultL.e [ 0 ] & ...  & resultL.e [ $|$ resultL$|$ ] \\
+\hline 
+Energy Competition & resultL.diff [ 0 ] $\%$    & ...     & resultL.diff [ $|$ resultL$|$ ] $\%$    \\
+\hline
+\end{tabular}
+\end{center}
+
+\item exception: 
+\end{itemize}
+
+
+\subsubsection{Local Functions}
+
+
+\section{MIS of Optimum Tilt Angle Module} \label{ModuleOT} \wss{Use labels for
+  cross-referencing}
+
+\subsection{Module}
+TitleAng
+\wss{Short name for the module}
+
+\subsection{Uses}
+SunInten\\
+ZenithAng\\
+
+\subsection{Syntax}
+
+
+\subsubsection{Exported Constants}
+
+$I_{S}$ := 1.35\\
+
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline 
+init &  -  & -  & - \\
+getilt &  -  & DegreeT & - \\
 
 
 
@@ -363,11 +682,9 @@ angle &  -  & degree & - \\
 
 \subsubsection{State Variables}
 
-
-max.inten: real\\
-max.inten :=  intenSingle($I_{S_{\text{total}}}$, $\theta_{S_{\text{date}}}$[0]),\\
-max.deg : degree\\
-max.deg = $\theta_{S_{\text{date}}}$[0]\\
+sunIn: real\\
+zenithL: a sequence of DegreeT\\
+maxsunIn: a tuple of (i: real, d: DegreeT)\\
 
 \wss{Not all modules will have state variables.  State variables give the module  a memory.}
 
@@ -383,19 +700,25 @@ N/A
 
 \wss{Try to minimize assumptions and anticipate programmer errors via
 exceptions, but for practical purposes assumptions are sometimes appropriate.}
+
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg} angle( ):
+\noindent \wss{accessProg} init( ):
 \begin{itemize}
-\item transition:\\
-($\forall$z: degree $|$ z $\in$ $\theta_{S_{\text{date}}}$ $	\bullet$ max.inten = ifMax (max.inten, intenSingle($I_{S_{\text{total}}}$,z))$\Rightarrow$ nothing change $|$  otherwise $\Rightarrow$ max.inten =  intenSingle($I_{S_{\text{total}}}$,z),
-max.deg = z)
-
-\item output: max.deg \\
-
-
-\item exception: \wss{if appropriate} 
+\item transition: sunIn, zenithL,maxsunIn.i, maxsunIn.d := SunInten.sum($I_{S}$), ZenithAng.getzen ( ),  
+\item output: 
+\item exception: 
 \end{itemize}
+
+
+\noindent \wss{accessProg} getilt ( ):
+\begin{itemize}
+\item transition: maxsunIn := (j: integer $|$ j $\in$ [0.. $|$zenithL$|$] $\bullet$ j = 0 $\Rightarrow$  (SunInten.single (sunIn, zenithL [ 0 ]), zenithL [ 0 ]) $|$ ifMax (maxsunIn.i, SunInten.single (sunIn, zenithL [ j ])) $\neq$ maxsunIn.i $\Rightarrow$  (SunInten.single (sunIn, zenithL [ j ]), zenithL [ j ]))
+ 
+\item output: out := maxsunIn.d
+\item exception: 
+\end{itemize}
+
 
 \wss{A module without environment variables or state variables is unlikely to
   have a state transition.  In this case a state transition can only occur if
@@ -407,7 +730,7 @@ max.deg = z)
 \subsubsection{Local Functions}
 
 ifMax: real $\times$ real $\rightarrow$ real\\
-ifMax(x, y) = (x $\geq$ y $\Rightarrow$ x $|$ y $>$ x $\Rightarrow$ y )
+ifMax(x, y) = (x $\geq$ y $\Rightarrow$ x $|$ otherwise $\Rightarrow$ y )
 
 \wss{As appropriate} \wss{These functions are for the purpose of specification.
   They are not necessarily something that is going to be implemented
@@ -419,23 +742,17 @@ ifMax(x, y) = (x $\geq$ y $\Rightarrow$ x $|$ y $>$ x $\Rightarrow$ y )
 \section{MIS of Solar Energy Absorption Module} \label{ModuleSEA} 
 
 \subsection{Module}
-Energy Absorption
+Energy
 
 \subsection{Uses}
-input parameter, solar intensity, tilt angle,zenith angle\\
+InputPara, ZenithAng, TiltAng
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
 
 $I_{S}$ := 1.35\\
-$I_{S_{\text{total}}}$: real\\
-$I_{S_{\text{total}}}$:= intenSum($I_{S}$)\\
-$I_{S_{\text{max}}}$ : real\\
-$I_{S_{\text{max}}}$
- := intenSingle($I_{S}$, angle( ))\\
-$\theta_{S_{\text{date}}}$: a sequence of degree\\
-$\theta_{S_{\text{date}}}$ := zenith( )\\
+
 \subsubsection{Exported Access Programs}
 
 \begin{center}
@@ -443,7 +760,10 @@ $\theta_{S_{\text{date}}}$ := zenith( )\\
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline 
-energy & - & real[ ] & - \\
+init & - & - & - \\
+getsunIn & - & a sequence of real & - \\
+getenergy & - & a sequence of real & - \\
+getavenergy & - & real & - \\
 
 \hline
 \end{tabular}
@@ -453,21 +773,55 @@ energy & - & real[ ] & - \\
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-$I_{S_{\text{daily}}}$: real[ ]
+sunInL: a sequence of real\\
+energyL: a sequence of real\\
+zenL: a sequence of DegreeT\\
+maxAng: real\\
+avenergy: real\\
+panW: real\\
+panH: real\\
 
 \subsubsection{Environment Variables}
 
 N/A
 
 \subsubsection{Assumptions}
+ZenithAngle has been fully implement before implement Energy.init ( ).\\
+Energy.init ( ) is called first before any other exported access programs.\\
+Energy.getsunIn ( ) is always called before Energy.getenergy ( ).
 
 
-\noindent  energy( ):
+\subsubsection{ Access Routine Semantics}
+
+\noindent  init ( ):
 \begin{itemize}
-\item transition: $I_{S_{\text{daily}}}$ := ($\forall$ x : degree $|$ x $\in$ $\theta_{S_{\text{date}}}$ $\bullet$ intenSingle($I_{S_{\text{max}}}$, x))
+\item transition: panW, panH, maxAng, zenL := InputPara.getpw ( ), InputPara.getph ( ), TitleAng.getilt ( ), ZenithAngle.getzen ( )
 
-\item output: out := ( $\forall$ x: real $|$ x $\in$ $I_{S_{\text{daily}}}$ $\bullet$ $P_{A_{\text{w}}}$ $\times$ $P_{A_{\text{h}}}$ $\times$ 18.7 $\times$ 0.75 $\times$ x)
+\item output:
  
+\item exception: 
+\end{itemize}
+
+\noindent  getsunIn ( ):
+\begin{itemize}
+\item transition: sunInL := $\|$ (i: integer $|$ i $\in$ [0.. $|$zenL$|$] $\bullet$ $\langle$ SunInten.single(maxAng, zenL[ i ]) $\rangle$)
+
+\item output: out := sunInL
+ 
+\item exception: 
+\end{itemize}
+
+\noindent  getenergy ( ):
+\begin{itemize}
+\item transition: energyL :=  $\|$ (i: integer $|$ i $\in$ [0.. $|$sunInL$|$] $\bullet$ $\langle$ panW $\times$ panH $\times$ 18.7 $\times$ 0.75 $\times$ sunInL [ i ] $\rangle$)
+\item output: out := energyL
+\item exception: 
+\end{itemize}
+
+\noindent  getavenergy ( ):
+\begin{itemize}
+\item transition: avenergy :=  + (i: integer $|$ i $\in$ [0.. $|$energyL$|$] $\bullet$  energyL[ i ]) / $|$energyL$|$
+\item output: out := avenergy
 \item exception: 
 \end{itemize}
 
@@ -480,30 +834,29 @@ N/A
 
 \wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
 
-\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
+\wss{It is also possible to use \LaTeX for hyperlinks  to external documents.}
 
 \subsection{Module}
-Sun Intensity
+SunInten
 
 \subsection{Uses}
-zenith angle
+ZenithAngle
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
 $I_{S}$ := 1.35\\
-$\theta_{S_{\text{date}}}$: a squence of degree\\
-$\theta_{S_{\text{date}}}$ := zenith( )
 
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{2cm} p{5cm} p{3cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline 
-intenSum & real & real & - \\
-intenSingle & real, degree & real & - \\
+init & - & - & - \\
+sum & real & real & - \\
+single & a tuple of (real, DegreeT) & real & - \\
 
 \hline
 \end{tabular}
@@ -514,24 +867,41 @@ intenSingle & real, degree & real & - \\
 
 \subsubsection{State Variables}
 
+zenL: a sequence of DegreeT\\
+
 
 \subsubsection{Environment Variables}
 
 N/A
 
 \subsubsection{Assumptions}
+SunInten.init ( ) is called first before any other exported access programs\\
+ZenithAngle.init ( ) has been fully implement before implement SunInten.init ( )\\
 
+\subsubsection{ Access Routine Semantics}
 
-\noindent intenSum( i ):
+\noindent init (  ):
 \begin{itemize}
-\item output: out := +($\forall$ d: degree $|$ d $\in$ $\theta_{S_{\text{date}}}$ $\bullet$ $I_{S} \cdot \frac{1.00}{i}^{sec(d)} $)
+\item transition : zenL := ZenithAng.getzen ( )
+\item output: out :
 \item exception: 
 \end{itemize}
 
-\noindent intenSingle(i, d):
+\noindent sum ( i ):
 \begin{itemize}
-\item output: out := $1.35 \cdot \frac{1.00}{i}^
-{sec(d)} $
+\item output: out := + (i: integer $|$ i $\in$ [0.. $|$zenL$|$] $\bullet$ 
+\begin{center}\large
+$I_{S} \cdot \frac{1.00}{i}^{sec(zenL [ i ])} $)
+\end{center}
+\item exception: 
+\end{itemize}
+
+\noindent single (i, d):
+\begin{itemize}
+\item output: out := 
+\begin{center}\large
+$I_{S} \cdot \frac{1.00}{i}^{sec(d)} $
+\end{center}
 \item exception: 
 \end{itemize}
 
@@ -541,19 +911,17 @@ N/A
 \section{MIS of Zenith Angle Equation Module} \label{ModuleZA} 
 
 \subsection{Module}
-Zenith angle
+ZenithAng
 
 
 \subsection{Uses}
-Date Duration Module\ref{ModuleDD}
-
+DayDurTy\\
+SunCatTy
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-$\Phi_{P}$: degree\\
-$\delta_{\text{date}}$: a squence of degree\\
-$\delta_{\text{date}}$:= declination( ) 
+
 
 \subsubsection{Exported Access Programs}
 
@@ -562,7 +930,10 @@ $\delta_{\text{date}}$:= declination( )
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline 
-zenith &  -  & degree[ ] & - \\
+init & AnalammaT & -  & -\\
+getzen &  -  & a sequence of DegreeT & - \\
+getfiltdec &  -  & a sequence of DegreeT & - \\
+getdec & - & a sequence of DegreeT & - \\
 
 \hline
 \end{tabular}
@@ -573,58 +944,84 @@ zenith &  -  & degree[ ] & - \\
 
 \subsubsection{State Variables}
 
-zenithS: a squence of degree
-
+zenS: a sequence of DegreeT\\
+decS: a sequence of DegreeT\\
+day: DayDurTy\\
+dayL: a sequence of integer\\
+latitude: real\\
+analeL: a sequence of AnalemmaT
 
 \subsubsection{Environment Variables}
 
-N/A
+
+
 
 \subsubsection{Assumptions}
+Read File Module will always be implemented before Zenith angle Module.\\
+InputPara Module will always be implemented before Zenith angle Module.\\
+ZenithAng.init ( ) is called before any other access program.\\
+ZenithAng.getdec ( ) is called before ZenithAng.getzen ( ).\\
+
+\subsubsection{ Access Routine Semantics}
 
 
-
-
-\noindent \wss{accessProg}zenith( ):
+\noindent \wss{accessProg}init (a):
 \begin{itemize}
-\item transition: zenithS := ($\forall$ d: degree $|$ d $\in$ $\delta_{\text{date}}$ $\bullet$ $\Phi_{P}$ $\times$ d $\geq$ 0 $\Rightarrow$ $\Phi_{P}$ - d $|$ otherwise $\Rightarrow$ $\Phi_{P}$ + d)
+\item transition: analeL := $\|$ (i: integer $|$ i $\in$ [0.. 365] $\bullet	$ (a.x [ i ], a.y [ i ], a.z [ i ]))\\
+day := new DayDurT (InputPara.days, InputPara.daye)\\
+dayL, latitude := day.getdurlist, InputPara.getlat\\
 
-\item output: out := self
+\item output: 
+\item exception: 
+\end{itemize}
+
+\noindent  getzen ( ):
+\begin{itemize}
+\item transition: zenS := $\|$ (i: integer $|$ i $\in$ [0.. 365] $\bullet$ latitude $\times$ decS [ i ] $\geq$ 0 $\Rightarrow$ $\langle$ latitude - decS [  i ] $\rangle$ $|$ otherwise $\Rightarrow$ $\langle$ latitude + decS [ i ] $\rangle$)
+
+\item output: out := zenS
 \item exception: 
 \end{itemize}
 
 
+\noindent  getdec ( ):
+\begin{itemize}
+\item transition: decS := $\|$ (i: integer $|$ i $\in$ [0.. $|$dayL$|$] $\bullet$ 
+\begin{center}\large{
+$	\langle \arcsin \frac{analeL.z [dayL[ i ] ]}{ \sqrt{analeL.x^2 [ dayL[ i ] ] + analeL.y^2 [ dayL[ i ] ] + analeL.z^2 [ dayL[ i ] ]}} \rangle$)}
+\end{center}
+\item output: out := decS
+\item exception: 
+\end{itemize}
 
 \subsubsection{Local Functions}
 
-
 \newpage
 
-\section{MIS of Sun Declination Module} \label{ModuleSD} 
+\section{MIS of Read File Module} \label{ModuleSD} 
 
 \subsection{Module}
-Sun Declination
+ReadFile
 
 
 \subsection{Uses}
-date duration
+ZenithAng
 
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-date: a squence of integer\\
-date := dateduration( )
+None
 
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{3cm} p{3cm} p{3cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline 
-intidec & - & AnalemmaT[ ] & -\\
-declination & - & degree[ ] & - \\
+load\_anale\_data & string & - & -\\
+
 
 \hline
 \end{tabular}
@@ -635,165 +1032,43 @@ declination & - & degree[ ] & - \\
 
 \subsubsection{State Variables}
 
-declinationS: a squence of degree\\
-initdec: a squence of AnalemmaT
+
 
 \subsubsection{Environment Variables}
 
-file: Input a file that contains a sequence of (x: real, y: real, z: real) of 366 days
-
+anale\_data: File listing Analemma data
 
 
 \subsubsection{Assumptions}
+The input file will match the given specification.
+
+\subsubsection{ Access Routine Semantics}
 
 
-
-\noindent  intidec( ):
+\noindent  load\_anale\_data ( s ):
 \begin{itemize}
-\item transition: initdec := ($\forall$ d: integer,$\forall$ i: integer $|$ d $\in$ date, i $\in$  [0...] $\bullet$ dec.z[i] := file[d].$z$, dec.x[i] := file[d].$x$,dec.y[i] := file[d].$y$)
+\item transition: read data from the file anale\_data associated with the string s. Use
+this data to update the state of the ZenithAng module. load\_anale\_data ( s ) will first initialize ZenithAng (ZenithAng.init ( )) before populating ZenithAng with analemma data that follows the types in SunCatTy.
 
-\item output: self
-\item exception: 
-\end{itemize}
+The text file has the following format, where x\_i, y\_i z\_i denotes the vector that locates
+Earth relative to the Sun on the day i since perihelion.
 
-\noindent  declination( ):
-\begin{itemize}
-\item transition: declinationS := ($\forall$: i:DayT $|$ i $\in$ intidec( ) $\bullet$ $\arcsin \frac{i.z}{ \sqrt{i.x^2 + i.y^2 + i.z^2}}$)
-
-\item output: self
+All data values in a row are separated by commas. Rows are separated by a new line. The data shown below is for a total of 366 days.
+\begin{center}
+x\_0,   y\_0,   z\_0\\
+x\_1,   y\_1,   z\_1\\
+x\_2,   y\_2,   z\_2\\
+.\\
+.\\
+.\\
+x\_365,   y\_365,   z\_365\\
+\end{center}
+\item output: 
 \item exception: 
 \end{itemize}
  
 
 \subsubsection{Local Functions}
-
-\section{MIS of Days Module} \label{ModuleDD} 
-\subsection{Module}
-Days
-
-\subsection{Uses}
-Input parameter
-
-\subsection{Syntax}
-
-\subsubsection{Exported Constants}
-
-end: DayT\\
-end.d = $\mathit{day}_\text{End}$\\
-end.m = $\mathit{month}_\text{End}$\\
-end.y = $\mathit{year}_\text{End}$\\
-
-\subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline 
-perihelion & DayT & DayT & - \\
-dateduration & - & integer[ ] & - \\
-
-
-\hline
-\end{tabular}
-\end{center}
- (day.m = 12 $	\wedge$ day.d $\geq	$ 21 $\Rightarrow$ fixday.y = day.y $|$ otherwise $\Rightarrow$ fixday.y := day.y - 1)
-
-\subsection{Semantics}
-
-\subsubsection{State Variables}
-days : a sequence of integer
-
-fixday : DayT
-
-start: DayT\\
-start.d := $\mathit{day}_\text{Start}$\\
-start.m := $\mathit{month}_\text{Start}$\\
-start.y := $\mathit{year}_\text{Start}$\\
-
-\subsubsection{Environment Variables}
-
-None
-
-\subsubsection{Assumptions}
-
-\noindent perihelion(day):
-\begin{itemize}
-\item transition: fixday :=  (day.m = 12 $	\wedge$ day.d $\geq	$ 21 $\Rightarrow$ fixday.d = 21, fixday.m = 12, fixday.y = day.y $|$ otherwise $\Rightarrow$ fixday.d = 21, fixday.m = 12, fixday.y := day.y - 1)
-\item output: out := fixday
-\item exception: 
-\end{itemize}
-
-\noindent dateduration(day):
-\begin{itemize}
-\item transition: days := ( negetiveD(start, end) = 1 $\Rightarrow$  countdays(perihelion(start), start)), start := adday(start)
-\item output: days
-\item exception: 
-\end{itemize}
-
-
-\subsubsection{Local Functions}
-negetiveD: DayT $\times$ DayT $\rightarrow $ integer\\
-negetiveD(day1, day2) := (countdays(day1, day2) $\geq$ 0 $\Rightarrow$ 1 $|$ otherwise $\Rightarrow$ -1)
-
-\section{MIS of Count Days Module} \label{ModuleDD} 
-\subsection{Module}
-Count days
-
-
-\subsection{Uses}
-N/A
-
-\subsection{Syntax}
-
-\subsubsection{Exported Constants}
-
-
-\subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline 
-countdays & DayT, DayT & integer & - \\
-addays & DayT & DayT & - \\
-
-\hline
-\end{tabular}
-\end{center}
-
-\subsection{Semantics}
-
-\subsubsection{State Variables}
-
-
-
-\subsubsection{Environment Variables}
-
-None
-
-\subsubsection{Assumptions}
-
-
-
-\noindent countdays(day1, day2):
-\begin{itemize}
-\item transition:
-\item output: out := Count the days from the start  date, day, to the end date, day, but not including the end date.
-\item exception: 
-\end{itemize}
-
-\noindent adday(day):
-\begin{itemize}
-\item transition: 
-\item output: out := the next day of the date, day.
-\item exception: 
-\end{itemize}
-
-
-\subsubsection{Local Functions}
-
 
 
 \newpage
