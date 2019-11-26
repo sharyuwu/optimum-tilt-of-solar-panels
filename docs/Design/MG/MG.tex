@@ -7,7 +7,10 @@
 \usepackage{tabularx}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{xr}
 \usepackage{hyperref}
+\externaldocument{../../SRS/SRS}
+
 \hypersetup{
     colorlinks,
     citecolor=black,
@@ -34,7 +37,7 @@
 \begin{document}
 
 \title{Module Guide for \progname{}} 
-\author{Author Name}
+\author{Sharon (Yu-Shiuan) Wu}
 \date{\today}
 
 \maketitle
@@ -46,7 +49,7 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
+2019/11/25 & 1.0 & First version update to Git\\
 Date 2 & 1.1 & Notes\\
 \bottomrule
 \end{tabularx}
@@ -119,7 +122,7 @@ potential readers of this document are as follows:
 
 \begin{itemize}
 \item New project members: This document can be a guide for a new project
-memberto easily understand the overall structure and quickly find the
+member to easily understand the overall structure and quickly find the
   relevant modules they are searching for.
 \item Maintainers: The hierarchical structure of the module guide improves the
 maintainers' understanding when they need to make changes to the system. It is
@@ -139,7 +142,7 @@ specifies the connections between the software requirements and the
 modules. Section \ref{SecMD} gives a detailed description of the
 modules. Section \ref{SecTM} includes two traceability matrices. One checks
 the completeness of the design against the requirements provided in the SRS.
-Theother shows the relation between anticipated changes and the modules.
+The other shows the relation between anticipated changes and the modules.
 Section\ref{SecUse} describes the use relation between modules.
 
 \section{Anticipated and Unlikely Changes} \label{SecChange}
@@ -154,44 +157,41 @@ unlikely changes are listed in Section \ref{SecUchange}.
 Anticipated changes are the source of the information that is to be hidden
 inside the modules. Ideally, changing one of the anticipated changes will only
 require changing the one module that hides the associated decision. The
-approachadapted here is called design for
+approach adopted here is called design for
 change.
 
 \begin{description}
-\item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific
+\item[\refstepcounter{acnum} \actheacnum \label{acH}:] The specific
   hardware on which the software is running.
-\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The initial of the
+\item[\refstepcounter{acnum} \actheacnum \label{acIP}:] The initial of the
   input parameter.
-\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The constraint of theinput data.
-\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The format of the
-  input parameter.
-\item[\refstepcounter{acnum} \actheacnum \label{acOutput}:] The constraint of
-the output data.
-\item[\refstepcounter{acnum} \actheacnum \label{acOutput}:] The format of the
-  output data.
-\item[\refstepcounter{acnum} \actheacnum \label{acSolarEnergy}:] How to
-calculate the output solar energy.
-\item[\refstepcounter{acnum} \actheacnum \label{acDateDuration}:]  How to
-calculate the date duration.
-\item[\refstepcounter{acnum} \actheacnum \label{acTiltAngle}:] How to calculate
-the optimum tilt angle.
-\item[\refstepcounter{acnum} \actheacnum \label{acSunIntensity}:] The algorithm
-of sun intensity.
-\item[\refstepcounter{acnum} \actheacnum \label{acZenithAngle}:] The algorithm
-of zenith angle.
-\item[\refstepcounter{acnum} \actheacnum \label{acSunDeclination}:] The
-algorithm of sun declination angle.
-\item[\refstepcounter{acnum} \actheacnum \label{acPlot}:]  The
-implementation for plotting the data.
-
+\item[\refstepcounter{acnum} \actheacnum \label{acIC}:] The constraint of the input data.
+\item[\refstepcounter{acnum} \actheacnum \label{acO}:] The initial of the
+  output parameter.
+\item[\refstepcounter{acnum} \actheacnum \label{acR}:] The initial of the
+  parameter of the read file.
+\item[\refstepcounter{acnum} \actheacnum \label{acSEA}:] The algorithm of the
+ solar energy absorption.
+\item[\refstepcounter{acnum} \actheacnum \label{acOTP}:] The algorithm of the 
+optimum tilt angle.
+\item[\refstepcounter{acnum} \actheacnum \label{acSI}:] The equation of the sun
+intensity.
+\item[\refstepcounter{acnum} \actheacnum \label{acZA}:] The algorithm of the
+ zenith angle.
+\item[\refstepcounter{acnum} \actheacnum \label{acDD}:] The structure of the 
+day duration ADT.
+\item[\refstepcounter{acnum} \actheacnum \label{acT}:] The structure of 
+the table-layout.
+\item[\refstepcounter{acnum} \actheacnum \label{acSCT}:]  The structure of 
+sun catcher type.
 \end{description}
 
 \subsection{Unlikely Changes} \label{SecUchange}
 
 The module design should be as general as possible. However, a general system
-ismore complex. Sometimes this complexity is not necessary. Fixing some design
+is more complex. Sometimes this complexity is not necessary. Fixing some design
 decisions at the system architecture stage can simplify the software design. If
-these decision should later need to be changed, then many parts of the design
+these decisions should later need to be changed, then many parts of the design
 will potentially need to be modified. Hence, it is not intended that these
 decisions will be changed.
 
@@ -199,7 +199,7 @@ decisions will be changed.
 \item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] Input/Output devices
   (Input: File and/or Keyboard, Output: File, Memory, and/or Screen).
 \item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] The goal of \progname
-is always predict the title angle and the solar energy absorption.
+is always predict the optimum title angle and the solar energy absorption and show the difference of the solar energy absorptions.
 \end{description}
 
 \section{Module Hierarchy} \label{SecMH}
@@ -210,21 +210,21 @@ below, which are leaves in the hierarchy tree, are the modules that will
 actually be implemented.
 
 \begin{description}
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
+\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware Hiding Modules
+\item [\refstepcounter{mnum} \mthemnum \label{mIC}:] Control Module
 \item [\refstepcounter{mnum} \mthemnum \label{mIP}:] Input Parameters Module
-\item [\refstepcounter{mnum} \mthemnum \label{mIF}:] Input Format Module
+\item [\refstepcounter{mnum} \mthemnum \label{mIV}:] Input Verification Module
 \item [\refstepcounter{mnum} \mthemnum \label{mOP}:] Output Parameters Module
-\item [\refstepcounter{mnum} \mthemnum \label{mSEA}:] Solar Energy Output
-Module\item [\refstepcounter{mnum} \mthemnum \label{mOTA}:] Optimum Tilt Angle
+Module\item [\refstepcounter{mnum} \mthemnum \label{mR}:] Read File Module
+\item [\refstepcounter{mnum} \mthemnum \label{mSE}:] Solar Energy Absorption Module
+\item [\refstepcounter{mnum} \mthemnum \label{mOTA}:] Optimum Tilt Angle Module
+\item [\refstepcounter{mnum} \mthemnum \label{mSIE}:] Sun Intensity Equation
 Module
-\item [\refstepcounter{mnum} \mthemnum \label{mSI}:] Sun Intensity Equation
+\item [\refstepcounter{mnum} \mthemnum \label{mZAE}:] Zenith Angle Equation
 Module
-\item [\refstepcounter{mnum} \mthemnum \label{mZA}:] Zenith Angle Equation
-Module
-\item [\refstepcounter{mnum} \mthemnum \label{mSD}:] Sun Declination Equation
-Module
-\item [\refstepcounter{mnum} \mthemnum \label{mDD}:] Date Duration Module
-\item [\refstepcounter{mnum} \mthemnum \label{mP}:] Plotting Module
+\item [\refstepcounter{mnum} \mthemnum \label{mDD}:] Day Duration ADT Module
+\item [\refstepcounter{mnum} \mthemnum \label{mT}:] Table-layout Module
+\item [\refstepcounter{mnum} \mthemnum \label{mSCT}:] Sun Catcher Type Module
 \end{description}
 
 
@@ -235,26 +235,26 @@ Module
 \textbf{Level 1} & \textbf{Level 2}\\
 \midrule
 
-{Hardware-Hiding Module} & ~ \\
+{Hardware-Hiding Modules} & ~ \\
 \midrule
 
 \multirow{7}{0.3\textwidth}{Behaviour-Hiding
  Module}& Control Module\\
 & Input Parameters Module\\
-& Input Verify Module\\
+& Input Verification Module\\
 & Output Parameters Module\\
+& Read File Module\\
 & Solar Energy Absorption Module\\
 & Optimum Tilt Angle Module\\
 & Sun Intensity Equation Module\\
 & Zenith Angle Equation Module\\
-& Sun Declination Module\\
-& Days Module\\
 \midrule
 
 \multirow{3}{0.3\textwidth}{Software Decision Module} 
-& Count days Module\\
+& Day Duration ADT Module\\
 & Table-layout Module\\
-& Sequence Data Structure Module\\
+& Sun Catcher Type 
+Module\\
 \bottomrule
 
 \end{tabular}
@@ -262,11 +262,7 @@ Module
 \label{TblMH}
 \end{table}
 
-\begin{figure}[H]
-	\center
-  \includegraphics[scale=0.5]{Fig_Hierarchy.jpg}
- \caption{\label{Fig_Hierarchy} Hierarchy}
-\end{figure}
+
 
 
 \section{Connection Between Requirements and Design} \label{SecConnection}
@@ -281,8 +277,8 @@ between requirements and modules is listed in Table \ref{TblRT}.
   they are explicitly recorded here.  For instance, if a program has security
   requirements, a specific design decision may be made to satisfy those
 requirements with a password. In scientific examples, the choice of
-algorithmcould potentially go here, if that is a decision that is exposed by
-theinterface.}
+algorithm could potentially go here, if that is a decision that is exposed by
+the interface.}
 
 \section{Module Decomposition} \label{SecMD}
 
@@ -299,7 +295,7 @@ module will be implemented by the \progname{} software.
 
 Only the leaf modules in the hierarchy have to be implemented. If a dash
 (\emph{--}) is shown, this means that the module is not a leaf and will not
-haveto be implemented.
+have to be implemented.
 
 \subsection{Hardware Hiding Modules (\mref{mHH})}
 
@@ -324,76 +320,81 @@ haveto be implemented.
 \item[Implemented By:] --
 \end{description}
 
+\subsubsection{Control Module (\mref{mC})}
+
+\begin{description}
+\item[Secrets:] The structure that modules connect to each other.
+\item[Services:] Implement the designed modules.
+\item[Implemented By:] \progname
+\end{description}
+
 \subsubsection{Input Parameters Module (\mref{mIP})}
 
 \begin{description}
-\item[Secrets:]The initialization of the input parameter.
-\item[Services:]Assigns the input value to its parameter.
+\item[Secrets:] The paramenters of inputs.
+\item[Services:] Assigns the input values to input paramenters.
+
 \item[Implemented By:] \progname
 \end{description}
 
-\subsubsection{Input Verify Module (\mref{mIF})}
+
+\subsubsection{Input Verification Module (\mref{mIV})}
 
 \begin{description}
-\item[Secrets:]The input values constraint.
-\item[Services:]Verifies the input by the input values constraint.
-
+\item[Secrets:] The constraint of the input values.
+\item[Services:] Verfies the input values
 \item[Implemented By:] \progname
 \end{description}
-
 
 \subsubsection{Output Parameters Module (\mref{mOP})}
 
 \begin{description}
-\item[Secrets:]The initialization of the output parameter.
-\item[Services:]Assigns the output value to its parameter.
+\item[Secrets:] The parameters of outputs.
+\item[Services:] Assigns the calculated results to output parameters.
 \item[Implemented By:] \progname
 \end{description}
 
-\subsubsection{Solar Energy Output Module (\mref{mSEA})}
+\subsubsection{Read File Module (\mref{mR})}
 
 \begin{description}
-\item[Secrets:] The equation of calculate the solar energy output, using the
-data from input parameter module.
-\item[Services:] Define the solar energy output equation, using the data from
-input parameter module.
+\item[Secrets:] The parameters for reading the file.
+\item[Services:] Assgins the input file to the parameter.
 \item[Implemented By:] \progname
 \end{description}
+
+\subsubsection{Solar Energy Absorption Module (\mref{mSEA})}
+
+\begin{description}
+\item[Secrets:]The algorithm of calculating solar energy absorption.
+\item[Services:] Calculates solar energy absorption.
+
+\item[Implemented By:] \progname
+\end{description}
+
 
 \subsubsection{Optimum Tilt Angle Module (\mref{mOTA})}
 
 \begin{description}
-\item[Secrets:]The equation of calculate the optimal tilt angle.
-\item[Services:] Define the optimal tilt angle equation.
+\item[Secrets:]The algorithm of calculating optimum tilt angle and optimum sun intensity associated with the optimum tilt angle.
+\item[Services:] Calculates the optimum tilt angle and optimum sun intensity.
 \item[Implemented By:] \progname
 \end{description}
 
-
-
-\subsubsection{Sun Intensity Equation Module (\mref{mSI})}
+\subsubsection{Sun Intensity Equation Module (\mref{mSIE})}
 
 \begin{description}
-\item[Secrets:]The equation of calculate the sun intensity.
-\item[Services:] Proves the algorithm calculate the Sun Intensity.
-
+\item[Secrets:]The equation of calculating the sun intensity.
+\item[Services:] Calculates the sun intensity.
 \item[Implemented By:] \progname
 \end{description}
 
-
-\subsubsection{Zenith Angle Equation Module (\mref{mZA})}
-
-\begin{description}
-\item[Secrets:]The equation of calculate the zenith angle.
-\item[Services:] Proves the algorithm calculate the zenith angle.
-\item[Implemented By:] \progname
-\end{description}
-
-\subsubsection{Sun Declination Module (\mref{mSD})}
+\subsubsection{Zenith Angle Equation Module (\mref{mZAE})}
 
 \begin{description}
-\item[Secrets:]The equation of calculate the sun declination.
-\item[Services:]Proves the algorithm calculate the zenith angle.
+\item[Secrets:]The algorithm of calculating the zenith angle.
+\item[Services:] Calculates the zenith angle.
 \item[Implemented By:] \progname
+
 \end{description}
 
 
@@ -404,29 +405,36 @@ input parameter module.
   facts, or programming considerations. The secrets of this module are
   \emph{not} described in the SRS.
 \item[Services:] Includes data structure and algorithms used in the system that
-  do not provide direct interaction with the user. 
+  does not provide direct interaction with the user. 
   % Changes in these modules are more likely to be motivated by a desire to
   % improve performance than by externally imposed changes.
 \item[Implemented By:] --
 \end{description}
 
 
-\subsubsection{Date Duration Module (\mref{mDD})}
+\subsubsection{Day Duration ADT Module (\mref{mDD})}
 
 \begin{description}
-\item[Secrets:]The algorithm of calculate the date duration, using the data 
-from input parameter module.
-\item[Services:] Provides the date duration calculating function. Calculate the 
-date duration by using the data from input parameter module.
+\item[Secrets:] The structure of defining day duration's type and the algorithm of calculating the day duration.
+\item[Services:] Creates variables with day duration's type and calculates the day duration.
 \item[Implemented By:] Data.Time
 \end{description}
 
-\subsubsection{Plotting Module (\mref{mP})}
+\subsubsection{Table-layout Module (\mref{mP})}
 
 \begin{description}
-\item[Secrets:]The data structure and algorithm for plotting module.
-\item[Services:] Provide the plot function.
-\item[Implemented By:] Graphics.EasyPlot
+\item[Secrets:] The structue of the table layout.
+\item[Services:] Creats a table.
+\item[Implemented By:] Text.Layout.Table
+\end{description}
+\subsubsection{Etc.}
+
+\subsubsection{Sun Catcher Type Module (\mref{mP})}
+
+\begin{description}
+\item[Secrets:] The structue of defining the sun catcher's type.
+\item[Services:] Creats variables with sun catcher's type.
+\item[Implemented By:] \progname
 \end{description}
 \subsubsection{Etc.}
 
@@ -444,21 +452,15 @@ requirements and between the modules and the anticipated changes.
 \toprule
 \textbf{Req.} & \textbf{Modules}\\
 \midrule
-R1 & \mref{mHH}, \mref{mInput}, \mref{mParams}, \mref{mControl}\\
-R2 & \mref{mInput}, \mref{mParams}\\
-R3 & \mref{mVerify}\\
-R4 & \mref{mOutput}, \mref{mControl}\\
-R5 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS},
-\mref{mSolver}, \mref{mPlot}\\
-R6 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS},
-\mref{mSolver}, \mref{mPlot}\\
-R7 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS},
-\mref{mPlot}\\
-R8 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS},
-\mref{mPlot}\\
-R9 & \mref{mVerifyOut}\\
-R10 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}\\
-R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
+R1 & \mref{mHH}, \mref{mIP}, \mref{mR}, \mref{mIC}\\
+R2 & \mref{mIV}, \mref{mIC}\\
+R3 & \mref{mOP}, \mref{mT}, \mref{mIC}\\
+R4 & \mref{mIC}\\
+R5 & \mref{mSIE}, \mref{mZAE}, \mref{mIC}\\
+R6 & \mref{mSE}, \mref{mSIE}, \mref{mZAE}, \mref{mIC}\\
+R7 &\mref{mOP}, \mref{mIC}\\
+R8 & \mref{mT}, \mref{mIC}\\
+R9 & \mref{mIC}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Requirements and Modules}
@@ -471,18 +473,18 @@ R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
 \toprule
 \textbf{AC} & \textbf{Modules}\\
 \midrule
-\acref{acHardware} & \mref{mHH}\\
-\acref{acInput} & \mref{mInput}\\
-\acref{acParams} & \mref{mParams}\\
-\acref{acVerify} & \mref{mVerify}\\
-\acref{acOutput} & \mref{mOutput}\\
-\acref{acVerifyOut} & \mref{mVerifyOut}\\
-\acref{acODEs} & \mref{mODEs}\\
-\acref{acEnergy} & \mref{mEnergy}\\
-\acref{acControl} & \mref{mControl}\\
-\acref{acSeqDS} & \mref{mSeqDS}\\
-\acref{acSolver} & \mref{mSolver}\\
-\acref{acPlot} & \mref{mPlot}\\
+\acref{acH} & \mref{mHH}\\
+\acref{acIP} & \mref{mIP}\\
+\acref{acIC} & \mref{mIV}\\
+\acref{acO} & \mref{mOP}\\
+\acref{acR} & \mref{mR}\\
+\acref{acSEA} & \mref{mSE}\\
+\acref{acOTP} & \mref{mOTA}\\
+\acref{acSI} & \mref{mSIE}\\
+\acref{acZA} & \mref{mZAE}\\
+\acref{acDD} & \mref{mDD}\\
+\acref{acT} & \mref{mT}\\
+\acref{acSCT} & \mref{mSCT}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Anticipated Changes and Modules}
@@ -493,7 +495,7 @@ R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
 
 In this section, the uses hierarchy between modules is
 provided. \citet{Parnas1978} said of two programs A and B that A {\em uses} B
-ifcorrect execution of B may be necessary for A to complete the task described
+if correct execution of B may be necessary for A to complete the task described
 in
 its specification. That is, A {\em uses} B if there exist situations in which
 the correct functioning of A depends upon the availability of a correct
@@ -501,13 +503,12 @@ implementation of B.  Figure \ref{FigUH} illustrates the use relation between
 the modules. It can be seen that the graph is a directed acyclic graph
 (DAG). Each level of the hierarchy offers a testable and usable subset of the
 system, and modules in the higher level of the hierarchy are essentially
-simplerbecause they use modules from the lower levels.
+simpler because they use modules from the lower levels.
 
 \begin{figure}[H]
-\centering
-%\includegraphics[width=0.7\textwidth]{UsesHierarchy.png}
-\caption{Use hierarchy among modules}
-\label{FigUH}
+	\center
+  \includegraphics[scale=0.5]{Fig_Hierarchy.jpg}
+ \caption{\label{FigUH} Use hierarchy among modules}
 \end{figure}
 
 %\section*{References}
