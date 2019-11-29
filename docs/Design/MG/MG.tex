@@ -164,10 +164,10 @@ change.
 \item[\refstepcounter{acnum} \actheacnum \label{acH}:] The specific
   hardware on which the software is running.
 \item[\refstepcounter{acnum} \actheacnum \label{acIP}:] The initial of the
-  input parameter.
+  input parameter. \wss{The initial what of the input parameter?}
 \item[\refstepcounter{acnum} \actheacnum \label{acIC}:] The constraint of the input data.
 \item[\refstepcounter{acnum} \actheacnum \label{acO}:] The initial of the
-  output parameter.
+  output parameter. \wss{The initial?}
 \item[\refstepcounter{acnum} \actheacnum \label{acR}:] The initial of the
   parameter of the read file.
 \item[\refstepcounter{acnum} \actheacnum \label{acSEA}:] The algorithm of the
@@ -320,7 +320,8 @@ have to be implemented.
 \item[Implemented By:] --
 \end{description}
 
-\subsubsection{Control Module (\mref{mC})}
+\subsubsection{Control Module (\mref{mC}) \wss{Nothing is currently labelled as
+  mC, so this reference does not work.}}
 
 \begin{description}
 \item[Secrets:] The structure that modules connect to each other.
@@ -331,8 +332,8 @@ have to be implemented.
 \subsubsection{Input Parameters Module (\mref{mIP})}
 
 \begin{description}
-\item[Secrets:] The paramenters of inputs.
-\item[Services:] Assigns the input values to input paramenters.
+\item[Secrets:] The paramenters \wss{spell check} of inputs.
+\item[Services:] Assigns the input values to input paramenters \wss{spell check}.
 
 \item[Implemented By:] \progname
 \end{description}
@@ -342,7 +343,7 @@ have to be implemented.
 
 \begin{description}
 \item[Secrets:] The constraint of the input values.
-\item[Services:] Verfies the input values
+\item[Services:] Verfies \wss{spell check!} the input values
 \item[Implemented By:] \progname
 \end{description}
 
@@ -358,7 +359,7 @@ have to be implemented.
 
 \begin{description}
 \item[Secrets:] The parameters for reading the file.
-\item[Services:] Assgins the input file to the parameter.
+\item[Services:] Assgins \wss{spell check} the input file to the parameter.
 \item[Implemented By:] \progname
 \end{description}
 
@@ -423,8 +424,9 @@ have to be implemented.
 \subsubsection{Table-layout Module (\mref{mP})}
 
 \begin{description}
-\item[Secrets:] The structue of the table layout.
-\item[Services:] Creats a table.
+\item[Secrets:] The structue \wss{spell check} of the table layout.
+\item[Services:] Creats \wss{spell check - there are many spelling mistakes in
+    this document} a table.
 \item[Implemented By:] Text.Layout.Table
 \end{description}
 \subsubsection{Etc.}
@@ -511,9 +513,18 @@ simpler because they use modules from the lower levels.
  \caption{\label{FigUH} Use hierarchy among modules}
 \end{figure}
 
+\wss{I suggest combining Read File with Input Parameters.  Also, as it is, the
+  Read File does not use Input Parameters, so there is not way for the Read File
+  module to change the state of the inputs.  Zenith Angle shouldn't really need
+  to use Read File.  If some of the Input Parameters are dates, then why doesn't
+  the Input Parameter module use the Day Duration ADT?  I also wonder if the Sun
+  Intensity and Zenith Angle modules should be combined?}
+
 %\section*{References}
 
 \bibliographystyle {plainnat}
 \bibliography{../../../refs/References}
+
+\wss{Your references are not working.}
 
 \end{document}
