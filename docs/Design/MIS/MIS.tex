@@ -178,7 +178,9 @@ Module\\
 Control
 
 \subsection{Uses}
-InputPara\ref{ModuleIP}\\
+InputPara\ref{ModuleIP} \wss{Please leave space between the name and the
+  reference.  You should also identify what type of reference it is, like you
+  would for a Figure or a Table.  That is, you should say (Section~\ref{ModuleIP}).}\\
 InputVer\ref{ModuleIV}\\
 OutputPara\ref{ModuleOP}\\
 TiltAng\ref{ModuleTA}\\
@@ -199,7 +201,7 @@ ReadFile\ref{ModuleR}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline 
-mian & - & - & - \\
+mian \wss{main?} & - & - & - \\
 
 \hline
 \end{tabular}
@@ -209,9 +211,14 @@ mian & - & - & - \\
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-dayS: DayT\\
+dayS: DayT \wss{You use this type, but I don't think you import (use) the module
+  that defines it}\\
 dayE: DayT
 
+\wss{Why are these two state variables here?  I thought you were going to use
+  the Input Parameters module?}
+\wss{Now that I think about it, given that you are planning on implementing with
+  Haskell, you might want to avoid having modules with state information.}
 
 \subsubsection{Environment Variables}
 
@@ -260,6 +267,7 @@ display ( )
 \end{itemize}
 
 
+\wss{It is nice to have a newpage between modules.}
 
 \section{Sun Catcher Type Module} \label{ModuleSCTM} 
 
@@ -307,7 +315,8 @@ SunCatTy\ref{ModuleSCTM} \\
 
 \subsection{Exported Types}
 
-DayDurT = ?\\
+DayDurT = ? \wss{It seems confusing to me that you have a DayT, that is not an
+  ADT, and a DayDurT that is an ADT.  Couldn't you just have an ADT for DayT?}\\
 
 \subsection{Syntax}
 
@@ -328,11 +337,13 @@ getdurlist &  -  & a sequence of integer & - \\
 \end{tabular}
 \end{center}
 
+\wss{The input to the DayDurT could just be DayT, DayT; you don't really need to
+  make the input a tuple.}
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-dayS : DayT\\
+dayS : DayT \wss{You have these same state variables in another module}\\
 dayE : DayT\\
 daduraL: a sequence of integer\\
 dateL: a sequence of DayT\\
@@ -342,6 +353,8 @@ N/A\\
 
 \subsubsection{Assumptions}
 In  getdiff (day1, day2), assume that day 2 is always greater than day 1.
+\wss{It would be neat if you defined a comparison access program to your ADT so
+  that you have greater than implemented.  As it is, saying greater than is ambiguous.}
 
 \subsubsection{ Access Routine Semantics}
 
@@ -350,7 +363,9 @@ In  getdiff (day1, day2), assume that day 2 is always greater than day 1.
 \item transition:  dayS, dayE, periheD.d,  periheD.m := s, e, 21, 12;\\
 
 dateL := $\|$ (s = e $\Rightarrow$ $\langle$ e $\rangle$ $|$ otherwise $\Rightarrow$ $\langle$ s, setlist (getnext ( )) $\rangle$) 
-
+\wss{You don't actually say otherwise using our notation.  You could just say
+  True.  You also don't have a dummy variable.  I don't really know how to read
+  this expression.}
 \item output: out := self
 \item exception: exc := (s $>$e $\Rightarrow$ invalid\_argument )
 \end{itemize}
@@ -362,6 +377,9 @@ dateL := $\|$ (s = e $\Rightarrow$ $\langle$ e $\rangle$ $|$ otherwise $\Rightar
 \item exception:
 \end{itemize}
 
+\wss{You shouldn't have a transition and an output.  I don't actually see why
+  you need the daduraL state variable.  I would think you could calculate the
+  duration as needed and simply output it?}
 
 \subsubsection{Local Functions}
 setlist : DayT $\rightarrow $ a sequence of DayT\\
@@ -414,7 +432,7 @@ getde & - & DayT & - \\
 
 \subsubsection{State Variables}
 latitude: DegreeT\\
-dayS: DayT\\
+dayS: DayT \wss{You have these state variables already in other modules.}\\
 dayE: DayT\\
 panH: real\\
 panW real
@@ -498,6 +516,8 @@ verified & DegreeT, real, real, DayT, DayT, & - & invaild\_lan, invaild\_pan, in
 \end{tabular}
 \end{center}
 
+\wss{Rather than simply rely on exceptions, you could have verify return a
+  Boolean.}
 
 \subsection{Semantics}
 
@@ -564,7 +584,7 @@ getresult & - & a sequence of a tulple of ( DegreeT, real, integer) & - \\
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-resultL: a sequence of a tulple of ( t: DegreeT, e: real, diff: integer)\\
+resultL: a sequence of a tulple \wss{spell check} of ( t: DegreeT, e: real, diff: integer)\\
 
 
 \subsubsection{Environment Variables}
@@ -585,7 +605,10 @@ OutputPara.init ( ) will only be called once.
 
 \noindent  addresult ( angle, energy ):
 \begin{itemize}
-\item transition: resultL := $\|$ ($|$resultL$|$ = 0 $\Rightarrow$ [ $\langle$ angle, energy, 100 $\rangle$ ] $|$ angle $\notin$ resultL.t $\Rightarrow$ [ $\langle$ angle, energy, getdiff (resultL.e, energy) $\rangle$ ] )
+\item transition: resultL := $\|$ ($|$resultL$|$ = 0 $\Rightarrow$ [ $\langle$
+  angle, energy, 100 $\rangle$ ] $|$ angle $\notin$ resultL.t $\Rightarrow$ [
+  $\langle$ angle, energy, getdiff (resultL.e, energy) $\rangle$ ] ) \wss{I
+    don't know how to read this.}
 \item output:
 \item exception: 
 \end{itemize}
@@ -644,7 +667,8 @@ display & - & - & - \\
 resultL: a sequence of a tulple of ( t: DegreeT, e: real, diff: integer)\\
 
 \subsubsection{Environment Variables}
-Output variables will display on the screen.
+Output variables will display on the screen. \wss{You should define an
+  environment variable for the screen.}
 
 \subsubsection{Assumptions}
 
@@ -731,6 +755,9 @@ sunIn: real\\
 zenithL: a sequence of DegreeT\\
 maxsunIn: a tuple of (i: real, d: DegreeT)\\
 
+\wss{Do you really need state variables?  I think you could use an input-output
+  module here.  The same comment applies elsewhere.}
+
 \wss{Not all modules will have state variables.  State variables give the module  a memory.}
 
 \subsubsection{Environment Variables}
@@ -758,7 +785,13 @@ exceptions, but for practical purposes assumptions are sometimes appropriate.}
 
 \noindent \wss{accessProg} getilt ( ):
 \begin{itemize}
-\item transition: maxsunIn := (j: integer $|$ j $\in$ [0.. $|$zenithL$|$] $\bullet$ j = 0 $\Rightarrow$  $\langle$ SunInten.single (sunIn, zenithL [ 0 ]), zenithL [ 0 ] $\rangle$ $|$ ifMax (maxsunIn.i, SunInten.single (sunIn, zenithL [ j ])) $\neq$ maxsunIn.i $\Rightarrow$  $\langle$ SunInten.single (sunIn, zenithL [ j ]), zenithL [ j ]$\rangle$ )
+\item transition: maxsunIn := (j: integer $|$ j $\in$ [0.. $|$zenithL$|$]
+  $\bullet$ j = 0 $\Rightarrow$  $\langle$ SunInten.single (sunIn, zenithL [ 0
+  ]), zenithL [ 0 ] $\rangle$ $|$ ifMax (maxsunIn.i, SunInten.single (sunIn,
+  zenithL [ j ])) $\neq$ maxsunIn.i $\Rightarrow$  $\langle$ SunInten.single
+  (sunIn, zenithL [ j ]), zenithL [ j ]$\rangle$ ) \wss{This is a complicated
+    expression.  I think you aren't quite following our notation.  Also, for a
+    complicated expression like this, it helps to add local functions.}
  
 \item output: out := maxsunIn.d
 \item exception: 
@@ -970,13 +1003,17 @@ day: DayDurTy\\
 latitude: real\\
 analeL: a sequence of AnalemmaT
 
+\wss{As I mentioned earlier, I don't think you need state variables.  An
+  input-output relation should work fine.}
+
 \subsubsection{Environment Variables}
 
 
 
 
 \subsubsection{Assumptions}
-Read File Module will always be implemented before Zenith angle Module.\\
+Read File Module will always be implemented before Zenith angle Module. \wss{Do
+  you mean ``called'' or ``invoked'' rather than ``implemented''?}\\
 InputPara Module will always be implemented before Zenith angle Module.\\
 ZenithAng.setzen is called before any other access program.\\
 ZenithAng.setzen is called by the Read File Module.
@@ -1093,6 +1130,14 @@ x\_365,   y\_365,   z\_365\\
 \bibliography {../../../refs/References}
 
 \newpage
+
+\wss{Your MIS seems more complicated than it has to be.  The purpose of all the
+  state variables is not clear.  I suggest you review all of the modules to see
+  if they are necessary and whether you really need the state variables.  You
+  also probably do not need so many modules.  You could combine the modules that
+  export calculations into a ``Calculation'' module.  Also, you might want to
+  explain what is going on in words, in case your math doesn't say what you
+  think it is saying.}
 
 \section{Appendix} \label{Appendix}
 
