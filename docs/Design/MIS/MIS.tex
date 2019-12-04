@@ -211,9 +211,8 @@ mian \wss{main?} & - & - & - \\
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-dayS: DayT \wss{You use this type, but I don't think you import (use) the module
-  that defines it}\\
-dayE: DayT
+\wss{You use this type, but I don't think you import (use) the module
+  that defines it} \an{Change DayT as Day ADT} \an{State Variable dayS and dayE should only exit in Input Parameters Module}\\
 
 \wss{Why are these two state variables here?  I thought you were going to use
   the Input Parameters module?}
@@ -235,8 +234,6 @@ dayE: DayT
 
 Get ($\Phi_P$: DegreeT, $P_{A_{\text{h}}}$: real, $P_{A_{\text{w}}}$: real, $\mathit{year}_\text{Start}$: natural number, $\mathit{month}_\text{Start}$: natural number, $\mathit{day}_\text{Start}$: natural number, $\mathit{year}_\text{End}$: natural number, $\mathit{month}_\text{End}$: natural number, $\mathit{day}_\text{End}$: natural number) and (filename: string ) from users' input.\\
 
-dayS := $\langle$ $\mathit{day}_\text{Start}$, $\mathit{month}_\text{Start}$, $\mathit{year}_\text{Start}$ $\rangle$ \\
-dayE :=  $\langle$ $\mathit{day}_\text{End}$, $\mathit{month}_\text{End}$, $\mathit{year}_\text{End}$ $\rangle$ \\
 
 load\_anale\_data (filename)\\
 InputPara.init ( )\\
@@ -304,10 +301,10 @@ N/A\\
 \subsubsection{Assumptions}
 For DayT the day will always lie between 1 and 31, the month will always lie between 1 and 12, and year will always be greater than 1.
 
-\section{Day Duration ADT Module} \label{ModuleADTD} 
+\section{Day ADT Module} \label{ModuleADTD} 
 
 \subsection{Template Module}
-DayDurTy
+DayT
 
 \subsection{Uses}
 
@@ -315,7 +312,7 @@ SunCatTy\ref{ModuleSCTM} \\
 
 \subsection{Exported Types}
 
-DayDurT = ? \wss{It seems confusing to me that you have a DayT, that is not an
+DayT = ? \wss{It seems confusing to me that you have a DayT, that is not an
   ADT, and a DayDurT that is an ADT.  Couldn't you just have an ADT for DayT?}\\
 
 \subsection{Syntax}
@@ -330,50 +327,49 @@ DayDurT = ? \wss{It seems confusing to me that you have a DayT, that is not an
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-new DayDurT& a tuple of (DayT, DayT)  & DayDurT & invalid\_argument \\
-getdurlist &  -  & a sequence of integer & - \\
+new DayT& $\mathbb{N}$, $\mathbb{N}$, $\mathbb{N}$ & DayT & invalid\_argument \\
+getdurlist &  DayT  & a sequence of integer & - \\
 
 \hline
 \end{tabular}
 \end{center}
 
 \wss{The input to the DayDurT could just be DayT, DayT; you don't really need to
-  make the input a tuple.}
+  make the input a tuple.} \an{Agree}
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-dayS : DayT \wss{You have these same state variables in another module}\\
-dayE : DayT\\
+day : a tuple of (y:$\mathbb{N}$, m:$\mathbb{N}$, d:$\mathbb{N}$) \wss{You have these same state variables in another module}\\
 daduraL: a sequence of integer\\
-dateL: a sequence of DayT\\
+
 \subsubsection{Environment Variables}
 
 N/A\\
 
 \subsubsection{Assumptions}
-In  getdiff (day1, day2), assume that day 2 is always greater than day 1.
+
 \wss{It would be neat if you defined a comparison access program to your ADT so
   that you have greater than implemented.  As it is, saying greater than is ambiguous.}
+\an{Change the expession of getdiff to countDiff. It uses compare function to check if day1 is greater than day2}
 
 \subsubsection{ Access Routine Semantics}
 
-\noindent  new DayDurT (s,e):
+\noindent  new DayDurT (y, m, d):
 \begin{itemize}
-\item transition:  dayS, dayE, periheD.d,  periheD.m := s, e, 21, 12;\\
+\item transition:  day.d, day.m, day.y = y, m, d\\
 
-dateL := $\|$ (s = e $\Rightarrow$ $\langle$ e $\rangle$ $|$ otherwise $\Rightarrow$ $\langle$ s, setlist (getnext ( )) $\rangle$) 
 \wss{You don't actually say otherwise using our notation.  You could just say
   True.  You also don't have a dummy variable.  I don't really know how to read
   this expression.}
 \item output: out := self
-\item exception: exc := (s $>$e $\Rightarrow$ invalid\_argument )
+\item exception: 
 \end{itemize}
 
-\noindent  getdurlist ( ):
+\noindent  getdurlist ( inday ):
 \begin{itemize}
-\item transition: daduraL := $\|$ (d: DayT $|$ d $\in$ dateL  $\bullet$ [ Countdiff (perihelion ( d ), d) ]
-\item output: out := daduraL
+\item transition: 
+\item output: out := setdurlist(day, inday)
 \item exception:
 \end{itemize}
 
@@ -382,17 +378,22 @@ dateL := $\|$ (s = e $\Rightarrow$ $\langle$ e $\rangle$ $|$ otherwise $\Rightar
   duration as needed and simply output it?}
 
 \subsubsection{Local Functions}
-setlist : DayT $\rightarrow $ a sequence of DayT\\
-setlist ( day ): = $\|$ (day = dayE $\Rightarrow$ $\langle$ dayE $\rangle$ $|$ day $<$ dayE $\Rightarrow$ [ day, setlist (getnext (day,  dayE)) ]) \\
+setdurlist : DayT $\times$ DayT $\rightarrow $ a sequence of integer\\
+setdurlist ( staDay, inpDay ): = (compare (staDay, inpDay) = True $\rightarrow $ daduraL [0.. countDiff(day, staDay)] $\|$ $\langle$ countDiff (perihelion ( staDay ), staDay) $\rangle$ $\|$ setdurlist (getnext (staDay), inpDay)) $|$ compare (staDay, inpDay) = False $\rightarrow $ $\langle$ $\rangle$ )\\
 
-getnext : DayT $\times$ DayT $\rightarrow $ DayT\\
-getnext (d1, d2) := (d1 $<$ d2 $\Rightarrow$ The next day of d1 according to the calendar $|$ otherwise $\Rightarrow$ dateL [0] )\\
+
+compare: DayT $\times$ DayT $\rightarrow $ Boolean\\
+compare(d1, d2) := (d1 $\leq$ d2 $\rightarrow $ True $|$ d1 $>$ d2 $\rightarrow $ False)\\
+
+
+getnext : DayT $\rightarrow $ DayT\\
+getnext (d) := The next day of d according to the calendar\\
 
 perihelion : DayT $\rightarrow $ DayT\\
-perihelion (day) :=  (day.m = 12 $	\wedge$ day.d $\geq	$ 21 $\Rightarrow$  day.y $|$ otherwise $\Rightarrow$  day.y - 1)\\
+perihelion (day) :=  (day.m = 12 $	\wedge$ day.d $\geq	$ 21 $\Rightarrow$  (day.y, 12, 21) $|$ True $\Rightarrow$ ( day.y - 1, 12, 21))\\
 
-Countdiff : DayT $\times$ DayT $\rightarrow $ integer\\
-Countdiff (day1, day2) := + (day1 = day2 $\Rightarrow$ 0 $|$ otherwise $\Rightarrow$ Countdiff (getnext (day1,day2), day2) + 1 )
+countDiff : DayT $\times$ DayT $\rightarrow $ integer\\
+countDiff (day1, day2) := + (compare (day1, day2) = True $\Rightarrow$ 1 + countDiff (getnext (day1), day2) $|$ compare (day1, day2) = False $\Rightarrow$ 0)
 
 
 \section{MIS of Input Parameters Module} \label{ModuleIP} 
@@ -432,10 +433,10 @@ getde & - & DayT & - \\
 
 \subsubsection{State Variables}
 latitude: DegreeT\\
-dayS: DayT \wss{You have these state variables already in other modules.}\\
+dayS: DayT \wss{You have these state variables already in other modules.}\an{Delete dayS and dayE in other module}\\
 dayE: DayT\\
 panH: real\\
-panW real
+panW: real
 
 
 \subsubsection{Environment Variables}
@@ -449,7 +450,11 @@ When users chick the submit bottom from system interface, InputPara.init ( ) imp
 \noindent  init ( ):
 \begin{itemize}
 \item transition: Get the values from users' input.\\
-latitude, panH, panW, dayS, dayE := HardH.la, HardH.pn, HardH.pw, (HardH.ds, HardH.ms, HardH.ys), (HardH.de, HardH.me, HardH.ye)
+latitude, panH, panW = HardH. $\Phi_P$, HardH. $P_{A_{\text{h}}}$, HardH. $P_{A_{\text{w}}}$\\
+
+dayS := new DayT (HardH. $\mathit{year}_\text{Start}$, HardH. $\mathit{month}_\text{Start}$, HardH. $\mathit{day}_\text{Start}$) \\
+
+dayE :=  new DayT ( HardH. $\mathit{year}_\text{End}$, HardH. $\mathit{month}_\text{End}$, HardH. $\mathit{day}_\text{End}$)\\
 \item output:
 \item exception: if the data type of captured values do not match with the parameters' data type $\Rightarrow$ Key\_error
 \end{itemize}
@@ -598,17 +603,18 @@ OutputPara.init ( ) will only be called once.
 
 \noindent  init ( ):
 \begin{itemize}
-\item transition: resultL := $\{ $ $ \}$
+\item transition: resultL := $\langle $ $ \rangle$
 \item output:
 \item exception: 
 \end{itemize}
 
 \noindent  addresult ( angle, energy ):
 \begin{itemize}
-\item transition: resultL := $\|$ ($|$resultL$|$ = 0 $\Rightarrow$ [ $\langle$
-  angle, energy, 100 $\rangle$ ] $|$ angle $\notin$ resultL.t $\Rightarrow$ [
-  $\langle$ angle, energy, getdiff (resultL.e, energy) $\rangle$ ] ) \wss{I
+\item transition: resultL := resultL $\|$ ($|$resultL$|$ = 0 $\Rightarrow$ [ $\langle$
+  angle, energy, 100 $\rangle$ ] $|$ True $\Rightarrow$ [
+  $\langle$ angle, energy, getdiff (resultL[0].e, energy) $\rangle$ ] )\wss{I
     don't know how to read this.}
+
 \item output:
 \item exception: 
 \end{itemize}
@@ -643,7 +649,7 @@ HardH\\
 
 hRow1: "Tilt Angle"
 hRow2: "Energy Absorption"
-hRow3: "Energy Competition"
+hRow3: "Energy Comparison"
 
 \subsubsection{Exported Access Programs}
 
@@ -947,7 +953,7 @@ N/A
 \begin{itemize}
 \item output: out := + (i: integer $|$ i $\in$ [0.. $|$z$|$] $\bullet$ 
 \begin{center}\large
-$I_{S} \cdot \frac{1.00}{e}^{sec(z [ i ])} $)
+$I_{S} \cdot (\frac{1.00}{e})^{sec(z [ i ])} $)
 \end{center}
 \item exception: exc := $|$z$|$ = 0 $\Rightarrow$ sequence\_empty
 \end{itemize}
@@ -956,7 +962,7 @@ $I_{S} \cdot \frac{1.00}{e}^{sec(z [ i ])} $)
 \begin{itemize}
 \item output: out := 
 \begin{center}\large
-$I_{S} \cdot \frac{1.00}{e}^{sec(z)} $
+$I_{S} \cdot (\frac{1.00}{e})^{sec(z)} $
 \end{center}
 \item exception: 
 \end{itemize}
@@ -999,9 +1005,8 @@ getzen &  -  & a sequence of DegreeT & sequence\_empty \\
 \subsubsection{State Variables}
 
 decS: a sequence of DegreeT\\
-day: DayDurTy\\
 latitude: real\\
-analeL: a sequence of AnalemmaT
+
 
 \wss{As I mentioned earlier, I don't think you need state variables.  An
   input-output relation should work fine.}
@@ -1024,10 +1029,8 @@ ZenithAng.setzen is called by the Read File Module.
 
 \noindent setzen (a, lan, ds, de):
 \begin{itemize}
-\item transition: analeL := $\|$ (i: integer $|$ i $\in$ [ 0..$|$a$|$ ] $\bullet	$ [ $\langle$ a.x [ i ], a.y [ i ], a.z [ i ] $\rangle$] )\\
-day := new DayDurT (ds, de)\\
-latitude := lan\\
-decS := getdec (day.getdurlist)
+\item transition: latitude := lan\\
+decS := getdec (a, ds.getdurlist(de))
 \item output: 
 \item exception: 
 \end{itemize}
@@ -1036,16 +1039,18 @@ decS := getdec (day.getdurlist)
 \begin{itemize}
 \item transition:
 
-\item output: out := $\|$ (i: integer $|$ i $\in$ [0.. $|$decS$|$] $\bullet$ latitude $\times$ decS [ i ] $\geq$ 0 $\Rightarrow$ [ latitude - decS [  i ] ] $|$ otherwise $\Rightarrow$ [ latitude + decS [ i ] ])
+\item output: out := out $\|$ (i: integer $|$ i $\in$ [0.. $|$decS$|$] $\bullet$ latitude $\times$ decS [ i ] $\geq$ 0 $\Rightarrow$ $\langle$ latitude - decS [  i ] $\rangle$ $|$ latitude $\times$ decS [ i ] $<$ 0 $\Rightarrow$ $\langle$ latitude + decS [ i ] $\rangle$)\\
+
+
 \item exception: $|$decS$|$ = 0 $\Rightarrow$ sequence\_empty
 \end{itemize}
 
 
 \subsubsection{Local Functions}
-getdec : a sequence of integer $\rightarrow$ a sequence of DegreeT\\
-getdec (d) := $\|$ (i: integer $|$ i $\in$ [0.. $|$d$|$] $\bullet$ 
+getdec : a sequence of AnalammaT $\times$ a sequence of integer $\rightarrow$ a sequence of DegreeT\\
+getdec (a, d) := decS $\|$ (i: integer $|$ i $\in$ [0.. $|$d$|$] $\bullet$ 
 \begin{center}\large
-[ $\arcsin \frac{analeL.z [d[ i ] ]}{ \sqrt{analeL.x^2 [ d[ i ] ] + analeL.y^2 [ dayL[ i ] ] + analeL.z^2 [ d[ i ] ]}}) $]
+$\langle$ $\arcsin \frac{a.z [d[ i ] ]}{ \sqrt{a.x^2 [ d[ i ] ] + a.y^2 [ dayL[ i ] ] + a.z^2 [ d[ i ] ]}}) $ $\rangle$
 \end{center}
 
 \newpage
