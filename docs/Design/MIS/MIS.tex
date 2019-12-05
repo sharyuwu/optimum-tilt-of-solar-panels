@@ -149,7 +149,6 @@ project.
 & Input Parameters Module\\
 & Input Verification Module\\
 & Output Parameters Module\\
-& Read File Module\\
 & Solar Energy Absorption Module\\
 & Optimum Tilt Angle Module\\
 & Sun Intensity Equation Module\\
@@ -157,7 +156,7 @@ project.
 \midrule
 
 \multirow{3}{0.3\textwidth}{Software Decision Module} 
-& Day Duration ADT Module\\
+& Day ADT Module\\
 & Table-layout Module\\
 & Sun Catcher Type 
 Module\\
@@ -181,13 +180,13 @@ Control
 InputPara\ref{ModuleIP} \wss{Please leave space between the name and the
   reference.  You should also identify what type of reference it is, like you
   would for a Figure or a Table.  That is, you should say (Section~\ref{ModuleIP}).}\\
-InputVer\ref{ModuleIV}\\
-OutputPara\ref{ModuleOP}\\
-TiltAng\ref{ModuleTA}\\
-Energy\ref{ModuleE}\\
-SunInten\ref{ModuleSI}\\
-ZenithAng\ref{ModuleZA}\\
-ReadFile\ref{ModuleR}
+InputVer (Section \ref{ModuleIV})\\
+OutputPara (Section \ref{ModuleOP})\\
+TiltAng (Section \ref{ModuleTA})\\
+Energy (Section \ref{ModuleE})\\
+SunInten (Section \ref{ModuleSI})\\
+ZenithAng (Section \ref{ModuleZA})\\
+
 
 \subsection{Syntax}
 
@@ -327,7 +326,9 @@ DayT = ? \wss{It seems confusing to me that you have a DayT, that is not an
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
 new DayT& $\mathbb{N}$, $\mathbb{N}$, $\mathbb{N}$ & DayT & invalid\_argument \\
-getdurlist &  DayT  & a sequence of integer & - \\
+getnext &  -  & DayT & - \\
+perihelion &  -  & DayT & - \\
+countDiff &  DayT  & Integer & - \\
 $\leq$ &  DayT  & $\mathbb{B}$ & - \\
 $>$ &  DayT  & $\mathbb{B}$ & - \\
 \hline
@@ -342,8 +343,7 @@ DayT: natural number
 
 \subsubsection{State Variables}
 
-day : DayT \wss{You have these same state variables in another module}\\
-daduraL : a sequence of Integer
+stateDay : DayT \wss{You have these same state variables in another module}\\
 
 \subsubsection{Environment Variables}
 
@@ -359,7 +359,7 @@ N/A\\
 
 \noindent  new DayT (y, m, d):
 \begin{itemize}
-\item transition:  day = (m = 1 $\lor$ m = 2 $\Rightarrow $ 365.25 $\times$ (y - 1) + 30.6001 $\times$ (m + 13) + d - calculateB(y/100) +  1720995 $|$ True $\Rightarrow $ 365.25 $\times$ y + 30.6001 $\times$ (m + 1) + d - calculateB(y / 100) +  1720995)\\
+\item transition:  stateDay = (m = 1 $\lor$ m = 2 $\Rightarrow $ 365.25 $\times$ (y - 1) + 30.6001 $\times$ (m + 13) + d - calculateB(y/100) +  1720995 $|$ True $\Rightarrow $ 365.25 $\times$ y + 30.6001 $\times$ (m + 1) + d - calculateB(y / 100) +  1720995)\\
 
 \wss{You don't actually say otherwise using our notation.  You could just say
   True.  You also don't have a dummy variable.  I don't really know how to read
@@ -368,24 +368,39 @@ N/A\\
 \item exception: 
 \end{itemize}
 
-\noindent  getdurlist ( inday ):
+\noindent  getnext ( ):
 \begin{itemize}
 \item transition: 
-\item output: out := setdurlist ( day, inday)
+\item output: out := The next day of the  stateDay according to the Gregorian Calender.
 \item exception:
 \end{itemize}
 
-\noindent  $\leq$ ( inday ):
+\noindent  perihelion ( ):
 \begin{itemize}
 \item transition: 
-\item output: out := compare ( day, inday )
+\item output: out := (stateDay.m = 12 $	\wedge$ stateDay.d $\geq	$ 21 $\Rightarrow$  (stateDay.y, 12, 21) $|$ True $\Rightarrow$ ( stateDay.y - 1, 12, 21))
 \item exception:
 \end{itemize}
 
-\noindent $>$  ( inday ):
+\noindent  countDiff ( day ):
 \begin{itemize}
 \item transition: 
-\item output: out := compare ( inday, day, )
+\item output: out := (day $\leq$ stateDay $\Rightarrow$ 1 + countDiff (getnext (day1)) $|$ day $<$  stateDay $\Rightarrow$ 0)
+\item exception:
+\end{itemize}
+
+
+\noindent  $\leq$ ( day ):
+\begin{itemize}
+\item transition: 
+\item output: out := (day is placed before than stateDay Gregorian Calender $\lor	$ inday and day is the same day $\Rightarrow$ True $|$ False)
+\item exception:
+\end{itemize}
+
+\noindent $>$  ( day ):
+\begin{itemize}
+\item transition: 
+\item output: out := (day is placed before than stateDay Gregorian Calender $\lor	$ day and stateDay is the same day $\Rightarrow$ True $|$ False)
 \item exception:
 \end{itemize}
 \wss{You shouldn't have a transition and an output.  I don't actually see why
@@ -393,25 +408,10 @@ N/A\\
   duration as needed and simply output it?}
 
 \subsubsection{Local Functions}
-setdurlist : DayT $\times$ DayT $\rightarrow $ a sequence of integer\\
-setdurlist ( staDay, inpDay ): = ( staDay $\leq$ inpDay $\Rightarrow $ daduraL [0 .. $|$daduraL$|$] $\|$ $\langle$ countDiff (perihelion ( staDay ), staDay) $\rangle$ $\|$ setdurlist (getnext (staDay), inpDay)) $|$ staDay $>$ inpDay $\Rightarrow $ daduraL [0 .. $|$daduraL$|$] )\\
 
 calculateB: $\mathbb{N}$ $\rightarrow $ $\mathbb{N}$\\
 calculateB (a) = 2 - a + (a / 4)\\
 
-
-compare: DayT $\times$ DayT $\rightarrow $ $\mathbb{B}$\\
-compare(d1, d2) := (d1 $\leq$ d2 $\Rightarrow $ True $|$ d1 $>$ d2 $\Rightarrow $ False)\\
-
-
-getnext : DayT $\rightarrow $ DayT\\
-getnext (d) := The next day of d according to the calendar\\
-
-perihelion : DayT $\rightarrow $ DayT\\
-perihelion (day) :=  (day.m = 12 $	\wedge$ day.d $\geq	$ 21 $\Rightarrow$  (day.y, 12, 21) $|$ True $\Rightarrow$ ( day.y - 1, 12, 21))\\
-
-countDiff : DayT $\times$ DayT $\rightarrow $ integer\\
-countDiff (day1, day2) := (day1 $\leq$  day2 $\Rightarrow$ 1 + countDiff (getnext (day1), day2) $|$ day1 $<$  day2 $\Rightarrow$ 0)
 
 
 \section{MIS of Input Parameters Module} \label{ModuleIP} 
@@ -420,7 +420,8 @@ countDiff (day1, day2) := (day1 $\leq$  day2 $\Rightarrow$ 1 + countDiff (getnex
 InputPara
 
 \subsection{Uses}
-HardH
+HardH\\
+Day ADT Module (Section \ref{ModuleADTD})
 
 \subsection{Syntax}
 
@@ -1111,81 +1112,6 @@ getdec (a, d) :=
 \begin{center}\large
  $\arcsin \frac{a.z [ d ]}{ \sqrt{a.x^2 [ d ] + a.y^2 [ d ] + a.z^2 [ d ]}}$
 \end{center}
-
-\newpage
-
-\section{MIS of Read File Module} \label{ModuleR} 
-
-\subsection{Module}
-ReadFile
-
-
-\subsection{Uses}
-ZenithAng\ref{ModuleZA}
-
-
-\subsection{Syntax}
-
-\subsubsection{Exported Constants}
-None
-
-\subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{3cm} p{3cm} p{3cm} p{2cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline 
-load\_anale\_data & string & - & -\\
-
-
-\hline
-\end{tabular}
-\end{center}
-
-
-\subsection{Semantics}
-
-\subsubsection{State Variables}
-
-
-
-\subsubsection{Environment Variables}
-
-anale\_data: File listing Analemma data
-
-
-\subsubsection{Assumptions}
-The input file will match the given specification.
-ReadFile.load\_anale\_data(s) is called by the Input Parameters Module
-
-\subsubsection{ Access Routine Semantics}
-
-
-\noindent  load\_anale\_data ( s ):
-\begin{itemize}
-\item transition: read data from the file anale\_data associated with the string s. Use
-this data to update the state of the ZenithAng module. load\_anale\_data ( s ) will first initialize ZenithAng (ZenithAng.setzen (anale, lan, ds, de )) before populating ZenithAng with analemma data that follows the types in SunCatTy.
-
-The text file has the following format, where x\_i, y\_i z\_i denotes the vector that locates
-Earth relative to the Sun on the day i since perihelion.
-
-All data values in a row are separated by commas. Rows are separated by a new line. The data shown below is for a total of 366 days.
-\begin{center}
-x\_0,   y\_0,   z\_0\\
-x\_1,   y\_1,   z\_1\\
-x\_2,   y\_2,   z\_2\\
-.\\
-.\\
-.\\
-x\_365,   y\_365,   z\_365\\
-\end{center}
-\item output: 
-\item exception: 
-\end{itemize}
- 
-
-\subsubsection{Local Functions}
 
 
 \newpage
