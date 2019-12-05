@@ -1,5 +1,4 @@
 module Calculation where
-    import Data.Angle
 
     sunInten:: Float
     sunInten = 1.35
@@ -10,5 +9,5 @@ module Calculation where
     sunIntenSum:: Float -> [Float] -> Float
     sunIntenSum e = foldr ((+) . sunIntenSingle e) 0
 
-    
+
 

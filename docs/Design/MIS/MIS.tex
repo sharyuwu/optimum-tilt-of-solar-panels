@@ -278,7 +278,6 @@ N/A\\
 \subsection{Exported Types}
 
 DegreeT = $\mathbb{R}$\\
-DayT = a tuple of (d:$\mathbb{N}$, m:$\mathbb{N}$, y:$\mathbb{N}$)\\
 AnalemmaT = a tuple of (x: $\mathbb{R}$ ,y: $\mathbb{R}$, z: $\mathbb{R}$)\\
 
 \subsection{Syntax}
@@ -355,7 +354,7 @@ N/A\\
 
 \subsubsection{ Access Routine Semantics}
 
-\noindent  new DayDurT (y, m, d):
+\noindent  new DayT (y, m, d):
 \begin{itemize}
 \item transition:  day.d, day.m, day.y = y, m, d\\
 
@@ -992,8 +991,8 @@ SunCatTy\ref{ModuleSCTM}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline 
-setzen & AnalammaT, real, DayT, DayT & -  & -\\
-getzen &  -  & a sequence of DegreeT & sequence\_empty \\
+setzen & a sequence of AnalammaT, a sequence of Integer & -  & -\\
+getzen &  real  & a sequence of DegreeT & sequence\_empty \\
 
 \hline
 \end{tabular}
@@ -1005,7 +1004,6 @@ getzen &  -  & a sequence of DegreeT & sequence\_empty \\
 \subsubsection{State Variables}
 
 decS: a sequence of DegreeT\\
-latitude: real\\
 
 
 \wss{As I mentioned earlier, I don't think you need state variables.  An
@@ -1027,19 +1025,19 @@ ZenithAng.setzen is called by the Read File Module.
 \subsubsection{ Access Routine Semantics}
 
 
-\noindent setzen (a, lan, ds, de):
+\noindent setzen (a, durlist):
 \begin{itemize}
-\item transition: latitude := lan\\
-decS := getdec (a, ds.getdurlist(de))
+\item transition: decS := (i: integer $|$ i $\in$ [0.. $|$durlist$|$] $\bullet$ decS $\|$ $\langle$ getdec (a, durlist[ i ])$\rangle$ )
+
 \item output: 
 \item exception: 
 \end{itemize}
 
-\noindent  getzen ( ):
+\noindent  getzen ( lan ):
 \begin{itemize}
 \item transition:
 
-\item output: out := out $\|$ (i: integer $|$ i $\in$ [0.. $|$decS$|$] $\bullet$ latitude $\times$ decS [ i ] $\geq$ 0 $\Rightarrow$ $\langle$ latitude - decS [  i ] $\rangle$ $|$ latitude $\times$ decS [ i ] $<$ 0 $\Rightarrow$ $\langle$ latitude + decS [ i ] $\rangle$)\\
+\item output: out := out $\|$ (i: integer $|$ i $\in$ [0.. $|$decS$|$] $\bullet$ lan $\times$ decS [ i ] $\geq$ 0 $\Rightarrow$ $\langle$ lan - decS [  i ] $\rangle$ $|$ lan $\times$ decS [ i ] $<$ 0 $\Rightarrow$ $\langle$ lan + decS [ i ] $\rangle$)\\
 
 
 \item exception: $|$decS$|$ = 0 $\Rightarrow$ sequence\_empty
@@ -1047,10 +1045,10 @@ decS := getdec (a, ds.getdurlist(de))
 
 
 \subsubsection{Local Functions}
-getdec : a sequence of AnalammaT $\times$ a sequence of integer $\rightarrow$ a sequence of DegreeT\\
-getdec (a, d) := decS $\|$ (i: integer $|$ i $\in$ [0.. $|$d$|$] $\bullet$ 
+getdec : a sequence of AnalammaT $\times$ integer $\rightarrow$ DegreeT\\
+getdec (a, d) := 
 \begin{center}\large
-$\langle$ $\arcsin \frac{a.z [d[ i ] ]}{ \sqrt{a.x^2 [ d[ i ] ] + a.y^2 [ dayL[ i ] ] + a.z^2 [ d[ i ] ]}}) $ $\rangle$
+ $\arcsin \frac{a.z [ d ]}{ \sqrt{a.x^2 [ d ] + a.y^2 [ d ] + a.z^2 [ d ]}}$
 \end{center}
 
 \newpage
