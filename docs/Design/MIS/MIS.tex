@@ -328,7 +328,8 @@ DayT = ? \wss{It seems confusing to me that you have a DayT, that is not an
 \hline
 new DayT& $\mathbb{N}$, $\mathbb{N}$, $\mathbb{N}$ & DayT & invalid\_argument \\
 getdurlist &  DayT  & a sequence of integer & - \\
-
+$\leq$ &  DayT  & $\mathbb{B}$ & - \\
+$>$ &  DayT  & $\mathbb{B}$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -337,10 +338,12 @@ getdurlist &  DayT  & a sequence of integer & - \\
   make the input a tuple.} \an{Agree}
 
 \subsection{Semantics}
+DayT: natural number
 
 \subsubsection{State Variables}
-day : a tuple of (y:$\mathbb{N}$, m:$\mathbb{N}$, d:$\mathbb{N}$) \wss{You have these same state variables in another module}\\
-daduraL: a sequence of integer\\
+
+day : DayT \wss{You have these same state variables in another module}\\
+daduraL : a sequence of Integer
 
 \subsubsection{Environment Variables}
 
@@ -356,7 +359,7 @@ N/A\\
 
 \noindent  new DayT (y, m, d):
 \begin{itemize}
-\item transition:  day.d, day.m, day.y = y, m, d\\
+\item transition:  day = (m = 1 $\lor$ m = 2 $\Rightarrow $ 365.25 $\times$ (y - 1) + 30.6001 $\times$ (m + 13) + d - calculateB(y/100) +  1720995 $|$ True $\Rightarrow $ 365.25 $\times$ y + 30.6001 $\times$ (m + 1) + d - calculateB(y / 100) +  1720995)\\
 
 \wss{You don't actually say otherwise using our notation.  You could just say
   True.  You also don't have a dummy variable.  I don't really know how to read
@@ -368,21 +371,37 @@ N/A\\
 \noindent  getdurlist ( inday ):
 \begin{itemize}
 \item transition: 
-\item output: out := setdurlist(day, inday)
+\item output: out := setdurlist ( day, inday)
 \item exception:
 \end{itemize}
 
+\noindent  $\leq$ ( inday ):
+\begin{itemize}
+\item transition: 
+\item output: out := compare ( day, inday )
+\item exception:
+\end{itemize}
+
+\noindent $>$  ( inday ):
+\begin{itemize}
+\item transition: 
+\item output: out := compare ( inday, day, )
+\item exception:
+\end{itemize}
 \wss{You shouldn't have a transition and an output.  I don't actually see why
   you need the daduraL state variable.  I would think you could calculate the
   duration as needed and simply output it?}
 
 \subsubsection{Local Functions}
 setdurlist : DayT $\times$ DayT $\rightarrow $ a sequence of integer\\
-setdurlist ( staDay, inpDay ): = (compare (staDay, inpDay) = True $\rightarrow $ daduraL [0.. countDiff(day, staDay)] $\|$ $\langle$ countDiff (perihelion ( staDay ), staDay) $\rangle$ $\|$ setdurlist (getnext (staDay), inpDay)) $|$ compare (staDay, inpDay) = False $\rightarrow $ $\langle$ $\rangle$ )\\
+setdurlist ( staDay, inpDay ): = ( staDay $\leq$ inpDay $\Rightarrow $ daduraL [0 .. $|$daduraL$|$] $\|$ $\langle$ countDiff (perihelion ( staDay ), staDay) $\rangle$ $\|$ setdurlist (getnext (staDay), inpDay)) $|$ staDay $>$ inpDay $\Rightarrow $ daduraL [0 .. $|$daduraL$|$] )\\
+
+calculateB: $\mathbb{N}$ $\rightarrow $ $\mathbb{N}$\\
+calculateB (a) = 2 - a + (a / 4)\\
 
 
-compare: DayT $\times$ DayT $\rightarrow $ Boolean\\
-compare(d1, d2) := (d1 $\leq$ d2 $\rightarrow $ True $|$ d1 $>$ d2 $\rightarrow $ False)\\
+compare: DayT $\times$ DayT $\rightarrow $ $\mathbb{B}$\\
+compare(d1, d2) := (d1 $\leq$ d2 $\Rightarrow $ True $|$ d1 $>$ d2 $\Rightarrow $ False)\\
 
 
 getnext : DayT $\rightarrow $ DayT\\
@@ -392,7 +411,7 @@ perihelion : DayT $\rightarrow $ DayT\\
 perihelion (day) :=  (day.m = 12 $	\wedge$ day.d $\geq	$ 21 $\Rightarrow$  (day.y, 12, 21) $|$ True $\Rightarrow$ ( day.y - 1, 12, 21))\\
 
 countDiff : DayT $\times$ DayT $\rightarrow $ integer\\
-countDiff (day1, day2) := + (compare (day1, day2) = True $\Rightarrow$ 1 + countDiff (getnext (day1), day2) $|$ compare (day1, day2) = False $\Rightarrow$ 0)
+countDiff (day1, day2) := (day1 $\leq$  day2 $\Rightarrow$ 1 + countDiff (getnext (day1), day2) $|$ day1 $<$  day2 $\Rightarrow$ 0)
 
 
 \section{MIS of Input Parameters Module} \label{ModuleIP} 
@@ -411,16 +430,18 @@ HardH
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{4cm} p{2cm} p{4cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline 
-init & - & - & Key\_error \\
+fromKeyBoard & - & - & Key\_error \\
+loadAnaleFile & string & - & File\_error \\
 getla & - & DegreeT & - \\
 getph & - & real & - \\
 getpw & - & real & - \\
-getds & - & DayT & - \\
-getde & - & DayT & - \\
+getdayS & - & DayT & - \\
+getdayE & - & DayT & - \\
+getdec & - & a sequence of real & - \\
 
 
 \hline
@@ -435,7 +456,8 @@ latitude: DegreeT\\
 dayS: DayT \wss{You have these state variables already in other modules.}\an{Delete dayS and dayE in other module}\\
 dayE: DayT\\
 panH: real\\
-panW: real
+panW: real\\
+declination: a sequence [366] of real
 
 
 \subsubsection{Environment Variables}
@@ -446,7 +468,7 @@ When users chick the submit bottom from system interface, InputPara.init ( ) imp
 
 \subsubsection{ Access Routine Semantics}
 
-\noindent  init ( ):
+\noindent  fromKeyBoard ( ):
 \begin{itemize}
 \item transition: Get the values from users' input.\\
 latitude, panH, panW = HardH. $\Phi_P$, HardH. $P_{A_{\text{h}}}$, HardH. $P_{A_{\text{w}}}$\\
@@ -455,7 +477,28 @@ dayS := new DayT (HardH. $\mathit{year}_\text{Start}$, HardH. $\mathit{month}_\t
 
 dayE :=  new DayT ( HardH. $\mathit{year}_\text{End}$, HardH. $\mathit{month}_\text{End}$, HardH. $\mathit{day}_\text{End}$)\\
 \item output:
-\item exception: if the data type of captured values do not match with the parameters' data type $\Rightarrow$ Key\_error
+\item exception: If the data type of captured values do not match with the parameters' data type $\Rightarrow$ Key\_error
+\end{itemize}
+
+
+
+\noindent  loadAnaleFile ( fileName ):
+\begin{itemize}
+\item transition: declination [0..366] := read data from the file analemma.txt.\\
+The text file has the following format, where declination\_i denotes the angle of sun declination for day 1 to day 366.
+All data values are separate into rows, where each row has a value. There is 366 rows in the file.
+\begin{center}
+declination\_0\\
+declination\_1\\
+declination\_2\\
+.\\
+.\\
+.\\
+declination\_366\\
+\end{center}
+
+\item output:
+\item exception: If the file is not found $\Rightarrow$ File\_error
 \end{itemize}
 
 \noindent  getla ( ):
@@ -479,17 +522,24 @@ dayE :=  new DayT ( HardH. $\mathit{year}_\text{End}$, HardH. $\mathit{month}_\t
 \item exception: 
 \end{itemize}
 
-\noindent  getds ( ):
+\noindent  getdayS ( ):
 \begin{itemize}
 \item transition: 
 \item output: dayS
 \item exception: 
 \end{itemize}
 
-\noindent  getde ( ):
+\noindent  getdayE ( ):
 \begin{itemize}
 \item transition: 
 \item output: dayE
+\item exception: 
+\end{itemize}
+
+\noindent  getdec ( ):
+\begin{itemize}
+\item transition: 
+\item output: declination
 \item exception: 
 \end{itemize}
 
@@ -515,7 +565,9 @@ InputPara\ref{ModuleIP}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline 
-verified & DegreeT, real, real, DayT, DayT, & - & invaild\_lan, invaild\_pan, invaild\_day \\
+verifiedLan & DegreeT& $\mathbb{B}$ & - \\
+verifiedP &  real, real & $\mathbb{B}$ & - \\
+verifiedD & DayT, DayT, & $\mathbb{B}$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -538,19 +590,27 @@ The input values is input from InputPara
 
 \subsubsection{ Access Routine Semantics}
 
-\noindent  verified (lan, ph, pw, ds, de):
+\noindent  verifiedLan (lan):
 \begin{itemize}
 \item transition: 
-
-\item output:
+\item output: (lan $>$ 90 $\lor$ lan $<$ - 90 $\Rightarrow$ False $|$ True)
 \item exception: exc := 
-(lan $>	$ 90 $\wedge$ lan $<$ - 90 $\Rightarrow$ invaild\_lan
-$|$
-ph $<$ 0 $\wedge$ pw $<$ 0 $\Rightarrow$ invaild\_pan
-$|$
+\end{itemize}
+
+\noindent  verifiedP (ph, pw):
+\begin{itemize}
+\item transition: 
+\item output: ( ph $<$ 0 $\lor$ pw $<$ 0 $\Rightarrow$ False $|$ True)
+\item exception: exc := 
 if ds and de is a invalid date in Gregorian calendar $\Rightarrow$ invaild\_day)
 \end{itemize}
 
+\noindent  verifiedD (ds, de):
+\begin{itemize}
+\item transition: 
+\item output: ( ds $<$ de $\Rightarrow$ False $|$ True)
+\item exception: exc := 
+\end{itemize}
 
 \subsubsection{Local Functions}
 
@@ -588,7 +648,7 @@ getresult & - & a sequence of a tulple of ( DegreeT, real, integer) & - \\
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-resultL: a sequence of a tulple \wss{spell check} of ( t: DegreeT, e: real, diff: integer)\\
+resultAEng: a sequence of a tuple \wss{spell check}\an{yes} of ( t: DegreeT, e: real, diff: integer)\\
 
 
 \subsubsection{Environment Variables}
@@ -602,16 +662,17 @@ OutputPara.init ( ) will only be called once.
 
 \noindent  init ( ):
 \begin{itemize}
-\item transition: resultL := $\langle $ $ \rangle$
+\item transition: resultAEng := $\langle $ $ \rangle$
 \item output:
 \item exception: 
 \end{itemize}
 
 \noindent  addresult ( angle, energy ):
 \begin{itemize}
-\item transition: resultL := resultL $\|$ ($|$resultL$|$ = 0 $\Rightarrow$ [ $\langle$
-  angle, energy, 100 $\rangle$ ] $|$ True $\Rightarrow$ [
-  $\langle$ angle, energy, getdiff (resultL[0].e, energy) $\rangle$ ] )\wss{I
+\item transition: resultAEng := resultAEng[0 .. $|$resultAEng$|$] $\|$ $\langle$
+  angle, energy $\rangle$
+
+\wss{I
     don't know how to read this.}
 
 \item output:
@@ -621,7 +682,7 @@ OutputPara.init ( ) will only be called once.
 \noindent  getresult (  ):
 \begin{itemize}
 \item transition: 
-\item output: out := resultL
+\item output: out := resultAEng
 \item exception: 
 \end{itemize}
 
