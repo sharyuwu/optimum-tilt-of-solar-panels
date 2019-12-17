@@ -200,8 +200,11 @@ filename = "analemma.txt"
 \begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline 
-mian \wss{main?}\an{Meaning the function at control all the module} & - & - & - \\
+\hline
+setInput  & - & - & - \\
+getOneAng \wss{main?}\an{changed name} & - & - & - \\
+getTwoAng & - & - & - \\
+writeOutput & - & - & - \\
 
 
 \hline
@@ -228,7 +231,7 @@ mian \wss{main?}\an{Meaning the function at control all the module} & - & - & - 
 
 \subsubsection{ Access Routine Semantics}
 
-\noindent  main ( ):
+\noindent  setInput ( ):
 
 \begin{itemize}
 \item transition: Implement the InputPara and  the environment variables for Output by following steps.
@@ -244,10 +247,17 @@ verifiedLat ( InputPara.getla ( ) )\\
 verifiedP ( InputPara.getph ( ), InputPara.getpw ( ) )\\
 verifiedD (InputPara.getdayS, InputPara.getdayE)\\
 
+
+\end{itemize}
+
+\noindent  getOneAng ( ):
+
+\begin{itemize}
+\item transition:Implied the one optimum cut by following steps
+
+
 $\#$ Get the zenith angle between dayS and
 dayE\\
-
-
 $\theta_{S_{\text{date}}}$ = Calculation.getzen ( InputPara.getdec,   localDaySandPer ( ),  localDaySandDayE ( ) )\\
 
 $\#$ Get the optimum tilt angle using $\theta_{S_{\text{date}}}$\\
@@ -261,12 +271,37 @@ $P_{E}$ = getenergy (InputPara.getpw, InputPara.getph, localtiltSunIn ( localsun
 $\#$ Output $P_{E}$ and $\theta_{T}$ to the Table-layout Module\\
 addresult ($\theta_{T}$, $P_{E}$ )\\
 
-$\#$ Display the output values on the screen using the Table-layout Module\\
-setable ( getresult ( ) )\\
-display ( )
+
 
 \end{itemize}
 
+\noindent  getTwoAng ( ):
+
+\begin{itemize}
+\item transition:Implied the two optimum cut by following steps\\
+
+$\#$ Get the zenith angle between dayS and
+$\frac{dayE + dayS}{2}$ and $\frac{dayE + dayS}{2}$ to dayE\\
+zenithSet =  \{$\theta_{S_{\text{date}}}[1.. | \frac{\theta_{S_{\text{date}}}}{2}|]$\} $\cup$ \{$\theta_{S_{\text{date}}}[| \frac{\theta_{S_{\text{date}}}}{2}|.. | \theta_{S_{\text{date}}}|]$\}\\
+ 
+$\#$ Get the optimum tilt angle using $\theta_{S_{\text{date}}}$\\
+$\theta_{T}$ = $\theta_{T}$ $\cup$ ( zenList : DegreeT[ ] $|$ zenList $\in$ zenithSet $\bullet$ getilt ( zenList, localsunIn(zenList) ) )\\
+
+$\#$ Get the estimated solar absorption using Optimum Tilt Angle Module\\
+
+$P_{E}$ = $P_{E}$ $\cup$  ( zenList : DegreeT[ ] $|$ zenList $\in$ zenithSet $\bullet$ getenergy (InputPara.getpw, InputPara.getph, localtiltSunIn ( localsunIn (zenList, $\theta_{T}$, $\theta_{T}$), zenList )))\\
+
+$\#$ Output $P_{E}$ and $\theta_{T}$ to the Table-layout Module\\
+addresult ($\theta_{T}$, $P_{E}$ )\\
+
+\end{itemize}
+
+\noindent  setInput ( ):
+\begin{itemize}
+\item output: out :=\\
+$\#$ Write the output values in the file using the Table-layout Module\\
+display ( )
+\end{itemize}
 \subsubsection{Local Functions}
 
 $\#$ The days detween start day and perhelion\\
@@ -285,7 +320,11 @@ $\#$ Get the optimum sun intensity\\
 localtiltSunIn: DegreeT $\times$ real $\rightarrow$ real\\
 localtiltSunIn (degree, intensity ) = TiltAngle.getiltInten (intensity, degree )
 
-\wss{It is nice to have a newpage between modules.}
+
+
+\wss{It is nice to have a newpage between modules.}\an{OK}
+
+\newpage
 
 \section{Sun Catcher Type Module} \label{ModuleSCTM} 
 
@@ -299,7 +338,6 @@ N/A\\
 \subsection{Exported Types}
 
 DegreeT = $\mathbb{R}$\\
-AnalemmaT = a tuple of (x: $\mathbb{R}$ ,y: $\mathbb{R}$, z: $\mathbb{R}$)\\
 
 \subsection{Syntax}
 
@@ -319,6 +357,10 @@ N/A\\
 N/A\\
 
 \subsubsection{Assumptions}
+N/A\\
+
+\newpage
+
 
 \section{Day ADT Module} \label{ModuleADTD} 
 
@@ -439,6 +481,10 @@ MonthOneorTwo (y, m, d) = 365.25 $\times$ (y - 1) + 30.6001 $\times$ (m + 13) + 
 
 MonthNotOneTwo: $\mathbb{N} \times \mathbb{N} \times \mathbb{N} \rightarrow \mathbb{N}$\\
 MonthNotOneorTwo (y, m, d) = 365.25 $\times$ y + 30.6001 $\times$ (m + 1) + d - calculateB(y / 100) +  1720995)
+
+
+
+\newpage
 
 
 \section{MIS of Input Parameters Module} \label{ModuleIP} 
@@ -573,6 +619,12 @@ declination\_366\\
 
 \subsubsection{Local Functions}
 
+
+
+\newpage
+
+
+
 \section{MIS of Input Verfication Module} \label{ModuleIV} 
 
 \subsection{Module}
@@ -642,73 +694,9 @@ The input values is input from InputPara
 
 \subsubsection{Local Functions}
 
-\section{MIS of Output Parameters Module} \label{ModuleOP} 
-
-\subsection{Module}
-OutputPara
-
-\subsection{Uses}
-Table\ref{ModuleT}\\
-
-\subsection{Syntax}
-
-\subsubsection{Exported Constants}
 
 
-\subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{5cm} p{5cm} p{2cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline 
-
-addresult &  DegreeT, a set of real & - & - \\
-getresult & - & a set of \{ tuple ( DegreeT, real) \} & - \\
-
-
-
-\hline
-\end{tabular}
-\end{center}
-
-
-\subsection{Semantics}
-
-\subsubsection{State Variables}
-resultAEng: a set of \{ tuple (DegreeT, real )\} \wss{spell check}\an{yes} \\
-
-
-\subsubsection{Environment Variables}
-
-
-\subsubsection{Assumptions}
-addresult will be called more than one time before called getresult.
-
-\subsubsection{ Access Routine Semantics}
-
-\noindent  addresult ( angle, energy ):
-\begin{itemize}
-\item transition: resultAEng := resultAEng $\cup$ \{ (angle, localAverage (energy))  \}
-\wss{I
-    don't know how to read this.}
-
-\item output:
-\item exception: 
-\end{itemize}
-
-\noindent  getresult (  ):
-\begin{itemize}
-\item transition: 
-\item output: out := resultAEng
-\item exception: 
-\end{itemize}
-
-
-\subsubsection{Local Functions}
-
-localAverage : a set of real $\rightarrow$ real\\
-localAverage (energy) =  + ( i: real $|$ i $\in$ energy $\bullet$  i) / $|$energy$|$\\
+\newpage
 
 
 
@@ -737,7 +725,7 @@ hRow3: "Energy Comparison"
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline 
-addresult &  DegreeT, a set of real & - & - \\
+addresult &  a set of DegreeT, a set of real & - & - \\
 setable & a sequce of a tuple of ( DegreeT, real, integer ) & - & - \\
 display & - & - & - \\
 
@@ -750,12 +738,13 @@ display & - & - & - \\
 
 \subsubsection{State Variables}
 
-resultL: a sequence of a tulple of ( t: DegreeT, e: real, diff: integer)\\
+mainTable: a set of \{ tuples of ( 
+cutTime: natural number, energy: real) \}\\
+tiltTable: a set of \{ sets of \{ angle: DegreeT\} \}\\
 
-resultAEng: a set of \{ tuple (DegreeT, real )\} \wss{spell check}\an{yes} \\
 
 \subsubsection{Environment Variables}
-Output variables will display on the screen. \wss{You should define an
+screen: Write tables  (output variables) in the file. \wss{You should define an
   environment variable for the screen.}
 
 \subsubsection{Assumptions}
@@ -765,21 +754,15 @@ Output variables will display on the screen. \wss{You should define an
 
 \noindent  addresult ( angle, energy ):
 \begin{itemize}
-\item transition: resultAEng := resultAEng $\cup$ \{ (angle, localAverage (energy))  \}
+\item transition: mainTable = mainTable $\cup$ \{ $|$angle$|$ ,localAverage (energy)  \}\\
+tiltTable = tiltTable $\cup$ \{ angle \}
 \wss{I
     don't know how to read this.}
-
+\an{Change the expression}
 \item output:
 \item exception: 
 \end{itemize}
 
-
-\noindent  setable (result):
-\begin{itemize}
-\item transition: resultL := result
-\item output:
-\item exception: 
-\end{itemize}
 
 \noindent  display ( ):
 \begin{itemize}
@@ -809,6 +792,11 @@ Energy Competition & resultL.diff [ 0 ] $\%$    & ...     & resultL.diff [ $|$ r
 \subsubsection{Local Functions}
 localAverage : a set of real $\rightarrow$ real\\
 localAverage (energy) =  + ( i: real $|$ i $\in$ energy $\bullet$  i) / $|$energy$|$\\
+
+
+
+\newpage
+
 
 
 
@@ -916,6 +904,11 @@ localMax(origDegree, newDegree, sunIn) = ( getiltInten (origDegree, sunIn) $\geq
 
 
 
+
+\newpage
+
+
+
 \section{MIS of Solar Energy Absorption Module} \label{ModuleE} 
 
 \subsection{Module}
@@ -938,7 +931,7 @@ TiltAng\ref{ModuleTA}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline 
-getenergy & real, real, DegreeT, a sequence of DegreeT & a set of real & - \\
+getenergy & real, real, real, DegreeT [ ] & a set of real & - \\
 
 
 \hline
@@ -976,6 +969,10 @@ localSunIn (zen[ ], maxinten) = $\cup$ (i: DegreeT $|$ i $\in$ z $\bullet$ \{ Su
 
 localEnergy: a set of real $\times$ real $\times$ real $\rightarrow$ a sequence of real\\
 localEnergy (sunIn, pw, ph) =  $\cup$ ( i: integer $|$ i $\in$ sunIn $\bullet$ \{ pw $\times$ ph $\times$ 18.7 $\times$ 0.75 $\times$ i \}t)
+
+
+
+\newpage
 
 
 \section{MIS of Calculation} \label{ModuleC} 
@@ -1051,8 +1048,8 @@ $I_{S} \cdot (\frac{1.00}{\text{energy}})^{sec(zen)} $
 
 \newpage
 
-\bibliographystyle {plainnat}
-\bibliography {../../../refs/References}
+%\bibliographystyle {plainnat}
+%\bibliography {../../../refs/References}
 
 \newpage
 
