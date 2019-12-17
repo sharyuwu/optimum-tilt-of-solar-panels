@@ -112,6 +112,7 @@ natural number & $\mathbb{N}$ & a number without a fractional component in [1,
 $\infty$) \\
 real & $\mathbb{R}$ & any number in  (-$\infty$, $\infty$)\\
 bool &$\mathbb{B}$ & a statement of True or False\\
+sequence & [ ] & a sequence of the same type\\
 
 
 \bottomrule
@@ -177,21 +178,21 @@ Module\\
 Control
 
 \subsection{Uses}
-InputPara\ref{ModuleIP} \wss{Please leave space between the name and the
+SunCatTy\\
+DayT\\
+InputPara (Section~\ref{ModuleIP})\\ \wss{Please leave space between the name and the
   reference.  You should also identify what type of reference it is, like you
   would for a Figure or a Table.  That is, you should say (Section~\ref{ModuleIP}).}\\
-InputVer (Section \ref{ModuleIV})\\
-OutputPara (Section \ref{ModuleOP})\\
-TiltAng (Section \ref{ModuleTA})\\
-Energy (Section \ref{ModuleE})\\
-SunInten (Section \ref{ModuleSI})\\
-ZenithAng (Section \ref{ModuleZA})\\
+InputVer (Section ~\ref{ModuleIV})\\
+OutputPara (Section ~\ref{ModuleOP})\\
+TiltAng (Section ~\ref{ModuleTA})\\
+Energy (Section ~\ref{ModuleE})\\
 
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-
+filename = "analemma.txt"
 
 \subsubsection{Exported Access Programs}
 
@@ -200,7 +201,8 @@ ZenithAng (Section \ref{ModuleZA})\\
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline 
-mian \wss{main?} & - & - & - \\
+mian \wss{main?}\an{Meaning the function at control all the module} & - & - & - \\
+
 
 \hline
 \end{tabular}
@@ -211,12 +213,12 @@ mian \wss{main?} & - & - & - \\
 
 \subsubsection{State Variables}
 \wss{You use this type, but I don't think you import (use) the module
-  that defines it} \an{Change DayT as Day ADT} \an{State Variable dayS and dayE should only exit in Input Parameters Module}\\
+  that defines it} \an{Change DayT as Day ADT} \an{State Variable dayS and dayE only exit in Input Parameters Module}\\
 
 \wss{Why are these two state variables here?  I thought you were going to use
   the Input Parameters module?}
 \wss{Now that I think about it, given that you are planning on implementing with
-  Haskell, you might want to avoid having modules with state information.}
+  Haskell, you might want to avoid having modules with state information.} \an{Yes, Agree. But I will still keep some of my state variable inside the document for the purpose the easy understanding. Then implement in a slightly different way.}
 
 \subsubsection{Environment Variables}
 
@@ -231,29 +233,32 @@ mian \wss{main?} & - & - & - \\
 \begin{itemize}
 \item transition: Implement the InputPara and  the environment variables for Output by following steps.
 
-Get ($\Phi_P$: DegreeT, $P_{A_{\text{h}}}$: real, $P_{A_{\text{w}}}$: real, $\mathit{year}_\text{Start}$: natural number, $\mathit{month}_\text{Start}$: natural number, $\mathit{day}_\text{Start}$: natural number, $\mathit{year}_\text{End}$: natural number, $\mathit{month}_\text{End}$: natural number, $\mathit{day}_\text{End}$: natural number) and (filename: string ) from users' input.\\
+Get ($\Phi_P$: DegreeT, $P_{A_{\text{h}}}$: real, $P_{A_{\text{w}}}$: real, $\mathit{year}_\text{Start}$: natural number, $\mathit{month}_\text{Start}$: natural number, $\mathit{day}_\text{Start}$: natural number, $\mathit{year}_\text{End}$: natural number, $\mathit{month}_\text{End}$: natural number, $\mathit{day}_\text{End}$: natural number) from users' input.\\
 
 
 load\_anale\_data (filename)\\
 InputPara.init ( )\\
 
 $\#$ Verify the input values using Input Verfication Module\\
-verified ($\Phi_P$, $P_{A_{\text{h}}}$, $P_{A_{\text{w}}}$, dayS, dayE )\\
+verifiedLat ( InputPara.getla ( ) )\\
+verifiedP ( InputPara.getph ( ), InputPara.getpw ( ) )\\
+verifiedD (InputPara.getdayS, InputPara.getdayE)\\
 
 $\#$ Get the zenith angle between dayS and
 dayE\\
-$\theta_{S_{\text{date}}}$ = getzen ( )\\
+
+
+$\theta_{S_{\text{date}}}$ = Calculation.getzen ( InputPara.getdec,   localDaySandPer ( ),  localDaySandDayE ( ) )\\
 
 $\#$ Get the optimum tilt angle using $\theta_{S_{\text{date}}}$\\
-setilt ( $\theta_{S_{\text{date}}}$ )\\
-$\theta_{T}$ = getilt ( )\\
+$\theta_{T}$ = getilt ( $\theta_{S_{\text{date}}}$, localsunIn($\theta_{S_{\text{date}}}$) )\\
 
 
 $\#$ Get the estimated solar absorption using Optimum Tilt Angle Module\\
-setenergy ($P_{A_{\text{w}}}$, $P_{A_{\text{h}}}$, getmaxInten ( ), $\theta_{S_{\text{date}}}$ )\\
-$P_{E}$ = getavenergy ( )\\
 
-$\#$ Output $P_{E}$ and $\theta_{T}$ to the Output paramaters Module\\
+$P_{E}$ = getenergy (InputPara.getpw, InputPara.getph, localtiltSunIn ( localsunIn ($\theta_{S_{\text{date}}}$, $\theta_{T}$, $\theta_{T}$), $\theta_{S_{\text{date}}}$ )\\
+
+$\#$ Output $P_{E}$ and $\theta_{T}$ to the Table-layout Module\\
 addresult ($\theta_{T}$, $P_{E}$ )\\
 
 $\#$ Display the output values on the screen using the Table-layout Module\\
@@ -262,6 +267,23 @@ display ( )
 
 \end{itemize}
 
+\subsubsection{Local Functions}
+
+$\#$ The days detween start day and perhelion\\
+localDaySandPer: Integer\\
+localDaySandPer = InputPara.getdayS. perhelion\\
+
+$\#$ The days detween start day and end day\\
+localDaySandDayE: Integer\\
+localDaySandDayE =InputPara.getdayE.countDiff (InputPara.getdayS)\\
+
+$\#$ Calculate the total sun intensity for the base case\\
+localsunIn: a sequence of DegreeT $\rightarrow$ real\\
+localsunIn (zen[ ]) = Calculation.sumSunIn( 1.35, zen)
+
+$\#$ Get the optimum sun intensity\\
+localtiltSunIn: DegreeT $\times$ real $\rightarrow$ real\\
+localtiltSunIn (degree, intensity ) = TiltAngle.getiltInten (intensity, degree )
 
 \wss{It is nice to have a newpage between modules.}
 
@@ -297,7 +319,6 @@ N/A\\
 N/A\\
 
 \subsubsection{Assumptions}
-For DayT the day will always lie between 1 and 31, the month will always lie between 1 and 12, and year will always be greater than 1.
 
 \section{Day ADT Module} \label{ModuleADTD} 
 
@@ -327,7 +348,7 @@ DayT = ? \wss{It seems confusing to me that you have a DayT, that is not an
 \hline
 new DayT& $\mathbb{N}$, $\mathbb{N}$, $\mathbb{N}$ & DayT & invalid\_argument \\
 getnext &  -  & DayT & - \\
-perihelion &  -  & DayT & - \\
+perihelion &  -  & Integer & - \\
 countDiff &  DayT  & Integer & - \\
 $\leq$ &  DayT  & $\mathbb{B}$ & - \\
 $>$ &  DayT  & $\mathbb{B}$ & - \\
@@ -359,7 +380,7 @@ N/A\\
 
 \noindent  new DayT (y, m, d):
 \begin{itemize}
-\item transition:  stateDay = (m = 1 $\lor$ m = 2 $\Rightarrow $ 365.25 $\times$ (y - 1) + 30.6001 $\times$ (m + 13) + d - calculateB(y/100) +  1720995 $|$ True $\Rightarrow $ 365.25 $\times$ y + 30.6001 $\times$ (m + 1) + d - calculateB(y / 100) +  1720995)\\
+\item transition:  stateDay = (m = 1 $\lor$ m = 2 $\Rightarrow$ MonthOneTwo (y, m, d) $|$ True $\Rightarrow$ MonthNotOneTwo (y, m, d)\\
 
 \wss{You don't actually say otherwise using our notation.  You could just say
   True.  You also don't have a dummy variable.  I don't really know how to read
@@ -378,14 +399,14 @@ N/A\\
 \noindent  perihelion ( ):
 \begin{itemize}
 \item transition: 
-\item output: out := (stateDay.m = 12 $	\wedge$ stateDay.d $\geq	$ 21 $\Rightarrow$  (stateDay.y, 12, 21) $|$ True $\Rightarrow$ ( stateDay.y - 1, 12, 21))
+\item output: out := (stateDay.m = 12 $	\wedge$ stateDay.d $\geq	$ 21 $\Rightarrow$  countDiff (new DayT (stateDay.y, 12, 21)) $|$ True $\Rightarrow$ countDiff (new DayT ( stateDay.y - 1, 12, 21)))
 \item exception:
 \end{itemize}
 
 \noindent  countDiff ( day ):
 \begin{itemize}
 \item transition: 
-\item output: out := (day $\leq$ stateDay $\Rightarrow$ 1 + countDiff (getnext (day1)) $|$ day $<$  stateDay $\Rightarrow$ 0)
+\item output: out := (day $\leq$ stateDay $\Rightarrow$ 1 + countDiff (getnext (day1)) $|$ day $>$  stateDay $\Rightarrow$ 0)
 \item exception:
 \end{itemize}
 
@@ -412,6 +433,12 @@ N/A\\
 calculateB: $\mathbb{N}$ $\rightarrow $ $\mathbb{N}$\\
 calculateB (a) = 2 - a + (a / 4)\\
 
+MonthOneTwo: $\mathbb{N} \times \mathbb{N} \times \mathbb{N} \rightarrow \mathbb{N}$\\
+MonthOneorTwo (y, m, d) = 365.25 $\times$ (y - 1) + 30.6001 $\times$ (m + 13) + d - calculateB(y /100) +  1720995\\
+
+
+MonthNotOneTwo: $\mathbb{N} \times \mathbb{N} \times \mathbb{N} \rightarrow \mathbb{N}$\\
+MonthNotOneorTwo (y, m, d) = 365.25 $\times$ y + 30.6001 $\times$ (m + 1) + d - calculateB(y / 100) +  1720995)
 
 
 \section{MIS of Input Parameters Module} \label{ModuleIP} 
@@ -566,7 +593,7 @@ InputPara\ref{ModuleIP}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline 
-verifiedLan & DegreeT& $\mathbb{B}$ & - \\
+verifiedLat & DegreeT& $\mathbb{B}$ & - \\
 verifiedP &  real, real & $\mathbb{B}$ & - \\
 verifiedD & DayT, DayT, & $\mathbb{B}$ & - \\
 \hline
@@ -583,7 +610,8 @@ verifiedD & DayT, DayT, & $\mathbb{B}$ & - \\
 
 
 \subsubsection{Environment Variables}
-
+\# Display warning message on the screen\\
+screen: Hardware.screen\\
 
 \subsubsection{Assumptions}
 The input values is input from InputPara
@@ -591,25 +619,24 @@ The input values is input from InputPara
 
 \subsubsection{ Access Routine Semantics}
 
-\noindent  verifiedLan (lan):
+\noindent  verifiedLat (latitude):
 \begin{itemize}
 \item transition: 
-\item output: (lan $>$ 90 $\lor$ lan $<$ - 90 $\Rightarrow$ False $|$ True)
+\item output: (latitude $>$ 90 $\lor$ latitude $<$ - 90 $\Rightarrow$ screen.display |`` The degree of the latitude can't be greater than 90 or smaller than -90. " $|$ True)
 \item exception: exc := 
 \end{itemize}
 
 \noindent  verifiedP (ph, pw):
 \begin{itemize}
 \item transition: 
-\item output: ( ph $<$ 0 $\lor$ pw $<$ 0 $\Rightarrow$ False $|$ True)
+\item output: ( ph $<$ 0 $\lor$ pw $<$ 0 $\Rightarrow$ screen.display |`` The height and the weight of the panel can't be negative. " $|$ True)
 \item exception: exc := 
-if ds and de is a invalid date in Gregorian calendar $\Rightarrow$ invaild\_day)
 \end{itemize}
 
 \noindent  verifiedD (ds, de):
 \begin{itemize}
 \item transition: 
-\item output: ( ds $<$ de $\Rightarrow$ False $|$ True)
+\item output: ( ds $<$ de $\Rightarrow$ screen.display |`` The end day can't be smaller than the start day. " $|$ True)
 \item exception: exc := 
 \end{itemize}
 
@@ -635,9 +662,9 @@ Table\ref{ModuleT}\\
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline 
-init & - & - & - \\
-addresult &  DegreeT, real & - & - \\
-getresult & - & a sequence of a tulple of ( DegreeT, real, integer) & - \\
+
+addresult &  DegreeT, a set of real & - & - \\
+getresult & - & a set of \{ tuple ( DegreeT, real) \} & - \\
 
 
 
@@ -649,30 +676,20 @@ getresult & - & a sequence of a tulple of ( DegreeT, real, integer) & - \\
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-resultAEng: a sequence of a tuple \wss{spell check}\an{yes} of ( t: DegreeT, e: real, diff: integer)\\
+resultAEng: a set of \{ tuple (DegreeT, real )\} \wss{spell check}\an{yes} \\
 
 
 \subsubsection{Environment Variables}
 
 
 \subsubsection{Assumptions}
-OutputPara.init ( ) always implement before any export access programs in output parameters module.
-OutputPara.init ( ) will only be called once.
+addresult will be called more than one time before called getresult.
 
 \subsubsection{ Access Routine Semantics}
 
-\noindent  init ( ):
-\begin{itemize}
-\item transition: resultAEng := $\langle $ $ \rangle$
-\item output:
-\item exception: 
-\end{itemize}
-
 \noindent  addresult ( angle, energy ):
 \begin{itemize}
-\item transition: resultAEng := resultAEng[0 .. $|$resultAEng$|$] $\|$ $\langle$
-  angle, energy $\rangle$
-
+\item transition: resultAEng := resultAEng $\cup$ \{ (angle, localAverage (energy))  \}
 \wss{I
     don't know how to read this.}
 
@@ -689,9 +706,10 @@ OutputPara.init ( ) will only be called once.
 
 
 \subsubsection{Local Functions}
-getdiff : real $\times$ real $\rightarrow$ interger\\
-getdiff (e1, e2) =
-$\frac{\text{e2}}{\text{e1}}$ $\times$ 100
+
+localAverage : a set of real $\rightarrow$ real\\
+localAverage (energy) =  + ( i: real $|$ i $\in$ energy $\bullet$  i) / $|$energy$|$\\
+
 
 
 \section{MIS of Table-layout Module} \label{ModuleT} 
@@ -719,6 +737,7 @@ hRow3: "Energy Comparison"
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline 
+addresult &  DegreeT, a set of real & - & - \\
 setable & a sequce of a tuple of ( DegreeT, real, integer ) & - & - \\
 display & - & - & - \\
 
@@ -733,6 +752,8 @@ display & - & - & - \\
 
 resultL: a sequence of a tulple of ( t: DegreeT, e: real, diff: integer)\\
 
+resultAEng: a set of \{ tuple (DegreeT, real )\} \wss{spell check}\an{yes} \\
+
 \subsubsection{Environment Variables}
 Output variables will display on the screen. \wss{You should define an
   environment variable for the screen.}
@@ -741,6 +762,17 @@ Output variables will display on the screen. \wss{You should define an
 
 
 \subsubsection{ Access Routine Semantics}
+
+\noindent  addresult ( angle, energy ):
+\begin{itemize}
+\item transition: resultAEng := resultAEng $\cup$ \{ (angle, localAverage (energy))  \}
+\wss{I
+    don't know how to read this.}
+
+\item output:
+\item exception: 
+\end{itemize}
+
 
 \noindent  setable (result):
 \begin{itemize}
@@ -775,6 +807,9 @@ Energy Competition & resultL.diff [ 0 ] $\%$    & ...     & resultL.diff [ $|$ r
 
 
 \subsubsection{Local Functions}
+localAverage : a set of real $\rightarrow$ real\\
+localAverage (energy) =  + ( i: real $|$ i $\in$ energy $\bullet$  i) / $|$energy$|$\\
+
 
 
 \section{MIS of Optimum Tilt Angle Module} \label{ModuleTA} \wss{Use labels for
@@ -803,9 +838,9 @@ $I_{S}$ := 1.35\\
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline 
-setilt &  a sequence of DegreeT  & -  & - \\
-getilt &  -  & DegreeT & - \\
-getmaxInten &  -  & real & out\_empty \\
+
+getilt &  DegreeT[ ], real  & DegreeT & - \\
+getiltInten &  DegreeT, real  & real & - \\
 
 
 \wss{accessProg} & - & - & - \\
@@ -818,9 +853,7 @@ getmaxInten &  -  & real & out\_empty \\
 
 \subsubsection{State Variables}
 
-sunIn: real\\
-zenithL: a sequence of DegreeT\\
-maxsunIn: a tuple of (i: real, d: DegreeT)\\
+tiltDegree: DegreeT\\
 
 \wss{Do you really need state variables?  I think you could use an input-output
   module here.  The same comment applies elsewhere.}
@@ -842,33 +875,23 @@ exceptions, but for practical purposes assumptions are sometimes appropriate.}
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg} setilt( zen ):
-\begin{itemize}
-\item transition: sunIn, zenithL, maxsunIn := SunInten.sum ($I_{S}$, zen),   zen, $\langle$ 0, 0 $\rangle$
-\item output: 
-\item exception: 
-\end{itemize}
 
-
-\noindent \wss{accessProg} getilt ( ):
+\noindent \wss{accessProg} getilt (zenithL[ ], sunIn ):
 \begin{itemize}
-\item transition: maxsunIn := (j: integer $|$ j $\in$ [0.. $|$zenithL$|$]
-  $\bullet$ j = 0 $\Rightarrow$  $\langle$ SunInten.single (sunIn, zenithL [ 0
-  ]), zenithL [ 0 ] $\rangle$ $|$ ifMax (maxsunIn.i, SunInten.single (sunIn,
-  zenithL [ j ])) $\neq$ maxsunIn.i $\Rightarrow$  $\langle$ SunInten.single
-  (sunIn, zenithL [ j ]), zenithL [ j ]$\rangle$ ) \wss{This is a complicated
+\item transition: 
+\item output: out := tiltDegree, such that  \\
+$\forall$(zen: DegreeT $|$ j $\in$ zenithL
+  $\bullet$ tiltDegree = localMax (tiltDegree, zen, sunIn) \wss{This is a complicated
     expression.  I think you aren't quite following our notation.  Also, for a
     complicated expression like this, it helps to add local functions.}
- 
-\item output: out := maxsunIn.d
 \item exception: 
 \end{itemize}
 
-\noindent getmaxInten ( ):
+\noindent getiltInten (degree, sunIn):
 \begin{itemize}
 \item transition:
-\item output: SunInten.single (sunIn, maxsunIn.d )
-\item exception: exp := maxsunIn.i = 0 $\wedge$ maxsunIn.d $\Rightarrow$ out\_empty
+\item output: Calculation.sglSunIn (degree, sunIn )
+\item exception: 
 \end{itemize}
 
 
@@ -881,8 +904,9 @@ exceptions, but for practical purposes assumptions are sometimes appropriate.}
 
 \subsubsection{Local Functions}
 
-ifMax: real $\times$ real $\rightarrow$ real\\
-ifMax(x, y) = (x $\geq$ y $\Rightarrow$ x $|$ otherwise $\Rightarrow$ y )\\
+$\#$ Get two tuples, then return a tuple.\\
+localMax: DegreeT $\times$ DegreeT $\times$ real $\rightarrow$ DegreeT\\
+localMax(origDegree, newDegree, sunIn) = ( getiltInten (origDegree, sunIn) $\geq$ getiltInten (newDegree, sunIn) $\Rightarrow$ origDegree $|$ True $\Rightarrow$ newDegree )\\
 
 
 \wss{As appropriate} \wss{These functions are for the purpose of specification.
@@ -914,8 +938,8 @@ TiltAng\ref{ModuleTA}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline 
-setenergy & real, real, DegreeT, a sequence of DegreeT & - & - \\
-getavenergy & - & real & - \\
+getenergy & real, real, DegreeT, a sequence of DegreeT & a set of real & - \\
+
 
 \hline
 \end{tabular}
@@ -933,49 +957,35 @@ energyL: a sequence of real\\
 N/A
 
 \subsubsection{Assumptions}
-ZenithAngle has been fully implement before implement Energy.init ( ).\\
-Energy.init ( ) is called first before any other exported access programs.\\
+
 
 
 \subsubsection{ Access Routine Semantics}
 
-\noindent  setenergy ( pw, ph, maxinten, zen ):
+\noindent  getenergy ( pw, ph, maxinten, zen[ ] ):
 \begin{itemize}
 \item transition:
-energyL := getenergy ( getsunIn ( zen, maxinten ),pw, ph)
-\item output:
- 
-\item exception: 
-\end{itemize}
-
-\noindent  getavenergy ( ):
-\begin{itemize}
-\item transition: 
-\item output: out := + (i: integer $|$ i $\in$ [0.. $|$energyL$|$] $\bullet$  energyL[ i ]) / $|$energyL$|$
+\item output:  localEnergy ( localSunIn ( zen, maxinten ),pw, ph)
 \item exception: 
 \end{itemize}
 
 
 \subsubsection{Local Functions}
-getsunIn: a sequence of DegreeT $\rightarrow$ a sequence of real\\
-getsunIn (z, maxinten) = $\|$ (i: integer $|$ i $\in$ [0.. $|$z$|$] $\bullet$ [ SunInten.single(maxinten, z[ i ]) ])\\
+localSunIn: a sequence of DegreeT $\times$ real $\rightarrow$ a set of real\\
+localSunIn (zen[ ], maxinten) = $\cup$ (i: DegreeT $|$ i $\in$ z $\bullet$ \{ SunInten.single(maxinten, i) \})\\
 
-getenergy: a sequence of real $\times$ real $\times$ real $\rightarrow$ a sequence of real\\
-getenergy (e, pw, ph) =  $\|$ (i: integer $|$ i $\in$ [0.. $|$e$|$] $\bullet$ [ pw $\times$ ph $\times$ 18.7 $\times$ 0.75 $\times$ e [ i ] ])
+localEnergy: a set of real $\times$ real $\times$ real $\rightarrow$ a sequence of real\\
+localEnergy (sunIn, pw, ph) =  $\cup$ ( i: integer $|$ i $\in$ sunIn $\bullet$ \{ pw $\times$ ph $\times$ 18.7 $\times$ 0.75 $\times$ i \}t)
 
 
-\section{MIS of Sun Intensity Equation Module} \label{ModuleSI} 
-\wss{Use labels for cross-referencing}
-
-\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
-
-\wss{It is also possible to use \LaTeX for hyperlinks  to external documents.}
+\section{MIS of Calculation} \label{ModuleC} 
 
 \subsection{Module}
-SunInten
+Calculation\\
+
 
 \subsection{Uses}
-ZenithAngle\ref{ModuleZA}
+
 
 \subsection{Syntax}
 
@@ -985,17 +995,17 @@ $I_{S}$ := 1.35\\
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{5cm} p{3cm} p{2cm}}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline 
-sum & real, a sequence of DegreeT & real & sequence\_empty \\
-single & real, DegreeT & real & - \\
+\hline
+getzen & DegreeT[ ], integer, integer & - & - \\
+sumSunIn & DegreeT[ ], real & real & - \\
+sglSunIn & DegreeT, real & real & - \\
 
 \hline
 \end{tabular}
 \end{center}
-
 
 \subsection{Semantics}
 
@@ -1004,114 +1014,39 @@ single & real, DegreeT & real & - \\
 
 \subsubsection{Environment Variables}
 
-N/A
 
 \subsubsection{Assumptions}
 
-\subsubsection{ Access Routine Semantics}
 
-\noindent sum ( e, z ):
+\subsubsection{Access Routine Semantics}
+
+\noindent getzen(zenList[ ], i , diff):
 \begin{itemize}
-\item output: out := + (i: integer $|$ i $\in$ [0.. $|$z$|$] $\bullet$ 
-\begin{center}\large
-$I_{S} \cdot (\frac{1.00}{e})^{sec(z [ i ])} $)
-\end{center}
-\item exception: exc := $|$z$|$ = 0 $\Rightarrow$ sequence\_empty
+\item transition: 
+\item output: zenList[i.. i+diff]
+\item exception: 
 \end{itemize}
 
-\noindent single (e, z):
+\noindent sumSunIn (  zenList[ ], energy ):
+\begin{itemize}
+\item output: out := + (zen: DegreeT $|$ zen $\in$ zenList $\bullet$ 
+\begin{center}\large
+$I_{S} \cdot (\frac{1.00}{\text{energy}})^{sec(\text{zen})} $)
+\end{center}
+\item exception: exc := $|$zenList$|$ = 0 $\Rightarrow$ sequence\_empty
+\end{itemize}
+
+\noindent sglSunIn (zen, energy):
 \begin{itemize}
 \item output: out := 
 \begin{center}\large
-$I_{S} \cdot (\frac{1.00}{e})^{sec(z)} $
+$I_{S} \cdot (\frac{1.00}{\text{energy}})^{sec(zen)} $
 \end{center}
 \item exception: 
 \end{itemize}
 
-\subsubsection{Local Functions}
-
-
-\section{MIS of Zenith Angle Equation Module} \label{ModuleZA} 
-
-\subsection{Module}
-ZenithAng
-
-
-\subsection{Uses}
-DayDurTy\ref{ModuleADTD}\\
-SunCatTy\ref{ModuleSCTM}
-
-\subsection{Syntax}
-
-\subsubsection{Exported Constants}
-
-
-\subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{5cm} p{4cm} p{1cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline 
-setzen & a sequence of AnalammaT, a sequence of Integer & -  & -\\
-getzen &  real  & a sequence of DegreeT & sequence\_empty \\
-
-\hline
-\end{tabular}
-\end{center}
-
-
-\subsection{Semantics}
-
-\subsubsection{State Variables}
-
-decS: a sequence of DegreeT\\
-
-
-\wss{As I mentioned earlier, I don't think you need state variables.  An
-  input-output relation should work fine.}
-
-\subsubsection{Environment Variables}
-
-
-
-
-\subsubsection{Assumptions}
-Read File Module will always be implemented before Zenith angle Module. \wss{Do
-  you mean ``called'' or ``invoked'' rather than ``implemented''?}\\
-InputPara Module will always be implemented before Zenith angle Module.\\
-ZenithAng.setzen is called before any other access program.\\
-ZenithAng.setzen is called by the Read File Module.
-
-
-\subsubsection{ Access Routine Semantics}
-
-
-\noindent setzen (a, durlist):
-\begin{itemize}
-\item transition: decS := (i: integer $|$ i $\in$ [0.. $|$durlist$|$] $\bullet$ decS $\|$ $\langle$ getdec (a, durlist[ i ])$\rangle$ )
-
-\item output: 
-\item exception: 
-\end{itemize}
-
-\noindent  getzen ( lan ):
-\begin{itemize}
-\item transition:
-
-\item output: out := out $\|$ (i: integer $|$ i $\in$ [0.. $|$decS$|$] $\bullet$ lan $\times$ decS [ i ] $\geq$ 0 $\Rightarrow$ $\langle$ lan - decS [  i ] $\rangle$ $|$ lan $\times$ decS [ i ] $<$ 0 $\Rightarrow$ $\langle$ lan + decS [ i ] $\rangle$)\\
-
-
-\item exception: $|$decS$|$ = 0 $\Rightarrow$ sequence\_empty
-\end{itemize}
-
 
 \subsubsection{Local Functions}
-getdec : a sequence of AnalammaT $\times$ integer $\rightarrow$ DegreeT\\
-getdec (a, d) := 
-\begin{center}\large
- $\arcsin \frac{a.z [ d ]}{ \sqrt{a.x^2 [ d ] + a.y^2 [ d ] + a.z^2 [ d ]}}$
-\end{center}
 
 
 \newpage
