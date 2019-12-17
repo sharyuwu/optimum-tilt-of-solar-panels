@@ -9,7 +9,8 @@
 \usepackage{float}
 \usepackage{xr}
 \usepackage{hyperref}
-\externaldocument{../../SRS/SRS}
+\externaldocument{../../docs/SRS/SRS}
+
 
 \hypersetup{
     colorlinks,
@@ -163,27 +164,24 @@ change.
 \begin{description}
 \item[\refstepcounter{acnum} \actheacnum \label{acH}:] The specific
   hardware on which the software is running.
-\item[\refstepcounter{acnum} \actheacnum \label{acIP}:] The initial of the
-  input parameter. \wss{The initial what of the input parameter?}
+\item[\refstepcounter{acnum} \actheacnum \label{acIP}:] The type of the
+  input parameter. \wss{The initial what of the input parameter?}\an{Changed}
 \item[\refstepcounter{acnum} \actheacnum \label{acIC}:] The constraint of the input data.
-\item[\refstepcounter{acnum} \actheacnum \label{acO}:] The initial of the
-  output parameter. \wss{The initial?}
-\item[\refstepcounter{acnum} \actheacnum \label{acR}:] The initial of the
-  parameter of the read file.
+\item[\refstepcounter{acnum} \actheacnum \label{acR}:] The name of input file.
 \item[\refstepcounter{acnum} \actheacnum \label{acSEA}:] The algorithm of the
  solar energy absorption.
 \item[\refstepcounter{acnum} \actheacnum \label{acOTP}:] The algorithm of the 
 optimum tilt angle.
+\item[\refstepcounter{acnum} \actheacnum \label{acOTPdiffDay}:] The algorithm of the calculating multiple optimum tilt angles with in a day period.
 \item[\refstepcounter{acnum} \actheacnum \label{acSI}:] The equation of the sun
 intensity.
-\item[\refstepcounter{acnum} \actheacnum \label{acZA}:] The algorithm of the
- zenith angle.
 \item[\refstepcounter{acnum} \actheacnum \label{acDD}:] The structure of the 
-day duration ADT.
+data type day ADT.
 \item[\refstepcounter{acnum} \actheacnum \label{acT}:] The structure of 
 the table-layout.
-\item[\refstepcounter{acnum} \actheacnum \label{acSCT}:]  The structure of 
-sun catcher type.
+\item[\refstepcounter{acnum} \actheacnum \label{acTFile}:] The name of 
+the output file.
+\item[\refstepcounter{acnum} \actheacnum \label{acSCT}:]  The structure of the data type sun catcher.
 \end{description}
 
 \subsection{Unlikely Changes} \label{SecUchange}
@@ -211,18 +209,13 @@ actually be implemented.
 
 \begin{description}
 \item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware Hiding Modules
-\item [\refstepcounter{mnum} \mthemnum \label{mIC}:] Control Module
-\item [\refstepcounter{mnum} \mthemnum \label{mIP}:] Input Parameters Module
+\item [\refstepcounter{mnum} \mthemnum \label{mC}:] Control Module
+\item [\refstepcounter{mnum} \mthemnum \label{mIP}:] Input/Read Parameters Module
 \item [\refstepcounter{mnum} \mthemnum \label{mIV}:] Input Verification Module
-\item [\refstepcounter{mnum} \mthemnum \label{mOP}:] Output Parameters Module
-Module\item [\refstepcounter{mnum} \mthemnum \label{mR}:] Read File Module
-\item [\refstepcounter{mnum} \mthemnum \label{mSE}:] Solar Energy Absorption Module
+\item [\refstepcounter{mnum} \mthemnum \label{mSEA}:] Solar Energy Absorption Module
 \item [\refstepcounter{mnum} \mthemnum \label{mOTA}:] Optimum Tilt Angle Module
-\item [\refstepcounter{mnum} \mthemnum \label{mSIE}:] Sun Intensity Equation
-Module
-\item [\refstepcounter{mnum} \mthemnum \label{mZAE}:] Zenith Angle Equation
-Module
-\item [\refstepcounter{mnum} \mthemnum \label{mDD}:] Day Duration ADT Module
+\item [\refstepcounter{mnum} \mthemnum \label{mCal}:] Calculation Module
+\item [\refstepcounter{mnum} \mthemnum \label{mDD}:] Day ADT Module
 \item [\refstepcounter{mnum} \mthemnum \label{mT}:] Table-layout Module
 \item [\refstepcounter{mnum} \mthemnum \label{mSCT}:] Sun Catcher Type Module
 \end{description}
@@ -240,18 +233,15 @@ Module
 
 \multirow{7}{0.3\textwidth}{Behaviour-Hiding
  Module}& Control Module\\
-& Input Parameters Module\\
+& Input/Read Parameters Module\\
 & Input Verification Module\\
-& Output Parameters Module\\
-& Read File Module\\
 & Solar Energy Absorption Module\\
 & Optimum Tilt Angle Module\\
-& Sun Intensity Equation Module\\
-& Zenith Angle Equation Module\\
+& Calculation Module\\
 \midrule
 
 \multirow{3}{0.3\textwidth}{Software Decision Module} 
-& Day Duration ADT Module\\
+& Day ADT Module\\
 & Table-layout Module\\
 & Sun Catcher Type 
 Module\\
@@ -321,19 +311,19 @@ have to be implemented.
 \end{description}
 
 \subsubsection{Control Module (\mref{mC}) \wss{Nothing is currently labelled as
-  mC, so this reference does not work.}}
+  mC, so this reference does not work.}}\an{Fixed}
 
 \begin{description}
 \item[Secrets:] The structure that modules connect to each other.
-\item[Services:] Implement the designed modules.
+\item[Services:] Called the designed modules.
 \item[Implemented By:] \progname
 \end{description}
 
 \subsubsection{Input Parameters Module (\mref{mIP})}
 
 \begin{description}
-\item[Secrets:] The paramenters \wss{spell check} of inputs.
-\item[Services:] Assigns the input values to input paramenters \wss{spell check}.
+\item[Secrets:] The type of the parameters \wss{spell check}\an{Fixed} of inputs.
+\item[Services:] Assigns the input values to the designed parameters \wss{spell check}\an{Fixed}.
 
 \item[Implemented By:] \progname
 \end{description}
@@ -343,31 +333,16 @@ have to be implemented.
 
 \begin{description}
 \item[Secrets:] The constraint of the input values.
-\item[Services:] Verfies \wss{spell check!} the input values
+\item[Services:] Verifies \wss{spell check!}\an{Sorry..} the input values.
 \item[Implemented By:] \progname
 \end{description}
 
-\subsubsection{Output Parameters Module (\mref{mOP})}
-
-\begin{description}
-\item[Secrets:] The parameters of outputs.
-\item[Services:] Assigns the calculated results to output parameters.
-\item[Implemented By:] \progname
-\end{description}
-
-\subsubsection{Read File Module (\mref{mR})}
-
-\begin{description}
-\item[Secrets:] The parameters for reading the file.
-\item[Services:] Assgins \wss{spell check} the input file to the parameter.
-\item[Implemented By:] \progname
-\end{description}
 
 \subsubsection{Solar Energy Absorption Module (\mref{mSEA})}
 
 \begin{description}
 \item[Secrets:]The algorithm of calculating solar energy absorption.
-\item[Services:] Calculates solar energy absorption.
+\item[Services:] Calculate solar energy absorption.
 
 \item[Implemented By:] \progname
 \end{description}
@@ -376,24 +351,16 @@ have to be implemented.
 \subsubsection{Optimum Tilt Angle Module (\mref{mOTA})}
 
 \begin{description}
-\item[Secrets:]The algorithm of calculating optimum tilt angle and optimum sun intensity associated with the optimum tilt angle.
-\item[Services:] Calculates the optimum tilt angle and optimum sun intensity.
+\item[Secrets:]The algorithm of calculating optimum tilt angle and sun intensity.
+\item[Services:] Calculates the optimum tilt angle and sun intensity.
 \item[Implemented By:] \progname
 \end{description}
 
-\subsubsection{Sun Intensity Equation Module (\mref{mSIE})}
+\subsubsection{Calculate Module (\mref{mCal})}
 
 \begin{description}
-\item[Secrets:]The equation of calculating the sun intensity.
-\item[Services:] Calculates the sun intensity.
-\item[Implemented By:] \progname
-\end{description}
-
-\subsubsection{Zenith Angle Equation Module (\mref{mZAE})}
-
-\begin{description}
-\item[Secrets:]The algorithm of calculating the zenith angle.
-\item[Services:] Calculates the zenith angle.
+\item[Secrets:]The algorithm of calculating the sun intensity and zenith angle.
+\item[Services:] Calculate sun intensity and zenith angle.
 \item[Implemented By:] \progname
 
 \end{description}
@@ -413,32 +380,32 @@ have to be implemented.
 \end{description}
 
 
-\subsubsection{Day Duration ADT Module (\mref{mDD})}
+\subsubsection{Day ADT Module (\mref{mDD})}
 
 \begin{description}
-\item[Secrets:] The structure of defining day duration's type and the algorithm of calculating the day duration.
-\item[Services:] Creates variables with day duration's type and calculates the day duration.
+\item[Secrets:] The structure of defining day's type and the algorithm of calculating the day.
+\item[Services:] Creates variables using day's type and calculates data in day's type.
 \item[Implemented By:] Data.Time
 \end{description}
 
-\subsubsection{Table-layout Module (\mref{mP})}
+\subsubsection{Table-layout Module (\mref{mT})}
 
 \begin{description}
-\item[Secrets:] The structue \wss{spell check} of the table layout.
-\item[Services:] Creats \wss{spell check - there are many spelling mistakes in
-    this document} a table.
+\item[Secrets:] The structure \wss{spell check} of the table layout.
+\item[Services:] Creates \wss{spell check - there are many spelling mistakes in
+    this document}\an{I am sorry about the spelling mistakes} a table.
 \item[Implemented By:] Text.Layout.Table
 \end{description}
 \subsubsection{Etc.}
 
-\subsubsection{Sun Catcher Type Module (\mref{mP})}
+\subsubsection{Sun Catcher Type Module (\mref{mSCT})}
 
 \begin{description}
-\item[Secrets:] The structue of defining the sun catcher's type.
-\item[Services:] Creats variables with sun catcher's type.
+\item[Secrets:] The structure of defining the sun catcher's type.
+\item[Services:] Creates variables using sun catcher's type.
 \item[Implemented By:] \progname
 \end{description}
-\subsubsection{Etc.}
+
 
 
 \section{Traceability Matrix} \label{SecTM}
@@ -454,15 +421,15 @@ requirements and between the modules and the anticipated changes.
 \toprule
 \textbf{Req.} & \textbf{Modules}\\
 \midrule
-R1 & \mref{mHH}, \mref{mIP}, \mref{mR}, \mref{mIC}\\
-R2 & \mref{mIV}, \mref{mIC}\\
-R3 & \mref{mOP}, \mref{mT}, \mref{mIC}\\
-R4 & \mref{mIC}\\
-R5 & \mref{mSIE}, \mref{mZAE}, \mref{mIC}\\
-R6 & \mref{mSE}, \mref{mSIE}, \mref{mZAE}, \mref{mIC}\\
-R7 &\mref{mOP}, \mref{mIC}\\
-R8 & \mref{mT}, \mref{mIC}\\
-R9 & \mref{mIC}\\
+R1 & \mref{mHH}, \mref{mIP}, \mref{mC}\\
+R2 & \mref{mIV}, \mref{mC}\\
+R3 & \mref{mT}, \mref{mC}\\
+R4 & \mref{mOTA}, \mref{mSEA}, \mref{mC}\\
+R5 & \mref{mOTA}, \mref{mCal}, \mref{mC}\\
+R6 & \mref{mSEA},  \mref{mCal}, \mref{mC}\\
+R7 & \mref{mT}, \mref{mC}\\
+R8 & \mref{mC}\\
+R9 & \mref{mC}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Requirements and Modules}
@@ -477,15 +444,15 @@ R9 & \mref{mIC}\\
 \midrule
 \acref{acH} & \mref{mHH}\\
 \acref{acIP} & \mref{mIP}\\
+\acref{acR} & \mref{mIP}\\
 \acref{acIC} & \mref{mIV}\\
-\acref{acO} & \mref{mOP}\\
-\acref{acR} & \mref{mR}\\
-\acref{acSEA} & \mref{mSE}\\
+\acref{acSEA} & \mref{mSEA}\\
 \acref{acOTP} & \mref{mOTA}\\
-\acref{acSI} & \mref{mSIE}\\
-\acref{acZA} & \mref{mZAE}\\
+\acref{acOTPdiffDay} & \mref{mC}\\
+\acref{acSI} & \mref{mCal}\\
 \acref{acDD} & \mref{mDD}\\
 \acref{acT} & \mref{mT}\\
+\acref{acTFile} & \mref{mT}\\
 \acref{acSCT} & \mref{mSCT}\\
 \bottomrule
 \end{tabular}

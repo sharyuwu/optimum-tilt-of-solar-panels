@@ -142,18 +142,16 @@ project.
 \textbf{Level 1} & \textbf{Level 2}\\
 \midrule
 
-{Hardware-Hiding Module} & ~ \\
+{Hardware-Hiding Modules} & ~ \\
 \midrule
 
 \multirow{7}{0.3\textwidth}{Behaviour-Hiding
  Module}& Control Module\\
-& Input Parameters Module\\
+& Input/Read Parameters Module\\
 & Input Verification Module\\
-& Output Parameters Module\\
 & Solar Energy Absorption Module\\
 & Optimum Tilt Angle Module\\
-& Sun Intensity Equation Module\\
-& Zenith Angle Equation Module\\
+& Calculation Module\\
 \midrule
 
 \multirow{3}{0.3\textwidth}{Software Decision Module} 
@@ -201,10 +199,10 @@ filename = "analemma.txt"
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-setInput  & - & - & - \\
+input  & - & - & - \\
 getOneAng \wss{main?}\an{changed name} & - & - & - \\
 getTwoAng & - & - & - \\
-writeOutput & - & - & - \\
+output & - & - & - \\
 
 
 \hline
@@ -231,7 +229,7 @@ writeOutput & - & - & - \\
 
 \subsubsection{ Access Routine Semantics}
 
-\noindent  setInput ( ):
+\noindent  input ( ):
 
 \begin{itemize}
 \item transition: Implement the InputPara and  the environment variables for Output by following steps.
@@ -269,7 +267,7 @@ $\#$ Get the estimated solar absorption using Optimum Tilt Angle Module\\
 $P_{E}$ = getenergy (InputPara.getpw, InputPara.getph, localtiltSunIn ( localsunIn ($\theta_{S_{\text{date}}}$, $\theta_{T}$, $\theta_{T}$), $\theta_{S_{\text{date}}}$ )\\
 
 $\#$ Output $P_{E}$ and $\theta_{T}$ to the Table-layout Module\\
-addresult ($\theta_{T}$, $P_{E}$ )\\
+addresult ($\theta_{T}$, $P_{E}$, \{InputPara.getdayS\} )\\
 
 
 
@@ -292,11 +290,11 @@ $\#$ Get the estimated solar absorption using Optimum Tilt Angle Module\\
 $P_{E}$ = $P_{E}$ $\cup$  ( zenList : DegreeT[ ] $|$ zenList $\in$ zenithSet $\bullet$ getenergy (InputPara.getpw, InputPara.getph, localtiltSunIn ( localsunIn (zenList, $\theta_{T}$, $\theta_{T}$), zenList )))\\
 
 $\#$ Output $P_{E}$ and $\theta_{T}$ to the Table-layout Module\\
-addresult ($\theta_{T}$, $P_{E}$ )\\
+addresult ($\theta_{T}$, $P_{E}$, \{InputPara.getdayS, InputPara.getdayS.addDay($| \frac{\theta_{S_{\text{date}}}}{2}|]$) \})\\
 
 \end{itemize}
 
-\noindent  setInput ( ):
+\noindent  output ( ):
 \begin{itemize}
 \item output: out :=\\
 $\#$ Write the output values in the file using the Table-layout Module\\
@@ -389,7 +387,7 @@ DayT = ? \wss{It seems confusing to me that you have a DayT, that is not an
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
 new DayT& $\mathbb{N}$, $\mathbb{N}$, $\mathbb{N}$ & DayT & invalid\_argument \\
-getnext &  -  & DayT & - \\
+addDay &  $\mathbb{N}$  & DayT & - \\
 perihelion &  -  & Integer & - \\
 countDiff &  DayT  & Integer & - \\
 $\leq$ &  DayT  & $\mathbb{B}$ & - \\
@@ -431,10 +429,11 @@ N/A\\
 \item exception: 
 \end{itemize}
 
-\noindent  getnext ( ):
+\noindent  addDay (times):
 \begin{itemize}
 \item transition: 
-\item output: out := The next day of the  stateDay according to the Gregorian Calender.
+\item output: out := (times $\ne$ 0 $\Rightarrow$ localnextday (stateDay).addDay(times -1) $|$ True $\Rightarrow$ stateDay)
+
 \item exception:
 \end{itemize}
 
@@ -448,7 +447,7 @@ N/A\\
 \noindent  countDiff ( day ):
 \begin{itemize}
 \item transition: 
-\item output: out := (day $\leq$ stateDay $\Rightarrow$ 1 + countDiff (getnext (day1)) $|$ day $>$  stateDay $\Rightarrow$ 0)
+\item output: out := (day $\leq$ stateDay $\Rightarrow$ 1 + countDiff (localnextday (day)) $|$ day $>$  stateDay $\Rightarrow$ 0)
 \item exception:
 \end{itemize}
 
@@ -482,7 +481,8 @@ MonthOneorTwo (y, m, d) = 365.25 $\times$ (y - 1) + 30.6001 $\times$ (m + 13) + 
 MonthNotOneTwo: $\mathbb{N} \times \mathbb{N} \times \mathbb{N} \rightarrow \mathbb{N}$\\
 MonthNotOneorTwo (y, m, d) = 365.25 $\times$ y + 30.6001 $\times$ (m + 1) + d - calculateB(y / 100) +  1720995)
 
-
+localnextday : DayT $\rightarrow$ DayT
+localnextday ( inputDay ) = The next day of the  inputDay according to the Gregorian Calender.
 
 \newpage
 
@@ -714,9 +714,10 @@ HardH\\
 
 \subsubsection{Exported Constants}
 
-hRow1: "Tilt Angle"
-hRow2: "Energy Absorption"
-hRow3: "Energy Comparison"
+mainRow1:  ``Adjust"\\
+mainRow2: ``Energy Absorption/day"\\
+onceColumn: ``Optimum Angle" \\
+
 
 \subsubsection{Exported Access Programs}
 
@@ -725,8 +726,7 @@ hRow3: "Energy Comparison"
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline 
-addresult &  a set of DegreeT, a set of real & - & - \\
-setable & a sequce of a tuple of ( DegreeT, real, integer ) & - & - \\
+addresult &  a set of DegreeT, a set of real, a set of DayT & - & - \\
 display & - & - & - \\
 
 \hline
@@ -740,7 +740,7 @@ display & - & - & - \\
 
 mainTable: a set of \{ tuples of ( 
 cutTime: natural number, energy: real) \}\\
-tiltTable: a set of \{ sets of \{ angle: DegreeT\} \}\\
+tiltTable: a set of \{ tuples of (time: a set of DayT, angle: a set of DegreeT) \}\\\\
 
 
 \subsubsection{Environment Variables}
@@ -752,10 +752,10 @@ screen: Write tables  (output variables) in the file. \wss{You should define an
 
 \subsubsection{ Access Routine Semantics}
 
-\noindent  addresult ( angle, energy ):
+\noindent  addresult ( angle, energy, day ):
 \begin{itemize}
-\item transition: mainTable = mainTable $\cup$ \{ $|$angle$|$ ,localAverage (energy)  \}\\
-tiltTable = tiltTable $\cup$ \{ angle \}
+\item transition: mainTable = mainTable $\cup$ \{ ( $|$angle$|$ ,localAverage (energy) )  \}\\
+tiltTable = tiltTable $\cup$ \{ (day, angle) \}
 \wss{I
     don't know how to read this.}
 \an{Change the expression}
@@ -767,23 +767,41 @@ tiltTable = tiltTable $\cup$ \{ angle \}
 \noindent  display ( ):
 \begin{itemize}
 \item transition:
-\item output: out := display a table that shows the result on the screen.
+\item output: out := display a table that shows the result in the file.
 
-The text file has the following format, where the first row following heading: hRow1, denotes the result of optimal tilt angle; the second row following heading, hRow2, denotes the result of estimating energy absorption; and the third row following heading, hRow3, denotes the result of different energy absorption between resultL.e [ 0 ] and resultL.e [ 1.. $|$ resultL$|$ ] followed by a symbol $\%$
+The main table has the following format, where the first row following heading: mainRow1, denotes the time of adjust the solar panel; the second row following heading, mainRow2, denotes the result of estimating energy absorption per day\\
+
+mainSet: a set of tuples $|$ mainSet $\in$ mainTable $\wedge$ main: ( 
+cutTime: natural number, energy: real) $|$ main $\in$ mainSet\\
 
 
 \begin{center}
-\begin{tabular}{p{4.5cm}|p{4cm}|p{1cm}|p{5cm}}
+\begin{tabular}{|p{4.5cm}|p{4cm}|p{1cm}|}
 
 \hline 
-Tilt Angle & resultL.t [ 0 ] & ...  & resultL.t [ $|$ resultL$|$ ] \\
+Adjust & main.cutTime   \\
 \hline 
-Energy Absorption & resultL.e [ 0 ] & ...  & resultL.e [ $|$ resultL$|$ ] \\
+Energy Absorption/day & main.energy    \\
 \hline 
-Energy Competition & resultL.diff [ 0 ] $\%$    & ...     & resultL.diff [ $|$ resultL$|$ ] $\%$    \\
-\hline
 \end{tabular}
 \end{center}
+
+The angle table has following format,  where the  first column heading: onceColumn, denotes the angle for adjusting the solar panel; the row heading denotes the time for adjusting the angle.\\
+
+
+tiltSet: a set of tuples $|$ tiltSet $\in$ tiltTable $\wedge$ tilt: (time: a set of DayT,  angle: a set of DegreeT)  $|$ tilt $\in$ tiltSet \ \\
+
+\begin{center}
+\begin{tabular}{|p{4.5cm}|p{4cm}|p{1cm}|}
+
+\hline 
+  & Optimum Angle   \\
+\hline 
+tilt.time & tilt.angle \\
+\hline 
+\end{tabular}
+\end{center}
+
 
 \item exception: 
 \end{itemize}
