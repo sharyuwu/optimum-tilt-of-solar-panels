@@ -67,6 +67,8 @@ module Control where
         let ph = read inputPh ::Double
         let latitude = read inputLatitude ::Double
         --putStr $unlines decList
+        writeFile "MainTable.txt" ""
+        writeFile "AngleTable.txt" ""
         getOneAng decListToDegreeT dayS dayE pw ph latitude
 
         {- putStr latitude
