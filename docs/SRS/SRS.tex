@@ -429,7 +429,7 @@ of the latitude and the earth's tilt angle in the four seasons.
 
 \wss{Usually these characteristics are given in terms of education level, and
   possibly education specialization.  You also want to mention that the reader
-  should understand the longitude and latitude coordinate system.}
+  should understand the longitude and latitude coordinate system.}\an{Change the content}
 
 \plt{This section summarizes the skills and knowledge of the readers of the
   SRS.  It does NOT have the same purpose as the ``User Characteristics''
@@ -549,13 +549,13 @@ physical and software constraints.
 \subsection{User Characteristics} \label{SecUserCharacteristics}
 
 This section summarized the expectation of the readers' knowledge 
-and skills forunderstanding this SRS. Readers should have a 
+and skills for understanding this SRS. Readers should have a 
 general knowledge of how a solar panel works and know the common factors that affect energy absorption.  
 
 \wss{I don't think Level 1 Calculation and Level 1 celestial
   mechanics are standard terms.  Are they?  Also, your user characteristics are
   more involved than your intended reader characteristics.  Did you get these
-  two sections backwards?}
+  two sections backwards?}\an{Change the content}
 
 \plt{This section summarizes the knowledge/skills expected of the user.
   Measuring usability, which is often a required non-function requirement,
@@ -702,11 +702,13 @@ estimation end ($\mathit{year}_\text{End}$, $\mathit{month}_\text{End}$, $\mathi
 
 \begin{itemize}
 
-\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] Predict
+\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_angle}:] Predict
   the optimum tilt angle in the period of days ($\theta_{T}$).
 
-\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] Predict
+\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_energy}:] Predict
   the optimum produced solar energy in the period of days ($P_{E}$).
+
+\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_multioulAngle}:] Predict the optimum angle in different interval time period from start day to end day.
 
 
 \end{itemize}
@@ -824,6 +826,8 @@ on the resource of \cite{Charles2001}, the value of $\theta_{T}$ is refine by:
 on the label of every solar panel, the value of $P_E$ is refine by:
 \iref{C_SEO}and \nameref{TblOutputVar}\\
 
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{a_timeInterval}]: Produce optimal angles in two different time interval. The assumption is used in \nameref{G_multioulAngle} \\
+
 
   \plt{Short description of each assumption.  Each assumption
     should have a meaningful label.  Use cross-references to identify the
@@ -848,7 +852,7 @@ using a type defined with a tuple.}
 sense.}
 
 \subsubsection{Type Definition}\label{C_TD}
-This section defines the general data type that \progname uses.
+This section defines the general data type that \progname uses. \an{Define below, I hope it make sense} \an{Regarding to the definition of latitude, I plan to treat it as an real number (just like what you said), but not explicitly define is negative represent N or S. I realize if I go to 	Google Map to capture the latitude, it is already in + or - format. So I decide not to bother define it. However, the constraint of latitude will show in the input constraint table.}
 
 \begin{itemize}
 \item[]$\mathit{day} $= a tuple of $(\mathit{year}, \mathit{month}, \mathit{day})$
@@ -1044,17 +1048,17 @@ Sources&
 \end{minipage}\\
 
 \wss{What is declination? You should repeat your definition from earlier in the
-document.}
+document.} \an{Ok.}
 \subsubsection*{Detailed describetion of Analemma}
 
 \verb|``Analemma is often drawn on globes as a bigbottomed ``figure 8,'' |\\ 
 \verb|shows the declination of the sun throughout the year. ''|\\
-The y-axis of analemma represent the degree of sun's declination,
- \verb|``N''| denotes northern hemisphere and \verb|``S''| denotes southern 
+The y-axis of analemma represent the degree of sun's declination\\
+Find the day on the ``figure 8'', and then get the corresponding solar declination angle from y-axis. In y-axis, \verb|``N''| denotes northern hemisphere and \verb|``S''| denotes southern 
 hemisphere.\\
 
-In \progname, ~plus sign (+) denotes northern hemisphere or the equator and 
-minus sign (-) denotes southern hemisphere.\\
+In \progname, ~plus sign (+) denotes \verb|``N''| or the equator and 
+minus sign (-) denotes \verb|``S''|.\\
 
 \begin{figure}[H]
 	\center
@@ -1190,7 +1194,7 @@ $\mathit{day}_{Start}$ is in the data type of $\mathit{day}$, which content a tu
 \end{tabular}
 \end{minipage}\\
 
-\wss{Adding a data type for date would help make this clearer.}
+\wss{Adding a data type for date would help make this clearer.}\an{Yes. Added I hope it help.}
 
 \subsubsection{Instance Models} \label{sec_instance}    
 
@@ -1470,15 +1474,15 @@ table of input's constrain: \nameref{TblInputVar}. \\
     always required, but often echoing the inputs as part of the output is a
     good idea.}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate}:] \progname~should able to determine the tilt angle by using $\iref{C_TA}$\\
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_CalculateAngle}:] \progname~should able to determine the tilt angle by using $\iref{C_TA}$\\
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate}:] \progname~should able to determine the solar energy output by 
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_CalculateEnergy}:] \progname~should able to determine the solar energy output by 
 using $\iref{C_SEO}$\\
 
 \plt{Calculation
     related requirements.}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_VerifyOutput}:] \progname~should able to verify the output by using the table of output's constrain: $\nameref{TblOutputVar}$\\
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_OutputConstraint}:] \progname~should able to verify the output by using the table of outputs constraint: $\nameref{TblOutputVar}$\\
 
 \plt{Verification related requirements.}
 
@@ -1636,21 +1640,33 @@ Sections}
 
 \begin{table}[h!]
 \centering
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
-& \iref{C_TA} & \iref{C_SEO}& \ref{sec_DataConstraints}& \rref{R_Inputs}&
-\rref{R_OutputInputs} & \rref{R_Calculate}& \rref{R_VerifyOutput}&
-\rref{R_Output}\\
+& \iref{C_TA} & \iref{C_DSI} 	& \iref{C_SEO}& \ref{sec_DataConstraints}& \rref{R_Inputs}&\rref{R_InputsVery} & \rref{R_OutputInputs}&\rref{R_VerifyOutput}&\rref{R_CalculateAngle} &\rref{R_CalculateEnergy}&\rref{R_Outputshowt}&\rref{R_Outputconsist} \\
 
 \hline
-\iref{C_TA}         				&    &    & X & X &     & X  & X  &X \\ \hline
-\iref{C_SEO}           		& X &    &    &    &     & X  & X  &X \\ \hline
-\rref{R_Inputs}    				& X &    & X &    & X  &     &     &     \\ \hline
-\rref{R_OutputInputs}  & X & X &    &    &     &     &     &     \\ \hline
-\rref{R_Calculate}  		& X & X &    &    &     &     &     &     \\ \hline
-\rref{R_VerifyOutput}  & X & X &    &    &     &      &     &    \\ \hline 
-\rref{R_Output}       		& X & X &    &    & X &      &     &    \\ \hline
-\hline
+\iref{C_TA}         				&    & X &    & X &     &    &    &X&    &X&X&X
+ \\ \hline
+\iref{C_DSI} 						& X &    &    & X &     & X &    &X&    &X&X&X
+ \\ \hline
+\iref{C_SEO}           		&    & X &    &    &     & X &     &    &    &X&X&X
+\\ \hline
+\rref{R_Inputs}    				&    &    &    & X &     &    &    &    &    &X&    &   
+\\ \hline
+\rref{R_InputsVery}  		&    &    &    & X & X  &    &    &    &    &X&    &   
+\\ \hline
+\rref{R_OutputInputs}  &    &    & X &    &     &    &    &X&X&X&X&X
+\\ \hline
+\rref{R_VerifyOutput}  	&    &    & X &    &     &    &    &    &    &X&X&X
+\\ \hline 
+\rref{R_CalculateAngle}    & X & X &     & X &     & X  &    &X&X&X&X&X
+ \\ \hline
+\rref{R_CalculateEnergy}  &    &    & X & X &     &    &    &    &X&    &X&X
+ \\ \hline
+\rref{R_Outputshowt}       		& X & X & X &     &     & X  & X  &X&X&X&    &X
+\\ \hline
+\rref{R_Outputconsist}       	& X & X & X &     &     & X  & X  &X&X&X&    &   
+\\ \hline
 \end{tabular}
 \caption{Traceability Matrix Showing the Connections Between Requirements and
 Instance Models}
