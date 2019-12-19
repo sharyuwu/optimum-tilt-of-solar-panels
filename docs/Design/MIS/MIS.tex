@@ -1037,11 +1037,11 @@ sglSunIn & DegreeT, real & real & - \\
 
 \subsubsection{Access Routine Semantics}
 
-\noindent getzenList(zenList[ ], i , diff, latitude):\\
-$\#$ Calculate every elemant in list, zenList[i.. i+diff]. Then output the list
+\noindent getzenList(decList[ ], i , diff, latitude):\\
+$\#$ Calculate every elemant in list, decList[i.. i+diff]. Then output the list
 \begin{itemize}
 \item transition: 
-\item output: $\|$ (zen: DegreeT $|$ zen $\in$ zenList[i.. i+diff] $\bullet$ localZenAngle (zen, latitude)
+\item output: $\|$ (dec: DegreeT $|$ dec $\in$ decList[i.. i+diff] $\bullet$ localZenAngle (dec, latitude)
 \item exception: 
 \end{itemize}
 
@@ -1066,7 +1066,7 @@ $I_{S} \cdot (\frac{1.00}{\text{energy}})^{sec(zen)} $
 
 \subsubsection{Local Functions}
 localZenAngle: DegreeT $\times$ real $\rightarrow$ Degree\\
-localZenAngle (zen, latitude) = (zen * latitude $<$ 0 $\Rightarrow$ zen + latitude $|$ True $\Rightarrow$ zen - latitude)
+localZenAngle (dec, latitude) = (dec * latitude $<$ 0 $\Rightarrow$ dec + latitude $|$ True $\Rightarrow$ dec - latitude)
 
 \newpage
 

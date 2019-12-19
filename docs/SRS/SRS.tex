@@ -1230,7 +1230,7 @@ cross-references where appropriate.}
   Input&$\theta_{S_{\text{date}}},I_{S_{date}}$\\
 
   \hline
-  Output & $\underset{\theta_{S_{\text{date}}}}{\text{arg max}} f(\theta_{S_{\text{date}}}) := \{ I_{S} \cdot \frac{1.00}{I_{S_{\text{total}}}}^
+  Output & $\underset{\theta_{S_{\text{date}}}}{\text{arg max}} f(\theta_{S_{\text{date}}}) := \{ I_{S} \cdot (\frac{1.00}{I_{S_{\text{total}}}})^
 {sec(\theta_{S_{\text{date}}})} | \forall y: f(y) < f(\theta_{S_{\text{date}}}) \}$
 \\
 & $\text{where}  \theta_{T} = \theta_{S_{\text{date}}}, I_{S_{\text{max}}} = f(\theta_{T})$\\
@@ -1273,7 +1273,7 @@ recalculates the optimum angle $\theta_{T}$. \\
 
   \hline
   Output & $ I_{S_{\text{daily}}}$\\
-& $I_{S_{\text{daily}}} = I_{S} \cdot \frac{1.00}{I_{S_{\text{max}}}}^
+& $I_{S_{\text{daily}}} = I_{S} \cdot (\frac{1.00}{I_{S_{\text{max}}}})^
 {sec(\theta_{S_{\text{date}}})}
 $\\
   \hline

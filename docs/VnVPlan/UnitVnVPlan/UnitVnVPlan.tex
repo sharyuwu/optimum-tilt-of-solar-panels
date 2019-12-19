@@ -1,5 +1,6 @@
 \documentclass[12pt, titlepage]{article}
 
+\usepackage{amsmath, mathtools}
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{hyperref}
@@ -14,6 +15,9 @@
 \usepackage[square,sort,comma,numbers]{natbib} 
 \input{../../Comments}
 \input{../../Common}
+
+\usepackage{xr}
+\externaldocument{../../docs/SRS/SRS}
 
 \begin{document}
 
@@ -141,54 +145,267 @@ Control Modul has a lower priority for verification than others. The purpose of 
   appropriate specific modules can be verified by a non-testing based
   technique.  That can also be documented in this section.}
 
-\subsubsection{Module 1}
 
+\subsection{Modules}
+\subsubsection{Input Verification Module} 
 \wss{Include a blurb here to explain why the subsections below cover the module.
   References to the MIS would be good.  You will want tests from a black box
   perspective and from a white box perspective.  Explain to the reader how the
   tests were selected.}
 
 \begin{enumerate}
+\item{InputBounds-id1\\} 
+This test case tests the capability of capture the invalid input value of $\Phi_P$.
 
-\item{test-id1\\}
+Control: Automatic. 
 
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
+Initial State: No input value\\
+Input: $\Phi_P$ 
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
 
-How test will be performed: 
-					
-\item{test-id2\\}
+Output: The expected result will for the given inputs is based on the input value.
+If $\Phi_P$ is between the value of [-90..90], output ``valid". Otherwise ouput ``invalid".
 
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+\noindent \begin{tabular}{l l l l} 
+    \toprule		
+    \textbf{id} & \textbf{Input} & \textbf{Output}\\ 
+	\midrule
+   id1.1 &  90  & valid\\
+   id1.2 & -90  & valid\\
+   id1.3 &  89.9  & valid\\
+   id1.4 & -89.9  & valid\\
+   id1.5 & 0  & valid\\
+   id1.6 & 91  & invalid\\
+   id1.7 & -91  & invalid\\
+   id1.8 & 90.1  & invalid\\
+   id1.9 & -90.1  & invalid\\
+    \bottomrule
+  \end{tabular}
+  %	\caption{Provide a caption}
+%\end{table}
 
-How test will be performed: 
 
-\item{...\\}
-    
+
+Test Case Derivation: The test case is testing the ability of capture the input value, $\Phi_P$. The constraint of $\Phi_P$  is driven by the geographic coordinate that the range from North pole to South pole is from 90 to -90. This constraint can be found in SRS \cite{YS2019}.
+
+
+How the test will be performed:
+
+\begin{itemize} 
+\item Input the designed test case input values by using testing framework, Tasty. 
+\item Write the output in the file, resultInputBounds-id1.txt.
+\item Verified the output showing in the file by match the result with the expected output above.
+\item If all the result match with the expected output, then the test case success.
+\item Otherwise the test case fails.
+\end{itemize}
+
+\item{InputBounds-id2\\}
+
+This test case test the capability of capture the invalid value of dayT.
+
+Control: Automatic. 
+  
+Initial State: No any given value.\\
+
+Input: Based on calendar, the given inputs is: 
+($\mathit{year}_\text{Start}$, $\mathit{month}_\text{Start}$, $\mathit{day}_\text{Start}$)
+
+Output: The expected result will for the given inputs is showing if the input date exist in the standard calendar.\\
+The existence of the day is based on the fact, if the day exist in the standard calendar.
+
+\noindent \begin{tabular}{l l l l} 
+    \toprule		
+    \textbf{id} & \textbf{Input} & \textbf{Output}\\ 
+	\midrule
+   id2.1 & (0, 0, 0) & not exist\\
+   id2.2 & (-1, -1, -1)  & not exist\\
+   id2.3 & (2020, -1, 29)  & not exist\\
+   id2.4 & (2020, 02, -1)  & not exist\\
+   id2.5 & (-1, 02, 29)  & not exist\\
+   id2.6 & (2020, 13, -1)  & not exist\\
+   id2.7 & (2020, 02, 29)  & not exist\\
+   id2.8 & (2020, 02, 28)  & exist\\
+    \bottomrule
+  \end{tabular}
+  %	\caption{Provide a caption}
+%\end{table}
+ 
+\wss{The expected result for the given inputs}
+
+Test Case Derivation: The expected result for the given input is based on the standard calendar. If the given input is exist in the calendar, display ``exist", otherwise display ``not exist". \\
+
+ \wss{Justify the expected value given in the Output field} 
+
+How the test will be performed:
+\begin{itemize} 
+\item Input the designed test case input values by using testing framework, Tasty. 
+\item Write the output in the file, resultInputBounds-id2.txt.
+\item Verified the output showing in the file by match the result with the expected output above.
+\item If all the result match with the expected output, then the test case success.
+\item Otherwise the test case fails.
+\end{itemize}
+
+\item{InputBounds-id3\\}
+
+This test case test the capability of capture the invalid input days, which means the end day is smaller than start day.
+
+Control: Automatic.
+ 
+Initial State: No any given value.\\
+Input: ($\mathit{year}_\text{Start}$, $\mathit{month}_\text{Start}$, $\mathit{day}_\text{Start}$) - ($\mathit{year}_\text{End}$, $\mathit{month}_\text{End}$, $\mathit{day}_\text{End}$)\\ 
+
+
+Output: The expected result will for the given inputs is based on the standard calendar.
+If the end day $<$ start day then output ``invalid", otherwise output ``valid".
+
+\noindent \begin{tabular}{l l l l} 
+    \toprule		
+    \textbf{id} & \textbf{Input} & \textbf{Output}\\ 
+	\midrule
+   id3.1 & (2020, 02, 28) - (2021, 02, 28) & valid\\
+   id3.2 & (2020, 02, 28) - (2019, 02, 28)  & invalid\\
+   id3.3 & (2020, 02, 28) - (2020, 01, 28)  & invalid\\
+   id3.4 & (2020, 02, 28) - (2020, 02, 27)  & invalid\\
+   id3.5 & (2020, 02, 28) - (2020, 02, 28)  & valid\\
+    \bottomrule
+  \end{tabular}
+  %	\caption{Provide a caption}
+
+
+Test Case Derivation: This test is driven by the standard calendar system.\\ By the fact days can be sorted, if the end day is the day after the start day in the  calendar, output ``valid". Otherwise output ``invalid".
+
+
+How the test will be performed: 
+
+\begin{itemize} 
+\item Input the designed test case input values by using testing framework, Tasty. 
+\item Write the output in the file, resultInputBounds-id3.txt.
+\item Verified the output showing in the file by match the result with the expected output above.
+\item If all the result match with the expected output, then the test case success.
+\item Otherwise the test case fails.
+\end{itemize}
+
 \end{enumerate}
 
-\subsubsection{Module 2}
 
-...
+\subsubsection{Calculation Module} 
+
+\begin{enumerate}
+\item{calculation-id4\\} 
+This test case tests the capability of calculate the zenith angle.
+
+Control: Automatic. 
+
+Initial State: Giving a fixed sun declination angle. $\delta_{date}$ =  20\\
+Input: $\Phi_P$ 
+
+
+Output: The expected result will for the given inputs is based on the input value.
+The output is calculated by the method descibed in MIS. 
+
+\noindent \begin{tabular}{l l l l} 
+    \toprule		
+    \textbf{id} & \textbf{Input} & \textbf{Output}\\ 
+	\midrule
+   id4.1 &  43.250943  & 23.250943\\
+   id4.2 & -43.250943  & -23.250943\\
+   id4.3 & -89.250943  & -69.250943\\
+   id4.4 &  89.250943  & 69.250943\\
+    \bottomrule
+  \end{tabular}
+  %	\caption{Provide a caption}
+%\end{table}
+
+Test Case Derivation: The output of this test case should follow the constraint of the latitude. The values should between [-90..90]. The equation of calculating the output is:\\
+($\delta_{date}$ * $\Phi_P$  $<$ 0 $\Rightarrow$ $\delta_{date}$ + $\Phi_P$ $|$ True $\Rightarrow$ $\delta_{date}$ - $\Phi_P$). Calculate an \textbf{absolute error}, such that $|$ expected output - actaul output $|$.
+
+
+How the test will be performed:
+
+\begin{itemize} 
+\item Input the designed test case input values by using testing framework, Tasty. 
+\item Verified the output showing in the file by calculating the \textbf{absolute error}.
+\item Write the absolute error in the file, resultCalculation-id4.txt.
+\item If all the absolute error is equal to 0, then the test case success.
+\item Otherwise the test case fails.
+\end{itemize}
+
+\item{calculation-id5\\} 
+This test case tests the capability of calculate the sun Intensity.
+
+Control: Automatic. 
+
+Initial State: Giving a fixed solar intensity $I_{S}$  =  1.35 \\
+Input: $\theta_{S_{\text{date}}}$ 
+
+
+Output: The expected result will for the given inputs is based on the input value.
+The output is calculated by the method descibed in MIS. 
+
+\noindent \begin{tabular}{l l l l} 
+    \toprule		
+    \textbf{id} & \textbf{Input} & \textbf{Output}\\ 
+	\midrule
+   id5.1 &  23.250943  & 1.0883942\\
+   id5.2 & -23.250943  & 1.0883942\\
+   id5.3 & -69.250943  & 2.8226608\\
+   id5.4 &  69.250943  & 2.8226608\\
+    \bottomrule
+  \end{tabular}
+  %	\caption{Provide a caption}
+%\end{table}
+
+Test Case Derivation: The equation of calculating the output is:\\
+$I_{S} \cdot (\frac{1.00}{\text{energy}})^{sec(\theta_{S_{\text{date}}})} $. Calculate an $\textbf{relative error}$ such that $| 1 - \frac{\text{actual result}}{ \text{expected result}} |$.
+
+
+How the test will be performed:
+
+\begin{itemize} 
+\item Input the designed test case input values by using testing framework, Tasty. 
+\item Verified the output showing in the file by calculating the \textbf{relative error}.
+\item Write the relative error in the file, resultCalculation-id5.txt.
+\item If all the relative error $<$ error Tolerance, then the test case success.
+\item Otherwise the test case fails.
+\end{itemize}
+
+\subsubsection{Control Module} 
+
+This test case test the coverage of the Control Module.
+
+\item{control-id6\\}
+
+Type: Dynamic analysis - Code Coverage 
+
+
+Input/Condition: Call the main function in code of Control Module
+
+Output: The number of how percentage that the software has been coverage by the implementation.
+
+Test Case Derivation: Use the code coverage tool, Haskell Program Coverage(HPC), to test the code coverage. The Control Module is controlling the process of geting the final output. Therefore, by testing the coverage of it, the output number can represent the coverage of the entire program.
+
+How the test will be performed:
+
+\begin{itemize} 
+\item Use the compiler, ghc-6.8.1 or later version, to active Haskell Program
+Coverage.
+\item Enable hpc with the command line, -fhpc.
+\item Implement the code of the \progname
+\item Display the output
+\item Write the result in the file, resultControl-id6.txt.
+\item The test case success, if the output gets the 100\% of the coverage,
+\item Otherwise the test case fails. 
+\end{itemize}
+
+\end{enumerate} 
+
+
+
 
 \subsection{Tests for Nonfunctional Requirements}
+
+This software do not have any nonfunctional requirements for unit testing.
 
 \wss{If there is a module that needs to be independently assessed for
   performance, those test cases can go here.  In some projects, planning for
@@ -197,43 +414,33 @@ How test will be performed:
 \wss{These tests may involve collecting performance data from previously
   mentioned functional tests.}
 
-\subsubsection{Module ?}
-		
-\begin{enumerate}
 
-\item{test-id1\\}
 
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input/Condition: 
-					
-Output/Result: 
-					
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
-
-\end{enumerate}
-
-\subsubsection{Module ?}
-
-...
 
 \subsection{Traceability Between Test Cases and Modules}
 
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline        
+	& R1& R2 & R3 &R4 & R5 &R6  &R7 &R8 &R9 \\
+\hline
+id1     &   & X &     &    &    &    &   &    &     
+\\ \hline
+id2     &   & X &     &    &    &    &   &    &     \\ 
+\hline
+id3     &   & X &     &    &    &    &   &    &   
+\\ \hline
+id4     &   &    &     & X &    &    &   &    &      \\ \hline
+id5     &   &    &     & X & X & X & X &    &     \\  \hline
+id6     &   &     & X & X &    &    &   & X & X  \\ 
+\hline
+\end{tabular}
+\caption{Traceability Between Functional Requirements Test Cases and
+Requirements}
+\label{Table:Rtrace}
+\end{table}
 \wss{Provide evidence that all of the modules have been considered.}
 
 \bibliographystyle{plain}
@@ -247,8 +454,21 @@ How test will be performed:
 \wss{This is where you can place additional information, as appropriate}
 
 \subsection{Symbolic Parameters}
-
 \wss{The definition of the test cases may call for SYMBOLIC\_CONSTANTS.
 Their values are defined in this section for easy maintenance.}
+
+  \noindent \begin{tabular}{l l l} 
+    \toprule		
+    \textbf{Symbol} & \textbf{Description} & \textbf{Value}\\
+    \midrule 
+    $I_{S}$ & Solar insensity &1.35  \\
+error Tolerance & Error Tolerance & 1\\
+    \bottomrule
+  \end{tabular}
+  %	\caption{Provide a caption}
+%\end{table}
+
+
+
 
 \end{document}
