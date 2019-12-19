@@ -1,4 +1,4 @@
-module Analemma (x0) where
+module Analemma where
 {-
     This is the SCR code to calculate analemma.txt and analemmaRE.txt
     The mathematic theory can be found in "https://arxiv.org/pdf/1302.0765.pdf"
@@ -10,7 +10,7 @@ module Analemma (x0) where
 -}
     import Data.Time
 
-    type FP = Float -- could be changed in this single place to |Double| later
+    type FP = Double -- could be changed in this single place to |Double| later
     fd :: Integer -> FP
     fd d = fromInteger (negate d) / 365.25 * 360 * 0.0174533
 {- 
@@ -22,10 +22,10 @@ module Analemma (x0) where
     x0 d = negate 0.9833 * sin (fd d)
     y0 d = negate 0.9833 * cos (fd d)
     
-    y0':: Integer ->Float
+    y0':: Integer ->FP
     y0' d = y0 d * cos (23.44 * 0.0174533)
     
-    z0:: Integer ->Float
+    z0:: Integer ->FP
     z0 d = negate $ y0 d * sin (23.44 * 0.0174533)
 
  -- |baseDate means the day of the perihelion for Earth does not occur
@@ -48,30 +48,30 @@ baseDate to the endDate.
 -- |If the input Day d is equal to the endDate the function terminate.
 -- |Otherwise appending the result value from function"re" to the list.
 -- |Then recursively call relist until its termination
-    relist :: Day -> [(Float, Float, Float)] -> [(Float, Float, Float)]
+    relist :: Day -> [(FP, FP, FP)] -> [(FP, FP, FP)]
     relist d x
        | d == endDate  = re 366 : x
        | otherwise     = re (diffDays d baseDate) : relist (nextDate d) x
 
 -- |Calculate the ~rE value using function x0, y0 and z0.
-    re :: Integer -> (Float, Float, Float)
+    re :: Integer -> (FP, FP, FP)
     re daydif = (x0 daydif, y0' daydif, z0 daydif)
           -- V.map ($ daydif) xyz
 -- |Output the value ~rE from function relist
 -- |[re 1] is the initialization of the list. Therefore, function relist
 -- |start appending the list from 2 days after the baseDate
-    showRe :: [(Float, Float, Float)]
+    showRe :: [(FP, FP, FP)]
     showRe = relist (addDays 2 baseDate) [re 1]
 
 {-
 Function toAnalemmareTxt and writeRetoTheFile are writing
 data from showRe to the designated file, "analemmaRE.txt".
 -}
-    toAnalemmaReTxt:: (Float, Float, Float) -> IO()
+    toAnalemmaReTxt:: (FP, FP, FP) -> IO()
     toAnalemmaReTxt get = let (x,y,z) = get in 
         appendFile "analemmaRE.txt" (show x ++ "," ++ show y ++ "," ++ show z ++ "\n")  
     
-    writeRetoTheFile:: [(Float, Float, Float)] -> IO ()
+    writeRetoTheFile:: [(FP, FP, FP)] -> IO ()
     writeRetoTheFile [] = putStrLn "This is empty"
     writeRetoTheFile [x] = toAnalemmaReTxt x
     writeRetoTheFile (x:xs) = toAnalemmaReTxt x >> writeRetoTheFile xs
@@ -84,24 +84,24 @@ external resource Eqs 35, Page 12.
 
 -- |Function setdec will use function getdec map through the 
 -- |entire input list    
-    setdec:: [(Float, Float, Float)] -> [Float]
+    setdec:: [(FP, FP, FP)] -> [FP]
     setdec = map getdec 
 
 -- |Function getdec will calculate the sun declination from 
 -- |the value ~rE 
-    getdec:: (Float, Float, Float) -> Float
+    getdec:: (FP, FP, FP) -> FP
     -- getdec a = let (x, y, z) = a in 
         --(asin z/sqrt(x^2 + y^2 + z^2)) * 57.2958
-    getdec a@(x, y, z) = (asin z/sqrt(x^2 + y^2 + z^2)) * 57.2958
+    getdec a@ (x, y, z) = (asin z/sqrt (x^2 + y^2 + z^2)) * 57.2958
 
 {-
 Function toAnalemmaTxt and writedectoTheFile are writing
 data from setdec to the designated file, "analemma.txt".
 -}
-    toAnalemmaTxt:: Float -> IO()
+    toAnalemmaTxt:: FP -> IO()
     toAnalemmaTxt get = appendFile "analemma.txt" (show get ++ "\n") 
 
-    writedectoTheFile:: [Float] -> IO() -- mapM_
+    writedectoTheFile:: [FP] -> IO() -- mapM_
     writedectoTheFile [] = putStrLn "This is empty"
     writedectoTheFile [x] = toAnalemmaTxt x
     writedectoTheFile (x:xs) = toAnalemmaTxt x >> writedectoTheFile xs

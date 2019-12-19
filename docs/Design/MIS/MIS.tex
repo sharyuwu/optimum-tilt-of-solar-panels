@@ -256,7 +256,7 @@ verifiedD (InputPara.getdayS, InputPara.getdayE)\\
 
 $\#$ Get the zenith angle between dayS and
 dayE\\
-$\theta_{S_{\text{date}}}$ = Calculation.getzen ( InputPara.getdec,   localDaySandPer ( ),  localDaySandDayE ( ) )\\
+$\theta_{S_{\text{date}}}$ = Calculation.getzenList ( InputPara.getdec,   localDaySandPer ( ),  localDaySandDayE ( ) , InputPara.getla)\\
 
 $\#$ Get the optimum tilt angle using $\theta_{S_{\text{date}}}$\\
 $\theta_{T}$ = getilt ( $\theta_{S_{\text{date}}}$, localsunIn($\theta_{S_{\text{date}}}$) )\\
@@ -264,7 +264,7 @@ $\theta_{T}$ = getilt ( $\theta_{S_{\text{date}}}$, localsunIn($\theta_{S_{\text
 
 $\#$ Get the estimated solar absorption using Optimum Tilt Angle Module\\
 
-$P_{E}$ = getenergy (InputPara.getpw, InputPara.getph, localtiltSunIn ( localsunIn ($\theta_{S_{\text{date}}}$, $\theta_{T}$, $\theta_{T}$), $\theta_{S_{\text{date}}}$ )\\
+$P_{E}$ = getenergy (InputPara.getpw, InputPara.getph, localtiltSunIn ( localsunIn ($\theta_{S_{\text{date}}}$, $\theta_{T}$), $\theta_{S_{\text{date}}}$ )\\
 
 $\#$ Output $P_{E}$ and $\theta_{T}$ to the Table-layout Module\\
 addresult ($\theta_{T}$, $P_{E}$, \{InputPara.getdayS\} )\\
@@ -278,6 +278,8 @@ addresult ($\theta_{T}$, $P_{E}$, \{InputPara.getdayS\} )\\
 \begin{itemize}
 \item transition:Implied the two optimum cut by following steps\\
 
+$\theta_{S_{\text{date}}}$ = Calculation.getzenList ( InputPara.getdec,   localDaySandPer ( ),  localDaySandDayE ( ) , InputPara.getlala)\\
+
 $\#$ Get the zenith angle between dayS and
 $\frac{dayE + dayS}{2}$ and $\frac{dayE + dayS}{2}$ to dayE\\
 zenithSet =  \{$\theta_{S_{\text{date}}}[1.. | \frac{\theta_{S_{\text{date}}}}{2}|]$\} $\cup$ \{$\theta_{S_{\text{date}}}[| \frac{\theta_{S_{\text{date}}}}{2}|.. | \theta_{S_{\text{date}}}|]$\}\\
@@ -287,7 +289,7 @@ $\theta_{T}$ = $\theta_{T}$ $\cup$ ( zenList : DegreeT[ ] $|$ zenList $\in$ zeni
 
 $\#$ Get the estimated solar absorption using Optimum Tilt Angle Module\\
 
-$P_{E}$ = $P_{E}$ $\cup$  ( zenList : DegreeT[ ] $|$ zenList $\in$ zenithSet $\bullet$ getenergy (InputPara.getpw, InputPara.getph, localtiltSunIn ( localsunIn (zenList, $\theta_{T}$, $\theta_{T}$), zenList )))\\
+$P_{E}$ = $P_{E}$ $\cup$  ( zenList : DegreeT[ ] $|$ zenList $\in$ zenithSet $\bullet$ getenergy (InputPara.getpw, InputPara.getph, localtiltSunIn ( localsunIn (zenList, $\theta_{T}$), zenList )))\\
 
 $\#$ Output $P_{E}$ and $\theta_{T}$ to the Table-layout Module\\
 addresult ($\theta_{T}$, $P_{E}$, \{InputPara.getdayS, InputPara.getdayS.addDay($| \frac{\theta_{S_{\text{date}}}}{2}|]$) \})\\
@@ -985,8 +987,8 @@ N/A
 localSunIn: a sequence of DegreeT $\times$ real $\rightarrow$ a set of real\\
 localSunIn (zen[ ], maxinten) = $\cup$ (i: DegreeT $|$ i $\in$ z $\bullet$ \{ SunInten.single(maxinten, i) \})\\
 
-localEnergy: a set of real $\times$ real $\times$ real $\rightarrow$ a sequence of real\\
-localEnergy (sunIn, pw, ph) =  $\cup$ ( i: integer $|$ i $\in$ sunIn $\bullet$ \{ pw $\times$ ph $\times$ 18.7 $\times$ 0.75 $\times$ i \}t)
+localEnergy: a set of real $\times$ real $\times$ real $\rightarrow$ a set of real\\
+localEnergy (sunIn, pw, ph) =  $\cup$ ( i: integer $|$ i $\in$ sunIn $\bullet$ \{ pw $\times$ ph $\times$ 18.7 $\times$ 0.75 $\times$ i \})
 
 
 
@@ -1014,7 +1016,7 @@ $I_{S}$ := 1.35\\
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-getzen & DegreeT[ ], integer, integer & - & - \\
+getzenList & DegreeT[ ], integer, integer & - & - \\
 sumSunIn & DegreeT[ ], real & real & - \\
 sglSunIn & DegreeT, real & real & - \\
 
@@ -1035,10 +1037,11 @@ sglSunIn & DegreeT, real & real & - \\
 
 \subsubsection{Access Routine Semantics}
 
-\noindent getzen(zenList[ ], i , diff):
+\noindent getzenList(zenList[ ], i , diff, latitude):\\
+$\#$ Calculate every elemant in list, zenList[i.. i+diff]. Then output the list
 \begin{itemize}
 \item transition: 
-\item output: zenList[i.. i+diff]
+\item output: $\|$ (zen: DegreeT $|$ zen $\in$ zenList[i.. i+diff] $\bullet$ localZenAngle (zen, latitude)
 \item exception: 
 \end{itemize}
 
@@ -1062,7 +1065,8 @@ $I_{S} \cdot (\frac{1.00}{\text{energy}})^{sec(zen)} $
 
 
 \subsubsection{Local Functions}
-
+localZenAngle: DegreeT $\times$ real $\rightarrow$ Degree\\
+localZenAngle (zen, latitude) = (zen * latitude $<$ 0 $\Rightarrow$ zen + latitude $|$ True $\Rightarrow$ zen - latitude)
 
 \newpage
 

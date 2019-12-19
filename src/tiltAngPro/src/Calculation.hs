@@ -1,13 +1,27 @@
 module Calculation where
 
-    sunInten:: Float
+    import Data.List
+    type DegreeT = Double
+
+
+    getzenList:: [DegreeT] -> Int -> Int -> Double -> [DegreeT]
+    getzenList decList i diff latitude = map (zenAngle latitude) $drop i decList ++ take diff decList
+    --getzenList decList i diff latitude = map (zenAngle latitude) $drop i decList ++ take diff decList 
+
+    zenAngle:: DegreeT -> Double -> DegreeT
+    zenAngle dec lat
+        | lat * dec < 0  = dec + lat
+        | otherwise      = dec - lat
+    
+    sunInten:: Double
     sunInten = 1.35
 
-    sunIntenSingle:: Float -> Float -> Float
-    sunIntenSingle e z = sunInten * (1.0 / e) ** (1.0/cos z * pi/180)
+    sumSunIn:: [DegreeT] -> Double -> Double
+    sumSunIn zenList energy = foldr ((+) . sglSunIn energy) 0 zenList
 
-    sunIntenSum:: Float -> [Float] -> Float
-    sunIntenSum e = foldr ((+) . sunIntenSingle e) 0
+    sglSunIn:: DegreeT -> Double -> Double
+    sglSunIn zen energy = sunInten * (1.0 / energy) ** (1.0/cos zen * 0.0174533)
+    --sglSunIn zen energy = sunInten * (1.0 / energy) ** (1.0/cos zen * 0.0174533)
 
 
 
