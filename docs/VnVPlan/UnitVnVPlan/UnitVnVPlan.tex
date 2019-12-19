@@ -10,15 +10,15 @@
     linkcolor=red,
     urlcolor=blue
 }
-\usepackage[round]{natbib}
-
+%\usepackage[round]{natbib}
+\usepackage[square,sort,comma,numbers]{natbib} 
 \input{../../Comments}
 \input{../../Common}
 
 \begin{document}
 
 \title{Project Title: Unit Verification and Validation Plan for \progname{}} 
-\author{Author Name}
+\author{Sharon (Yu-Shiuan) Wu}
 \date{\today}
 	
 \maketitle
@@ -30,7 +30,7 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
+2019/12/18 & 1.0 & First Version\\
 Date 2 & 1.1 & Notes\\
 \bottomrule
 \end{tabularx}
@@ -74,9 +74,13 @@ This document ... \wss{provide an introductory blurb and roadmap of the
 
 \subsection{Purpose}
 
+The purpose of this document is to verify the software, \progname{}. The test cases in this document follows the module defined in Designed documentation, MG and MIS. This document is not an repitation of the ducument, SystemVnVPlan.
 \wss{Identify software that is being unit tested (verified).}
 
 \subsection{Scope}
+
+In this document, the module, Day ADT Module, will not be tested. Day ADT Module is developed by using external framework ``time: A time library" which is mentain by external developer, Ashley Yakeley. The framework's  document can be found in \cite{time}. Although Day ADT Module is an extension of the external library, it use the functions from the sources directly without overwriting the original sources. The module,  Table-layout Module, has a low priority for verification. The purpose of this module is 
+to write the output value to the designed file. Because this module is not effect to the output value, this module is considered having lower priority than others.
 
 \wss{What modules are outside of the scope.  If there are modules that are
   developed by someone else, then you would say here if you aren't planning on
@@ -87,10 +91,21 @@ This document ... \wss{provide an introductory blurb and roadmap of the
 \section{Plan}
 	
 \subsection{Verification and Validation Team}
-
+Main reviewer: Sharon (Yu-Shiuan) Wu\\ 
+Secondary reviewer: Doctor Smith\\
 \wss{Probably just you.  :-)}
 
 \subsection{Automated Testing and Verification Tools}
+
+\begin{itemize}
+
+\item Haskell Program Coverage: Dynamic Testing Tool, a tool-kit to record 
+and display the code coverage of a Haskell Program. It aims to reinforce the 
+correctness of the software and to eliminate the infeasibility problems.[Gill
+and Runciman] \cite{GillandRunciman}
+\item Tasty: a testing framework for Haskell.
+
+\end{itemize} 
 
 \wss{What tools are you using for automated testing.  Likely a unit testing
   framework and maybe a profiling tool, like ValGrind.  Other possible tools
@@ -99,11 +114,23 @@ This document ... \wss{provide an introductory blurb and roadmap of the
 
 \subsection{Non-Testing Based Verification}
 
+\begin{itemize}
+\item code walkthrough: Code walkthrough will be hold between Sharon (Yu-Shiuan) Wu and Doctor. Kal. The code notes with clear comment. The code should be writen by using external framework ``HaTeX". The code should not be repeated and redundant.
+\item hlint: a framework for giving suggestions on the source code. The code should be not has any warning from hlint.
+\end{itemize} 
 \wss{List any approaches like code inspection, code walkthrough, symbolic
   execution etc.  Enter not applicable if you do not plan on any non-testing
   based verification.}
 
 \section{Unit Test Description}
+
+The test cases follow the module descibed in designed document, MIS. MIS can be found in the link \url{https://github.com/sharyuwu/optimum-tilt-of-solar-panels/blob/master/docs/VnVPlan/UnitVnVPlan/UnitVnVPlan.pdf}.\\
+
+Input verification Module has the highest priority for verification. The purpose of this module is to test whether or not the input value is valid. Because the software will fail if implement an invalid input, this module has the highest priority. \\
+
+Calculation Modul has the second priority for verification. The purpose of this module is to do necessary calculate for the output value for the requirements of the software. The accuracy of the output if this module will affect the final output value.\\
+
+Control Modul has a lower priority for verification than others. The purpose of this module is to connect and associate other modules. Because this module is not effect on the value of the output, this module has a lower priority.
 
 \wss{Reference your MIS and explain your overall philosophy for test case
   selection.}
@@ -209,9 +236,9 @@ How test will be performed:
 
 \wss{Provide evidence that all of the modules have been considered.}
 
-\bibliographystyle{plainnat}
-
-\bibliography{SRS}
+\bibliographystyle{plain}
+\bibliography{../../../refs/References} 
+%\bibliography{SRS}
 
 \newpage
 
