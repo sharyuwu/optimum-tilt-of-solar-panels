@@ -718,11 +718,12 @@ DayT (Section~\ref{ModuleADTD}) \\
 
 \subsubsection{Exported Constants}
 
-mainRow1:  ``Adjust"\\
-mainRow2: ``Energy Absorption/day"\\
-onceColumn: ``Optimum Angle" \\
+mainColumn1:  ``Adjust How Many Times"\\
+mainColumn2: ``Energy Absorption/day"\\
+angleColumn1: ``Optimum Angle" \\
+angleColumn2: ``Optimum Angle" \\
 fileForMian: ``MainTable.txt"
-fileNameForAngle: ``AngleTable.txt"
+fileForAngle: ``AngleTable.txt"
 
 \subsubsection{Exported Access Programs}
 
@@ -774,19 +775,19 @@ tiltTable = tiltTable $\cup$ \{ (day, angle) \}
 \item transition:
 \item output: out := display a table that shows the result in the file.
 
-The main table has the following format, where the first row following heading: mainRow1, denotes the time of adjust the solar panel; the second row following heading, mainRow2, denotes the result of estimating energy absorption per day\\
+The main table has the following format, where the first row following heading: mainColumn1, denotes the time of adjust the solar panel; the second row following heading, mainColumn2, denotes the result of estimating energy absorption per day\\
 
 mainSet: a set of tuples $|$ mainSet $\in$ mainTable $\wedge$ main: ( 
 cutTime: natural number, energy: real) $|$ main $\in$ mainSet\\
 
 
 \begin{center}
-\begin{tabular}{|p{4.5cm}|p{4cm}|p{1cm}|}
+\begin{tabular}{|p{5cm}|p{5cm}|}
 
 \hline 
-Adjust & main.cutTime   \\
+Adjust How Many Times & Energy Absorption/day \\
 \hline 
-Energy Absorption/day & main.energy    \\
+main.cutTime & main.energy    \\
 \hline 
 \end{tabular}
 \end{center}
@@ -794,16 +795,16 @@ Energy Absorption/day & main.energy    \\
 writeFile.(fileForMain)
 
 
-The angle table has following format,  where the  first column heading: onceColumn, denotes the angle for adjusting the solar panel; the row heading denotes the time for adjusting the angle.\\
+The angle table has following format,  where the fist column heading: angleColumn1, denotes the time for adjust the solar panel; and the second column heading: angleColumn2, denotes the angle for adjusting the solar panel; the row heading denotes the time for adjusting the angle.\\
 
 
 tiltSet: a set of tuples $|$ tiltSet $\in$ tiltTable $\wedge$ tilt: (time: a set of DayT,  angle: a set of DegreeT)  $|$ tilt $\in$ tiltSet \ \\
 
 \begin{center}
-\begin{tabular}{|p{4.5cm}|p{4cm}|p{1cm}|}
+\begin{tabular}{|p{4.5cm}|p{4cm}|}
 
 \hline 
-  & Optimum Angle   \\
+  Time & Optimum Angle   \\
 \hline 
 tilt.time & tilt.angle \\
 \hline 
