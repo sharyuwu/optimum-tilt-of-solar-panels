@@ -852,10 +852,10 @@ using a type defined with a tuple.}
 sense.}
 
 \subsubsection{Type Definition}\label{C_TD}
-This section defines the general data type that \progname uses. \an{Define below, I hope it make sense} \an{Regarding to the definition of latitude, I plan to treat it as an real number (just like what you said), but not explicitly define is negative represent N or S. I realize if I go to 	Google Map to capture the latitude, it is already in + or - format. So I decide not to bother define it. However, the constraint of latitude will show in the input constraint table.}
+This section defines the general data type for \progname. \an{Define below, I hope it make sense} \an{Regarding to the definition of latitude, I plan to treat it as an real number (just like what you said), but not explicitly define is negative represent N or S. I realize if I go to 	Google Map to capture the latitude, it is already in + or - format. So I decide not to bother define it. However, the constraint of latitude will show in the input constraint table.}
 
 \begin{itemize}
-\item[]$\mathit{day} $= a tuple of $(\mathit{year}, \mathit{month}, \mathit{day})$
+\item[]$\mathit{day} $ = a tuple of $(\mathit{year}, \mathit{month}, \mathit{day})$
 \item[]$\mathit{date}$ = a sequence of $\mathit{day}$
 \end{itemize}
 
@@ -882,8 +882,8 @@ on.
   Label&\bf Lambert's cosine law\\
   \hline
 
-Equation& $ I_0 = I \times \frac{\cos{\theta} \times \partial \Omega \times
-\partial A}{\cos{\theta} \times \partial\Omega_0 \times \partial A_0}$\\
+Equation& $$ I_0 = I \times \frac{\cos{\theta} \times \partial \Omega \times
+\partial A}{\cos{\theta} \times \partial\Omega_0 \times \partial A_0}$$\\
 
 
   \hline
@@ -952,8 +952,8 @@ add additional definitions as appropriate.}
   SI Units&$\theta_{S_{\text{date}}}$\\
 
   \hline
-Equation& $ I_{S_{\text{total}}} = I_{S} \cdot \frac{1.00}{I_{S}}^
-{sec(\theta_{S_{\text{date}}})} $\\
+Equation& $$ I_{S_{\text{total}}} = I_{S} \cdot \frac{1.00}{I_{S}}^
+{sec(\theta_{S_{\text{date}}})} $$\\
   \hline
   Description&
 This equation is calculating the total solar intensity in the date duration\\
@@ -1234,10 +1234,10 @@ cross-references where appropriate.}
   Input&$\theta_{S_{\text{date}}},I_{S_{date}}$\\
 
   \hline
-  Output & $\underset{\theta_{S_{\text{date}}}}{\text{arg max}} f(\theta_{S_{\text{date}}}) := \{ I_{S} \cdot (\frac{1.00}{I_{S_{\text{total}}}})^
-{sec(\theta_{S_{\text{date}}})} | \forall y: f(y) < f(\theta_{S_{\text{date}}}) \}$
+  Output & $$\underset{\theta_{S_{\text{date}}}}{\text{arg max}} f(\theta_{S_{\text{date}}}) := \{ I_{S} \cdot (\frac{1.00}{I_{S_{\text{total}}}})^
+{sec(\theta_{S_{\text{date}}})} | \forall y: f(y) < f(\theta_{S_{\text{date}}}) \}$$
 \\
-& $\text{where}  \theta_{T} = \theta_{S_{\text{date}}}, I_{S_{\text{max}}} = f(\theta_{T})$\\
+& where $\theta_{T} = \theta_{S_{\text{date}}}; \  I_{S_{\text{max}}} = f(\theta_{T})$\\
 &\wss{write this using argmax
 \url{https://en.wikipedia.org/wiki/Arg_max}.}\an{I have tried this mathematical syntax but not should if it is correct expression}\\
   \hline
@@ -1276,10 +1276,10 @@ recalculates the optimum angle $\theta_{T}$. \\
   Input&$\theta_{S_{\text{date}}},I_{S_{\text{max}}}$\\
 
   \hline
-  Output & $ I_{S_{\text{daily}}}$\\
-& $I_{S_{\text{daily}}} = I_{S} \cdot (\frac{1.00}{I_{S_{\text{max}}}})^
+  Output & 
+$$ I_{S_{\text{daily}}} = I_{S} \cdot (\frac{1.00}{I_{S_{\text{max}}}})^
 {sec(\theta_{S_{\text{date}}})}
-$\\
+$$\\
   \hline
   Description&
 Using General Definition: \dref{C_TA} can get the optimal solar intensity
@@ -1316,7 +1316,7 @@ recalculates the optimum daily sun intensity $I_{S_{\text{daily}}}$. \\
   Input&$P_A$\\
 
   \hline
-  Output & $ P_E = P_A \times P_r \times  I_{S_{\text{daily}}} \times PR$\\ 
+  Output & $$ P_E = P_A \times P_r \times  I_{S_{\text{daily}}} \times PR$$\\ 
   \hline
   Description&
 		P is the solar panel.\\
