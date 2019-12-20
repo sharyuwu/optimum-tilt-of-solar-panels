@@ -4,6 +4,8 @@ module Table where
     import Data.List
     import Calculation
     import DayADT
+    import SunCatTy
+
     import Data.Set (Set)
     import qualified Data.Set as Set
 

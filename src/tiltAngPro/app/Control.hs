@@ -12,6 +12,7 @@ module Control where
     import Energy
     import Calculation
     import Table
+    import SunCatTy
 
     import Data.String
     import Data.Set (Set)
@@ -25,8 +26,8 @@ module Control where
     absorption.
 -}
     getOneAng:: [DegreeT] -> DayT -> DayT ->Double -> Double -> DegreeT -> IO()
-    getOneAng zenList dayS dayE pw ph latitude =
-        let theta_s_date = getzenList (scaleList zenList scale) dropPoint diff latitude
+    getOneAng decList dayS dayE pw ph latitude =
+        let theta_s_date = getzenList (scaleList decList scale) dropPoint diff latitude
               where 
                 dropPoint = fromInteger $perihelion dayS
                 diff      = fromInteger $diffDays dayS dayE

@@ -55,7 +55,7 @@ urlcolor=cyan          % color of external links
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
 2019/11/25 & 1.0 & First Version\\
-Date 2 & 1.1 & Notes\\
+2019/12/19 & 1.2 & Second Version\\
 \bottomrule
 \end{tabularx}
 
@@ -176,15 +176,15 @@ Module\\
 Control
 
 \subsection{Uses}
-SunCatTy\\
-DayT\\
+SunCatTy (Section~\ref{ModuleSCTM})\\
+DayT (Section~\ref{ModuleADTD})\\
 InputPara (Section~\ref{ModuleIP})\\ \wss{Please leave space between the name and the
   reference.  You should also identify what type of reference it is, like you
   would for a Figure or a Table.  That is, you should say (Section~\ref{ModuleIP}).}\\
 InputVer (Section ~\ref{ModuleIV})\\
-OutputPara (Section ~\ref{ModuleOP})\\
 TiltAng (Section ~\ref{ModuleTA})\\
 Energy (Section ~\ref{ModuleE})\\
+Calculation (Section ~\ref{ModuleC})\\
 
 
 \subsection{Syntax}
@@ -237,8 +237,8 @@ output & - & - & - \\
 Get ($\Phi_P$: DegreeT, $P_{A_{\text{h}}}$: real, $P_{A_{\text{w}}}$: real, $\mathit{year}_\text{Start}$: natural number, $\mathit{month}_\text{Start}$: natural number, $\mathit{day}_\text{Start}$: natural number, $\mathit{year}_\text{End}$: natural number, $\mathit{month}_\text{End}$: natural number, $\mathit{day}_\text{End}$: natural number) from users' input.\\
 
 
-load\_anale\_data (filename)\\
-InputPara.init ( )\\
+InputPara.load\_anale\_data (filename)\\
+
 
 $\#$ Verify the input values using Input Verfication Module\\
 verifiedLat ( InputPara.getla ( ) )\\
@@ -264,7 +264,7 @@ $\theta_{T}$ = getilt ( $\theta_{S_{\text{date}}}$, localsunIn($\theta_{S_{\text
 
 $\#$ Get the estimated solar absorption using Optimum Tilt Angle Module\\
 
-$P_{E}$ = getenergy (InputPara.getpw, InputPara.getph, localtiltSunIn ( localsunIn ($\theta_{S_{\text{date}}}$, $\theta_{T}$), $\theta_{S_{\text{date}}}$ )\\
+$P_{E}$ = getEnergy (InputPara.getpw, InputPara.getph, localtiltSunIn ( localsunIn ($\theta_{S_{\text{date}}}$, $\theta_{T}$), $\theta_{S_{\text{date}}}$ )\\
 
 $\#$ Output $P_{E}$ and $\theta_{T}$ to the Table-layout Module\\
 addresult ($\theta_{T}$, $P_{E}$, \{InputPara.getdayS\} )\\
@@ -289,7 +289,7 @@ $\theta_{T}$ = $\theta_{T}$ $\cup$ ( zenList : DegreeT[ ] $|$ zenList $\in$ zeni
 
 $\#$ Get the estimated solar absorption using Optimum Tilt Angle Module\\
 
-$P_{E}$ = $P_{E}$ $\cup$  ( zenList : DegreeT[ ] $|$ zenList $\in$ zenithSet $\bullet$ getenergy (InputPara.getpw, InputPara.getph, localtiltSunIn ( localsunIn (zenList, $\theta_{T}$), zenList )))\\
+$P_{E}$ = $P_{E}$ $\cup$  ( zenList : DegreeT[ ] $|$ zenList $\in$ zenithSet $\bullet$ getEnergy (InputPara.getpw, InputPara.getph, localtiltSunIn ( localsunIn (zenList, $\theta_{T}$), zenList )))\\
 
 $\#$ Output $P_{E}$ and $\theta_{T}$ to the Table-layout Module\\
 addresult ($\theta_{T}$, $P_{E}$, \{InputPara.getdayS, InputPara.getdayS.addDay($| \frac{\theta_{S_{\text{date}}}}{2}|]$) \})\\
@@ -369,7 +369,7 @@ DayT
 
 \subsection{Uses}
 
-SunCatTy\ref{ModuleSCTM} \\
+
 
 \subsection{Exported Types}
 
@@ -496,8 +496,8 @@ InputPara
 
 \subsection{Uses}
 HardH\\
-Day ADT Module (Section \ref{ModuleADTD})
-
+Day ADT Module (Section ~\ref{ModuleADTD})
+SunCatTy (Section~\ref{ModuleSCTM}) \\
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
@@ -547,11 +547,11 @@ When users chick the submit bottom from system interface, InputPara.init ( ) imp
 \noindent  fromKeyBoard ( ):
 \begin{itemize}
 \item transition: Get the values from users' input.\\
-latitude, panH, panW = HardH. $\Phi_P$, HardH. $P_{A_{\text{h}}}$, HardH. $P_{A_{\text{w}}}$\\
+latitude, panH, panW = key. $\Phi_P$, key. $P_{A_{\text{h}}}$, key. $P_{A_{\text{w}}}$\\
 
-dayS := new DayT (HardH. $\mathit{year}_\text{Start}$, HardH. $\mathit{month}_\text{Start}$, HardH. $\mathit{day}_\text{Start}$) \\
+dayS := new DayT (key. $\mathit{year}_\text{Start}$, key. $\mathit{month}_\text{Start}$, key. $\mathit{day}_\text{Start}$) \\
 
-dayE :=  new DayT ( HardH. $\mathit{year}_\text{End}$, HardH. $\mathit{month}_\text{End}$, HardH. $\mathit{day}_\text{End}$)\\
+dayE :=  new DayT ( key. $\mathit{year}_\text{End}$, key. $\mathit{month}_\text{End}$, key. $\mathit{day}_\text{End}$)\\
 \item output:
 \item exception: If the data type of captured values do not match with the parameters' data type $\Rightarrow$ Key\_error
 \end{itemize}
@@ -633,7 +633,9 @@ declination\_366\\
 InputVer
 
 \subsection{Uses}
-InputPara\ref{ModuleIP}
+InputPara (Section ~\ref{ModuleIP})
+SunCatTy (Section~\ref{ModuleSCTM}) \\
+DayT (Section~\ref{ModuleADTD}) \\
 
 \subsection{Syntax}
 
@@ -708,9 +710,9 @@ The input values is input from InputPara
 Table\\
 
 \subsection{Uses}
-OutputPara\ref{ModuleOP}\\
 HardH\\
-
+SunCatTy (Section~\ref{ModuleSCTM}) \\
+DayT (Section~\ref{ModuleADTD}) \\
 
 \subsection{Syntax}
 
@@ -719,7 +721,8 @@ HardH\\
 mainRow1:  ``Adjust"\\
 mainRow2: ``Energy Absorption/day"\\
 onceColumn: ``Optimum Angle" \\
-
+fileForMian: ``MainTable.txt"
+fileNameForAngle: ``AngleTable.txt"
 
 \subsubsection{Exported Access Programs}
 
@@ -746,7 +749,7 @@ tiltTable: a set of \{ tuples of (time: a set of DayT, angle: a set of DegreeT) 
 
 
 \subsubsection{Environment Variables}
-screen: Write tables  (output variables) in the file. \wss{You should define an
+writeFile: Write tables  (output variables) in the file. \wss{You should define an
   environment variable for the screen.}
 
 \subsubsection{Assumptions}
@@ -788,6 +791,9 @@ Energy Absorption/day & main.energy    \\
 \end{tabular}
 \end{center}
 
+writeFile.(fileForMain)
+
+
 The angle table has following format,  where the  first column heading: onceColumn, denotes the angle for adjusting the solar panel; the row heading denotes the time for adjusting the angle.\\
 
 
@@ -803,7 +809,7 @@ tilt.time & tilt.angle \\
 \hline 
 \end{tabular}
 \end{center}
-
+writeFile.(fileForAngle)
 
 \item exception: 
 \end{itemize}
@@ -828,8 +834,9 @@ TitleAng
 \wss{Short name for the module}
 
 \subsection{Uses}
-SunInten\ref{ModuleSI}\\
-ZenithAng\ref{ModuleZA}\\
+Calculation ( Section ~\ref{ModuleC})\\
+SunCatTy (Section~\ref{ModuleSCTM}) \\
+
 
 \subsection{Syntax}
 
@@ -935,9 +942,10 @@ localMax(origDegree, newDegree, sunIn) = ( getiltInten (origDegree, sunIn) $\geq
 Energy
 
 \subsection{Uses}
-InputPara\ref{ModuleIP}\\
-ZenithAng\ref{ModuleZA}\\ 
-TiltAng\ref{ModuleTA}
+InputPara (Section ~\ref{ModuleIP})\\
+Calculation (Section ~\ref{ModuleC})\\
+TiltAng (Section ~\ref{ModuleTA})
+SunCatTy (Section~\ref{ModuleSCTM}) \\
 
 \subsection{Syntax}
 
@@ -951,7 +959,7 @@ TiltAng\ref{ModuleTA}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline 
-getenergy & real, real, real, DegreeT [ ] & a set of real & - \\
+getEnergy & real, real, real, DegreeT [ ] & a set of real & - \\
 
 
 \hline
@@ -975,10 +983,10 @@ N/A
 
 \subsubsection{ Access Routine Semantics}
 
-\noindent  getenergy ( pw, ph, maxinten, zen[ ] ):
+\noindent  getEnergy ( pw, ph, maxInten, zen[ ] ):
 \begin{itemize}
 \item transition:
-\item output:  localEnergy ( localSunIn ( zen, maxinten ),pw, ph)
+\item output:  localEnergy ( localSunIn ( zen, maxInten ),pw, ph)
 \item exception: 
 \end{itemize}
 
@@ -1002,6 +1010,7 @@ Calculation\\
 
 
 \subsection{Uses}
+SunCatTy (Section~\ref{ModuleSCTM}) \\
 
 
 \subsection{Syntax}
