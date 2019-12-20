@@ -25,6 +25,7 @@ dependencies:
 - AC-Angle
 - containers
 - table-layout
+- hspec
 
 library:
   source-dirs: src

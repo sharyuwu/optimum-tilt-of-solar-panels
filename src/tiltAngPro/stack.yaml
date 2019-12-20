@@ -38,6 +38,7 @@ extra-deps:
 - AC-Angle-1.0@sha256:e1ffee97819283b714598b947de323254e368f6ae7d4db1d3618fa933f80f065,544
 - table-layout-0.8.0.5@sha256:28d671445448874a5e6a7d28c2072f443bb189d655f6e0f6aae5eb5df646d41a,5693
 - data-default-instances-base-0.1.0.1@sha256:985a13d7103e45a65f06f277b735ef025636014f0d29dd6de998bc7628e09be9,509
+
   # - acme-missiles-0.3
 # - git: https://github.com/commercialhaskell/stack.git
 #   commit: e7b331f14bcffb8367cd58fbfc8b40ec7642100a

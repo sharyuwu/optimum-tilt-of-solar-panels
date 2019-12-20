@@ -6,6 +6,7 @@ Sorry for the inconvenience.
 
 For testing this software please open this software with the environment where
 has implement GHC compiler.
+And Install stack (1.2.0 or latter).
 
 Please use the editor that support Haskell using GHCi to run this code.
 
