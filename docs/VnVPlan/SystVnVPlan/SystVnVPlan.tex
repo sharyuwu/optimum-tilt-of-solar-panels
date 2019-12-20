@@ -175,7 +175,7 @@ publishing to GitHub.
 be ad hoc feedback from reviewers, like your classmates, or you may have
 something more rigorous/systematic in mind..}
 
-\subsection{Design Verification Plan}
+\subsection{Design Verification Plan}\label{Planfordv}
 \begin{itemize}
 
 \item The design should be verified by complete and success the test cases in
@@ -187,10 +187,10 @@ the system VnV plan under section \ref{STD}.
 
 \wss{How are you going to verify the design?}
 
-\wss{Plans for design verification}\label{Planfordv}
+\wss{Plans for design verification}
 
 
-\subsection{Implementation Verification Plan} 
+\subsection{Implementation Verification Plan}\label{ImplementVP} 
 The following tools will be used to facilitate testing: 
 
 \begin{itemize}
@@ -395,25 +395,16 @@ How the test will be performed:
 
 \end{enumerate}
 
-\subsubsection{Output Calculation}\label{tP_OC}
 
-
-This test covers the requirements, R3 to R5, in section \ref{Objectives}.
-This test relates to the previous test input reading testing. After the 
-system reads the inputs from the software interface, the system starts
-calculating the outputs.
-
+\subsubsection{Output Verification}\label{tP_VO} 
 
 \wss{It would be nice to have a blurb here to explain why the subsections below
 cover the requirements. References to the SRS would be good. If a section
 covers tests for input constraints, you should reference the data constraints
 table in the SRS.} 
 
-
-\subsubsection{Output Verification}\label{tP_VO} 
-
 This test covers the requirements of the verification of the outputs. This test
-uses external data\ref{RD} to verify the output.
+uses external documents, which mentioned in section \ref{ImplementVP}, to verify the output. The following test cases map the actual output to the expected output from the external documents. Then calculate a relative error the verified the correctness of the input values.
 
 \paragraph{The Correctness of the Calculation}\label{tP_CC}
 \begin{enumerate}
