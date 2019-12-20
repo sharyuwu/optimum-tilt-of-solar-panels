@@ -22,7 +22,9 @@ the end day. i denode the start day. diff denode how mant days
 is between start day and end day.
 -}
 getzenList :: [DegreeT] -> Int -> Int -> Double -> [DegreeT]
-getzenList decList i diff latitude = map (zenAngle latitude) $drop i decList ++ take diff decList
+getzenList decList i diff latitude = map (zenAngle latitude) $ drop i decList
+-- take diff $ drop i decList
+--drop i decList ++ take diff decList
 {-
 zenAngle get the sun declination and the latitude, and then
 calculate the zenith angle.
@@ -44,7 +46,7 @@ sumSunIn zenList energy = sum $ map (sglSunIn energy) zenList
 
 -- |sglSunIn denotes the single sun intensity 
 sglSunIn :: DegreeT -> Double -> Double
-sglSunIn zen energy = sunInten * (1.0 / energy) ** (1.0/cos zen * 0.0174533)
+sglSunIn zen energy = sunInten * (1.0 / energy) ** (1.0/cos (zen * 0.0174533))
 
 
 
