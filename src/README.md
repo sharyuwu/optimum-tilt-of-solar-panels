@@ -19,7 +19,7 @@ For now it have to test manually. Later, it will update its automatic test case.
 Sorry for the inconvenience.
 
 For testing this software please open this software with the environment where
-has implement GHS compiler.
+has implement GHC compiler.
 Then input the following command in the terminal.
 stack build
 stack ghci
