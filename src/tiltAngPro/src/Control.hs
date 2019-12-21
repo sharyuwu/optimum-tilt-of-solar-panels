@@ -13,6 +13,7 @@ import Energy
 import Calculation
 import Table
 import SunCatTy
+import InputVer
 
 import Data.String
 import Data.Set (Set)
@@ -25,7 +26,9 @@ import qualified Data.Set as Set
     the result of one optimum angle and its corresponding energy
     absorption.
 -}
-getOneAng:: [DegreeT] -> DayT -> DayT ->Double -> Double -> DegreeT -> IO()
+ 
+getOneAng :: [DegreeT] -> DayT -> DayT ->Double -> Double -> DegreeT -> IO()
+  
 getOneAng decList dayS dayE pw ph latitude =
   let theta_s_date = getzenList (scaleList decList scale) dropPoint diff latitude
         where 
@@ -56,37 +59,21 @@ scaleList list diff
             |diffLen > len = len
             |otherwise     = diffLen
                         
-main :: IO ()
-main = do
+
+input :: String -> String -> String -> String -> String -> String-> String-> String-> String ->IO ()
+input latitude startYear startMonth startDay endYear endMonth endDay pw ph = do
     inputAnalemma <- readFile "analemma.txt"
-    putStr "Input the latitude"
-    inputLatitude <- getLine  
-    putStr "Input the Start Year"
-    inputStartYear <- getLine
-    putStr "Input the Start Month"
-    inputStartMonth <- getLine
-    putStr "Input the Start Day"
-    inputStartDay <- getLine
-    putStr "Input the End Year"
-    inputEndYear <- getLine
-    putStr "Input the End Month"
-    inputEndtMonth <- getLine
-    putStr "Input the End Day"
-    inputEndtDay <- getLine
-    putStr "Input the weight of your solar panel"
-    inputPw <- getLine
-    putStr "Input the height of your solar panel"
-    inputPh <- getLine
-    let decList = lines inputAnalemma
-    let decListToDegreeT = map read decList :: [DegreeT]
-    let dayS = fromGregorian (read inputStartYear ::Integer) (read inputStartMonth ::Int) (read inputStartDay ::Int)
-    let dayE = fromGregorian (read  inputEndYear ::Integer) (read inputEndtMonth ::Int) (read inputEndtDay ::Int)
-    let pw = read inputPw ::Double
-    let ph = read inputPh ::Double
-    let latitude = read inputLatitude ::Double
+    let contentOfFile = lines inputAnalemma
+    let decList = map read contentOfFile :: [DegreeT]
+    let dayS = fromGregorian (read startYear ::Integer) (read startMonth ::Int) (read startDay ::Int)
+    let dayE = fromGregorian (read  endYear ::Integer) (read endMonth ::Int) (read endDay ::Int)
+    let pw1 = read pw ::Double
+    let ph1 = read ph ::Double
+    let latitude1 = read latitude ::Double
     writeFile "MainTable.txt" ""
     writeFile "AngleTable.txt" ""
-    getOneAng decListToDegreeT dayS dayE pw ph latitude
-
+    if verifiedP pw1 ph1 && verifiedD dayS dayE && verifiedLat latitude1
+    then getOneAng decList dayS dayE pw1 ph1 latitude1
+    else putStr "Incorrect input data"
 
 

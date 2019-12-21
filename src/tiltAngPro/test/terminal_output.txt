@@ -1,0 +1,9 @@
+Input the latitude
+Input the Start Year
+Input the Start Day
+Input the Start Month
+Input the End Year
+Input the End Month
+Input the End Day
+Input the weight of your solar panel
+Input the height of your solar panel

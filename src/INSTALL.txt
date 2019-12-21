@@ -1,8 +1,7 @@
 Instructions for installation and running of software.
 
-Test::
-For now it have to test manually. Later, it will update its automatic test case. 
-Sorry for the inconvenience.
+Test ::
+Offer manually and automatically test case.
 
 For testing this software please open this software with the environment where
 has implement GHC compiler.
@@ -10,10 +9,11 @@ And Install stack (1.2.0 or latter).
 
 Please use the editor that support Haskell using GHCi to run this code.
 
+Implement the code manually using following steps.
 Then input the following command in the terminal.
 stack build
 stack ghci
-Control.main
+Main.main
 \# input the value\
 30 --Input the latitude
 2018 --Input the Start Year
@@ -24,4 +24,9 @@ Control.main
 05 --Input the End Day
 1455 -- Input the weight of your solar panel
 665 -- Input the height of your solar panel
+\# View the result in the file MainTable.txt and AngleTable.txt\
+
+
+Implement the code automatically using following steps.
+stack test
 \# View the result in the file MainTable.txt and AngleTable.txt\

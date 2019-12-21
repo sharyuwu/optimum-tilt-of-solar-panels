@@ -21,14 +21,14 @@ import DayADT
 -- inputs: latitude:: DegreeT (represented here as a Float since DegreeT is not defined.)
 -- output: Bool
 -- This function should check that the input latitude is between 90 and -90 (inclusive).
-verifiedLat :: Float -> Bool
+verifiedLat :: Double -> Bool
 verifiedLat lat = (-90 < lat) && (lat < 90)
 
 -- Function: verifiedP
 -- inputs: panelHeight::Float, panelWidth::Real
 -- output: Bool
 -- This function should check that the panel height and width are appropriate (not zero).
-verifiedP :: Float-> Float -> Bool
+verifiedP :: Double -> Double -> Bool
 verifiedP panelHeight panelWidth = (panelHeight > 0) && (panelWidth > 0)
 
 -- Function: verifiedP
