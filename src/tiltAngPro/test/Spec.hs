@@ -32,6 +32,12 @@ deltaDate = [20]
 sunInten :: Double
 sunInten = 1.35
 
+dayS_id4 :: DayT
+dayS_id4 = fromGregorian 2018 01 01
+dayE_id4 :: DayT
+dayE_id4 = fromGregorian 2018 12 31
+
+
 main :: IO ()
 main = do
   inputHandle <- openFile "test/tests/input.txt" ReadMode
@@ -102,6 +108,12 @@ test "id5" ".calculation" s =
     case linesS of
         (x:xs) -> test_id5_Cal x xs
         []     -> "This is an empty string."
+
+{-test "id4" ".verifyOutput" s =
+  let linesS = lines s in
+    case linesS of
+        (x:xs) -> test_id4_ver x xs
+        []     -> "This is an empty string."-}
         
 
 test_id1_IR, test_id2_IR, test_id3_IR :: String -> [String] -> String
@@ -219,6 +231,13 @@ test_id5_Cal "id5_4" (x:xs) =
       calculation = sglSunIn actual sunInten
       result = "id5_4" : errorCal_id5 [calculation] expect
       in unlines result
+
+{-test_id4_ver "id4_1" (x:xs) =
+  let actual = read x :: Double
+      expect = [43] :: [DegreeT]
+      calculation = getAngle actual sunInten
+      result = "id5_4" : errorCal_id5 [calculation] expect
+      in unlines result-}
 
 
 inputBoundsTests_id1 = testGroup "InputBounds tests id1"
