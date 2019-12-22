@@ -27,6 +27,7 @@ shows on the terminal for getting the result.
 \# Under test file\
 Spec.hs : This is the file that content the code for testing the project.
 
+\# Under test\test file\
 input.txt : txt file. This is file content the information for the input.
 Users can modify the input information in the file.
 It contents value denote as following:
@@ -42,3 +43,10 @@ Input height of your solar panel --Default value: 665
 
 terminal_output.txt : txt file. This is the file content meaning of the value in input.txt.
 
+id*.inputReading : The file content the input for System Testing,InputReading
+
+id*.inputReading.golden : The file content the result for System Testing,InputReading
+
+id*.calculation : The file content the input for System Testing, calculation
+
+id*.calculation.golden : The file content the result for System Testing, calculation

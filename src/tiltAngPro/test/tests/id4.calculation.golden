@@ -1,0 +1,9 @@
+.calculation
+id4_1
+Input 23.250943 Output 23.250943 Absolute Erros = 0.0
+id4_2
+Input -23.250943 Output -23.250943 Absolute Erros = 0.0
+id4_3
+Input -69.250943 Output -69.250943 Absolute Erros = 0.0
+id4_4
+Input 69.250943 Output 69.250943 Absolute Erros = 0.0

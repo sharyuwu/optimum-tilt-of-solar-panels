@@ -76,7 +76,7 @@ $\mathit{day}_\text{End}$ & the day of the calcuation's ending date\\
 This section defines the general data type for \progname. 
 
 \begin{itemize}
-\item[]$\mathit{day} $ = a tuple of $(\mathit{year}, \mathit{month}, \mathit{day})$
+\item[]$\mathit{day} $ = a tuple of $(\mathit{year}, \mathit{month}, \mathit{day} )$
 \item[]$\mathit{date}$ = a sequence of $\mathit{day}$
 \end{itemize} 
 
@@ -379,8 +379,8 @@ The output should display the input value on the screen.
     \toprule		
     \textbf{id} & \textbf{Input} & \textbf{Output}\\ 
 	\midrule
-   id3.1 & (2020, 02, 28) - (2021, 02, 28) & (2020, 02, 28)  (2021, 02, 28)\\
-   id3.2 & (2020, 02, 28) - (2020, 02, 28)  & (2020, 02, 28)  (2020, 02, 28)\\
+   id3.1 & (2020, 02, 28) - (2021, 02, 28) & (2020, 02, 28) - (2021, 02, 28)\\
+   id3.2 & (1996, 01, 03) - (2000, 01, 14)  & (1996, 01, 03) - (2000, 01, 14) \\
     \bottomrule
   \end{tabular}
   %	\caption{Provide a caption}
@@ -429,13 +429,10 @@ Control: Automatic. The test cases contain cases that $\Phi_P
 latitude}$. 
 
 Initial State: Based on the assumption in SRS\cite{YS2019}, $I_{S}$:1.35, and
-based on the assumption in [Jacobson and Jadhav] \cite{JacobsonandJadhav},
-$\mathit{year}_\text{Start}$: 2018
-~$\mathit{month}_\text{Start}$: 01 
-~$\mathit{day}_\text{Start}$: 01;
-~$\mathit{year}_\text{End}$: 2018 
-~$\mathit{month}_\text{End}$: 12
-~$\mathit{day}_\text{End}$: 31\\ 
+based on the assumption in [Jacobson and Jadhav] \cite{JacobsonandJadhav},\\
+($\mathit{year}_\text{Start}$, $\mathit{month}_\text{Start}$, $\mathit{day}_\text{Start}$)  ($\mathit{year}_\text{End}$, $\mathit{month}_\text{End}$, $\mathit{day}_\text{End}$)\\ 
+(2018, 01, 01)-(2018, 12, 31)
+\\
 
 Input: $\Phi_P$\\
 
@@ -503,13 +500,10 @@ Initial State:
 Basedon the assumption in SRS\cite{YS2019}, $I_{S}$: 1.35, and based on the
 assumption in [Landau]\cite{Charles2001}, the days duration of the winter in
 northern hemisphere is from\\
-~ $\mathit{year}_\text{Start}$: 2018
-~$\mathit{month}_\text{Start}$: 10 
-~$\mathit{day}_\text{Start}$: 05 \\
- to
-~$\mathit{year}_\text{End}$: 2019 
-~$\mathit{month}_\text{End}$: 03
-~$\mathit{day}_\text{End}$: 05\\
+($\mathit{year}_\text{Start}$, $\mathit{month}_\text{Start}$, $\mathit{day}_\text{Start}$)  ($\mathit{year}_\text{End}$, $\mathit{month}_\text{End}$, $\mathit{day}_\text{End}$)\\ 
+(2018, 10, 05)-(2019, 03, 05)
+\\
+
 
 Input: $\Phi_P$\\
 

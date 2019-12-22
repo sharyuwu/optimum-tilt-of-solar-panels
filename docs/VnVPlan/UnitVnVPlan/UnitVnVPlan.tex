@@ -257,7 +257,7 @@ Input: ($\mathit{year}_\text{Start}$, $\mathit{month}_\text{Start}$, $\mathit{da
 
 
 Output: The expected result will for the given inputs is based on the standard calendar.
-If the end day $<$ start day then output ``invalid", otherwise output ``valid".
+If the start day $<$ end day then output ``invalid", otherwise output ``invalid".
 
 \noindent \begin{tabular}{l l l l} 
     \toprule		
@@ -267,7 +267,7 @@ If the end day $<$ start day then output ``invalid", otherwise output ``valid".
    id3.2 & (2020, 02, 28) - (2019, 02, 28)  & invalid\\
    id3.3 & (2020, 02, 28) - (2020, 01, 28)  & invalid\\
    id3.4 & (2020, 02, 28) - (2020, 02, 27)  & invalid\\
-   id3.5 & (2020, 02, 28) - (2020, 02, 28)  & valid\\
+   id3.5 & (2020, 02, 28) - (2020, 02, 28)  & invalid\\
     \bottomrule
   \end{tabular}
   %	\caption{Provide a caption}
@@ -347,10 +347,10 @@ The output is calculated by the method descibed in MIS.
     \toprule		
     \textbf{id} & \textbf{Input} & \textbf{Output}\\ 
 	\midrule
-   id5.1 &  23.250943  & 1.0883942\\
-   id5.2 & -23.250943  & 1.0883942\\
-   id5.3 & -69.250943  & 2.8226608\\
-   id5.4 &  69.250943  & 2.8226608\\
+   id5.1 &  23.250943  & 0.9738212\\
+   id5.2 & -23.250943  & 0.9738212\\
+   id5.3 & -69.250943  & 0.5786897\\
+   id5.4 &  69.250943  & 0.5786897\\
     \bottomrule
   \end{tabular}
   %	\caption{Provide a caption}

@@ -1,5 +1,8 @@
 \documentclass[12pt, titlepage]{article}
 
+
+\usepackage{amsmath, mathtools}
+\usepackage{float}
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{hyperref}
@@ -10,14 +13,15 @@
     linkcolor=red,
     urlcolor=blue
 }
-\usepackage[round]{natbib}
-
+%\usepackage[round]{natbib}
+\usepackage[square,sort,comma,numbers]{natbib} 
 \input{../../Comments}
+\input{../../Common}
 
 \begin{document}
 
-\title{Test Report: Project Title} 
-\author{Author Name}
+\title{Test Report: System Verification and Validation Report for Sun Catcher} 
+\author{Sharon (Yu-Shiuan) Wu}
 \date{\today}
 	
 \maketitle
@@ -29,7 +33,7 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
+2019/12/21 & 1.0 & First Version\\
 Date 2 & 1.1 & Notes\\
 \bottomrule
 \end{tabularx}
@@ -61,10 +65,123 @@ Date 2 & 1.1 & Notes\\
 
 \pagenumbering{arabic}
 
-This document ...
+This document is the test report of the system testing for \progname
 
 \section{Functional Requirements Evaluation}
+\begin{enumerate}
+\item{InputReading-id1\\}
+This is the testing for ensuring the software has the ability to read the input value $P_{A_{h}}$ and $P_{A_{w}}$.
+The the input can be find under the path ``../src/tiltAngPro/test/tests"\\
+Input File Name : ``id1.inputReading"\\
+Output File Nmae: ``id1.inputReading.golden"
 
+
+
+\begin{table}[h!]
+\centering
+\noindent \begin{tabular}{l l l l} 
+    \toprule		
+    \textbf{id} & \textbf{Input} & \textbf{Output}\\ 
+	\midrule
+   id1.1 &  (1455, 665)  & (1455, 665)\\
+   id1.2 &  (1455.54, 665.13) & (1455.54, 665.13)\\
+    \bottomrule
+  \end{tabular}
+\caption{Actual Input and Expected Output}
+\end{table}
+
+
+Content:
+\begin{center}
+.inputReading\\
+id1\_1\\
+Input 1455.0 Absolute Erros = 0.0\\
+Input 665.0 Absolute Erros = 0.0\\
+id1\_2\\
+Input 1455.54 Absolute Erros = 0.0\\
+Input 665.13 Absolute Erros = 0.0\\
+\end{center}
+
+
+
+This result shows all the absolute error for the cases under InputReading-id1 is 0. Therefore the case success.
+
+\item{InputReading-id2\\}
+
+This is the testing for ensuring the software has the ability to read the input value $\Phi_P$.\\
+The the input can be find under the path ``../src/tiltAngPro/test/tests"\\
+Input File Name : ``id2.inputReading"\\
+Output File Nmae: ``id2.inputReading.golden"
+
+\begin{table}[h!]
+\centering
+\noindent \begin{tabular}{l l l l} 
+    \toprule		
+    \textbf{id} & \textbf{Input} & \textbf{Output}\\ 
+	\midrule
+   id2.1 &  90  & 90\\
+   id2.2 & -90  & -90\\
+   id2.3 & 3.2  & 3.2\\
+   id2.4 & -3.2  & -3.2\\
+   id2.5 & 0  & 0\\
+    \bottomrule
+  \end{tabular}
+\caption{Actual Input and Expected Output}
+\end{table}
+
+
+\begin{center}
+
+.inputReading\\
+id2\_1\\
+Input 90.0 Absolute Erros = 0.0\\
+id2\_2\\
+Input -90.0 Absolute Erros = 0.0\\
+id2\_3\\
+Input 3.2 Absolute Erros = 0.0\\
+id2\_4\\
+Input -3.2 Absolute Erros = 0.0\\
+id2\_5\\
+Input 0.0 Absolute Erros = 0.0\\
+\end{center}
+
+This result shows all the absolute error for the cases under InputReading-id2 is 0. Therefore the case success.
+
+\item{InputReading-id3\\}
+
+This is the testing for ensuring the software has the ability to read the input value  ($\mathit{year}_\text{Start}$, $\mathit{month}_\text{Start}$, $\mathit{day}_\text{Start}$)  ($\mathit{year}_\text{End}$, $\mathit{month}_\text{End}$, $\mathit{day}_\text{End}$).\\
+
+
+The the input can be find under the path ``../src/tiltAngPro/test/tests"\\
+Input File Name : ``id3.inputReading"\\
+Output File Nmae: ``id3.inputReading.golden"
+
+\begin{table}[h!]
+\centering
+\noindent \begin{tabular}{l l l l} 
+    \toprule		
+    \textbf{id} & \textbf{Input} & \textbf{Output}\\ 
+	\midrule
+   id3.1 & (2020, 02, 28) - (2021, 02, 28) & (2020, 02, 28) - (2021, 02, 28)\\
+   id3.2 & (1996, 01, 03) - (2000, 01, 14)  & (1996, 01, 03) - (2000, 01, 14) \\
+    \bottomrule
+  \end{tabular}
+\caption{Actual Input and Expected Output}
+\end{table}
+
+\begin{center}
+.inputReading\\
+id3\_1\\
+Input 2020-02-28 Absolute Erros = 0\\
+Input 2021-02-28 Absolute Erros = 0\\
+id3\_2\\
+Input 1996-01-03 Absolute Erros = 0\\
+Input 2000-01-14 Absolute Erros = 0\\
+\end{center}
+
+This result shows all the absolute error for the cases under InputReading-id3 is 0. Therefore the case success.
+
+\end{enumerate}
 \section{Nonfunctional Requirements Evaluation}
 
 \subsection{Usability}
@@ -89,8 +206,8 @@ This section will not be appropriate for every project.
 
 \section{Code Coverage Metrics}
 
-\bibliographystyle{plainnat}
-
-\bibliography{SRS}
+\bibliographystyle{plain}
+\bibliography{../../../refs/References} 
+%\bibliography{SRS}
 
 \end{document}

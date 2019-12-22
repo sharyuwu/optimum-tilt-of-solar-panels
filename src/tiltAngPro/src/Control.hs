@@ -26,7 +26,7 @@ import qualified Data.Set as Set
     the result of one optimum angle and its corresponding energy
     absorption.
 -}
- 
+
 getOneAng :: [DegreeT] -> DayT -> DayT ->Double -> Double -> DegreeT -> IO()
   
 getOneAng decList dayS dayE pw ph latitude =

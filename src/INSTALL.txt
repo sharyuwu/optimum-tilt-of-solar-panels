@@ -9,6 +9,11 @@ And Install stack (1.2.0 or latter).
 
 Please use the editor that support Haskell using GHCi to run this code.
 
+Implement the code automatically using following steps.
+stack test
+\# View the result in the file MainTable.txt and AngleTable.txt\
+
+
 Implement the code manually using following steps.
 Then input the following command in the terminal.
 stack build
@@ -26,7 +31,3 @@ Main.main
 665 -- Input the height of your solar panel
 \# View the result in the file MainTable.txt and AngleTable.txt\
 
-
-Implement the code automatically using following steps.
-stack test
-\# View the result in the file MainTable.txt and AngleTable.txt\

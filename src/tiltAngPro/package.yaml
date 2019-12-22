@@ -25,7 +25,12 @@ dependencies:
 - AC-Angle
 - containers
 - table-layout
-- hspec
+- tasty
+- tasty-hunit
+- tasty-golden
+- filepath
+- Glob
+- bytestring
 
 library:
   source-dirs: src

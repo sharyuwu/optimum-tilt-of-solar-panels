@@ -22,7 +22,7 @@ import DayADT
 -- output: Bool
 -- This function should check that the input latitude is between 90 and -90 (inclusive).
 verifiedLat :: Double -> Bool
-verifiedLat lat = (-90 < lat) && (lat < 90)
+verifiedLat lat = (lat <= 90) && (lat >= -90)
 
 -- Function: verifiedP
 -- inputs: panelHeight::Float, panelWidth::Real

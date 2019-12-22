@@ -22,7 +22,7 @@ the end day. i denode the start day. diff denode how mant days
 is between start day and end day.
 -}
 getzenList :: [DegreeT] -> Int -> Int -> Double -> [DegreeT]
-getzenList decList i diff latitude = map (zenAngle latitude) $ drop i decList
+getzenList decList i diff latitude = map (zenAngle latitude) . take diff $ drop i decList
 -- take diff $ drop i decList
 --drop i decList ++ take diff decList
 {-

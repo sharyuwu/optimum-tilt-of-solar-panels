@@ -678,21 +678,24 @@ The input values is input from InputPara
 \noindent  verifiedLat (latitude):
 \begin{itemize}
 \item transition: 
-\item output: (latitude $>$ 90 $\lor$ latitude $<$ - 90 $\Rightarrow$ screen.display |`` The degree of the latitude can't be greater than 90 or smaller than -90. " $|$ True)
+\item output: latitude $\leq$ 90 $\land$ atitude $\geq$ - 90 
+
 \item exception: exc := 
 \end{itemize}
 
 \noindent  verifiedP (ph, pw):
 \begin{itemize}
 \item transition: 
-\item output: ( ph $<$ 0 $\lor$ pw $<$ 0 $\Rightarrow$ screen.display |`` The height and the weight of the panel can't be negative. " $|$ True)
+\item output: ph $>$ 0 $\land$ pw $>$ 0 
+
 \item exception: exc := 
 \end{itemize}
 
 \noindent  verifiedD (ds, de):
 \begin{itemize}
 \item transition: 
-\item output: ( ds $<$ de $\Rightarrow$ screen.display |`` The end day can't be smaller than the start day. " $|$ True)
+\item output: ds $<$ de 
+
 \item exception: exc := 
 \end{itemize}
 
