@@ -12,6 +12,10 @@ Please use the editor that support Haskell using GHCi to run this code.
 Implement the code automatically using following steps.
 stack test
 \# View the result in the file MainTable.txt and AngleTable.txt\
+\# View the test report in \test\test
+\#If changing the text input values, please delete the 
+.golden file before you run the test.
+
 
 
 Implement the code manually using following steps.
