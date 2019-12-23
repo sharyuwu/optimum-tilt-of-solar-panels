@@ -40,8 +40,8 @@ dayE_id4 = fromGregorian 2018 12 31
 
 main :: IO ()
 main = do
-  inputHandle <- openFile "test/tests/input.txt" ReadMode
-  outputHandle <- openFile "test/tests/terminal_output.txt" WriteMode
+  inputHandle <- openFile "test/input.txt" ReadMode
+  outputHandle <- openFile "test/terminal_output.txt" WriteMode
   runTiltAngPro inputHandle outputHandle
   hClose inputHandle
   hClose outputHandle
