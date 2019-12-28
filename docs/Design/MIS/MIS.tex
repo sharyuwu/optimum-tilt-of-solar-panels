@@ -225,7 +225,7 @@ output & - & - & - \\
 
 
 \subsubsection{Assumptions}
-
+Get ($\Phi_P$: DegreeT, $P_{A_{\text{h}}}$: real, $P_{A_{\text{w}}}$: real, $\mathit{year}_\text{Start}$: natural number, $\mathit{month}_\text{Start}$: natural number, $\mathit{day}_\text{Start}$: natural number, $\mathit{year}_\text{End}$: natural number, $\mathit{month}_\text{End}$: natural number, $\mathit{day}_\text{End}$: natural number) from users' input.\\
 
 \subsubsection{ Access Routine Semantics}
 
@@ -233,8 +233,6 @@ output & - & - & - \\
 
 \begin{itemize}
 \item transition: Implement the InputPara and  the environment variables for Output by following steps.
-
-Get ($\Phi_P$: DegreeT, $P_{A_{\text{h}}}$: real, $P_{A_{\text{w}}}$: real, $\mathit{year}_\text{Start}$: natural number, $\mathit{month}_\text{Start}$: natural number, $\mathit{day}_\text{Start}$: natural number, $\mathit{year}_\text{End}$: natural number, $\mathit{month}_\text{End}$: natural number, $\mathit{day}_\text{End}$: natural number) from users' input.\\
 
 
 InputPara.load\_anale\_data (filename)\\
@@ -245,86 +243,117 @@ verifiedLat ( InputPara.getla ( ) )\\
 verifiedP ( InputPara.getph ( ), InputPara.getpw ( ) )\\
 verifiedD (InputPara.getdayS, InputPara.getdayE)\\
 
+$\#$ If verifiedLat, verifiedP, and verifiedD are all true\\
+intermidiate ( InputPara.getdec ( ), InputPara.getdayS ( ), InputPara.getdayE ( ), InputPara.getpw ( ) , InputPara.getph ( ) , InputPara.getla ( ) )
 
 \end{itemize}
 
-\noindent  getOneAng ( ):
 
+\noindent  intermidiate ( dec [ ], dayS, dayE, pw, ph, latitude ):
 \begin{itemize}
-\item transition:Implied the one optimum cut by following steps
+\item transition:
 
+zenith = zenithList (dec [ ], dayS, dayE )
 
-$\#$ Get the zenith angle between dayS and
-dayE\\
-$\theta_{S_{\text{date}}}$ = Calculation.getzenList ( InputPara.getdec,   localDaySandPer ( ),  localDaySandDayE ( ) , InputPara.getla)\\
+cutList = makeCut (2, $|$ zenith $|$)
 
-$\#$ Get the optimum tilt angle using $\theta_{S_{\text{date}}}$\\
-$\theta_{T}$ = getilt ( $\theta_{S_{\text{date}}}$, localsunIn($\theta_{S_{\text{date}}}$) )\\
+angle = $\|$ ( (a, b) : ($\mathbb{N}$, $\mathbb{N}$) $|$ (a, b) $\in$ cutList $\bullet	$  optAngle (zenith [a*b...(a * b + b)], latitude ) )
 
+cupZipAng = zipList( cutList, angle)
 
+energy = $\|$ (((a, b), ang) : (($\mathbb{N}$, $\mathbb{N}$), real) $|$ ((a, b), ang)  $\in$ cupZipAng $\bullet	$ optEnergy (zenith [a*b...(a * b + b)], ang, pw, ph))
+
+day = getDayList ( cutList, dayS)
+
+addResult (angle, energy,  day)
+
+\end{itemize}
+
+\noindent  optEnergy ( zen [ ], tiltAngle, pw, ph ):\\
 $\#$ Get the estimated solar absorption using Optimum Tilt Angle Module\\
+\begin{itemize}
+\item output: out :=
 
-$P_{E}$ = getEnergy (InputPara.getpw, InputPara.getph, localtiltSunIn ( localsunIn ($\theta_{S_{\text{date}}}$, $\theta_{T}$), $\theta_{S_{\text{date}}}$ )\\
-
-$\#$ Output $P_{E}$ and $\theta_{T}$ to the Table-layout Module\\
-addresult ($\theta_{T}$, $P_{E}$, \{InputPara.getdayS\} )\\
-
-
-
+ getEnergy (InputPara.getpw, InputPara.getph, localtiltSunIn ( localsunIn ($\theta_{S_{\text{date}}}$, $\theta_{T}$), $\theta_{S_{\text{date}}}$ ))\\
 \end{itemize}
 
-\noindent  getTwoAng ( ):
 
-\begin{itemize}
-\item transition:Implied the two optimum cut by following steps\\
-
-$\theta_{S_{\text{date}}}$ = Calculation.getzenList ( InputPara.getdec,   localDaySandPer ( ),  localDaySandDayE ( ) , InputPara.getlala)\\
-
-$\#$ Get the zenith angle between dayS and
-$\frac{dayE + dayS}{2}$ and $\frac{dayE + dayS}{2}$ to dayE\\
-zenithSet =  \{$\theta_{S_{\text{date}}}[1.. | \frac{\theta_{S_{\text{date}}}}{2}|]$\} $\cup$ \{$\theta_{S_{\text{date}}}[| \frac{\theta_{S_{\text{date}}}}{2}|.. | \theta_{S_{\text{date}}}|]$\}\\
- 
+\noindent  optAngle ( zen [ ], latutude ):\\
 $\#$ Get the optimum tilt angle using $\theta_{S_{\text{date}}}$\\
-$\theta_{T}$ = $\theta_{T}$ $\cup$ ( zenList : DegreeT[ ] $|$ zenList $\in$ zenithSet $\bullet$ getilt ( zenList, localsunIn(zenList) ) )\\
-
-$\#$ Get the estimated solar absorption using Optimum Tilt Angle Module\\
-
-$P_{E}$ = $P_{E}$ $\cup$  ( zenList : DegreeT[ ] $|$ zenList $\in$ zenithSet $\bullet$ getEnergy (InputPara.getpw, InputPara.getph, localtiltSunIn ( localsunIn (zenList, $\theta_{T}$), zenList )))\\
-
-$\#$ Output $P_{E}$ and $\theta_{T}$ to the Table-layout Module\\
-addresult ($\theta_{T}$, $P_{E}$, \{InputPara.getdayS, InputPara.getdayS.addDay($| \frac{\theta_{S_{\text{date}}}}{2}|]$) \})\\
-
-\end{itemize}
-
-\noindent  output ( ):
 \begin{itemize}
-\item output: out :=\\
-$\#$ Write the output values in the file using the Table-layout Module\\
-display ( )
+\item output: out :=
+ getilt ( $\theta_{S_{\text{date}}}$, localsunIn($\theta_{S_{\text{date}}}$) )\\
 \end{itemize}
+
+\noindent  makeCut ( cut, len):
+\begin{itemize}
+\item output: out := $\|$ ( i : $\mathbb{N}$ $|$ i $\in$ cut $\bullet$	 localCut (i, listLen) )
+\end{itemize}
+
+\noindent  zenithList ( dec [ ], dayS, dayE):
+\begin{itemize}
+\item output: out :=
+ Calculation.getzenList ( localScaleDec(dec,dayS,dayE)   localDaySandPer ( ),  localDaySandDayE ( ) , InputPara.getlala)\\
+\end{itemize}
+
+
+
 \subsubsection{Local Functions}
 
-$\#$ The days detween start day and perhelion\\
-localDaySandPer: Integer\\
-localDaySandPer = InputPara.getdayS. perhelion\\
+~\newline
 
-$\#$ The days detween start day and end day\\
-localDaySandDayE: Integer\\
-localDaySandDayE =InputPara.getdayE.countDiff (InputPara.getdayS)\\
+$\#$ The days detween start day and perhelion
 
-$\#$ Calculate the total sun intensity for the base case\\
-localsunIn: a sequence of DegreeT $\rightarrow$ real\\
+localDaySandPer: Integer
+
+localDaySandPer = InputPara.getdayS. perhelion
+
+~\newline
+
+$\#$ The days detween start day and end day
+
+localDaySandDayE: Integer
+
+localDaySandDayE =InputPara.getdayE.countDiff (InputPara.getdayS)
+
+~\newline
+
+$\#$ Calculate the total sun intensity for the base case
+
+localsunIn: a sequence of DegreeT $\rightarrow$ real
+
 localsunIn (zen[ ]) = Calculation.sumSunIn( 1.35, zen)
 
-$\#$ Get the optimum sun intensity\\
-localtiltSunIn: DegreeT $\times$ real $\rightarrow$ real\\
+~\newline
+
+$\#$ Get the optimum sun intensity
+
+localtiltSunIn: DegreeT $\times$ real $\rightarrow$ real
+
 localtiltSunIn (degree, intensity ) = TiltAngle.getiltInten (intensity, degree )
 
+
+localScaleDec :  DegreeT [ ] $\times$ DayT  $\times$ DayT $\rightarrow$  DegreeT [ ] 
+localScaleDec (dec, ds, ds) 
 
 
 \wss{It is nice to have a newpage between modules.}\an{OK}
 
-\newpage
+
+
+~\newline
+
+localCut : $\mathbb{N}$  $\times$ $\mathbb{N}$ $\rightarrow$ a sequence of tuple ($\mathbb{N}$, $\mathbb{R}^+ $)
+
+localCut (i, lenght) = $ \|$ (x : $\mathbb{N}$ $|$ x $\in$ i $\bullet$	(x-1, lenght / i) )
+
+~\newline 
+
+zipList : a sequence $\times$ a sequence $\rightarrow$ a sequence
+
+zipList ([a] , [b]) = $\|$ (x : $\mathbb{N}$ $|$ x $\in$ $|$ a $|$ $\bullet$ ( a[x], b[x] ))
+
+~\newpage
 
 \section{Sun Catcher Type Module} \label{ModuleSCTM} 
 
@@ -473,17 +502,28 @@ N/A\\
 
 \subsubsection{Local Functions}
 
-calculateB: $\mathbb{N}$ $\rightarrow $ $\mathbb{N}$\\
-calculateB (a) = 2 - a + (a / 4)\\
+~\newline
 
-MonthOneTwo: $\mathbb{N} \times \mathbb{N} \times \mathbb{N} \rightarrow \mathbb{N}$\\
-MonthOneorTwo (y, m, d) = 365.25 $\times$ (y - 1) + 30.6001 $\times$ (m + 13) + d - calculateB(y /100) +  1720995\\
+calculateB: $\mathbb{N}$ $\rightarrow $ $\mathbb{N}$
 
+calculateB (a) = 2 - a + (a / 4)
 
-MonthNotOneTwo: $\mathbb{N} \times \mathbb{N} \times \mathbb{N} \rightarrow \mathbb{N}$\\
+~\newline
+
+MonthOneTwo: $\mathbb{N} \times \mathbb{N} \times \mathbb{N} \rightarrow \mathbb{N}$
+
+MonthOneorTwo (y, m, d) = 365.25 $\times$ (y - 1) + 30.6001 $\times$ (m + 13) + d - calculateB(y /100) +  1720995
+
+~\newline
+
+MonthNotOneTwo: $\mathbb{N} \times \mathbb{N} \times \mathbb{N} \rightarrow \mathbb{N}$
+
 MonthNotOneorTwo (y, m, d) = 365.25 $\times$ y + 30.6001 $\times$ (m + 1) + d - calculateB(y / 100) +  1720995)
 
+~\newline
+
 localnextday : DayT $\rightarrow$ DayT
+
 localnextday ( inputDay ) = The next day of the  inputDay according to the Gregorian Calender.
 
 \newpage
@@ -763,7 +803,7 @@ writeFile: Write tables  (output variables) in the file. \wss{You should define 
 
 \noindent  addresult ( angle, energy, day ):
 \begin{itemize}
-\item transition: mainTable = mainTable $\cup$ \{ ( $|$angle$|$ ,localAverage (energy) )  \}\\
+\item transition: mainTable = mainTable $\cup$ \{ ( $|$angle$|$ , energy )  \}\\
 tiltTable = tiltTable $\cup$ \{ (day, angle) \}
 \wss{I
     don't know how to read this.}
@@ -820,8 +860,7 @@ writeFile.(fileForAngle)
 
 
 \subsubsection{Local Functions}
-localAverage : a set of real $\rightarrow$ real\\
-localAverage (energy) =  + ( i: real $|$ i $\in$ energy $\bullet$  i) / $|$energy$|$\\
+
 
 
 
@@ -963,7 +1002,7 @@ SunCatTy (Section~\ref{ModuleSCTM}) \\
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline 
-getEnergy & real, real, real, DegreeT [ ] & a set of real & - \\
+getEnergy & real, real, real, DegreeT [ ] & real & - \\
 
 
 \hline
@@ -990,19 +1029,30 @@ N/A
 \noindent  getEnergy ( pw, ph, maxInten, zen[ ] ):
 \begin{itemize}
 \item transition:
-\item output:  localEnergy ( localSunIn ( zen, maxInten ),pw, ph)
+\item output:  localAverage ( localEnergy ( localSunIn ( zen, maxInten ),pw, ph) )
 \item exception: 
 \end{itemize}
 
 
 \subsubsection{Local Functions}
-localSunIn: a sequence of DegreeT $\times$ real $\rightarrow$ a set of real\\
-localSunIn (zen[ ], maxinten) = $\cup$ (i: DegreeT $|$ i $\in$ z $\bullet$ \{ SunInten.single(maxinten, i) \})\\
 
-localEnergy: a set of real $\times$ real $\times$ real $\rightarrow$ a set of real\\
+~\newline
+
+localSunIn: a sequence of DegreeT $\times$ real $\rightarrow$ a set of real
+
+localSunIn (zen[ ], maxinten) = $\cup$ (i: DegreeT $|$ i $\in$ z $\bullet$ \{ SunInten.single(maxinten, i) \})
+
+~\newline
+
+localEnergy: a set of real $\times$ real $\times$ real $\rightarrow$ a set of real
+
 localEnergy (sunIn, pw, ph) =  $\cup$ ( i: integer $|$ i $\in$ sunIn $\bullet$ \{ pw $\times$ ph $\times$ 18.7 $\times$ 0.75 $\times$ i \})
 
+~\newline
 
+localAverage : a set of real $\rightarrow$ real
+
+localAverage (energy) =  + ( i: real $|$ i $\in$ energy $\bullet$  i) / $|$energy$|$
 
 \newpage
 
@@ -1055,6 +1105,13 @@ $\#$ Calculate every elemant in list, decList[i.. i+diff]. Then output the list
 \begin{itemize}
 \item transition: 
 \item output: $\|$ (dec: DegreeT $|$ dec $\in$ decList[i.. i+diff] $\bullet$ localZenAngle (dec, latitude)
+\item exception: 
+\end{itemize}
+
+\noindent getDayList (cut, dayS):\\
+\begin{itemize}
+\item transition: 
+\item output: ((a, b) : ($\mathbb{N}$, $\mathbb{N}$) $|$ (a,b) $\in$ cut $\bullet	$  dayS.addDay (a * b))
 \item exception: 
 \end{itemize}
 

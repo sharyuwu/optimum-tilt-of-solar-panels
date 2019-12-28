@@ -23,15 +23,17 @@ maxInten denotes value of sun intensity corresponding to the optimum
 tilt angle.
 zenList denotes the list of zenith angle.
 -}
-getEnergy :: Double -> Double -> Double -> [DegreeT] -> Set Double
-getEnergy pw ph maxInten zenList = localEnergy (localSunIn zenList maxInten) pw ph
+getEnergy :: Double -> Double -> DegreeT -> [DegreeT] -> Double
+getEnergy pw ph tilt zenList = sum $ localEnergy (localSunIn zenList tilt) pw ph
+    --sum $ localEnergy (localSunIn zenList maxInten) pw ph
 
 -- | localSunIn calculate the sun intensity corresponding to the 
 -- | situation of solar panel is adjust to the optimum tilt angle.
 
-localSunIn :: [DegreeT] -> Double -> Set Double
-localSunIn zenList maxInten = Set.fromList $ map (sglSunIn maxInten) zenList
+localSunIn :: [DegreeT] -> DegreeT -> [Double]
+localSunIn zenList tilt = map (`sglSunIn` tilt) zenList
 
 -- | localEnergy calculate the energy absorption.
-localEnergy :: Set Double -> Double -> Double -> Set Double
-localEnergy sunIn pw ph = Set.map ((pw * ph * 1.87 * 0.75) *) sunIn
+localEnergy :: [Double] -> Double -> Double -> [Double]
+localEnergy sunIn pw ph = map ((pw * ph * 1.87 * 0.75) *) sunIn
+

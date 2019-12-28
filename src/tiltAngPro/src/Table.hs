@@ -1,51 +1,42 @@
 module Table where
 
-    import Text.Layout.Table
-    import Data.List
-    import Calculation
-    import DayADT
-    import SunCatTy
+import Text.Layout.Table
+import Data.List
+import Calculation
+import DayADT
+import SunCatTy
 
-    import Data.Set (Set)
-    import qualified Data.Set as Set
+import Data.Set (Set)
+import qualified Data.Set as Set
 
-    addResult:: Set DegreeT -> Set Double -> Set DayT -> IO()
-    addResult angle energy day = displayMainTable mainTable >> displayAngleTable day angle
-        where mainTable = (Set.size angle, localAverage energy)
+addResult :: [(Int, Int)] -> [DegreeT] -> [Double] -> [DayT] -> Int -> IO()
+addResult cut angle energy day len = displayMainTable cut energy len >> displayAngleTable cut day angle
 
-    localAverage:: Set Double -> Double
-    localAverage energy = (/) (Set.foldr (+) 0 energy) (fromIntegral $ Set.size energy)
 
-    displayMainTable:: (Int, Double) -> IO()
-    displayMainTable (cutime, energy) = do
-        content <- readFile "MainTable.txt"
-        if null content
-            then let mainTableContent = tableString [def , numCol]
-                                        unicodeRoundS
-                                        def
-                                        [ rowG ["Adjust/time", show cutime]
-                                        , rowG ["Energy Absorption/day", show energy]
-                                        ] in
-                writeFile "MainTable.txt" mainTableContent
-            else let mainTableContent =  content ++ newContent
-                        where newContent = tableString [ numCol]
-                                           unicodeRoundS
-                                           def
-                                           [ rowG [show cutime ]
-                                           , rowG [show energy ]
-                                           ] in
-                writeFile "MainTable.txt" mainTableContent
+displayMainTable :: [(Int, Int)] -> [Double] -> Int -> IO()
+displayMainTable list energy len = 
+  writeFile "MainTable.txt" content
+    where content = tableString [fixedLeftCol 15, column (fixed 20) center dotAlign def]
+                                unicodeS
+                                (titlesH ["Adjust/time", "Energy/day"])
+                                $ map (\x -> timeAndAngergy x energy len) list
 
-    displayAngleTable:: Set DayT -> Set DegreeT -> IO()
-    displayAngleTable time angle = 
-        appendFile "AngleTable.txt" content
-            where content = tableString [fixedLeftCol 10, column (fixed 20) center dotAlign def]
-                                        unicodeS
-                                        (titlesH ["Time", "Optimum Angle"])
-                                        $timeAndAngle (Set.toList time) (Set.toList angle)
+timeAndAngergy :: (Int, Int) -> [Double] -> Int -> RowGroup
+timeAndAngergy (x, y) energy len = rowG [show y, show average]
+    where
+      list = take y $ drop x energy
+      average = sum list / toEnum len 
+
+displayAngleTable ::  [(Int, Int)] -> [DayT] -> [DegreeT] -> IO()
+displayAngleTable list time angle = 
+   writeFile "AngleTable.txt" content
+      where content = tableString [fixedLeftCol 10, column (fixed 20) center dotAlign def]
+                                unicodeS
+                                (titlesH ["Time", "Optimum Angle"])
+                                $ timeAndAngle time angle
 
     
-    timeAndAngle:: [DayT] -> [DegreeT] -> [RowGroup]
-    timeAndAngle  [x]    [y]    = [rowG [show x, show y]]
-    timeAndAngle (x:xs) (y:ys)  = timeAndAngle [x] [y] ++ timeAndAngle xs ys
+timeAndAngle:: [DayT] -> [DegreeT] -> [RowGroup]
+timeAndAngle [x] [y] = [rowG [show x, show y]]
+timeAndAngle (x:xs) (y:ys)  = timeAndAngle [x] [y] ++ timeAndAngle xs ys
 

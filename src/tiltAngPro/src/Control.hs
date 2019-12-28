@@ -28,53 +28,53 @@ import qualified Data.Set as Set
     absorption.
 -}
 
---getOneAng :: [DegreeT] -> DayT -> DayT ->Double -> Double -> DegreeT -> IO()
---getOneAng :: [DegreeT] -> DayT -> DayT ->Double -> Double -> DegreeT -> IO()
-getPE :: [DegreeT] -> DegreeT ->Double -> Double -> Set Double
---getTwoAng :: [DegreeT] -> DayT -> DayT ->Double -> Double -> DegreeT -> IO()
-{-getTwoAng theta_s_date dayS dayE pw ph latitude =
-  let result1 = getOneAng xs dayS (addDay diff dayS) pw ph latitude
-      result2 = getOneAng ys (addDay diff dayS) dayE pw ph latitude
-        where 
-          diff    = floor (abs . fromInteger $ diffDays dayE dayS) / 2
-          xs = take diff  theta_s_date
-          ys = drop diff  theta_s_date
-      collect = (a `Set.union` a1, b `Set.union` b1, c `Set.union` c1)
-        where (a,b,c) =  result1 
-              (a1,b1,c1) =  result2
-  in collect
-    --(Set.singleton theta_T,p_e, Set.singleton dayS)-}
 
-getAngle :: [DegreeT] ->  DegreeT
-getThetaSDate :: [DegreeT] -> DayT -> DayT -> DegreeT -> [DegreeT]
+baseSunInten :: [DegreeT] -> Double
+baseSunInten list = sumSunIn list 1.35
 
-getAngle theta_s_date =
-      getTilt theta_s_date baseCase
+cutTime :: Int
+cutTime = 2
+
+optAngle :: (Int, Integer) -> [DegreeT] ->  DegreeT -> DegreeT
+optAngle (x, y) theta_s_date tiltBefore 
+    | tiltBefore == 0                            =  optAngle (x, y) theta_s_date tiltAfter
+    | intensity tiltBefore > intensity tiltAfter = tiltBefore
+    | otherwise                                  = optAngle (x, y) theta_s_date tiltAfter
         where 
-          baseCase = sumSunIn theta_s_date 1.35
+          intensity = sumSunIn list
+          list = take (fromInteger y) $ drop (x * fromInteger y) theta_s_date
+          tiltAfter = getTilt list tiltBefore
+  --getTilt list (baseSunInten list)
+ {-   let list = take (fromInteger y) $ drop (x * fromInteger y) theta_s_date
+        tiltAfter = getTilt list tiltBefore
+    in 
+      if ((sum $ map (sumSunIn tiltBefore) list) > (sum $ map (sumSunIn tiltAfter) list))
+      then tiltBefore
+      else optAngle (x, y) theta_s_date tiltAfter -}
 --putStr $show theta_T
 
-getThetaSDate decList dayS dayE latitude =
-  let a = getzenList (scaleList decList scale) dropPoint diff latitude
-            where 
-              dropPoint = abs . fromInteger $ perihelion dayS
-              diff      = abs . fromInteger $ diffDays dayE dayS
-              scale     = diff + dropPoint
-      in a
-
-getPE theta_s_date theta_T pw ph =
-  let a = getEnergy pw ph localTiltSunIn theta_s_date
-            where 
-              localTiltSunIn = sglSunIn theta_T baseCase
-              baseCase = sumSunIn theta_s_date 1.35
-    in a
+optEnergy :: ((Int, Integer), Double) -> [DegreeT] -> Double -> Double -> Double
+optEnergy ((x, y), ang) theta_s_date pw ph =
+  getEnergy pw ph ang list
+    where 
+      --localTiltSunIn = sglSunIn ang (baseSunInten list)
+      list = take (fromInteger y) $ drop (x * fromInteger y) theta_s_date
     --putStr $show theta_T
     --putStr $show $sumSunIn theta_s_date 1.35
     --(Set.singleton theta_T,p_e, Set.singleton dayS) 
     --putStr . unlines $ map show $Set.toList p_e
   --addResult (Set.singleton theta_T) p_e $Set.singleton dayS
-        
-scaleList:: [DegreeT] -> Int -> [DegreeT]
+
+zenithL :: [DegreeT] -> DayT -> DayT -> LatitudeT -> [DegreeT]
+zenithL decList dayS dayE latitude =
+  let scaleL = scaleList decList scale
+        where scale = diff + dropPoint
+      dropPoint = abs . fromInteger $ perihelion dayS
+      diff      = abs . fromInteger $ diffDays dayE dayS
+  in getzenList scaleL dropPoint diff latitude
+
+
+scaleList :: [DegreeT] -> Int -> [DegreeT]
 scaleList list diff
     | diff > len  = scaleList (list ++ take haveTakeDay list) $ diff-haveTakeDay
     | otherwise   = list
@@ -86,6 +86,36 @@ scaleList list diff
             |otherwise     = diffLen
                         
 
+makeCut :: Int -> Double -> [(Int, Integer)]
+makeCut cut len =  netFst cut  (len / toEnum cut)
+    where 
+      netFst c le
+        | c /= 0              = netSnd (c - 1) le
+        | c == 0 && le /= len = makeCut (cut - 1) len
+        | otherwise           = [ ]
+        where netSnd c le = (c, round le) : netFst c le
+
+intermidiate :: [DegreeT] -> DayT -> DayT -> Double -> Double -> LatitudeT -> IO ()
+intermidiate dec dayS dayE pw ph latitude =
+  let zenith = zenithL dec dayS dayE latitude
+      cutList = makeCut cutTime $ toEnum (length zenith)
+      angle = map (\x -> optAngle x zenith 0) cutList
+      energy = map (\x -> optEnergy x zenith pw ph) zipCA
+        where zipCA = zip cutList angle
+      day = map (`getDayList` dayS) cutList
+    in addResult (lisForResult cutTime) angle energy day (length zenith)
+      --putStr . unlines $ map show cutList
+      --putStr . unlines $ map show energy
+      --addResult (lisForResult cutTime) angle energy day (length zenith)
+
+lisForResult :: Int -> [(Int, Int)]
+lisForResult cut = netFirst (cut-1) 0
+  where netFirst c record
+            | c < 0 = [ ]
+            -- | c == 1 = [(c + 1 + record, 1)]
+            | record == 0 = (0, c + 1) : netFirst (c-1) (c + 1)
+            | otherwise = (record, c + 1) : netFirst (c-1) (c + 1 + record)
+
 input :: String -> String -> String -> String -> String -> String-> String-> String-> String ->IO ()
 input latitude startYear startMonth startDay endYear endMonth endDay pw ph = do
     inputAnalemma <- readFile "analemma.txt"
@@ -96,14 +126,8 @@ input latitude startYear startMonth startDay endYear endMonth endDay pw ph = do
     let pw1 = read pw :: Double
     let ph1 = read ph :: Double
     let latitude1 = read latitude :: Double
-    writeFile "MainTable.txt" ""
-    writeFile "AngleTable.txt" ""
     if verifiedP pw1 ph1 && verifiedD dayS dayE && verifiedLat latitude1
-    then 
-      let thetha_s_data = getThetaSDate decList dayS dayE latitude1
-          tiltAngle = getAngle thetha_s_data
-          energy = getPE thetha_s_data tiltAngle pw1 ph1
-      in addResult (Set.singleton tiltAngle) energy (Set.singleton dayS)
+     then intermidiate decList dayS dayE pw1 ph1 latitude1
      {- let theta_s_date = getzenList (scaleList decList scale) dropPoint diff latitude
             where 
               dropPoint = abs . fromInteger $ perihelion dayS
@@ -112,6 +136,6 @@ input latitude startYear startMonth startDay endYear endMonth endDay pw ph = do
           --putStr . unlines $ map show theta_s_date
           collect = getOneAng theta_s_date dayS dayE pw1 ph1 latitude1
         in addResult collect-}
-    else putStr "Incorrect input data"
+     else putStr "Incorrect input data"
 
 
